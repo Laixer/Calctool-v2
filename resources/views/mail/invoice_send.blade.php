@@ -65,8 +65,8 @@
 												@if ($user_logo)
 												<tr><!-- logo -->
 													<td width="100%" style="font-family: helvetica, Arial, sans-serif; font-size: 18px; letter-spacing: 0px;">
-														<a href="{{ URL::to('/') }}" style="text-decoration: none;">
-															<img src="{{ URL::to('/') }}/{{ $user_logo }}" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
+														<a href="{{ url('/') }}" style="text-decoration: none;">
+															<img src="{{ url('/') }}/{{ $user_logo }}" alt="CalculatieTool.com" border="0" width="166" height="auto" style="with: 166px; height: auto; border: 5px solid #ffffff;" />
 														</a>
 													</td>
 												</tr>

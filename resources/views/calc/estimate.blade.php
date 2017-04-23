@@ -879,7 +879,7 @@ var n = this,
 
 	<section class="container fix-footer-bottom">
 
-		@include('calc.wizard', array('page' => 'estimate'))
+		@include('wizard.index', array('page' => 'estimate'))
 
 			<div class="pull-right">
 				<a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button"><i class="fa fa-file-pdf-o">&nbsp;</i>Project overzicht</a>

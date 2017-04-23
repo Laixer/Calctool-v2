@@ -367,7 +367,7 @@ $(document).ready(function() {
 
     <section class="container">
 
-        @include('calc.wizard', array('page' => 'calculation'))
+        @include('wizard.index', array('page' => 'calculation'))
 
         @if (Session::has('success'))
         <div class="alert alert-success">
@@ -400,7 +400,7 @@ $(document).ready(function() {
         <div class="white-row">
 
             <div id="project">
-                <form method="POST" action="/project/new" accept-charset="UTF-8">
+                <form method="POST" action="{{ url()->current() }}" accept-charset="UTF-8">
                     {!! csrf_field() !!}
                     <h4>Projectgegevens</h4>
                     <h5><strong>Gegevens</strong></h5>

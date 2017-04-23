@@ -138,7 +138,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated) {
 
 	<section class="container">
 
-		@include('calc.wizard', array('page' => 'invoice'))
+		@include('wizard.index', array('page' => 'invoice'))
 
 			<div class="modal fade" id="codeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel2" aria-hidden="true">
 				<div class="modal-dialog">

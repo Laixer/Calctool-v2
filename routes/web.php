@@ -62,6 +62,13 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('res-{resource_id}/view',     'ResourceController@view');
     Route::get('res-{resource_id}/delete',   'ResourceController@doDeleteResource');
 
+    /* Routes by PaymentController */
+    Route::get('payment',                      'PaymentController@getPayment');
+    Route::get('payment/order/{token}',        'PaymentController@getPaymentFinish');
+    Route::post('payment/promocode',           'PaymentController@doCheckPromotionCode');
+    Route::get('payment/increasefree',         'PaymentController@getPaymentFree');
+    Route::get('payment/subscription/cancel',  'PaymentController@getSubscriptionCancel');
+
     /* Module Group Account */
     Route::group(['namespace' => $this->namespaceAccount], function() {
         Route::get('account',                                  'AccountController@getAccount')->name('account');
@@ -74,6 +81,10 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('account/preferences/update',              'AccountController@doUpdatePreferences');
         Route::post('account/notepad/save',                    'AccountController@doUpdateNotepad');
     });
+});
+
+/* Authentication and Payzone Group */
+Route::group(['middleware' => ['auth','payzone']], function() {
 
     /* Notification actions */
     Route::get('notification',                          'NotificationController@notificationList');
@@ -82,17 +93,83 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('notification/message-{message}',        'NotificationController@getMessage')->where('message', '[0-9]+');
 
     /* Finance actions */
-    Route::get('finance/overview', 'Finance\OverviewController@overview');
+    Route::get('finance/overview', 'Finance\OverviewController@overview')->middleware('reqcompany');
 
-    /* Routes by PaymentController */
-    Route::get('payment',                      'PaymentController@getPayment');
-    Route::get('payment/order/{token}',        'PaymentController@getPaymentFinish');
-    Route::post('payment/promocode',           'PaymentController@doCheckPromotionCode');
-    Route::get('payment/increasefree',         'PaymentController@getPaymentFree');
-    Route::get('payment/subscription/cancel',  'PaymentController@getSubscriptionCancel');
+    /* Module Group Product */
+    Route::group(['namespace' => $this->namespaceProducts], function() {
+ 
+         /* Product list */
+        Route::get('material',                        'MaterialController@getList');
+        Route::get('material/subcat/{type}/{id}',     'MaterialController@getListSubcat');
+        Route::post('material/search',                'MaterialController@doSearch');
+        Route::post('material/newmaterial',           'MaterialController@doNew');
+        Route::post('material/updatematerial',        'MaterialController@doUpdate');
+        Route::post('material/deletematerial',        'MaterialController@doDelete');
+        Route::post('material/favorite',              'MaterialController@doFavorite');
+        Route::post('material/element/new',           'MaterialController@doNewElement');
+        Route::post('material/upload',                'MaterialController@doUploadCSV');
+
+        /* Wholesale */
+        Route::get('wholesale',                       'WholesaleController@getAll');
+        Route::get('wholesale/new',                   'WholesaleController@getNew');
+        Route::post('wholesale/new',                  'WholesaleController@doNew');
+        Route::post('wholesale/update',               'WholesaleController@doUpdate');
+        Route::get('wholesale-{wholesale_id}/edit',   'WholesaleController@getEdit')->where('wholesale_id', '[0-9]+');
+        Route::get('wholesale-{wholesale_id}/show',   'WholesaleController@getShow')->where('wholesale_id', '[0-9]+');
+        Route::post('wholesale/iban/update',          'WholesaleController@doUpdateIban');
+        Route::get('wholesale-{wholesale_id}/delete', 'WholesaleController@getDelete')->where('wholesale_id', '[0-9]+');
+    });
+
+    /* Module Group Company */ //TODO: namespace
+    Route::group(['prefix' => 'company'], function() {
+        Route::get('details',                 'Company\LayoutController@details');
+        Route::get('setupcompany',            'Company\LayoutController@setupCompany');
+        Route::post('setupcompany',           'Company\SetupCompanyController');
+        Route::get('contacts',                'Company\LayoutController@contacts');
+        Route::get('financial',               'Company\LayoutController@financial');
+        Route::get('logo',                    'Company\LayoutController@logo');
+        Route::get('preferences',             'Company\LayoutController@preferences');
+        Route::post('update',                 'Company\UpdateController@updateDetails');
+        Route::post('updatefinacial',         'Company\UpdateController@updateIban');
+        Route::post('uploadlogo',             'Company\UploadController@uploadLogo');
+        Route::post('uploadagreement',        'Company\UploadController@uploadAgreement');
+    });
+
+    //TODO: move into namespaceRelation
+    Route::get('import', function() {
+        return view('base.import');
+    });
+
+    //TODO: move into namespaceRelation
+    Route::post('import/save',                  'Relation\ImportController');
+    Route::get('relation/export',               'Relation\ExportController');
+
+    /* Module Group Relation */
+    Route::group(['namespace' => $this->namespaceRelation], function() {
+        Route::get('relation/new',                      'RelationController@getNew');
+        Route::post('relation/new',                     'RelationController@doNew');
+        Route::post('relation/update',                  'RelationController@doUpdate');
+        Route::post('relation/contact/new',             'RelationController@doNewContact');
+        Route::post('relation/contact/update',          'RelationController@doUpdateContact');
+        Route::post('relation/contact/delete',          'RelationController@doDeleteContact');
+        Route::post('relation/iban/update',             'RelationController@doUpdateIban');
+        Route::post('relation/iban/new',                'RelationController@doNewIban');
+        Route::post('relation/updatecalc',              'RelationController@doUpdateProfit');
+        Route::get('relation',                          'RelationController@getAll');
+        Route::get('relation-{relation_id}/edit',       'RelationController@getEdit');
+        Route::get('relation-{relation_id}/delete',     'RelationController@getDelete');
+        Route::get('relation-{relation_id}/contact/new','RelationController@getNewContact');
+        Route::get('relation-{relation_id}/contact-{contact_id}/edit', 'RelationController@getEditContact');
+        Route::get('relation-{relation_id}/convert',    'RelationController@getConvert');
+        Route::get('relation-{relation_id}/contact-{contact_id}/vcard', 'RelationController@downloadVCard');
+    });
+});
+
+/* Authentication, Payzone, Require Company Group */
+Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
 
     /* Module Group Invoice */
-    Route::group(['middleware' => 'payzone'], function() {
+    Route::group([], function() {
         Route::post('invoice/updatecondition', 'InvoiceController@doUpdateCondition');
         Route::post('invoice/updatecode', 'InvoiceController@doUpdateCode');
         Route::post('invoice/updatedesc', 'InvoiceController@doUpdateDescription');
@@ -125,9 +202,9 @@ Route::group(['middleware' => 'auth'], function() {
     });
 
     /* Module Group Proposal */
-    Route::group(['middleware' => 'payzone'], function() {
-        Route::get('offerversions/project-{project_id}', 'Calculation\CalcController@getOfferAll');;
-        Route::get('offer/project-{project_id}', 'Calculation\CalcController@getOffer');;
+    Route::group([], function() {
+        Route::get('offerversions/project-{project_id}',          'Calculation\CalcController@getOfferAll');;
+        Route::get('offer/project-{project_id}',                  'Calculation\CalcController@getOffer');;
         Route::post('offer/project-{project_id}',                 'OfferController@doNewOffer');
         Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
             return view('calc.offer_show_pdf');
@@ -138,13 +215,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('offer/sendpost',                             'OfferController@doSendPostOffer');
     });
 
-    //TODO: move into namespaceCalculation
-    Route::get('result/project-{project_id}', function() {
-        return view('calc.result');
-    })->middleware('payzone');
-
     /* Module Group Calculation */
-    Route::group(['namespace' => $this->namespaceCalculation, 'middleware' => ['payzone','reqcompany']], function() {
+    Route::group(['namespace' => $this->namespaceCalculation], function() {
 
         /* Routes by CalcController */
         Route::post('calculation/newchapter/{project_id}',        'CalcController@doNewChapter');
@@ -207,7 +279,7 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('blancrow/updaterow',                         'BlancController@doUpdateRow');
 
         /* Calculation pages */
-        Route::get('calculation/project-{project_id}',            'CalcController@getCalculation');
+        Route::get('project/{project_id}-{name}/calculation',     'CalcController@getCalculation');
         Route::get('calculation/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getCalculationWithFavorite');
         Route::get('calculation/summary/project-{project_id}',    'CalcController@getCalculationSummary');
         Route::get('calculation/endresult/project-{project_id}',  'CalcController@getCalculationEndresult');
@@ -247,6 +319,8 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('more/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'MoreController@getMoreWithFavorite');
         Route::get('more/summary/project-{project_id}', 'CalcController@getMoreSummary');
         Route::get('more/endresult/project-{project_id}', 'CalcController@getMoreEndresult');
+
+        /* More pages */
         Route::post('more/newmaterial',                          'MoreController@doNewMaterial');
         Route::post('more/newequipment',                         'MoreController@doNewEquipment');
         Route::post('more/newlabor',                             'MoreController@doNewLabor');
@@ -262,60 +336,14 @@ Route::group(['middleware' => 'auth'], function() {
         Route::post('more/moveactivity',                         'MoreController@doMoveActivity');
     });
 
-    //TODO: move into namespaceRelation
-    Route::get('import', function() {
-        return view('base.import');
-    });
-
-    //TODO: move into namespaceRelation
-    Route::post('import/save',                  'Relation\ImportController');
-    Route::get('relation/export',               'Relation\ExportController');
-
-    /* Module Group Relation */
-    Route::group(['namespace' => $this->namespaceRelation, 'middleware' => 'payzone'], function() {
-
-        /* Relation pages */
-        Route::get('relation/new',                      'RelationController@getNew');
-        Route::post('relation/new',                     'RelationController@doNew');
-        Route::post('relation/update',                  'RelationController@doUpdate');
-        Route::post('relation/contact/new',             'RelationController@doNewContact');
-        Route::post('relation/contact/update',          'RelationController@doUpdateContact');
-        Route::post('relation/contact/delete',          'RelationController@doDeleteContact');
-        Route::post('relation/iban/update',             'RelationController@doUpdateIban');
-        Route::post('relation/iban/new',                'RelationController@doNewIban');
-        Route::post('relation/updatecalc',              'RelationController@doUpdateProfit');
-        Route::get('relation',                          'RelationController@getAll');
-        Route::get('relation-{relation_id}/edit',       'RelationController@getEdit');
-        Route::get('relation-{relation_id}/delete',     'RelationController@getDelete');
-        Route::get('relation-{relation_id}/contact/new','RelationController@getNewContact');
-        Route::get('relation-{relation_id}/contact-{contact_id}/edit', 'RelationController@getEditContact');
-        Route::get('relation-{relation_id}/convert',    'RelationController@getConvert');
-        Route::get('relation-{relation_id}/contact-{contact_id}/vcard', 'RelationController@downloadVCard');
-        
-    });
-
-    /* Module Group Company */ //TODO: namespace
-    Route::group(['middleware' => 'payzone'], function() {
-        Route::get('company/details',                 'Company\LayoutController@details');
-        Route::get('company/setupcompany',            'Company\LayoutController@setupCompany');
-        Route::post('company/setupcompany',           'Company\SetupCompanyController');
-        Route::get('company/contacts',                'Company\LayoutController@contacts');
-        Route::get('company/financial',               'Company\LayoutController@financial');
-        Route::get('company/logo',                    'Company\LayoutController@logo');
-        Route::get('company/preferences',             'Company\LayoutController@preferences');
-        Route::post('company/update',                 'Company\UpdateController@updateDetails');
-        Route::post('company/updatefinacial',         'Company\UpdateController@updateIban');
-        Route::post('company/uploadlogo',             'Company\UploadController@uploadLogo');
-        Route::post('company/uploadagreement',        'Company\UploadController@uploadAgreement');
-    });
-
     /* Module Group Project */ //TODO: prefix
-    Route::group(['namespace' => $this->namespaceProject, 'middleware' => ['payzone','reqcompany']], function() {
+    Route::group(['namespace' => $this->namespaceProject], function() {
         Route::get('project/all',                                          'ListController');
         Route::get('project/new',                                          'NewController@index');
         Route::post('project/new',                                         'NewController@new');
         Route::get('project/{project_id}-{name}/copy',                     'CopyController');
         Route::get('project/{project_id}-{name}/details',                  'DetailController@index');
+        Route::get('project/{project_id}-{name}/result',                   'ResultController');
         Route::get('project/relation/{relation_id}',                       'UpdateController@getRelationDetails'); //TODO: MOVE
         Route::post('project/update',                                      'UpdateController@updateDetails');
         Route::post('project/update/note',                                 'UpdateController@updateNote');
@@ -332,7 +360,7 @@ Route::group(['middleware' => 'auth'], function() {
     });
 
     /* Module Group Cost */
-    Route::group(['middleware' => 'payzone'], function() {
+    Route::group([], function() {
         Route::get('timesheet',                                     'CostController@getTimesheet');
         Route::post('timesheet/new',                                'CostController@doNewTimesheet');
         Route::post('timesheet/delete',                             'CostController@doDeleteTimesheet');
@@ -341,30 +369,5 @@ Route::group(['middleware' => 'auth'], function() {
         Route::get('purchase',                                      'CostController@getPurchase');
         Route::post('purchase/new',                                 'CostController@doNewPurchase');
         Route::post('purchase/delete',                              'CostController@doDeletePurchase');
-    });
-
-    /* Module Group Product */
-    Route::group(['namespace' => $this->namespaceProducts, 'middleware' => 'payzone'], function() {
- 
-         /* Product list */
-        Route::get('material',                        'MaterialController@getList');
-        Route::get('material/subcat/{type}/{id}',     'MaterialController@getListSubcat');
-        Route::post('material/search',                'MaterialController@doSearch');
-        Route::post('material/newmaterial',           'MaterialController@doNew');
-        Route::post('material/updatematerial',        'MaterialController@doUpdate');
-        Route::post('material/deletematerial',        'MaterialController@doDelete');
-        Route::post('material/favorite',              'MaterialController@doFavorite');
-        Route::post('material/element/new',           'MaterialController@doNewElement');
-        Route::post('material/upload',                'MaterialController@doUploadCSV');
-
-        /* Wholesale */
-        Route::get('wholesale',                       'WholesaleController@getAll');
-        Route::get('wholesale/new',                   'WholesaleController@getNew');
-        Route::post('wholesale/new',                  'WholesaleController@doNew');
-        Route::post('wholesale/update',               'WholesaleController@doUpdate');
-        Route::get('wholesale-{wholesale_id}/edit',   'WholesaleController@getEdit')->where('wholesale_id', '[0-9]+');
-        Route::get('wholesale-{wholesale_id}/show',   'WholesaleController@getShow')->where('wholesale_id', '[0-9]+');
-        Route::post('wholesale/iban/update',          'WholesaleController@doUpdateIban');
-        Route::get('wholesale-{wholesale_id}/delete', 'WholesaleController@getDelete')->where('wholesale_id', '[0-9]+');
     });
 });

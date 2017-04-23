@@ -269,6 +269,7 @@
                             </div>
                         </div>
 
+                        @if (Auth::user()->isSystem())
                         <div class="col-sm-12 col-md-2">
                             <div class="item-box item-box-show fixed-box">
                                 <figure>
@@ -319,6 +320,7 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
 
                     </div>
 

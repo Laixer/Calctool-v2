@@ -98,7 +98,7 @@ if (!$invoice) {
 
 	<section class="container">
 
-		@include('calc.wizard', array('page' => 'invoice'))
+		@include('wizard.index', array('page' => 'invoice'))
 
 		<div class="pull-right">
 			<?php if (!$project->project_close) { ?>

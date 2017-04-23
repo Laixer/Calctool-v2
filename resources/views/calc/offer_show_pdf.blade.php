@@ -188,7 +188,7 @@ $(document).ready(function() {
 
 	<section class="container">
 
-		@include('calc.wizard', array('page' => 'offer'))
+		@include('wizard.index', array('page' => 'offer'))
 
 		<div id="mailsent" class="alert alert-success" style="display: none;">
 			<i class="fa fa-check-circle"></i>

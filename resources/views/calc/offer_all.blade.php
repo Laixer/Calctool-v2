@@ -112,7 +112,7 @@ $(document).ready(function() {
 
 	<section class="container">
 
-		@include('calc.wizard', array('page' => 'offer'))
+		@include('wizard.index', array('page' => 'offer'))
 
 		@if ($offer_last)
 		@if (number_format(CalculationEndresult::totalProject($project), 3, ",",".") != number_format($offer_last->offer_total, 3, ",","."))

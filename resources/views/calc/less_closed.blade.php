@@ -104,7 +104,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 
 	<section class="container fix-footer-bottom">
 
-			@include('calc.wizard', array('page' => 'less'))
+			@include('wizard.index', array('page' => 'less'))
 
 			<h2><strong>Minderwerk</strong></h2>
 

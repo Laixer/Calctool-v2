@@ -202,7 +202,7 @@ if (!$project || !$project->isOwner()) {
 
 	<section class="container printable fix-footer-bottom">
 
-		@include('calc.wizard', array('page' => 'invoice'))
+		@include('wizard.index', array('page' => 'invoice'))
 
 		@if (Session::has('success'))
 		<div class="alert alert-success">

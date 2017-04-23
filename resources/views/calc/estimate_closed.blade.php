@@ -141,7 +141,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 
 	<section class="container fix-footer-bottom">
 
-		@include('calc.wizard', array('page' => 'estimate'))
+		@include('wizard.index', array('page' => 'estimate'))
 
 			<h2><strong>Stelposten</strong> stellen</h2>
 

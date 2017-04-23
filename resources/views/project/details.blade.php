@@ -360,7 +360,7 @@ $(document).ready(function() {
 
     <section class="container">
 
-        @include('calc.wizard', array('page' => 'project'))
+        @include('wizard.index', array('page' => 'project'))
 
         @if (Session::has('success'))
         <div class="alert alert-success">

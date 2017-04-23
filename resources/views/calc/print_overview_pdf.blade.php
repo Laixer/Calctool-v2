@@ -22,9 +22,9 @@ use \BynqIO\CalculatieTool\Calculus\LessOverview;
 $project = Project::find($project_id);
 $type = ProjectType::find($project->type_id);
 
-$image_height = 0;
+$image_height = 300;
 if ($relation_self && $relation_self->logo_id) {
-    $image_src = getcwd() . '/' . Resource::find($relation_self->logo_id)->file_location;
+    $image_src = storage_prefix_path() . '/' . Resource::find($relation_self->logo_id)->file_location;
     $image = getimagesize($image_src);
     $image_height = round(($image[1] / $image[0]) * 300);
 }

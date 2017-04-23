@@ -14,26 +14,11 @@ if ($db_version)
 else
     $db_version = '-';
 
-$loadresult = @exec('uptime');
-preg_match("/averages?: ([0-9\.]+),[\s]+([0-9\.]+),[\s]+([0-9\.]+)/", $loadresult, $avgs);
-
-$uptime = explode(' up ', $loadresult);
-$uptime = explode(',', $uptime[1]);
-$uptime = $uptime[0].', '.$uptime[1];
-
 function convert($size) {
     $unit=array('b','kb','mb','gb','tb','pb');
     return @round($size/pow(1024,($i=floor(log($size,1024)))),2).' '.$unit[$i];
 }
 
-$rev_timestamp = '-';
-$rev = '-';
-if (File::exists('../.revision')) {
-    $rev_timestamp = File::lastModified('../.revision');
-    $rev = substr(File::get('../.revision'), 0, 7);
-}
-
-$redis_info = Redis::command('info');
 ?>
 <div id="wrapper">
 
@@ -62,7 +47,9 @@ $redis_info = Redis::command('info');
             <div class="white-row">
 
                 <div class="pull-right">
+                    <?php // @if (Auth::user()->isSystem()) ?>
                     <a href="/admin/environment/clearcaches" class="btn btn-primary">Clear cache</a>
+                    <?php // @endif ?>
                 </div>
 
                 <h4>Serverstatus</h4>
@@ -76,11 +63,7 @@ $redis_info = Redis::command('info');
                 </div>
                 <div class="row">
                     <div class="col-md-2"><strong>Load Averages</strong></div>
-                    <div class="col-md-10">{{ $avgs[1] . ' ' . $avgs[2] . ' ' . $avgs[2] }}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-2"><strong>Uptime</strong></div>
-                    <div class="col-md-10">{{ $uptime }}</div>
+                    <div class="col-md-10">{{ sys_getloadavg()[0] . ' ' . sys_getloadavg()[1] . ' ' . sys_getloadavg()[2] }}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-2"><strong>Date offset</strong></div>
@@ -93,16 +76,8 @@ $redis_info = Redis::command('info');
                 <br />
                 <h4>Software</h4>
                 <div class="row">
-                    <div class="col-md-2">Upstream</div>
-                    <div class="col-md-10">{{ $rev_timestamp == '-' ? '-' : date('Y-m-d H:i:s', $rev_timestamp) }}</div>
-                </div>
-                <div class="row">
                     <div class="col-md-2">Versie</div>
                     <div class="col-md-10">{{ config('app.version') }}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-2">Revisie</div>
-                    <div class="col-md-10">{{ $rev }}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Framework</div>
@@ -111,10 +86,6 @@ $redis_info = Redis::command('info');
                 <div class="row">
                     <div class="col-md-2">PHP</div>
                     <div class="col-md-10">{{ phpversion() }}</div>
-                </div>
-                <div class="row">
-                    <div class="col-md-2">Cache</div>
-                    <div class="col-md-10">{{ $redis_info['Server']['redis_version'] }}</div>
                 </div>
                 <div class="row">
                     <div class="col-md-2">Database</div>

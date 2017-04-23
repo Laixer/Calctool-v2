@@ -20,8 +20,8 @@ use Illuminate\Database\Eloquent\Model;
 
 use Auth;
 
-class Project extends Model {
-
+class Project extends Model
+{
     protected $table = 'project';
     protected $guarded = array('id', 'project_code');
 
@@ -43,6 +43,21 @@ class Project extends Model {
 
     public function type() {
         return $this->hasOne('\BynqIO\CalculatieTool\Models\ProjectType', 'id', 'type_id');
+    }
+
+    public function isCalculation()
+    {
+        return $this->type->type_name == 'calculatie';
+    }
+
+    public function isDirectWork()
+    {
+        return $this->type->type_name == 'regiewerk';
+    }
+
+    public function isQuickInvoice()
+    {
+        return $this->type->type_name == 'snelle offerte en factuur';
     }
 
     public function isOwner() {

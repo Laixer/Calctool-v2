@@ -209,7 +209,7 @@ var n = this,
 
 	<section class="container">
 
-		@include('calc.wizard', array('page' => 'calculation'))
+		@include('wizard.index', array('page' => 'calculation'))
 
 			<h2><strong>Offerteregels</strong></h2>
 

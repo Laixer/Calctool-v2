@@ -44,7 +44,7 @@ if (!$project || !$project->isOwner()) {
 
 	<section class="container">
 
-		@include('calc.wizard', array('page' => 'invoice'))
+		@include('wizard.index', array('page' => 'invoice'))
 
 		<h2><strong>Factuurgeschiedenis {{ $invoice->invoice_code }}</strong></h2>
 

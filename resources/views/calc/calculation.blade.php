@@ -1361,7 +1361,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 
     <section class="container fix-footer-bottom">
 
-        @include('calc.wizard', array('page' => 'calculation'))
+        @include('wizard.index', array('page' => 'calculation'))
 
             <div class="pull-right">
                 <a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button"><i class="fa fa-file-pdf-o">&nbsp;</i>Projectoverzicht</a>

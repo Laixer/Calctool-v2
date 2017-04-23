@@ -17,6 +17,7 @@ namespace BynqIO\CalculatieTool\Http;
 
 use BynqIO\CalculatieTool\Http\Middleware\AdminPolicy;
 use BynqIO\CalculatieTool\Http\Middleware\TrimStrings;
+use BynqIO\CalculatieTool\Http\Middleware\Authenticate;
 use BynqIO\CalculatieTool\Http\Middleware\EncryptCookies;
 use BynqIO\CalculatieTool\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Session\Middleware\StartSession;
@@ -65,6 +66,7 @@ class Kernel extends HttpKernel
             StartSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+            Authenticate::class,
         ],
 
         'admin' => [
@@ -74,6 +76,7 @@ class Kernel extends HttpKernel
             ShareErrorsFromSession::class,
             VerifyCsrfToken::class,
             SubstituteBindings::class,
+            Authenticate::class,
             AdminPolicy::class,
         ],
 

@@ -325,7 +325,7 @@ $type = ProjectType::find($project->type_id);
 
     <section class="container printable fix-footer-bottom">
 
-        @include('calc.wizard', array('page' => 'offer'))
+        @include('wizard.index', array('page' => 'offer'))
 
         @if(!$relation_self || Contact::where('relation_id','=',$relation_self->id)->count()<1)
         <div class="alert alert-danger">

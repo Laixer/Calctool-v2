@@ -104,7 +104,7 @@ $type = ProjectType::find($project->type_id);
 
 	<section class="container fix-footer-bottom">
 
-			@include('calc.wizard', array('page' => 'more'))
+			@include('wizard.index', array('page' => 'more'))
 
 			<h2><strong>{{ $type->type_name == 'regie' ? 'Regiewerk' : 'Meerwerk' }}</strong></h2>
 
