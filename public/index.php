@@ -1,10 +1,16 @@
 <?php
 
 /**
- * Laravel - A PHP Framework For Web Artisans
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
  *
- * @package  Laravel
- * @author   Taylor Otwell <taylorotwell@gmail.com>
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
 /*
@@ -20,6 +26,19 @@
 */
 
 require __DIR__.'/../bootstrap/autoload.php';
+
+/*
+|--------------------------------------------------------------------------
+| Register Constant Definitions
+|--------------------------------------------------------------------------
+|
+| This file provides a single point for global definitions and will 
+| decouple implementation from configuration. This list must include
+| everything that should be marked as static data.
+|
+*/
+
+require __DIR__.'/../bootstrap/constant.php';
 
 /*
 |--------------------------------------------------------------------------

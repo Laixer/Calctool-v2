@@ -8,7 +8,6 @@
 
 @push('scripts')
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
-<script type="text/javascript" src="/js/iban.js"></script>
 @endpush
 
 @section('content')
@@ -91,7 +90,7 @@ $(document).ready(function() {
             <div>
                 <ol class="breadcrumb">
                   <li><a href="/">Dashboard</a></li>
-                  <li class="active">Bedrijfsgegevens</li>
+                  <li class="active">Bedrijfsgegevens {{ Month }}</li>
                 </ol>
             </div>
 

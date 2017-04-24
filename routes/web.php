@@ -25,16 +25,16 @@
 */
 
 /* Module Group Auth */
-Route::group(['namespace' => $this->namespaceAuth, 'prefix' => 'auth'], function() {
-    Route::get('signin',                              'SigninController@index')->name('signin');
-    Route::post('signin',                             'SigninController@signin');
-    Route::any('signout',                             'SignoutController')->name('singout');
-    Route::get('signup',                              'SignupController@index')->name('signup');
-    Route::post('signup',                             'SignupController@signup');
-    Route::get('confirm/{token}',                     'ActivateController');
-    Route::get('password/{token}',                    'PasswordResetController@index');
-    Route::post('password/reset',                     'PasswordResetController@requestPasswordReset');
-    Route::post('password/{token}',                   'PasswordResetController@submitNewPassword');
+Route::group(['namespace' => 'Auth'], function() {
+    Route::get('auth/signin',                              'SigninController@index')->name('signin');
+    Route::post('auth/signin',                             'SigninController@signin');
+    Route::any('auth/signout',                             'SignoutController')->name('singout');
+    Route::get('auth/signup',                              'SignupController@index')->name('signup');
+    Route::post('auth/signup',                             'SignupController@signup');
+    Route::get('auth/confirm/{token}',                     'ActivateController');
+    Route::get('auth/password/{token}',                    'PasswordResetController@index');
+    Route::post('auth/password/reset',                     'PasswordResetController@requestPasswordReset');
+    Route::post('auth/password/{token}',                   'PasswordResetController@submitNewPassword');
 });
 
 /* Payment callbacks */
@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('payment/subscription/cancel',  'PaymentController@getSubscriptionCancel');
 
     /* Module Group Account */
-    Route::group(['namespace' => $this->namespaceAccount], function() {
+    Route::group(['namespace' => 'Account'], function() {
         Route::get('account',                                  'AccountController@getAccount')->name('account');
         Route::get('account/deactivate',                       'AccountController@getAccountDeactivate');
         Route::get('account/loaddemo',                         'AccountController@doLoadDemoProject');
@@ -96,7 +96,7 @@ Route::group(['middleware' => ['auth','payzone']], function() {
     Route::get('finance/overview', 'Finance\OverviewController@overview')->middleware('reqcompany');
 
     /* Module Group Product */
-    Route::group(['namespace' => $this->namespaceProducts], function() {
+    Route::group(['namespace' => 'Product'], function() {
  
          /* Product list */
         Route::get('material',                        'MaterialController@getList');
@@ -135,17 +135,17 @@ Route::group(['middleware' => ['auth','payzone']], function() {
         Route::post('uploadagreement',        'Company\UploadController@uploadAgreement');
     });
 
-    //TODO: move into namespaceRelation
+    //TODO: move into Relation
     Route::get('import', function() {
         return view('base.import');
     });
 
-    //TODO: move into namespaceRelation
+    //TODO: move into Relation
     Route::post('import/save',                  'Relation\ImportController');
     Route::get('relation/export',               'Relation\ExportController');
 
     /* Module Group Relation */
-    Route::group(['namespace' => $this->namespaceRelation], function() {
+    Route::group(['namespace' => 'Relation'], function() {
         Route::get('relation/new',                      'RelationController@getNew');
         Route::post('relation/new',                     'RelationController@doNew');
         Route::post('relation/update',                  'RelationController@doUpdate');
@@ -216,7 +216,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
     });
 
     /* Module Group Calculation */
-    Route::group(['namespace' => $this->namespaceCalculation], function() {
+    Route::group(['namespace' => 'Calculation'], function() {
 
         /* Routes by CalcController */
         Route::post('calculation/newchapter/{project_id}',        'CalcController@doNewChapter');
@@ -336,8 +336,8 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('more/moveactivity',                         'MoreController@doMoveActivity');
     });
 
-    /* Module Group Project */ //TODO: prefix
-    Route::group(['namespace' => $this->namespaceProject], function() {
+    /* Module Group Project */
+    Route::group(['namespace' => 'Project'], function() {
         Route::get('project/all',                                          'ListController');
         Route::get('project/new',                                          'NewController@index');
         Route::post('project/new',                                         'NewController@new');

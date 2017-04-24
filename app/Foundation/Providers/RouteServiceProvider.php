@@ -33,33 +33,6 @@ class RouteServiceProvider extends ServiceProvider
     protected $namespaceAdmin       = 'BynqIO\CalculatieTool\Http\Controllers\Admin';
 
     /**
-     * Module namespaces.
-     *
-     * @var string
-     */ 
-    protected $namespaceAccount     = 'Account';
-    protected $namespaceAuth        = 'Auth';
-    protected $namespaceCalculation = 'Calculation';
-    protected $namespaceInvoice     = 'Invoice';
-    protected $namespaceProducts    = 'Product';
-    protected $namespaceProject     = 'Project';
-    protected $namespaceProposal    = 'Poposal';
-    protected $namespaceRelation    = 'Relation';
-
-    /**
-     * Force the use of HTTPS when url is configured
-     * as such.
-     *
-     * @return void
-     */
-    private function forceTLS()
-    {
-        if (config('app.forcetls')) {
-            URL::forceScheme('https');
-        }
-    }
-
-    /**
      * Define your route model bindings, pattern filters, etc.
      *
      * @return void
@@ -72,8 +45,6 @@ class RouteServiceProvider extends ServiceProvider
         Route::pattern('resource_id', '[0-9]+');
         Route::pattern('invoice_id',  '[0-9]+');
         Route::pattern('token',       '[0-9a-z]{40}');
-
-        $this->forceTLS();
 
         parent::boot();
     }

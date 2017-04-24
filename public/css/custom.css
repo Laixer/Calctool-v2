@@ -3,6 +3,10 @@
     and layout defaults.
 */
 
+.breadcrumb>li+li:before {
+    content: "»";
+}
+
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
