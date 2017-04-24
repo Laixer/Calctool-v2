@@ -183,7 +183,6 @@ return [
     ],
 
     // Other
-    'home'            => 'Home',
     'description'     => 'Blijf op de hoogte van de laatste service updates over :app.',
     'powered_by'      => 'Mogelijk gemaakt door <a href="https://cachethq.io" class="links">Cachet</a>.',
     'timezone'        => 'Tijden worden getoond in :timezone.',

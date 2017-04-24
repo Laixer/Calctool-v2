@@ -19,7 +19,7 @@ use \BynqIO\CalculatieTool\Models\Contact;
         <div class="col-md-12">
 
             <ol class="breadcrumb">
-                <li><a href="/">Home</a></li>
+                <li><a href="/">Dashboard</a></li>
                 <li class="active">Projecten</li>
             </ol>
             <div>

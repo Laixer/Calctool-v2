@@ -9,7 +9,7 @@
 
             <div>
             <ol class="breadcrumb">
-              <li><a href="/">Home</a></li>
+              <li><a href="/">Dashboard</a></li>
               <li><a href="/admin">Admin CP</a></li>
               <li><a href="/admin/user">Gebruikers</a></li>
               <li class="active">Gebruikerstags</li>

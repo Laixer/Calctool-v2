@@ -107,7 +107,7 @@ use \BynqIO\CalculatieTool\Models\Offer;
 
             <div>
                 <ol class="breadcrumb">
-                  <li><a href="/">Home</a></li>
+                  <li><a href="/">Dashboard</a></li>
                   <li class="active">Urenregistratie</li>
                 </ol>
             <div>

@@ -93,9 +93,7 @@ $(document).ready(function() {
                   <li><a href="/">Dashboard</a></li>
                   <li class="active">Bedrijfsgegevens</li>
                 </ol>
-            <div>
-
-            <br>
+            </div>
 
             @if (Session::has('success'))
             <div class="alert alert-success">

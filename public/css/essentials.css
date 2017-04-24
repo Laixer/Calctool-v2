@@ -1333,6 +1333,7 @@ div.tabs ul.nav-tabs a i.fa {
 }
 
 .panel-title a {
+    padding:6px 10px;
     text-decoration:none;
     display:block;
     color:#333;
@@ -1748,7 +1749,7 @@ h4.modal-title {
 /** 29. Nav List (aside)
  **************************************************************** **/
 .nav-align {
-    padding-top:40px;
+    padding-top:41px;
 }
 aside ul.nav-list {
     padding:0;

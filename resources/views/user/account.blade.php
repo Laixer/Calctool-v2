@@ -257,7 +257,7 @@ $(document).ready(function() {
 
             <div>
                 <ol class="breadcrumb">
-                  <li><a href="/">Home</a></li>
+                  <li><a href="/">Dashboard</a></li>
                   <li class="active">Account</li>
                 </ol>
             <div>

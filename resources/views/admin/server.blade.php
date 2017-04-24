@@ -28,7 +28,7 @@ function convert($size) {
 
             <div>
             <ol class="breadcrumb">
-              <li><a href="/">Home</a></li>
+              <li><a href="/">Dashboard</a></li>
               <li><a href="/admin">Admin CP</a></li>
               <li class="active">Server & Config</li>
             </ol>
