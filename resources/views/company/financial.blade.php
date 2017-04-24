@@ -1,4 +1,4 @@
-@extends('company.layout')
+@extends('company.layout', ['page' => 'financial'])
 
 @section('company_section_name', 'Financieel')
 

@@ -2,7 +2,7 @@
 use \BynqIO\CalculatieTool\Models\Resource;
 ?>
 
-@extends('company.layout')
+@extends('company.layout', ['page' => 'logo'])
 
 @section('company_section_name', 'Logo & Voorwaarden')
 

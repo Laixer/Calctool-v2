@@ -1,4 +1,4 @@
-@extends('company.layout')
+@extends('company.layout', ['page' => 'preferences'])
 
 @section('company_section_name', 'Voorkeuren')
 

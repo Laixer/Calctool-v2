@@ -2,7 +2,7 @@
 @inject('province', 'BynqIO\CalculatieTool\Models\Province')
 @inject('country', 'BynqIO\CalculatieTool\Models\Country')
 
-@extends('company.layout')
+@extends('company.layout', ['page' => 'details'])
 
 @section('company_section_name', 'Bedrijfsgegevens')
 

@@ -116,17 +116,17 @@ $(document).ready(function() {
             </div>
             @endif
 
-            <aside class="col-md-3">
+            <aside class="col-md-3 nav-align">
 
                 <ul class="nav nav-list">
                     @if (Auth::user()->hasOwnCompany())
-                    <li><a href="/company/details"><i class="fa fa-id-card"></i> Bedrijfsgegevens</a></li>
-                    <li><a href="/company/contacts"><i class="fa fa-users"></i> Contacten</a></li>
-                    <li><a href="/company/financial"><i class="fa fa-university"></i> Financieel</a></li>
-                    <li><a href="/company/logo"><i class="fa fa-file-image-o"></i> Logo & Voorwaarden</a></li>
-                    <li><a href="/company/preferences"><i class="fa fa-cogs"></i> Voorkeuren</a></li>
+                    <li class="{{ $page == 'details' ? 'nav-active' : '' }}"><a href="/company/details"><i class="fa fa-id-card"></i> Bedrijfsgegevens</a></li>
+                    <li class="{{ $page == 'contacts' ? 'nav-active' : '' }}"><a href="/company/contacts"><i class="fa fa-users"></i> Contacten</a></li>
+                    <li class="{{ $page == 'financial' ? 'nav-active' : '' }}"><a href="/company/financial"><i class="fa fa-university"></i> Financieel</a></li>
+                    <li class="{{ $page == 'logo' ? 'nav-active' : '' }}"><a href="/company/logo"><i class="fa fa-file-image-o"></i> Logo & Voorwaarden</a></li>
+                    <li class="{{ $page == 'preferences' ? 'nav-active' : '' }}"><a href="/company/preferences"><i class="fa fa-cogs"></i> Voorkeuren</a></li>
                     @else
-                    <li><a href="/company/setupcompany"><i class="fa fa-id-card"></i> Nieuw Bedrijf</a></li>
+                    <li class="nav-active"><a href="/company/setupcompany"><i class="fa fa-id-card"></i> Nieuw Bedrijf</a></li>
                     @endif
                 </ul>
 

@@ -1,4 +1,4 @@
-@extends('company.layout')
+@extends('company.layout', ['page' => 'contacts'])
 
 @section('company_section_name', 'Contactpersonen')
 
