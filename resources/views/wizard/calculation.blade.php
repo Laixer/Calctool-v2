@@ -15,16 +15,16 @@ if ($offer_last && $offer_last->offer_finish)
     <a href="/"> Dashboard</a>
     <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/details" {!! $page=='project' ? 'class="current"' : '' !!} >Project</a>
     <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/calculation" {!! $page=='calculation' ? 'class="current"' : '' !!} >Calculeren</a>
-    <a href="/offerversions/project-{{ $project->id }}" {!! $page=='offer' ? 'class="current"' : '' !!} >Offerte</a>
+    <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/quotations" {!! $page=='offer' ? 'class="current"' : '' !!} >Offerte</a>
     @if ($show_all)
     @if ($project->use_estimate)
-    <a href="/estimate/project-{{ $project->id }}" {!! $page=='estimate' ? 'class="current"' : '' !!}>Stelposten stellen</a>
+    <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/estimate" {!! $page=='estimate' ? 'class="current"' : '' !!}>Stelposten stellen</a>
     @endif
     @if ($project->use_less)
-    <a href="/less/project-{{ $project->id }}" {!! $page=='less' ? 'class="current"' : '' !!} >Minderwerk</a>
+    <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/less" {!! $page=='less' ? 'class="current"' : '' !!} >Minderwerk</a>
     @endif
     @if ($project->use_more)
-    <a href="/more/project-{{ $project->id }}" {!! $page=='more' ? 'class="current"' : ''!!} >Meerwerk</a>
+    <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/more" {!! $page=='more' ? 'class="current"' : ''!!} >Meerwerk</a>
     @endif
     <a href="/invoice/project-{{ $project->id }}" {!! $page=='invoice' ? 'class="current"' : ''!!} >Factuur</a>
     <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/result" {!! $page=='result' ? 'class="current"' : '' !!} >Resultaat</a>

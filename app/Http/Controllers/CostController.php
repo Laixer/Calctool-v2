@@ -33,8 +33,8 @@ use BynqIO\CalculatieTool\Models\Wholesale;
 use BynqIO\CalculatieTool\Models\MoreLabor;
 use BynqIO\CalculatieTool\Models\ProjectType;
 
-class CostController extends Controller {
-
+class CostController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
     | Default Home Controller

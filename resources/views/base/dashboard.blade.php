@@ -221,13 +221,19 @@
                         <h2><strong>{{ trans_choice('core.project', 2) }}</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube2"></a></h2>
 
                         <div class="white-row" ng-controller="projectController">
+
                             <div class="row">
                                 <div class="form-group col-lg-12">
                                     <div class="input-group">
-                                        <input type="text" class="form-control" ng-model="query" placeholder="Zoek in projecten...">
-                                        <span class="input-group-btn">
-                                            <a href="/project/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> @lang('core.new') {{ trans_choice('core.project', 1) }}</a>
-                                        </span>
+                                    <input type="text" class="form-control" ng-model="query" placeholder="Zoek in projecten...">
+                                    <div class="input-group-btn">
+                                        <a href="/project/new" class="btn btn-primary" type="button"><i class="fa fa-file"></i> @lang('core.new') {{ trans_choice('core.project', 1) }}</a>
+                                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <span class="caret"></span> <span class="sr-only">Toggle Dropdown</span>
+                                        </button>
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li><a href="/project/all">Alle Projecten</a></li>
+                                        </ul> </div>
                                     </div>
                                 </div>
                             </div>

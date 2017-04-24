@@ -286,7 +286,7 @@ class AccountController extends Controller
         if (!$project)
             return back();
 
-        return redirect('/project-' . $project->id . '/edit');
+        return redirect('/project/' . $project->id . '-PROJ-' . str_slug($project->project_name) . '/details');
     }
 
     public function doRevokeApp(Request $request, $client_id) {

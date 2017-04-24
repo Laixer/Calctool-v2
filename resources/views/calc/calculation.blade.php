@@ -117,11 +117,11 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
         });
         $('#tab-summary').click(function(e){
             sessionStorage.toggleTabCalc{{Auth::id()}} = 'summary';
-            $('#summary').load('summary/project-{{ $project->id }}');
+            $('#summary').load('/calculation/summary/project-{{ $project->id }}');
         });
         $('#tab-endresult').click(function(e){
             sessionStorage.toggleTabCalc{{Auth::id()}} = 'endresult';
-            $('#endresult').load('endresult/project-{{ $project->id }}');
+            $('#endresult').load('/calculation/endresult/project-{{ $project->id }}');
         });
         if (sessionStorage.toggleTabCalc{{Auth::id()}}){
             $toggleOpenTab = sessionStorage.toggleTabCalc{{Auth::id()}};

@@ -83,7 +83,7 @@ $(document).ready(function() {
 
         @include('wizard.index', array('page' => 'result'))
 
-            <h2><strong>Resultaat Project</strong> {{$project->project_name}} <sup><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier staan alle ingevoerde getallen samengevat in een projectresultaat en een urenresultaat waaruit een winst en verlies berekening voortkomt." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></sup></h2>
+            <h2><strong>Projectresultaat </strong> <sup><a data-toggle="tooltip" data-placement="bottom" data-original-title="Hier staan alle ingevoerde getallen samengevat in een projectresultaat en een urenresultaat waaruit een winst en verlies berekening voortkomt." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></sup></h2>
 
             <div class="tabs nomargin">
 

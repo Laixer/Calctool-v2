@@ -8,7 +8,7 @@ if ($offer_last && $offer_last->offer_finish)
     <a href="/"> Dashboard</a>
     <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/details" {!! $page=='project' ? 'class="current"' : '' !!} >Project</a>
     <a href="/blancrow/project-{{ $project->id }}" {!! $page=='calculation' ? 'class="current"' : '' !!} >Regels</a>
-    <a href="/offerversions/project-{{ $project->id }}" {!! $page=='offer' ? 'class="current"' : '' !!} >Offerte</a>
+    <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/quotations" {!! $page=='offer' ? 'class="current"' : '' !!} >Offerte</a>
     @if ($show_all)
     <a href="/invoice/project-{{ $project->id }}" {!! $page=='invoice' ? 'class="current"' : ''!!} >Factuur</a>
     @else

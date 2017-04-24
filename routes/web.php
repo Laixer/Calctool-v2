@@ -201,9 +201,9 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         });
     });
 
-    /* Module Group Proposal */
+    /* Module Group Quotations */
     Route::group([], function() {
-        Route::get('offerversions/project-{project_id}',          'Calculation\CalcController@getOfferAll');;
+        Route::get('project/{project_id}-{name}/quotations',      'Calculation\CalcController@getOfferAll');;
         Route::get('offer/project-{project_id}',                  'Calculation\CalcController@getOffer');;
         Route::post('offer/project-{project_id}',                 'OfferController@doNewOffer');
         Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
@@ -284,7 +284,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('calculation/summary/project-{project_id}',    'CalcController@getCalculationSummary');
         Route::get('calculation/endresult/project-{project_id}',  'CalcController@getCalculationEndresult');
         Route::get('blancrow/project-{project_id}',               'BlancController@getBlanc');
-        Route::get('estimate/project-{project_id}',               'CalcController@getEstimate');
+        Route::get('project/{project_id}-{name}/estimate',        'CalcController@getEstimate');
         Route::get('estimate/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getEstimateWithFavorite');
         Route::get('estimate/summary/project-{project_id}',       'CalcController@getEstimateSummary');
         Route::get('estimate/endresult/project-{project_id}',     'CalcController@getEstimateEndresult');
@@ -304,7 +304,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('estimate/deletelabor',                       'EstimController@doDeleteEstimateLabor');
 
         /* Less pages */
-        Route::get('less/project-{project_id}',                   'CalcController@getLess');
+        Route::get('project/{project_id}-{name}/less',            'CalcController@getLess');
         Route::get('less/summary/project-{project_id}',           'CalcController@getLessSummary');
         Route::get('less/endresult/project-{project_id}',         'CalcController@getLessEndresult');
         Route::post('less/updatelabor',                           'LessController@doUpdateLabor');
@@ -315,7 +315,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('less/resetequipment',                        'LessController@doResetEquipment');
 
         /* More pages */
-        Route::get('more/project-{project_id}', 'CalcController@getMore');
+        Route::get('project/{project_id}-{name}/more',            'CalcController@getMore');
         Route::get('more/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'MoreController@getMoreWithFavorite');
         Route::get('more/summary/project-{project_id}', 'CalcController@getMoreSummary');
         Route::get('more/endresult/project-{project_id}', 'CalcController@getMoreEndresult');

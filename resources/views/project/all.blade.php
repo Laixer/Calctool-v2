@@ -7,6 +7,10 @@ use \BynqIO\CalculatieTool\Models\Contact;
 
 @extends('layout.master')
 
+@push('scripts')
+<script src="/components/angular/angular.min.js"></script>
+@endpush
+
 @section('content')
 <div id="wrapper" ng-app="projectApp">
 
@@ -65,11 +69,13 @@ use \BynqIO\CalculatieTool\Models\Contact;
 
 </div>
 <script type="text/javascript">
+$(document).ready(function() {
     angular.module('projectApp', []).controller('projectController', function($scope, $http) {
         $http.get('/api/v1/projects').then(function(response){
             $scope.projects = response.data;
         });
 
     });
+});
 </script>
 @stop
