@@ -2,17 +2,13 @@
 
 namespace BynqIO\CalculatieTool\Models;
 
+use BynqIO\CalculatieTool\Models\Traits\Ownable;
 use Illuminate\Database\Eloquent\Model;
 
-use Auth;
+class BankAccount extends Model
+{
+    use Ownable;
 
-class BankAccount extends Model {
-
-	protected $table = 'bank_account';
-	protected $guarded = array('id');
-
-	public function isOwner() {
-		return Auth::id() == $this->user_id;
-	}
-
+    protected $table = 'bank_account';
+    protected $guarded = array('id');
 }

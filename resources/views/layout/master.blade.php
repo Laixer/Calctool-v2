@@ -4,7 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge" />
-        <title>CalculatieTool.com - @yield('title', 'Online calculeren & offreren')</title>
+        <title>{{ config('app.name') }} - @yield('title', 'Online calculeren & offreren')</title>
         <meta name="application-name" content="CalculatieTool.com">
 
         <?php // -- favicon -- ?>

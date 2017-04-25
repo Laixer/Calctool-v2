@@ -7,36 +7,6 @@
 @endpush
 
 @section('content')
-<div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <iframe width="1280" height="720" src="https://www.youtube.com/embed/xPmVzvmuFvY" frameborder="0" allowfullscreen></iframe>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myYouTube2" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <iframe width="1280" height="720" src="https://www.youtube.com/embed/8YevS5CHoMA" frameborder="0" allowfullscreen></iframe>
-
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="myYouTube3" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <iframe width="1280" height="720" src="https://www.youtube.com/embed/JGj8iyxZXH0" frameborder="0" allowfullscreen></iframe>
-
-        </div>
-    </div>
-</div>
-
 <div id="wrapper">
 
     <div id="shop">
@@ -62,7 +32,7 @@
             </div>
             @endif
 
-            <h2 style="margin: 10px 0 20px 0;"><strong>{{ $welcomeMessage }}</strong> {{ Auth::user()->firstname }}&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+            <h2 style="margin: 10px 0 20px 0;"><strong>{{ $welcomeMessage }}</strong> {{ Auth::user()->firstname }}</h2>
             
             <div class="row">
 
@@ -218,7 +188,7 @@
                     <div class="col-md-12">
                         <br>
                         @if ($projectCount)
-                        <h2><strong>{{ trans_choice('core.project', 2) }}</strong>&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube2"></a></h2>
+                        <h2><strong>{{ trans_choice('core.project', 2) }}</strong></h2>
 
                         <div class="white-row" ng-controller="projectController">
 
@@ -238,7 +208,7 @@
                                 </div>
                             </div>
 
-                            <table ng-cloak class="table table-striped">
+                            <table class="ng-cloak table table-striped">
                                 <thead>
                                     <tr>
                                         <th class="col-md-5" ng-click="orderByField='project_name'; reverseSort = !reverseSort">@lang('core.projectname')</th>
@@ -330,13 +300,13 @@
                     return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
                 }
             }).filter('strReplace', function () {
-  return function (input, from, to) {
-    input = input || '';
-    from = from || '';
-    to = to || '';
-    return input.replace(new RegExp(from, 'g'), to);
-  };
-});
+                return function (input, from, to) {
+                    input = input || '';
+                    from = from || '';
+                    to = to || '';
+                    return input.replace(new RegExp(from, 'g'), to);
+                };
+            });
 
 
         });

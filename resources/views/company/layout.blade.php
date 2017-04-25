@@ -90,7 +90,7 @@ $(document).ready(function() {
             <div>
                 <ol class="breadcrumb">
                   <li><a href="/">Dashboard</a></li>
-                  <li class="active">Bedrijfsgegevens {{ Month }}</li>
+                  <li class="active">Bedrijfsgegevens</li>
                 </ol>
             </div>
 
@@ -121,7 +121,7 @@ $(document).ready(function() {
                     <li class="{{ $page == 'contacts' ? 'nav-active' : '' }}"><a href="/company/contacts"><i class="fa fa-users"></i> Contacten</a></li>
                     <li class="{{ $page == 'financial' ? 'nav-active' : '' }}"><a href="/company/financial"><i class="fa fa-university"></i> Financieel</a></li>
                     <li class="{{ $page == 'logo' ? 'nav-active' : '' }}"><a href="/company/logo"><i class="fa fa-file-image-o"></i> Logo & Voorwaarden</a></li>
-                    <li class="{{ $page == 'preferences' ? 'nav-active' : '' }}"><a href="/company/preferences"><i class="fa fa-cogs"></i> Voorkeuren</a></li>
+                    <li class="{{ $page == 'preferences' ? 'nav-active' : '' }}"><a href="/company/preferences"><i class="fa fa-sliders"></i> Voorkeuren</a></li>
                     @else
                     <li class="nav-active"><a href="/company/setupcompany"><i class="fa fa-id-card"></i> Nieuw Bedrijf</a></li>
                     @endif

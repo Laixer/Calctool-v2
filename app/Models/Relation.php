@@ -3,45 +3,42 @@
 namespace BynqIO\CalculatieTool\Models;
 
 use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\Traits\Ownable;
 use Illuminate\Database\Eloquent\Model;
 
-use Auth;
-
-class Relation extends Model {
+class Relation extends Model
+{
+    use Ownable;
 
     protected $table = 'relation';
     protected $guarded = array('id', 'debtor_code');
 
-    public function user() {
-        return $this->hasOne('User');
-    }
+    // public function user() {
+    //     return $this->hasOne('User');
+    // }
 
-    public function province() {
-        return $this->hasOne('Province');
-    }
+    // public function province() {
+    //     return $this->hasOne('Province');
+    // }
 
     public function contacts() {
         return $this->hasMany(Contact::class);
     }
 
-    public function country() {
-        return $this->hasOne('Country');
-    }
+    // public function country() {
+    //     return $this->hasOne('Country');
+    // }
 
-    public function resource() {
-        return $this->hasOne('Resource');
-    }
+    // public function resource() {
+    //     return $this->hasOne('Resource');
+    // }
 
-    public function type() {
-        return $this->hasOne('RelationType');
-    }
+    // public function type() {
+    //     return $this->hasOne('RelationType');
+    // }
 
     public function kind() {
         return $this->hasOne('BynqIO\CalculatieTool\Models\RelationKind', 'id', 'kind_id')->first();
-    }
-
-    public function isOwner() {
-        return Auth::id() == $this->user_id;
     }
 
     public function isActive() {

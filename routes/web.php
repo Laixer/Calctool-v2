@@ -135,15 +135,6 @@ Route::group(['middleware' => ['auth','payzone']], function() {
         Route::post('uploadagreement',        'Company\UploadController@uploadAgreement');
     });
 
-    //TODO: move into Relation
-    Route::get('import', function() {
-        return view('base.import');
-    });
-
-    //TODO: move into Relation
-    Route::post('import/save',                  'Relation\ImportController');
-    Route::get('relation/export',               'Relation\ExportController');
-
     /* Module Group Relation */
     Route::group(['namespace' => 'Relation'], function() {
         Route::get('relation/new',                      'RelationController@getNew');
@@ -156,7 +147,14 @@ Route::group(['middleware' => ['auth','payzone']], function() {
         Route::post('relation/iban/new',                'RelationController@doNewIban');
         Route::post('relation/updatecalc',              'RelationController@doUpdateProfit');
         Route::get('relation',                          'RelationController@getAll');
-        Route::get('relation-{relation_id}/edit',       'RelationController@getEdit');
+        Route::get('relation/import',                   'RelationController@getImport');
+        Route::post('relation/import/save',             'ImportController');
+        Route::get('relation/export',                   'ExportController');
+        Route::get('relation/{relation_id}-{name}/details','RelationController@details');
+        Route::get('relation/{relation_id}-{name}/contacts','RelationController@contacts');
+        Route::get('relation/{relation_id}-{name}/financial','RelationController@financial');
+        Route::get('relation/{relation_id}-{name}/invoices','RelationController@invoices');
+        Route::get('relation/{relation_id}-{name}/preferences','RelationController@preferences');
         Route::get('relation-{relation_id}/delete',     'RelationController@getDelete');
         Route::get('relation-{relation_id}/contact/new','RelationController@getNewContact');
         Route::get('relation-{relation_id}/contact-{contact_id}/edit', 'RelationController@getEditContact');

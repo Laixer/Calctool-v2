@@ -13,15 +13,20 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Models;
+namespace BynqIO\CalculatieTool\Models\Traits;
 
-use BynqIO\CalculatieTool\Models\Traits\Ownable;
-use Illuminate\Database\Eloquent\Model;
+use Auth;
 
-class MessageBox extends Model
+trait Ownable
 {
-    use Ownable;
+    public function isOwner()
+    {
+        return Auth::id() == $this->user_id;
+    }
 
-    protected $table = 'messagebox';
-    protected $guarded = array('id');
+    //TODO: check user id
+    protected function transferOwnership($id)
+    {
+        $this->user_id = $id;
+    }
 }

@@ -2,8 +2,8 @@
 
     <div class="footer-bar">
         <div class="container">
-            <span class="copyright">Copyright &copy; {{ date("Y") }} CalculatieTool.com Alle Rechten Voorbehouden.</span>
-            <span class="toTop">Versie {{ config('app.version') }}</span>
+            <span class="copyright">Copyright &copy; {{ date("Y") }} {{ config('app.name') }} @lang('layout.rightsreserved')</span>
+            <span class="toTop">@lang('layout.version') {{ config('app.version') }}</span>
         </div>
     </div>
 

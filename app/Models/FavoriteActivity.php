@@ -2,24 +2,21 @@
 
 namespace BynqIO\CalculatieTool\Models;
 
+use BynqIO\CalculatieTool\Models\Traits\Ownable;
 use Illuminate\Database\Eloquent\Model;
 
-use Auth;
+class FavoriteActivity extends Model
+{
+    use Ownable;
 
-class FavoriteActivity extends Model {
+    protected $table = 'favorite_activity';
+    protected $guarded = array('id');
 
-	protected $table = 'favorite_activity';
-	protected $guarded = array('id');
+    // public function user() {
+    //     return $this->hasOne('User');
+    // }
 
-	public function user() {
-		return $this->hasOne('User');
-	}
-
-	public function tax() {
-		return $this->hasOne('Tax', 'id', 'tax_id');
-	}
-
-	public function isOwner() {
-		return Auth::id() == $this->user_id;
-	}
+    // public function tax() {
+    //     return $this->hasOne('Tax', 'id', 'tax_id');
+    // }
 }

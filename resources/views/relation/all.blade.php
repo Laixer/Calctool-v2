@@ -32,7 +32,7 @@
             <br>
 
             <div class="pull-right">
-                <a href="/import" class="btn btn-primary" type="button"><i class="fa fa-upload"></i> Importeer</a>
+                <a href="/relation/import" class="btn btn-primary" type="button"><i class="fa fa-upload"></i> Importeer</a>
                 <a href="/relation/export" class="btn btn-primary" type="button"><i class="fa fa-download"></i> Exporteer</a>
             </div>
 
@@ -52,7 +52,7 @@
                     </div>
                 </div>
 
-                <table ng-cloak class="table table-striped">
+                <table class="ng-cloak table table-striped">
                     <thead>
                         <tr>
                             <th class="col-md-1">Debiteur</th>
@@ -66,8 +66,8 @@
 
                     <tbody>
                         <tr ng-repeat="relation in relations | filter: query | orderBy: orderByField:reverseSort as results">
-                            <td class="col-md-1"><a href="/relation-@{{ relation.id }}/edit">@{{ relation.debtor_code }}</td>
-                            <td class="col-md-4"><a href="/relation-@{{ relation.id }}/edit">@{{ relation.company }}</td>
+                            <td class="col-md-1"><a href="/relation/@{{ relation.id }}-@{{ relation.company | strReplace:' ':'-' }}/details">@{{ relation.debtor_code }}</td>
+                            <td class="col-md-4"><a href="/relation/@{{ relation.id }}-@{{ relation.company | strReplace:' ':'-' }}/details">@{{ relation.company }}</td>
                             <td class="col-md-2">@{{ relation.type_name }}</td>
                             <td class="col-md-2">@{{ relation._phone }}</td>
                             <td class="col-md-2">@{{ relation._email }}</td>
@@ -94,7 +94,15 @@
             return function(input) {
                 return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
             }
+        }).filter('strReplace', function () {
+            return function (input, from, to) {
+                input = input || '';
+                from = from || '';
+                to = to || '';
+                return input.replace(new RegExp(from, 'g'), to);
+            };
         });
+
     });
 </script>
 @stop

@@ -26,9 +26,8 @@ use BynqIO\CalculatieTool\Models\ContactFunction;
 use BynqIO\CalculatieTool\Models\Resource;
 use BynqIO\CalculatieTool\Http\Controllers\Controller;
 
-use \Auth;
-use \Image;
-use \Storage;
+use Image;
+use Storage;
 
 class RelationController extends Controller
 {
@@ -39,24 +38,54 @@ class RelationController extends Controller
      * @return Response
      */
 
-    public function getNew()
+    public function getAll()
     {
-        return view('user.new_relation', ['debtor_code' => mt_rand(1000000, 9999999)]);
+        return view('relation.all');
     }
 
-    public function getEdit()
+    public function getNew()
     {
-        return view('user.edit_relation');
+        return view('relation.new_relation', ['debtor_code' => mt_rand(1000000, 9999999)]);
+    }
+
+    public function details()
+    {
+        return view('relation.details');
+    }
+
+    public function contacts()
+    {
+        return view('relation.contacts');
+    }
+
+    public function financial()
+    {
+        return view('relation.financial');
+    }
+
+    public function invoices()
+    {
+        return view('relation.invoices');
+    }
+
+    public function preferences()
+    {
+        return view('relation.preferences');
     }
 
     public function getNewContact()
     {
-        return view('user.new_contact');
+        return view('relation.new_contact');
     }
 
     public function getEditContact()
     {
-        return view('user.edit_contact');
+        return view('relation.edit_contact');
+    }
+
+    public function getImport()
+    {
+        return view('relation.import');
     }
 
     public function doUpdate(Request $request)
@@ -76,15 +105,15 @@ class RelationController extends Controller
         ]);
 
         /* General */
-        $relation = \BynqIO\CalculatieTool\Models\Relation::find($request->input('id'));
-        if (!$relation || !$relation->isOwner()) {
+        $relation = \BynqIO\CalculatieTool\Models\Relation::findOrFail($request->input('id'));
+        if (!$relation->isOwner()) {
             return back()->withInput($request->all());
         }
         $relation->note = $request->input('note');
         $relation->debtor_code = $request->input('debtor');
 
         /* Company */
-        $relation_kind = \BynqIO\CalculatieTool\Models\RelationKind::find($relation->kind_id);
+        $relation_kind = \BynqIO\CalculatieTool\Models\RelationKind::findOrFail($relation->kind_id);
         if ($relation_kind->kind_name == "zakelijk") {
             $relation->company_name = $request->input('company_name');
             $relation->type_id = $request->input('company_type');
@@ -102,7 +131,6 @@ class RelationController extends Controller
         $relation->address_city = $request->input('city');
         $relation->province_id = $request->input('province');
         $relation->country_id = $request->input('country');
-
         $relation->save();
 
         return back()->with('success', 'Relatie is aangepast');
@@ -124,12 +152,12 @@ class RelationController extends Controller
 
     public function getConvert(Request $request, $relation_id)
     {
-        $relation = \BynqIO\CalculatieTool\Models\Relation::find($relation_id);
-        if (!$relation || !$relation->isOwner()) {
+        $relation = \BynqIO\CalculatieTool\Models\Relation::findOrFail($relation_id);
+        if (!$relation->isOwner()) {
             return back()->withInput($request->all());
         }
 
-        if (\BynqIO\CalculatieTool\Models\RelationKind::find($relation->kind_id)->kind_name == 'zakelijk') {
+        if (\BynqIO\CalculatieTool\Models\RelationKind::findOrFail($relation->kind_id)->kind_name == 'zakelijk') {
             $relation->kind_id = \BynqIO\CalculatieTool\Models\RelationKind::where('kind_name','particulier')->first()->id;
         } else {
             $relation->kind_id = \BynqIO\CalculatieTool\Models\RelationKind::where('kind_name','zakelijk')->first()->id;
@@ -240,7 +268,7 @@ class RelationController extends Controller
 
         /* General */
         $relation = new \BynqIO\CalculatieTool\Models\Relation;
-        $relation->user_id = \Auth::id();
+        $relation->user_id = $request->user()->id;
         $relation->note = $request->input('note');
         $relation->kind_id = $request->input('relationkind');
         $relation->debtor_code = $request->input('debtor');
@@ -429,11 +457,6 @@ class RelationController extends Controller
         Audit::CreateEvent('relation.update.profit.success', 'Profits by relation ' . $relation->id . ' updated');
 
         return back()->with('success', 'Uurtarief & winstpercentages aangepast');
-    }
-
-    public function getAll()
-    {
-        return view('user.relation');
     }
 
     public function downloadVCard(Request $request, $relation_id, $contact_id)

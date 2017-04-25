@@ -1,6 +1,5 @@
 <?php
 
-
 /**
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
@@ -16,30 +15,31 @@
 
 namespace BynqIO\CalculatieTool\Models;
 
+use BynqIO\CalculatieTool\Models\Traits\Ownable;
 use Illuminate\Database\Eloquent\Model;
-
-use Auth;
 
 class Project extends Model
 {
+    use Ownable;
+
     protected $table = 'project';
     protected $guarded = array('id', 'project_code');
 
-    public function user() {
-        return $this->hasOne('User');
-    }
+    // public function user() {
+    //     return $this->hasOne('User');
+    // }
 
-    public function contactor() {
-        return $this->hasOne('Relation', 'id', 'client_id');
-    }
+    // public function contactor() {
+    //     return $this->hasOne('Relation', 'id', 'client_id');
+    // }
 
-    public function province() {
-        return $this->hasOne('Province');
-    }
+    // public function province() {
+    //     return $this->hasOne('Province');
+    // }
 
-    public function country() {
-        return $this->hasOne('Country');
-    }
+    // public function country() {
+    //     return $this->hasOne('Country');
+    // }
 
     public function type() {
         return $this->hasOne('\BynqIO\CalculatieTool\Models\ProjectType', 'id', 'type_id');
@@ -58,9 +58,5 @@ class Project extends Model
     public function isQuickInvoice()
     {
         return $this->type->type_name == 'snelle offerte en factuur';
-    }
-
-    public function isOwner() {
-        return Auth::id() == $this->user_id;
     }
 }
