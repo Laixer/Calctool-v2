@@ -73,6 +73,11 @@ class RelationController extends Controller
         return view('relation.preferences');
     }
 
+    public function options()
+    {
+        return view('relation.options');
+    }
+
     public function getNewContact()
     {
         return view('relation.new_contact');
@@ -136,11 +141,18 @@ class RelationController extends Controller
         return back()->with('success', 'Relatie is aangepast');
     }
 
-    public function getDelete(Request $request, $relation_id)
+    public function getDelete(Request $request)
     {
-        $relation = \BynqIO\CalculatieTool\Models\Relation::find($relation_id);
-        if (!$relation || !$relation->isOwner()) {
-            return back()->withInput($request->all());
+        // $this->validate($request, [
+        //     'id' => array('required','integer'),
+        // ]);
+        if (csrf_token() != $request->get('csrf')) {
+            abort(404);
+        }
+
+        $relation = \BynqIO\CalculatieTool\Models\Relation::findOrFail($request->get('id'));
+        if (!$relation->isOwner()) {
+            abort(404);
         }
 
         $relation->active = false;

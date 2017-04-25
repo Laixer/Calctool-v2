@@ -14,6 +14,17 @@ $relation = Relation::find(Route::Input('relation_id'));
 ?>
 
 <div class="white-row">
+
+<div class="pull-right">
+    <div class="btn-group" role="group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
+        <ul class="dropdown-menu">
+            <li><a href="/relation/convert?id={{ $relation->id }}">Omzetten naar particulier</a></li>
+            <li><a href="/relation/delete?id={{ $relation->id }}&csrf={{ csrf_token() }}">Verwijderen</a>
+        </li></ul>
+    </div>
+</div>
+
 <form method="POST" action="/relation/update" accept-charset="UTF-8">
 {!! csrf_field() !!}
 <h4>{{ ucfirst(RelationKind::find($relation->kind_id)->kind_name) }}e relatie</h4>
@@ -142,7 +153,7 @@ $relation = Relation::find(Route::Input('relation_id'));
     </div>
 
 </div>
-
+<!--
 <h4>Opmerkingen</h4>
 <div class="row">
     <div class="form-group">
@@ -150,7 +161,7 @@ $relation = Relation::find(Route::Input('relation_id'));
             <textarea name="note" id="summernote" rows="10" class="form-control">{{ old('note') ? old('note') : $relation->note }}</textarea>
         </div>
     </div>
-</div>
+</div>-->
 <div class="row">
     <div class="col-md-12">
         <button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>

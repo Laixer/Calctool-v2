@@ -155,7 +155,8 @@ Route::group(['middleware' => ['auth','payzone']], function() {
         Route::get('relation/{relation_id}-{name}/financial','RelationController@financial');
         Route::get('relation/{relation_id}-{name}/invoices','RelationController@invoices');
         Route::get('relation/{relation_id}-{name}/preferences','RelationController@preferences');
-        Route::get('relation-{relation_id}/delete',     'RelationController@getDelete');
+        Route::get('relation/{relation_id}-{name}/options','RelationController@options');
+        Route::get('relation/delete',     'RelationController@getDelete');
         Route::get('relation-{relation_id}/contact/new','RelationController@getNewContact');
         Route::get('relation-{relation_id}/contact-{contact_id}/edit', 'RelationController@getEditContact');
         Route::get('relation-{relation_id}/convert',    'RelationController@getConvert');
