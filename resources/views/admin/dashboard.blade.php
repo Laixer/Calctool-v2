@@ -8,7 +8,7 @@
             <section class="container text-center">
                 <h1 class="text-center">
                     <strong>Admin</strong> Dashboard
-                    <span class="subtitle">CalculatieTool.com</span>
+                    <span class="subtitle">{{ config('app.name') }}</span>
                 </h1>
             </section>
 

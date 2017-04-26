@@ -88,17 +88,6 @@ use \BynqIO\CalculatieTool\Models\Offer;
     });
 </script>
 
-
-<div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <iframe width="1280" height="720" src="https://www.youtube.com/embed/AXnvfz8whEY" frameborder="0" allowfullscreen></iframe>
-
-        </div>
-    </div>
-</div>
-
 <div id="wrapper">
 
     <section class="container" ng-app="timesheetApp">
@@ -113,7 +102,7 @@ use \BynqIO\CalculatieTool\Models\Offer;
             <div>
             <br>
 
-            <h2><strong>Urenregistratie &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></strong></h2>
+            <h2><strong>Urenregistratie</strong></h2>
 
             <div class="tabs nomargin">
 

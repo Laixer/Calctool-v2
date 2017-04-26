@@ -239,16 +239,6 @@ $(document).ready(function() {
     </div>
 </div>
 
-<div class="modal fade" id="myYouTube2" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <iframe width="1280" height="720" src="https://www.youtube.com/embed/ONt8mPRGEIc" frameborder="0" allowfullscreen></iframe>
-
-        </div>
-    </div>
-</div>
-
 <div id="wrapper">
 
     <section class="container">
@@ -297,7 +287,7 @@ $(document).ready(function() {
                             ->where('owner_id',Auth::id())->get();
             ?>
 
-            <h2><strong>Account</strong> Instellingen &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube2"></a></h2>
+            <h2><strong>Account</strong> Instellingen</h2>
 
                 <div class="tabs nomargin-top">
 

@@ -112,7 +112,7 @@ if (!function_exists('array_numeric_sort')) {
     }
 }
 
-if (!function_exists('cachet_route')) {
+if (!function_exists('is_whitelabel')) {
     /**
      * Generate a URL to a named route, which resides in a given domain.
      *
@@ -123,7 +123,7 @@ if (!function_exists('cachet_route')) {
      *
      * @return string
      */
-    function cachet_route($name, $parameters = [], $method = 'get', $domain = 'core')
+    function is_whitelabel()
     {
         return app('url')->route("{$domain}::{$method}:{$name}", $parameters, true);
     }

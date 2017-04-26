@@ -353,16 +353,6 @@ $(document).ready(function() {
     </div>
 </div>
 
-<div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <iframe width="1280" height="720" src="https://www.youtube.com/embed/8YevS5CHoMA" frameborder="0" allowfullscreen></iframe>
-
-        </div>
-    </div>
-</div>
-
 <div id="wrapper">
 
     <section class="container">
@@ -388,7 +378,7 @@ $(document).ready(function() {
         </div>
         @endif
 
-        <h2><strong>Nieuw</strong> project&nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+        <h2><strong>Nieuw</strong> project</h2>
 
         @if(!Relation::where('user_id', Auth::user()->id)->count())
         <div class="alert alert-info">

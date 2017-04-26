@@ -746,16 +746,6 @@ $(document).ready(function() {
 });
 </script>
 
-<div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <iframe width="1280" height="720" src="https://www.youtube.com/embed/dtBcNLHJ3iU" frameborder="0" allowfullscreen></iframe>
-
-        </div>
-    </div>
-</div>
-
 <div id="wrapper">
 
     <div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="descModalLabel" aria-hidden="true">
@@ -931,7 +921,7 @@ $(document).ready(function() {
             <div>
             <br>
 
-            <h2><strong>Producten &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></strong></h2>
+            <h2><strong>Producten</strong></h2>
 
             <div class="tabs nomargin-top">
 

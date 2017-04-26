@@ -243,7 +243,7 @@
                             <h2><strong>@lang('core.firststep')</strong></h2>
                             <div class="bs-callout text-center whiteBg" style="margin:0">
                                 <h3>			
-                                    <a href="javascript:void(0);" class="btn btn-primary btn-lg" class="fa fa-youtube-play yt-vid" data-toggle="modal" data-target="#myYouTube3">@lang('core.watchwelcvid')</a>
+                                    <a href="/" class="btn btn-primary btn-lg" class="fa fa-youtube-play yt-vid">@lang('core.watchwelcvid')</a>
                                         of
                                     <a href="/project/new" class="btn btn-primary btn-lg">@lang('core.crefirstprod') <i class="fa fa-arrow-right"></i></a>
                                 </h3>
@@ -255,60 +255,59 @@
                     </div>
                 </div>
             </div>
-        </div> 
+        </section>
+    </div> 
 
-    </div>
-    <script type="text/javascript">
-        $(document).ready(function() {
-            angular.module('projectApp', []).controller('projectController', function($scope, $http) {
-                $http.get('/api/v1/projects').then(function(response){
-                    $scope._projects = response.data;
-                    $scope.filter_close = false;
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        angular.module('projectApp', []).controller('projectController', function($scope, $http) {
+            $http.get('/api/v1/projects').then(function(response){
+                $scope._projects = response.data;
+                $scope.filter_close = false;
+                $scope.projects = [];
+                angular.forEach($scope._projects, function(value, key) {
+                    if (value.project_close == null) {
+                        $scope.projects.push(value);
+                    }
+                });
+            });
+            $("[name='toggle-close']").click(function() {
+                if ($scope.filter_close) {
                     $scope.projects = [];
                     angular.forEach($scope._projects, function(value, key) {
                         if (value.project_close == null) {
                             $scope.projects.push(value);
                         }
                     });
-                });
-                $("[name='toggle-close']").click(function() {
-                    if ($scope.filter_close) {
-                        $scope.projects = [];
-                        angular.forEach($scope._projects, function(value, key) {
-                            if (value.project_close == null) {
-                                $scope.projects.push(value);
-                            }
-                        });
-                        $scope.$apply();
-                        $scope.filter_close = false;
-                        $("[name='toggle-close']").html('<i class="fa fa-close"></i> @lang('core.closed') {{ trans_choice('core.project', 2) }}');
-                    } else {
-                        $scope.projects = [];
-                        angular.forEach($scope._projects, function(value, key) {
-                            if (value.project_close != null) {
-                                $scope.projects.push(value);
-                            }
-                        });
-                        $scope.$apply();
-                        $scope.filter_close = true;
-                        $("[name='toggle-close']").html('<i class="fa fa-folder-open" aria-hidden="true"></i> @lang('core.open') {{ trans_choice('core.project', 2) }}');
-                    }
-                });
-
-            }).filter('capitalize', function() {
-                return function(input) {
-                    return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+                    $scope.$apply();
+                    $scope.filter_close = false;
+                    $("[name='toggle-close']").html('<i class="fa fa-close"></i> @lang('core.closed') {{ trans_choice('core.project', 2) }}');
+                } else {
+                    $scope.projects = [];
+                    angular.forEach($scope._projects, function(value, key) {
+                        if (value.project_close != null) {
+                            $scope.projects.push(value);
+                        }
+                    });
+                    $scope.$apply();
+                    $scope.filter_close = true;
+                    $("[name='toggle-close']").html('<i class="fa fa-folder-open" aria-hidden="true"></i> @lang('core.open') {{ trans_choice('core.project', 2) }}');
                 }
-            }).filter('strReplace', function () {
-                return function (input, from, to) {
-                    input = input || '';
-                    from = from || '';
-                    to = to || '';
-                    return input.replace(new RegExp(from, 'g'), to);
-                };
             });
 
-
+        }).filter('capitalize', function() {
+            return function(input) {
+                return (!!input) ? input.charAt(0).toUpperCase() + input.substr(1).toLowerCase() : '';
+            }
+        }).filter('strReplace', function () {
+            return function (input, from, to) {
+                input = input || '';
+                from = from || '';
+                to = to || '';
+                return input.replace(new RegExp(from, 'g'), to);
+            };
         });
-    </script>
+    });
+</script>
 @stop

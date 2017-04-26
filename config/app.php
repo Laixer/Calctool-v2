@@ -11,7 +11,7 @@ return [
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
     */
-    'name' => env('APP_NAME', 'CalculatieTool.com'),
+    'name' => env('APP_NAME', APP_NAME),
 
     /*
     |--------------------------------------------------------------------------
@@ -24,7 +24,7 @@ return [
     |
     */
 
-    'env' => env('APP_ENV', 'production'),
+    'env' => env('APP_ENV', APP_ENV),
 
     /*
     |--------------------------------------------------------------------------
@@ -37,7 +37,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', APP_DEBUG),
 
     /*
     |--------------------------------------------------------------------------
@@ -50,7 +50,7 @@ return [
     |
     */
 
-    'version' => env('APP_VERSION', ''),
+    'version' => env('APP_VERSION', APP_VERSION),
 
     /*
     |--------------------------------------------------------------------------
@@ -63,7 +63,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', APP_URL),
 
     /*
     |--------------------------------------------------------------------------
@@ -76,7 +76,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'Europe/Amsterdam'),
+    'timezone' => env('APP_TIMEZONE', APP_TIMEZONE),
 
     /*
     |--------------------------------------------------------------------------
@@ -89,7 +89,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'nl'),
+    'locale' => env('APP_LOCALE', APP_LOCALE),
 
     /*
     |--------------------------------------------------------------------------
@@ -134,7 +134,7 @@ return [
 
     'log' => env('APP_LOG', 'single'),
 
-    'log_level' => env('APP_LOG_LEVEL', 'error'),
+    'log_level' => env('APP_LOG_LEVEL', APP_LOG_LEVEL),
 
     /*
     |--------------------------------------------------------------------------

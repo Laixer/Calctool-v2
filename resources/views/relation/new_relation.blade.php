@@ -123,16 +123,6 @@ $(document).ready(function() {
 });
 </script>
 
-<div class="modal fade" id="myYouTube" tabindex="-1" role="dialog" aria-labelledby="mYouTubeLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-
-            <iframe width="1280" height="720" src="https://www.youtube.com/embed/CCXRWinSKsg?rel=0" frameborder="0" allowfullscreen></iframe>
-            
-        </div>
-    </div>
-</div>
-
 <div id="wrapper">
 
     <section class="container">
@@ -167,7 +157,7 @@ $(document).ready(function() {
             </div>
             @endif
 
-            <h2 style="margin: 10px 0 20px 0;"><strong>Nieuwe</strong> relatie &nbsp;&nbsp;<a class="fa fa-youtube-play yt-vid" href="javascript:void(0);" data-toggle="modal" data-target="#myYouTube"></a></h2>
+            <h2 style="margin: 10px 0 20px 0;"><strong>Nieuwe</strong> relatie</h2>
 
             <div class="white-row">
                 <form method="POST" action="/relation/new{{ Input::get('redirect') ? '?redirect='.Input::get('redirect') : '' }}" accept-charset="UTF-8">

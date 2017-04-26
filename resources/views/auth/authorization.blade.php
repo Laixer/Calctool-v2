@@ -3,18 +3,16 @@
 @section('title', 'Applicatie toegang')
 
 @section('header')
-
 <header id="topNav" class="topHead">
     <div class="container">
         <a class="logo" href="/">
-            <img src="/images/logo.png" width="229px" alt="CalculatieTool.com" />
+            <img src="/images/logo.png" width="229px" alt="{{ config('app.name') }}" />
         </a>
     </div>
 </header>
 @endsection
 
 @section('content')
-
 <div id="wrapper">
 
     <div id="shop">

@@ -9,9 +9,9 @@ use \BynqIO\CalculatieTool\Models\UserType;
             <i class="fa fa-bars"></i>
         </button>
 
-        <a class="logo" href="/">
-            <img src="/images/logo.png" width="229px" alt="CalculatieTool.com" />
-        </a>
+        @if (defined('APP_LOGO'))
+        <a class="logo" href="/">@logo</a>
+        @endif
 
         <div class="navbar-collapse nav-main-collapse collapse pull-right">
             <nav class="nav-main mega-menu">
