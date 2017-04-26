@@ -155,7 +155,7 @@ Route::group(['middleware' => ['auth','payzone']], function() {
         Route::get('relation/{relation_id}-{name}/financial','RelationController@financial');
         Route::get('relation/{relation_id}-{name}/invoices','RelationController@invoices');
         Route::get('relation/{relation_id}-{name}/preferences','RelationController@preferences');
-        Route::get('relation/{relation_id}-{name}/options','RelationController@options');
+        Route::get('relation/{relation_id}-{name}/notes','RelationController@notes');
         Route::get('relation/delete',     'RelationController@getDelete');
         Route::get('relation-{relation_id}/contact/new','RelationController@getNewContact');
         Route::get('relation-{relation_id}/contact-{contact_id}/edit', 'RelationController@getEditContact');
@@ -202,7 +202,6 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
 
     /* Module Group Quotations */
     Route::group([], function() {
-        Route::get('project/{project_id}-{name}/quotations',      'Calculation\CalcController@getOfferAll');;
         Route::get('offer/project-{project_id}',                  'Calculation\CalcController@getOffer');;
         Route::post('offer/project-{project_id}',                 'OfferController@doNewOffer');
         Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
@@ -278,12 +277,10 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('blancrow/updaterow',                         'BlancController@doUpdateRow');
 
         /* Calculation pages */
-        Route::get('project/{project_id}-{name}/calculation',     'CalcController@getCalculation');
         Route::get('calculation/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getCalculationWithFavorite');
         Route::get('calculation/summary/project-{project_id}',    'CalcController@getCalculationSummary');
         Route::get('calculation/endresult/project-{project_id}',  'CalcController@getCalculationEndresult');
         Route::get('blancrow/project-{project_id}',               'BlancController@getBlanc');
-        Route::get('project/{project_id}-{name}/estimate',        'CalcController@getEstimate');
         Route::get('estimate/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getEstimateWithFavorite');
         Route::get('estimate/summary/project-{project_id}',       'CalcController@getEstimateSummary');
         Route::get('estimate/endresult/project-{project_id}',     'CalcController@getEstimateEndresult');
@@ -303,7 +300,6 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('estimate/deletelabor',                       'EstimController@doDeleteEstimateLabor');
 
         /* Less pages */
-        Route::get('project/{project_id}-{name}/less',            'CalcController@getLess');
         Route::get('less/summary/project-{project_id}',           'CalcController@getLessSummary');
         Route::get('less/endresult/project-{project_id}',         'CalcController@getLessEndresult');
         Route::post('less/updatelabor',                           'LessController@doUpdateLabor');
@@ -314,7 +310,6 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('less/resetequipment',                        'LessController@doResetEquipment');
 
         /* More pages */
-        Route::get('project/{project_id}-{name}/more',            'CalcController@getMore');
         Route::get('more/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'MoreController@getMoreWithFavorite');
         Route::get('more/summary/project-{project_id}', 'CalcController@getMoreSummary');
         Route::get('more/endresult/project-{project_id}', 'CalcController@getMoreEndresult');
@@ -340,9 +335,15 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('project/all',                                          'ListController');
         Route::get('project/new',                                          'NewController@index');
         Route::post('project/new',                                         'NewController@new');
-        Route::get('project/{project_id}-{name}/copy',                     'CopyController');
-        Route::get('project/{project_id}-{name}/details',                  'DetailController@index');
-        Route::get('project/{project_id}-{name}/result',                   'ResultController');
+
+        Route::get('project/{project_id}-{name}/{module}',                  'ComponentController@index');
+        // Route::get('project/{project_id}-{name}/calculation',              'CalcController@getCalculation');
+        // Route::get('project/{project_id}-{name}/quotations',               'Calculation\CalcController@getOfferAll');;
+        // Route::get('project/{project_id}-{name}/estimate',                 'CalcController@getEstimate');
+        // Route::get('project/{project_id}-{name}/less',                     'CalcController@getLess');
+        // Route::get('project/{project_id}-{name}/more',                     'CalcController@getMore');
+        // Route::get('project/{project_id}-{name}/result',                   'ResultController');
+
         Route::get('project/relation/{relation_id}',                       'UpdateController@getRelationDetails'); //TODO: MOVE
         Route::post('project/update',                                      'UpdateController@updateDetails');
         Route::post('project/update/note',                                 'UpdateController@updateNote');
@@ -352,6 +353,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('project/updateworkexecution',                         'UpdateController@updateWorkExecution');
         Route::post('project/updateworkcompletion',                        'UpdateController@updateWorkCompletion');
         Route::post('project/updateprojectclose',                          'UpdateController@updateProjectClose');
+        Route::get('project/{project_id}-{name}/copy',                     'CopyController');//TODO: rename
         Route::get('project/{project_id}-{name}/cancel',                   'UpdateController@cancel');
         Route::get('project/{project_id}-{name}/packingslip',              'ReportController@packingSlip');
         Route::get('project/{project_id}-{name}/printoverview',            'ReportController@printOverview');

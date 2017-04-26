@@ -13,7 +13,7 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Foundation\Providers;
+namespace BynqIO\CalculatieTool\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;

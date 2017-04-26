@@ -1,4 +1,4 @@
-@extends('relation.layout', ['page' => 'options'])
+@extends('relation.layout', ['page' => 'notes'])
 
 @section('relation_section_name', 'Notities')
 
@@ -15,7 +15,7 @@ $relation = Relation::find(Route::Input('relation_id'));
 
 <div class="white-row">
 <form method="POST" action="/relation/update" accept-charset="UTF-8">
-<!--<h4>Opmerkingen</h4>-->
+{!! csrf_field() !!}
 <div class="row">
     <div class="form-group">
         <div class="col-md-12">

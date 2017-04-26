@@ -148,10 +148,10 @@ $(document).ready(function() {
                 <ul class="nav nav-list">
                     <li class="{{ $page == 'details' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/details"><i class="fa fa-id-card"></i> Bedrijfsgegevens</a></li>
                     <li class="{{ $page == 'contacts' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/contacts"><i class="fa fa-users"></i> Contacten</a></li>
+                    <li class="{{ $page == 'notes' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/notes"><i class="fa fa-cogs"></i> Notities</a></li>
                     <li class="{{ $page == 'financial' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/financial"><i class="fa fa-university"></i> Financieel</a></li>
                     <li class="{{ $page == 'invoices' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/invoices"><i class="fa fa-file-pdf-o"></i> Facturen</a></li>
                     <li class="{{ $page == 'preferences' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/preferences"><i class="fa fa-sliders"></i> Voorkeuren</a></li>
-                    <li class="{{ $page == 'options' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/options"><i class="fa fa-cogs"></i> Opties</a></li>
                 </ul>
 
             </aside>

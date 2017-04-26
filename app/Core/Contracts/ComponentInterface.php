@@ -13,16 +13,9 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Project;
+namespace BynqIO\CalculatieTool\Core\Contracts;
 
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-
-class DetailController extends Controller
+interface ComponentInterface
 {
-    public function index(Request $request)
-    {
-        return view('project.details');
-    }
-
+    public function view();
 }

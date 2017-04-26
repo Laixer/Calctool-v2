@@ -188,10 +188,11 @@ return [
         /*
          * Application Service Providers...
          */
-        BynqIO\CalculatieTool\Foundation\Providers\AppServiceProvider::class,
-        BynqIO\CalculatieTool\Foundation\Providers\AuthServiceProvider::class,
-        BynqIO\CalculatieTool\Foundation\Providers\EventServiceProvider::class,
-        BynqIO\CalculatieTool\Foundation\Providers\RouteServiceProvider::class,
+        BynqIO\CalculatieTool\Providers\AppServiceProvider::class,
+        BynqIO\CalculatieTool\Providers\FlowServiceProvider::class,
+        BynqIO\CalculatieTool\Providers\AuthServiceProvider::class,
+        BynqIO\CalculatieTool\Providers\EventServiceProvider::class,
+        BynqIO\CalculatieTool\Providers\RouteServiceProvider::class,
 
     ],
 

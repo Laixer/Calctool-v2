@@ -13,7 +13,7 @@ if ($offer_last && $offer_last->offer_finish)
 
 <div class="wizard">
     <a href="/"> Dashboard</a>
-    <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/details" {!! $page=='project' ? 'class="current"' : '' !!} >Project</a>
+    <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/details" {!! $page=='details' ? 'class="current"' : '' !!} >Project</a>
     <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/calculation" {!! $page=='calculation' ? 'class="current"' : '' !!} >Calculeren</a>
     <a href="/project/{{ $project->id }}-{{ str_slug($project->project_name) }}/quotations" {!! $page=='offer' ? 'class="current"' : '' !!} >Offerte</a>
     @if ($show_all)

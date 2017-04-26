@@ -13,9 +13,8 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Foundation\Providers;
+namespace BynqIO\CalculatieTool\Providers;
 
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider

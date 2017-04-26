@@ -73,9 +73,9 @@ class RelationController extends Controller
         return view('relation.preferences');
     }
 
-    public function options()
+    public function notes()
     {
-        return view('relation.options');
+        return view('relation.notes');
     }
 
     public function getNewContact()

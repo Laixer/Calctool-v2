@@ -134,13 +134,17 @@ $(document).ready(function() {
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opties<span class="caret"></span></button>
                             <ul class="dropdown-menu">
+                                @if (!$user->isAdmin())
                                 <li><a href="/admin/user-{{ $user->id }}/switch">Gebruiker overnemen</a></li>
+                                @endif
                                 @if ($user->active)
                                 <li><a href="/admin/user-{{ $user->id }}/validation">Validatie project laden</a></li>
                                 <li><a href="/admin/user-{{ $user->id }}/stabu">STABU project laden</a></li>
                                 <li><a href="/admin/message?user={{ $user->id }}">Bericht sturen</a></li>
                                 <li><a href="/admin/user-{{ $user->id }}/passreset">Stuur wachtwoord reset link</a></li>
+                                @if (!$user->isAdmin())
                                 <li><a href="/admin/user-{{ $user->id }}/passdefault">Standaard wachtwoord</a></li>
+                                @endif
                                 <li><a href="/admin/payment?user_id={{ $user->id }}">Transacties</a></li>
                                 @if ($user->payment_subscription_id)
                                 <li><a href="/admin/user-{{ $user->id }}/subscription/cancel">Incasso stoppen</a></li>

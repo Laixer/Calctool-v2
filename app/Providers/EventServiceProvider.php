@@ -13,7 +13,7 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Foundation\Providers;
+namespace BynqIO\CalculatieTool\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;

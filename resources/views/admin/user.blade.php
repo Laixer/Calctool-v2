@@ -73,7 +73,7 @@ $(document).ready(function() {
                 $selection_week = \BynqIO\CalculatieTool\Models\User::where('active','true')->whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
                 $selection_other = \BynqIO\CalculatieTool\Models\User::where('active','true')->Where(function($query) {
                     $query->whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at');
-                })->orderBy('online_at','desc')->get();
+                })->where('login_count','>',1)->orderBy('online_at','desc')->get();
             }
             ?>
 

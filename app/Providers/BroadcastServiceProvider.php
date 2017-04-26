@@ -13,11 +13,12 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Foundation\Providers;
+namespace BynqIO\CalculatieTool\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Broadcast;
 
-class AppServiceProvider extends ServiceProvider
+class BroadcastServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
@@ -26,17 +27,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
-    }
+        Broadcast::routes();
 
-    /**
-     * Register any application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
+        require base_path('routes/channels.php');
     }
-
 }
