@@ -91,11 +91,13 @@ class DashboardController extends Controller
 
         $this->setUserOnline();
 
-        return view('base.dashboard', [
+        $data = [
             'welcomeMessage'  => $this->welcomeMessage(),
             'projectCount'    => Project::where('user_id', Auth::id())->count(),
             'systemMessage'   => SysMessage::where('active', true)->orderBy('created_at', 'desc')->first(),
-        ]);
+        ];
+
+        return view('dashboard.layout', $data);
     }
 
 }
