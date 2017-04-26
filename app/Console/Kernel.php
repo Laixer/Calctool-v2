@@ -1,21 +1,33 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the BynqIO\CalculatieTool.com.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  CalculatieTool
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
+
 namespace BynqIO\CalculatieTool\Console;
 
+use BynqIO\CalculatieTool\Models\Project;
+use BynqIO\CalculatieTool\Models\Contact;
+use BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\CalculatieTool\Models\Invoice;
+use BynqIO\CalculatieTool\Models\User;
+use BynqIO\CalculatieTool\Models\UserGroup;
+use BynqIO\CalculatieTool\Models\MessageBox;
+use BynqIO\CalculatieTool\Models\Payment;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\UserGroup;
-use \BynqIO\CalculatieTool\Models\MessageBox;
-use \BynqIO\CalculatieTool\Models\Payment;
-
-use \Mail;
-use \Newsletter;
+use Mail;
+use Newsletter;
 
 class Kernel extends ConsoleKernel
 {
@@ -31,6 +43,7 @@ class Kernel extends ConsoleKernel
         \BynqIO\CalculatieTool\Console\Commands\SessionClear::class,
         \BynqIO\CalculatieTool\Console\Commands\OauthClear::class,
         \BynqIO\CalculatieTool\Console\Commands\AdminReset::class,
+        \BynqIO\CalculatieTool\Console\Commands\Upgrade::class,
     ];
 
     /**

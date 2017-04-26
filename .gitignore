@@ -1,4 +1,5 @@
 /vendor
+/public/user-content
 /node_modules
 Homestead.yaml
 Homestead.json
