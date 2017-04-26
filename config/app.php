@@ -192,6 +192,7 @@ return [
         BynqIO\CalculatieTool\Providers\FlowServiceProvider::class,
         BynqIO\CalculatieTool\Providers\AuthServiceProvider::class,
         BynqIO\CalculatieTool\Providers\EventServiceProvider::class,
+        BynqIO\CalculatieTool\Providers\ComposerServiceProvider::class,
         BynqIO\CalculatieTool\Providers\RouteServiceProvider::class,
 
     ],

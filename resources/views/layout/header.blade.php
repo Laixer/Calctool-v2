@@ -1,6 +1,4 @@
 <?php
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\MessageBox;
 use \BynqIO\CalculatieTool\Models\UserType;
 ?>
 
@@ -18,19 +16,22 @@ use \BynqIO\CalculatieTool\Models\UserType;
         <div class="navbar-collapse nav-main-collapse collapse pull-right">
             <nav class="nav-main mega-menu">
                 <ul class="nav nav-pills nav-main scroll-menu" id="topMain">
+
                     @if (Auth::check() && !Auth::user()->isSystem())
-                    <li>
+                    <li class="active">
                         <a href="/">Dashboard</a>
                     </li>
                     <li>
                         <a href="/account">Account</a>
                     </li>
                     @endif
+
                     @if (Auth::check() && Auth::user()->isAdmin() && !session()->has('swap_session'))
                     <li>
                         <a href="/admin">Admin Dashboard</a>
                     </li>
-                    @else
+                    @endif
+
                     <li>
                         @if (!Auth::check())
                         <a href="/support">Support</a>
@@ -38,62 +39,53 @@ use \BynqIO\CalculatieTool\Models\UserType;
                         <a href="/support/gethelp">Support</a>
                         @endif
                     </li>
+
+                    @if (Auth::check())
+                        @if (UserType::find(Auth::user()->user_type)->user_type != 'demo')
+                            @if (session()->has('swap_session'))
+                            <li><a href="/admin/switch/back">Terugkeren</a></li>
+                            @else
+                            <li><a href="/auth/signout">Uitloggen</a></li>
+                            @endif
+                        @endif
+                    @else
+                    <a href="/auth/signin">Login</a></li>
                     @endif
-                    <li class="active">
-                    <?php
-                        if (Auth::check()) {
-                            if (UserType::find(Auth::user()->user_type)->user_type != 'demo') {
-                                if (session()->has('swap_session')) {
-                                    echo '<a href="/admin/switch/back">Terugkeren</a>';
-                                } else {
-                                    echo '<a href="/auth/signout">Uitloggen</a>';
-                                }
-                            } else {
-                                echo '<a href="javascript:void(0);"></a>';
-                            }
-                        } else {
-                            echo '<a href="/auth/signin">Login</a>';
-                        }
-                    ?>
-                    </li>
-                    @if (!Auth::check())
+
+                    @unless (Auth::check())
                     <li class="visible-xs visible-sm">
                         <a href="/register">Account aanmaken</a>
                     </li>
-                    @endif
-                    @if (0)
+                    @endunless
+
                     <li class="search">
-                        <form method="get" action="#" class="input-group pull-right">
-                            <input type="text" class="form-control" name="k" id="k" value="" placeholder="Zoeken">
+                        <form method="get" action="/search" class="input-group pull-right">
+                            <input type="text" class="form-control" name="q" id="q" value="" placeholder="Zoeken">
                             <span class="input-group-btn">
-                                <button class="btn btn-primary notransition"><i class="fa fa-search"></i></button>
+                                <button class="btn btn-primary notranssubjectition"><i class="fa fa-search"></i></button>
                             </span>
                         </form>
                     </li>
-                    @endif
+
                     @if (Auth::check())
                     <li class="quick-cart">
-                        <?php
-                        $msg_cnt = MessageBox::where('user_id', Auth::id())->where('active', true)->whereNull('read')->count();
-                        ?>
-                        @if ($msg_cnt > 0)
-                        <span class="badge pull-right">{{ $msg_cnt }}</span>
+                        @if ($notifications->count() > 0)
+                        <span class="badge pull-right">{{ $notifications->count() }}</span>
                         @endif
                         <div class="quick-cart-content">
 
-                            @if ($msg_cnt == 0)
+                            @if ($notifications->count() == 0)
                             <p> Geen nieuwe meldingen</p>
-                            @elseif ($msg_cnt == 1)
+                            @elseif ($notifications->count() == 1)
                             <p> 1 ongelezen notificatie</p>
                             @else
-                            <p> {{ $msg_cnt }} ongelezen notificaties</p>
+                            <p> {{ $notifications->count() }} ongelezen notificaties</p>
                             @endif
 
-                            @foreach(MessageBox::where('user_id','=', Auth::id())->where('active', true)->whereNull('read')->get() as $message)
+                            @foreach($notifications as $message)
                             <a class="item" href="/notification/message-{{ $message->id }}">
                                 <i class="fa fa-envelope pull-left fsize30" style="margin-right: 10px; margin-left: 8px;"></i>
                                 <div class="inline-block">
-                                    <span class="price">{{ ucfirst(User::find($message->from_user)->username) }}</span>
                                     <span class="title">{{ $message->subject }}</span>
                                 </div>
                             </a>
@@ -106,9 +98,9 @@ use \BynqIO\CalculatieTool\Models\UserType;
                             </div>
 
                         </div>
-
                     </li>
                     @endif
+
                 </ul>
             </nav>
         </div>
