@@ -13,11 +13,11 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Flow;
+namespace BynqIO\CalculatieTool\ProjectManager\Flow;
 
 use Exception;
 use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Core\Flow\BaseFlow;
+use BynqIO\CalculatieTool\ProjectManager\Flow\BaseFlow;
 
 class FlowControl
 {
@@ -32,7 +32,12 @@ class FlowControl
 
     public function all()
     {
-        return $this->container;
+        $names = [];
+        foreach ($this->container as $class => $instance) {
+            array_push($names, static::name($class));
+        }
+
+        return $names;
     }
 
     public function make($id, $component)

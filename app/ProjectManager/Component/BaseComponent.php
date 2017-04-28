@@ -13,7 +13,7 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Component;
+namespace BynqIO\CalculatieTool\ProjectManager\Component;
 
 use BynqIO\CalculatieTool\Models\Project;
 

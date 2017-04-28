@@ -13,16 +13,18 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Flow;
+namespace BynqIO\CalculatieTool\ProjectManager\Flow;
 
-use BynqIO\CalculatieTool\Core\Contracts\Flow;
+use BynqIO\CalculatieTool\ProjectManager\Contracts\Flow;
 
-class DirectWorkFlow extends BaseFlow implements Flow
+class QuickInvoiceFlow extends BaseFlow implements Flow
 {
     protected $steps = [
         'DetailsComponent',
-        'DirectWorkComponent',
+        'QuickRulesComponent',
+        'QuotationsComponent',
         'InvoicesComponent',
+        'ResultComponent',
     ];
 
     /**

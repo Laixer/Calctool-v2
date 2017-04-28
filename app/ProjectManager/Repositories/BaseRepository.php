@@ -13,7 +13,7 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Repositories;
+namespace BynqIO\CalculatieTool\ProjectManager\Repositories;
 
 use Auth;
 use Utils;

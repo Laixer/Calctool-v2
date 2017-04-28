@@ -19,7 +19,7 @@ $relation = Relation::find(Route::Input('relation_id'));
     <div class="btn-group" role="group">
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
         <ul class="dropdown-menu">
-            <li><a href="/relation/convert?id={{ $relation->id }}">Omzetten naar particulier</a></li>
+            <li><a href="/relation/convert?id={{ $relation->id }}&csrf={{ csrf_token() }}">Omzetten naar particulier</a></li>
             <li><a href="/relation/delete?id={{ $relation->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Relatie verwijderen?')">Verwijderen</a>
         </li></ul>
     </div>

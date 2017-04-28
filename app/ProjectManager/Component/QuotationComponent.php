@@ -13,14 +13,14 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Component;
+namespace BynqIO\CalculatieTool\ProjectManager\Component;
 
-use BynqIO\CalculatieTool\Core\Contracts\Component;
+use BynqIO\CalculatieTool\ProjectManager\Contracts\Component;
 
 /**
- * Class DetailComponent.
+ * Class QuotationComponent.
  */
-class DetailComponent extends BaseComponent implements Component
+class QuotationComponent extends BaseComponent implements Component
 {
     public function render()
     {

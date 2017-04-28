@@ -13,9 +13,17 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Contracts;
+namespace BynqIO\CalculatieTool\ProjectManager\Component;
 
-interface Component
+use BynqIO\CalculatieTool\ProjectManager\Contracts\Component;
+
+/**
+ * Class CalculationComponent.
+ */
+class CalculationComponent extends BaseComponent implements Component
 {
-    public function render();
+    public function render()
+    {
+        return view("component.{$this->component}");
+    }
 }

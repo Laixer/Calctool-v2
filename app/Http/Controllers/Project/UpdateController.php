@@ -308,34 +308,47 @@ class UpdateController extends Controller
     public function updateProjectClose(Request $request)
     {
         $this->validate($request, [
-            'project' => array('required','integer'),
-            'date' => array('required'),
+            'id' => array('required','integer'),
         ]);
 
-        $project = Project::find($request->input('project'));
-        if (!$project || !$project->isOwner()) {
-            return back()->withInput($request->all());
+        if (csrf_token() != $request->get('csrf')) {
+            return back();
         }
-        $project->project_close = date('Y-m-d', strtotime($request->input('date')));
 
+        $project = Project::findOrFail($request->get('id'));
+        if (!$project->isOwner()) {
+            return back();
+        }
+
+        $project->project_close = date("Y-m-d H:i:s");
         $project->save();
 
         Audit::CreateEvent('project.close.success', 'Project ' . $project->project_name . ' closed');
 
-        return response()->json(['success' => 1]);
+        return back()->with('success', 'Project gesloten');
     }
 
-    public function cancel(Request $request, $project_id)
+    public function cancel(Request $request)
     {
-        $project = Project::find($project_id);
-        if (!$project || !$project->isOwner()) {
-            return back()->withInput($request->all());
-        }
-        if (!$project->project_close) {
-            return back()->withInput($request->all());
-        }
-        $project->is_dilapidated = true;
+        $this->validate($request, [
+            'id' => array('required','integer'),
+        ]);
 
+        if (csrf_token() != $request->get('csrf')) {
+            return back();
+        }
+
+        $project = Project::findOrFail($request->get('id'));
+        if (!$project->isOwner()) {
+            return back();
+        }
+
+        /* Project must be closed before canceling is possible */
+        if (!$project->project_close) {
+            return back();
+        }
+
+        $project->is_dilapidated = true;
         $project->save();
 
         Audit::CreateEvent('project.dilapidated.success', 'Project ' . $project->project_name . ' dilapidated');

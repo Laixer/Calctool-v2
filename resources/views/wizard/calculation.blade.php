@@ -15,7 +15,7 @@ if ($offer_last && $offer_last->offer_finish)
     <a href="/"> Dashboard</a>
     <a href="/project/{{ $project->id }}-{{ $project->slug() }}/details" {!! $page=='details' ? 'class="current"' : '' !!} >Project</a>
     <a href="/project/{{ $project->id }}-{{ $project->slug() }}/calculation" {!! $page=='calculation' ? 'class="current"' : '' !!} >Calculeren</a>
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/quotations" {!! $page=='offer' ? 'class="current"' : '' !!} >Offerte</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/quotations" {!! $page=='quotations' ? 'class="current"' : '' !!} >Offerte</a>
     @if ($show_all)
     @if ($project->use_estimate)
     <a href="/project/{{ $project->id }}-{{ $project->slug() }}/estimate" {!! $page=='estimate' ? 'class="current"' : '' !!}>Stelposten stellen</a>

@@ -249,7 +249,7 @@ return [
         'Newsletter'=> Spatie\Newsletter\NewsletterFacade::class,
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,
         'Image'     => Intervention\Image\Facades\Image::class,
-        'Flow'      => BynqIO\CalculatieTool\Core\Facades\Flow::class,
+        'Flow'      => BynqIO\CalculatieTool\ProjectManager\Facades\Flow::class,
 
     ],
 

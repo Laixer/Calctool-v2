@@ -15,7 +15,7 @@
 
 namespace BynqIO\CalculatieTool\Providers;
 
-use BynqIO\CalculatieTool\Core\Providers\FlowServiceProvider as ServiceProvider;
+use BynqIO\CalculatieTool\ProjectManager\Providers\FlowServiceProvider as ServiceProvider;
 
 class FlowServiceProvider extends ServiceProvider
 {
@@ -25,9 +25,9 @@ class FlowServiceProvider extends ServiceProvider
      * @var array
      */
     protected $flow = [
-        'BynqIO\CalculatieTool\Core\Flow\CalculationFlow',
-        'BynqIO\CalculatieTool\Core\Flow\DirectWorkFlow',
-        'BynqIO\CalculatieTool\Core\Flow\QuickInvoiceFlow',
+        'BynqIO\CalculatieTool\ProjectManager\Flow\CalculationFlow',
+        'BynqIO\CalculatieTool\ProjectManager\Flow\DirectWorkFlow',
+        'BynqIO\CalculatieTool\ProjectManager\Flow\QuickInvoiceFlow',
     ];
 
     /**

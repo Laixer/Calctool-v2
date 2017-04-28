@@ -41,12 +41,19 @@ use Auth;
 
 class CopyController extends Controller
 {
-    public function __invoke(Request $request, $project_id)
+    public function __invoke(Request $request)
     {
-        $orig_project = Project::find($project_id);
+        $this->validate($request, [
+            'id' => array('required','integer'),
+        ]);
 
+        if (csrf_token() != $request->get('csrf')) {
+            return back();
+        }
+
+        $orig_project = Project::findOrFail($request->get('id'));
         if (!$orig_project->isOwner()) {
-            return back()->withErrors(['error' => 'Project bestaat niet']);
+            return back();
         }
 
         $project = new Project;
@@ -269,7 +276,7 @@ class CopyController extends Controller
 
         Audit::CreateEvent('project.copy.success', 'Duplicated project: ' . $project->project_name);
 
-        return redirect('project-'.$project->id.'/edit')->with('success', 'Project is gekopieerd en toegevoegd aan je projectenoverzicht op het dashboard. U bevindt zich nu in het gekopieerde project.');
+        return redirect("project/{$project->id}-{$project->project_name}/details")->with('success', 'Project is gekopieerd en toegevoegd aan je projectenoverzicht op het dashboard. U bevindt zich nu in het gekopieerde project.');
     }
 
 }

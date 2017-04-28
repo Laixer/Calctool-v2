@@ -13,11 +13,9 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Exceptions;
+namespace BynqIO\CalculatieTool\ProjectManager\Contracts;
 
-use Exception;
-
-class NotAllowedException extends Exception
+interface Flow
 {
-    //
+    public function map();
 }

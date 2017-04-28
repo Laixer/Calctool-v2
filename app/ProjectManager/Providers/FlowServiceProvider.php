@@ -13,9 +13,9 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Providers;
+namespace BynqIO\CalculatieTool\ProjectManager\Providers;
 
-use BynqIO\CalculatieTool\Core\Flow\FlowControl;
+use BynqIO\CalculatieTool\ProjectManager\Flow\FlowControl;
 use Illuminate\Support\ServiceProvider;
 
 class FlowServiceProvider extends ServiceProvider

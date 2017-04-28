@@ -13,17 +13,11 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Component;
+namespace BynqIO\CalculatieTool\ProjectManager\Exceptions;
 
-use BynqIO\CalculatieTool\Core\Contracts\Component;
+use Exception;
 
-/**
- * Class QuotationComponent.
- */
-class QuotationComponent extends BaseComponent implements Component
+class NotAllowedException extends Exception
 {
-    public function render()
-    {
-        return view("component.{$this->component}");
-    }
+    //
 }

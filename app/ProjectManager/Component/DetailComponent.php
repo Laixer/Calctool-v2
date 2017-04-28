@@ -13,9 +13,17 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Contracts;
+namespace BynqIO\CalculatieTool\ProjectManager\Component;
 
-interface Flow
+use BynqIO\CalculatieTool\ProjectManager\Contracts\Component;
+
+/**
+ * Class DetailComponent.
+ */
+class DetailComponent extends BaseComponent implements Component
 {
-    public function map();
+    public function render()
+    {
+        return view("component.{$this->component}");
+    }
 }

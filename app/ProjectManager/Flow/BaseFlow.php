@@ -13,13 +13,13 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Flow;
+namespace BynqIO\CalculatieTool\ProjectManager\Flow;
 
 use Closure;
 
 class BaseFlow
 {
-    protected $namespace = 'BynqIO\CalculatieTool\Core\Component';
+    protected $namespace = 'BynqIO\CalculatieTool\ProjectManager\Component';
     protected $currentStep;
 
     protected function bind($name, $func)
