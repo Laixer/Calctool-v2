@@ -417,10 +417,17 @@ $(document).ready(function() {
                             <div class="form-group">
                                 <label for="type">Soort project</label>
                                 <select name="type" id="type" class="form-control pointer">
+                                    @foreach (Flow::all() as $type)
+                                    <option value="{{ $type->name() }}" >{{ $type->name() }}</option>
+                                    @endforeach
+                                </select>
+                                <?php /*
+                                <select name="type" id="type" class="form-control pointer">
                                     @foreach (ProjectType::all() as $type)
                                     <option {{ $type->type_name=='calculatie' ? 'selected' : '' }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
                                     @endforeach
-                                </select>										
+                                </select>
+                                */ ?>
                             </div>
                         </div>
                         <div class="col-md-2">

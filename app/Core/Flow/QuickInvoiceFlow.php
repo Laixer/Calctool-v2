@@ -15,14 +15,26 @@
 
 namespace BynqIO\CalculatieTool\Core\Flow;
 
-class QuickInvoiceFlow extends BaseFlow
+use BynqIO\CalculatieTool\Core\Contracts\Flow;
+
+class QuickInvoiceFlow extends BaseFlow implements Flow
 {
     protected $steps = [
-        'details',
-        'rows',
-        'quotations',
-        'invoice',
-        'result',
+        'DetailsComponent',
+        'QuickRulesComponent',
+        'QuotationsComponent',
+        'InvoicesComponent',
+        'ResultComponent',
     ];
+
+    /**
+     * Define the components for the application.
+     *
+     * @return void
+     */
+    public function map()
+    {
+        // Component::bind('detail', 'DetailsComponent');
+    }
 
 }

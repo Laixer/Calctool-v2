@@ -13,19 +13,17 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Project;
+namespace BynqIO\CalculatieTool\Core\Component;
 
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
-
-use Flow;
+use BynqIO\CalculatieTool\Core\Contracts\Component;
 
 /**
- * Class ComponentController.
+ * Class DetailComponent.
  */
-class ComponentController extends Controller
+class DetailComponent extends BaseComponent implements Component
 {
-    public function index($id, $name, $component)
+    public function render()
     {
-        return Flow::make($id, $component)->response();
+        return view("component.{$this->component}");
     }
 }

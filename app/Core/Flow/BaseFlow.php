@@ -15,29 +15,23 @@
 
 namespace BynqIO\CalculatieTool\Core\Flow;
 
+use Closure;
+
 class BaseFlow
 {
+    protected $namespace = 'BynqIO\CalculatieTool\Core\Component';
     protected $currentStep;
 
-    /**
-     * @param $entity
-     * @param $type
-     *
-     * @return string
-     */
-    private function getEventClass($entity, $type)
+    protected function bind($name, $func)
     {
-        return 'App\\Events\\' . ucfirst($entity->getEntityType()) . 'Was' . $type;
+        app()->bind($name, $this->namespace . '\\'. $func);
     }
 
-    // public function __construct($id)
-    // {
-    //     $this->project = Project::findOrFail($id);
-    //     if (!$this->project->isOwner()){
-    //         throw new NotAllowedException;
-    //     }
-    //     if ($this->project->is_dilapidated){
-    //         throw new NotAllowedException;
-    //     }
-    // }
+    public function __construct() {
+        $this->map();
+    }
+
+    public function __toString() {
+        return $this->name();
+    }
 }

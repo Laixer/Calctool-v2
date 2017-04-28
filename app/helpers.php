@@ -125,7 +125,7 @@ if (!function_exists('is_whitelabel')) {
      */
     function is_whitelabel()
     {
-        return app('url')->route("{$domain}::{$method}:{$name}", $parameters, true);
+        return strtolower(str_slug($project->project_name));
     }
 }
 

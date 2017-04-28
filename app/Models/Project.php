@@ -16,6 +16,7 @@
 namespace BynqIO\CalculatieTool\Models;
 
 use BynqIO\CalculatieTool\Models\Traits\Ownable;
+use BynqIO\CalculatieTool\Models\ProjectType;
 use Illuminate\Database\Eloquent\Model;
 
 class Project extends Model
@@ -41,8 +42,19 @@ class Project extends Model
     //     return $this->hasOne('Country');
     // }
 
+    /**
+     * Get the project slug name.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function slug()
+    {
+        return strtolower(str_slug($this->project_name));
+    }
+
     public function type() {
-        return $this->hasOne('\BynqIO\CalculatieTool\Models\ProjectType', 'id', 'type_id');
+        return $this->hasOne(ProjectType::class, 'id', 'type_id');
     }
 
     public function isCalculation()

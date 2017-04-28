@@ -22,7 +22,7 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
 
 ?>
 
-@extends('component.layout')
+@extends('component.layout', ['title' => $page])
 
 @push('scripts')
 <script src="/plugins/summernote/summernote.min.js"></script>

@@ -13,9 +13,17 @@
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Core\Contracts;
+namespace BynqIO\CalculatieTool\Core\Component;
 
-interface ComponentInterface
+use BynqIO\CalculatieTool\Core\Contracts\Component;
+
+/**
+ * Class QuotationComponent.
+ */
+class QuotationComponent extends BaseComponent implements Component
 {
-    public function view();
+    public function render()
+    {
+        return view("component.{$this->component}");
+    }
 }

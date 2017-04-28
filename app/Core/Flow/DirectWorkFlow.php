@@ -15,12 +15,24 @@
 
 namespace BynqIO\CalculatieTool\Core\Flow;
 
-class DirectWorkFlow extends BaseFlow
+use BynqIO\CalculatieTool\Core\Contracts\Flow;
+
+class DirectWorkFlow extends BaseFlow implements Flow
 {
     protected $steps = [
-        'details',
-        'directwork',
-        'invoice',
+        'DetailsComponent',
+        'DirectWorkComponent',
+        'InvoicesComponent',
     ];
+
+    /**
+     * Define the components for the application.
+     *
+     * @return void
+     */
+    public function map()
+    {
+        // Component::bind('detail', 'DetailsComponent');
+    }
 
 }

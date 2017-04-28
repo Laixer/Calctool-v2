@@ -15,7 +15,7 @@
 
 namespace BynqIO\CalculatieTool\Core\Providers;
 
-use Illuminate\Support\Arr;
+use BynqIO\CalculatieTool\Core\Flow\FlowControl;
 use Illuminate\Support\ServiceProvider;
 
 class FlowServiceProvider extends ServiceProvider
@@ -34,9 +34,9 @@ class FlowServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        // foreach ($this->flows() as $event) {
-        //     Event::listen($event, $listener);
-        // }
+        foreach ($this->flows() as $flow) {
+            $this->app->make('flow')->add($flow);
+        }
     }
 
     /**
@@ -46,15 +46,9 @@ class FlowServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        // $this->app->singleton('flow', function ($app) {
-        //     $config = $app->make('config')->get('database.redis');
-
-        //     return new RedisManager(Arr::pull($config, 'client', 'predis'), $config);
-        // });
-
-        // $this->app->bind('redis.connection', function ($app) {
-        //     return $app['redis']->connection();
-        // });
+        $this->app->singleton('flow', function ($app) {
+            return new FlowControl($app);
+        });
     }
 
     /**

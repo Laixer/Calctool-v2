@@ -16,39 +16,45 @@
 namespace BynqIO\CalculatieTool\Core\Component;
 
 use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Core\Exceptions\NotAllowedException;
 
 /**
  * Class BaseComponent.
  */
 abstract class BaseComponent
 {
+    protected $control;
     protected $project;
+    protected $type;
+    protected $component;
 
-    /**
-     * @return null
-     */
-    public function getClassName()
+    public function response()
     {
-        return null;
+        $data = [
+            'project' => $this->project,
+            'wizard' => $this->type,
+            'page' => $this->component,
+        ];
+
+        return $this->render()->with($data);
     }
 
-    /**
-     * @return null
-     */
-    public static function getName()
+    public function setProject($project)
     {
-        return null;
+        $this->project = $project;
     }
 
-    public function __construct($id)
+    public function setType($type)
     {
-        $this->project = Project::findOrFail($id);
-        if (!$this->project->isOwner()){
-            throw new NotAllowedException;
-        }
-        if ($this->project->is_dilapidated){
-            throw new NotAllowedException;
-        }
+        $this->type = $type;
+    }
+
+    public function setComponent($component)
+    {
+        $this->component = $component;
+    }
+
+    public function __construct()
+    {
+        $this->control = app()->make('flow');
     }
 }

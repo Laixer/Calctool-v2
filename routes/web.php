@@ -352,7 +352,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('project/updateoptions',                               'UpdateController@updateOptions');
         Route::post('project/updateworkexecution',                         'UpdateController@updateWorkExecution');
         Route::post('project/updateworkcompletion',                        'UpdateController@updateWorkCompletion');
-        Route::post('project/updateprojectclose',                          'UpdateController@updateProjectClose');
+        Route::get('project/close',                                        'UpdateController@updateProjectClose');
         Route::get('project/{project_id}-{name}/copy',                     'CopyController');//TODO: rename
         Route::get('project/{project_id}-{name}/cancel',                   'UpdateController@cancel');
         Route::get('project/{project_id}-{name}/packingslip',              'ReportController@packingSlip');

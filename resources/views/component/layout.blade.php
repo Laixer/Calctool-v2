@@ -27,8 +27,6 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
 
 @extends('layout.master')
 
-@section('title', $title)
-
 @section('content')
 <div id="wrapper">
     <section class="container fix-footer-bottom">

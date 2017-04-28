@@ -5,17 +5,10 @@ use \BynqIO\CalculatieTool\Models\Offer;
 use \BynqIO\CalculatieTool\Models\ProjectType;
 use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
 
-
-$common_access_error = false;
-$project = Project::find(Route::Input('project_id'));
-if (!$project || !$project->isOwner() || $project->is_dilapidated) {
-    $common_access_error = true;
-} else {
-    $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
-}
+$offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 ?>
 
-@extends('layout.master')
+@extends('component.layout', ['title' => $page])
 
 @push('style')
 <link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
@@ -26,20 +19,6 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated) {
 @endpush
 
 @section('title', 'Offertebeheer')
-
-<?php if($common_access_error){ ?>
-@section('content')
-<div id="wrapper">
-    <section class="container">
-        <div class="alert alert-danger">
-            <i class="fa fa-frown-o"></i>
-            <strong>Fout</strong>
-            Dit project bestaat niet
-        </div>
-    </section>
-</div>
-@stop
-<?php }else{ ?>
 
 @section('content')
 <script type="text/javascript">
@@ -182,5 +161,3 @@ $(document).ready(function() {
 
 </div>
 @stop
-
-<?php } ?>
