@@ -57,7 +57,6 @@ $(document).ready(function() {
                   <li class="active">Financieel</li>
                 </ol>
             <div>
-            <br>
 
             @if (Session::has('success'))
             <div class="alert alert-success">

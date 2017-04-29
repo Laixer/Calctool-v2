@@ -24,6 +24,24 @@ class CalculationComponent extends BaseComponent implements Component
 {
     public function render()
     {
-        return view("component.{$this->component}");
+        $data = [
+            'tabs' => [
+                ['name' => 'calculate', 'title' => 'Calculatie',    'icon' => 'fa-list'],
+            ]
+        ];
+
+        if ($this->project->use_estimate) {
+            array_push($data['tabs'], ['name' => 'estimate',  'title' => 'Stelposten',    'icon' => 'fa-align-justify']);
+        }
+
+        $async = [
+            ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', 'async' => "/calculation/summary/project-{$this->project->id}"],
+            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  'async' => "/calculation/endresult/project-{$this->project->id}"],
+        ];
+
+        array_push($data['tabs'], $async[0], $async[1]);
+
+        return view("component.tabs", $data);
+        // return view("component.{$this->component}", $data);
     }
 }

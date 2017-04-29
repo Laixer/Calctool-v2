@@ -16,6 +16,7 @@
 namespace BynqIO\CalculatieTool\ProjectManager\Flow;
 
 use Exception;
+use ReflectionException;
 use BynqIO\CalculatieTool\Models\Project;
 use BynqIO\CalculatieTool\ProjectManager\Flow\BaseFlow;
 
@@ -46,6 +47,7 @@ class FlowControl
         if (!$project->isOwner()){
             throw new NotAllowedException;
         }
+
         if ($project->is_dilapidated){
             throw new NotAllowedException;
         }
@@ -54,10 +56,15 @@ class FlowControl
 
         $type = static::convertProjectType($project->type->type_name);
 
-        $instance = $this->app->make($component);
-        $instance->setProject($project);
-        $instance->setType($type);
-        $instance->setComponent($component);
+        try {
+            $instance = $this->app->makeWith($component, [
+                'project' => $project,
+                'type' => $type,
+                'component' => $component,
+            ]);
+        } catch (ReflectionException $e) {
+            abort(404);
+        }
 
         return $instance;
     }

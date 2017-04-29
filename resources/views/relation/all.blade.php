@@ -19,7 +19,6 @@
                   <li>Relaties</li>
                 </ol>
             <div>
-            <br>
 
             <div class="pull-right">
                 <a href="/relation/import" class="btn btn-primary" type="button"><i class="fa fa-upload"></i> Importeer</a>

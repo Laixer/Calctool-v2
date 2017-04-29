@@ -1,8 +1,101 @@
+<?php
+
+use BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\CalculatieTool\Models\Invoice;
+use BynqIO\CalculatieTool\Models\Chapter;
+use BynqIO\CalculatieTool\Models\Activity;
+
+use BynqIO\CalculatieTool\Models\EstimateLabor;
+use BynqIO\CalculatieTool\Models\EstimateMaterial;
+use BynqIO\CalculatieTool\Models\EstimateEquipment;
+use BynqIO\CalculatieTool\Models\MoreLabor;
+use BynqIO\CalculatieTool\Models\MoreMaterial;
+use BynqIO\CalculatieTool\Models\MoreEquipment;
+use BynqIO\CalculatieTool\Models\CalculationLabor;
+use BynqIO\CalculatieTool\Models\CalculationMaterial;
+use BynqIO\CalculatieTool\Models\CalculationEquipment;
+
+$offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
+if ($offer_last)
+    $cntinv = Invoice::where('offer_id',$offer_last->id)->where('invoice_close',true)->count('id');
+else
+    $cntinv = 0;
+
+$offer_last ? $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose','=',true)->first() : $invoice_end = null;
+
+$estim_total = 0;
+$more_total = 0;
+$less_total = 0;
+$disable_estim = false;
+$disable_more = false;
+$disable_less = false;
+
+foreach(Chapter::where('project_id','=', $project->id)->get() as $chap) {
+    foreach(Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
+        $estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
+        $estim_total += EstimateMaterial::where('activity_id','=', $activity->id)->count('id');
+        $estim_total += EstimateEquipment::where('activity_id','=', $activity->id)->count('id');
+
+        $more_total += MoreLabor::where('activity_id','=', $activity->id)->count('id');
+        $more_total += MoreMaterial::where('activity_id','=', $activity->id)->count('id');
+        $more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');	
+
+        $less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+        $less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+        $less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
+    }
+}
+
+if ($offer_last) {
+    $disable_estim = true;
+}
+if ($estim_total>0) {
+    $disable_estim = true;
+}
+
+if ($invoice_end && $invoice_end->invoice_close) {
+    $disable_more = true;
+}
+if ($more_total>0) {
+    $disable_more = true;
+}
+
+if ($invoice_end && $invoice_end->invoice_close) {
+    $disable_less = true;
+}
+if ($less_total>0) {
+    $disable_less = true;
+}
+?>
+
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
+@endpush
+
+@push('scripts')
+<script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+@endpush
+
+@push('jsinline')
+<script type="text/javascript">
+$(document).ready(function() {
+    $("[name='tax_reverse']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_equipment']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_subcontract']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_estimate']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_more']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='use_less']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='mail_reminder']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+    $("[name='hide_null']").bootstrapSwitch({onText: 'Ja',offText: 'Nee'});
+});
+</script>
+@endpush
+
 <form method="POST" action="/project/updateoptions">
     {!! csrf_field() !!}
     <input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
 
-    @if ($type->type_name != 'regie')
+    @if ($type != 'directwork')
     <div class="row">
         <div class="col-md-6">	
             <div class="col-md-3">
@@ -45,7 +138,7 @@
                 </div>
             </div>
             <div class="col-md-9"  style="padding-top:30px;">
-                <p>Voeg onderaanneming toe aan je {{ $type->type_name == 'regie' ? 'regiewerk' : 'calculatie' }}.</p>
+                <p>Voeg onderaanneming toe aan je {{ $type == 'directwork' ? 'regiewerk' : 'calculatie' }}.</p>
                 <ul>
                     <li>Kan na toevoegen niet ongedaan gemaakt worden</li>
                 </ul>
@@ -59,7 +152,7 @@
                 </div>
             </div>
             <div class="col-md-9" style="padding-top:30px;">
-                <p>Voeg naast arbeid en materiaal een extra niveau toe aan je {{ $type->type_name == 'regie' ? 'regiewerk' : 'calculatie' }}.</p>
+                <p>Voeg naast arbeid en materiaal een extra niveau toe aan je {{ $type == 'directwork' ? 'regiewerk' : 'calculatie' }}.</p>
                 <ul>
                     <li>Bijvoorbeeld voor <i>materieel</i></li>
                     <li>Kan na toevoegen niet ongedaan gemaakt worden</li>
@@ -67,7 +160,7 @@
             </div>
         </div>
     </div>
-    @if ($type->type_name != 'regie')
+    @if ($type != 'directwork')
     <hr>
     <div class="row">
         <div class="col-md-6">

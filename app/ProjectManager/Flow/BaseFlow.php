@@ -16,18 +16,28 @@
 namespace BynqIO\CalculatieTool\ProjectManager\Flow;
 
 use Closure;
+use Illuminate\Container\Container;
 
 class BaseFlow
 {
+    protected $container;
     protected $namespace = 'BynqIO\CalculatieTool\ProjectManager\Component';
     protected $currentStep;
 
     protected function bind($name, $func)
     {
-        app()->bind($name, $this->namespace . '\\'. $func);
+        $this->container->bind($name, function ($app, array $parameters) use ($func) {
+            $class = $this->namespace . '\\'. $func;
+            return $app->makeWith($class, [
+                'project' => $parameters['project'],
+                'type' => $parameters['type'],
+                'component' => $parameters['component'],
+            ]);
+        });
     }
 
-    public function __construct() {
+    public function __construct(Container $container) {
+        $this->container = $container;
         $this->map();
     }
 

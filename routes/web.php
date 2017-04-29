@@ -336,7 +336,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('project/new',                                          'NewController@index');
         Route::post('project/new',                                         'NewController@new');
 
-        Route::get('project/{project_id}-{name}/{module}',                  'ComponentController@index');
+        Route::get('project/{project_id}-{name}/{module}/{submodule?}',    'ComponentController@index');
         // Route::get('project/{project_id}-{name}/calculation',              'CalcController@getCalculation');
         // Route::get('project/{project_id}-{name}/quotations',               'Calculation\CalcController@getOfferAll');;
         // Route::get('project/{project_id}-{name}/estimate',                 'CalcController@getEstimate');

@@ -135,22 +135,22 @@ div.tabs ul.nav-tabs a {
 
 /* Actieve onderdelen, niet actief and border */
 /* gebruikt op Calculatiepagina*/
-div.toggle-chapter > label {
+/*div.toggle-chapter > label {
     background: #fff;
     border: #8E8E8E 2px solid;
-}
+}*/
 
-div.toggle-chapter.active > label {
+/*div.toggle-chapter.active > label {
     color: #fff;
     background: #517A00;
     border: #517A00 2px solid;
-}
+}*/
 
-div.toggle-chapter > label:hover {
+/*div.toggle-chapter > label:hover {
     color: #fff;
     background: #517A00;
     border: #517A00 2px solid;
-}
+}*/
 
 .btn-primary-chapter, .btn-primary-chapter:hover {
     background: #517A00;
@@ -171,9 +171,9 @@ div.toggle-activity > label:hover {
     background: #4E4E4E;
 }
 
-.btn-primary-activity, .btn-primary-activity:hover {
+/*.btn-primary-activity, .btn-primary-activity:hover {
     background: #4E4E4E !important;
-}
+}*/
 
 /* Knop materialen databse mdb*/
 /* gebruikt op Calculatiepagina*/

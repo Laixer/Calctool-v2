@@ -1,17 +1,57 @@
 <?php
 
-use BynqIO\CalculatieTool\Calculus\CalculationEndresult;
 use BynqIO\CalculatieTool\Models\Relation;
 use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\Offer;
 use BynqIO\CalculatieTool\Models\RelationKind;
-use BynqIO\CalculatieTool\Models\Province;
-use BynqIO\CalculatieTool\Models\Country;
 
 ?>
+<?php
+
+use BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\CalculatieTool\Models\Invoice;
+
+$offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
+?>
+
+@inject('province', 'BynqIO\CalculatieTool\Models\Province')
+@inject('country', 'BynqIO\CalculatieTool\Models\Country')
+
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">
+@endpush
+
+@push('scripts')
+<script src="/components/x-editable/dist/bootstrap3-editable/js/bootstrap-editable.min.js"></script>
+@endpush
+
+@push('jsinline')
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#wordexec').datepicker().on('changeDate', function(e){
+        $('#wordexec').datepicker('hide');
+        $.post("/project/updateworkexecution", {
+            date: e.date.toISOString(),
+            project: {{ $project->id }}
+        }, function(data){
+            location.reload();
+        });
+    });
+
+    $('#wordcompl').datepicker().on('changeDate', function(e){
+        $('#wordcompl').datepicker('hide');
+        $.post("/project/updateworkcompletion", {
+            date: e.date.toISOString(),
+            project: {{ $project->id }}
+        }, function(data){
+            location.reload();
+        });
+    });
+});
+</script>
+@endpush
 
 <div class="pull-right">
-    <a href="javascript:void(0);" data-toggle="modal" data-target="#notepad" class="btn btn-primary"><i class="fa fa-file-text-o"></i>&nbsp;Kladblok</a>
+    <a data-toggle="modal" data-target="#notepad" class="btn btn-primary"><i class="fa fa-file-text-o"></i>&nbsp;Kladblok</a>
     <div class="btn-group" role="group">	
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
         <ul class="dropdown-menu">
@@ -64,7 +104,7 @@ use BynqIO\CalculatieTool\Models\Country;
                 <input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-3">
             <div class="form-group">
                 <label for="contractor">Opdrachtgever*</label>
                 @if (!Relation::find($project->client_id)->isActive())
@@ -117,7 +157,7 @@ use BynqIO\CalculatieTool\Models\Country;
             <div class="form-group">
                 <label for="province">Provincie*</label>
                 <select name="province" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="province" class="form-control pointer">
-                    @foreach (Province::all() as $province)
+                    @foreach ($province::all() as $province)
                     <option {{ $project->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
                     @endforeach
                 </select>
@@ -128,7 +168,7 @@ use BynqIO\CalculatieTool\Models\Country;
             <div class="form-group">
                 <label for="country">Land*</label>
                 <select name="country" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} id="country" class="form-control pointer">
-                    @foreach (Country::all() as $country)
+                    @foreach ($country::all() as $country)
                     <option {{ $project->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
                     @endforeach
                 </select>

@@ -1,3 +1,5 @@
+@inject('agent', 'Jenssegers\Agent\Agent')
+
 @extends('layout.master')
 
 @section('title', __('core.dashboard'))
@@ -25,6 +27,13 @@
             @endif
 
             @include('layout.message')
+
+            @if ($agent->isMobile())
+            <div class="alert alert-warning">
+                <i class="fa fa-warning"></i>
+                <strong>@lang('core.mobilewarning')</strong>
+            </div>
+            @endif
 
             @if (Auth::user()->isNewPeriod())
             <div class="pull-right" style="margin: 10px 0 20px 0">

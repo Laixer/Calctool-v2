@@ -23,7 +23,8 @@ class ComposerServiceProvider extends ServiceProvider
 
             $appname = config('app.name');
             $logo = APP_LOGO;
-            return "<img src='{$logo}' width='230px' alt='{$appname}' title='{$appname}' />";
+            $logo_width = APP_LOGO_WIDTH;
+            return "<img src='{$logo}' width='{$logo_width}px' alt='{$appname}' title='{$appname}' />";
         });
     }
 

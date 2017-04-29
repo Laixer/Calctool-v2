@@ -1,7 +1,3 @@
-<?php
-use \BynqIO\CalculatieTool\Models\UserType;
-?>
-
 <header id="topNav" class="topHead">
     <div class="container">
 
@@ -18,21 +14,21 @@ use \BynqIO\CalculatieTool\Models\UserType;
                 <ul class="nav nav-pills nav-main scroll-menu" id="topMain">
 
                     @if (Auth::check() && !Auth::user()->isSystem())
-                    <li class="active">
+                    <li class="{{ request()->is('/') ? 'active' : '' }}">
                         <a href="/">Dashboard</a>
                     </li>
-                    <li>
-                        <a href="/account">Account</a>
+                    <li class="{{ request()->is('account') ? 'active' : '' }}">
+                        <a href="/account">Account </a>
                     </li>
                     @endif
 
                     @if (Auth::check() && Auth::user()->isAdmin() && !session()->has('swap_session'))
-                    <li>
+                    <li class="{{ request()->is('admin') ? 'active' : '' }}">
                         <a href="/admin">Admin Dashboard</a>
                     </li>
                     @endif
 
-                    <li>
+                    <li class="{{ (request()->is('support') || request()->is('support/gethelp')) ? 'active' : '' }}">
                         @if (!Auth::check())
                         <a href="/support">Support</a>
                         @else
@@ -41,7 +37,7 @@ use \BynqIO\CalculatieTool\Models\UserType;
                     </li>
 
                     @if (Auth::check())
-                        @if (UserType::find(Auth::user()->user_type)->user_type != 'demo')
+                        @if (!Auth::user()->isDemo())
                             @if (session()->has('swap_session'))
                             <li><a href="/admin/switch/back">Terugkeren</a></li>
                             @else

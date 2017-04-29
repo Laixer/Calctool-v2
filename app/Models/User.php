@@ -15,6 +15,7 @@
 
 namespace BynqIO\CalculatieTool\Models;
 
+use BynqIO\CalculatieTool\Models\UserType;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Model;
@@ -22,8 +23,6 @@ use Illuminate\Foundation\Auth\Access\Authorizable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
-
-use Carbon\Carbon;
 
 class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract
 {
@@ -37,12 +36,12 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->secret;
     }
 
-    public function projects() {
-        return $this->hasMany('Project');
-    }
+    // public function projects() {
+    //     return $this->hasMany('Project');
+    // }
 
     public function type() {
-        return $this->hasOne('UserType');
+        return $this->hasOne(UserType::class, 'id', 'user_type');
     }
 
     public function productFavorite() {
@@ -54,15 +53,19 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     public function isSuperUser() {
-        return in_array(UserType::find($this->user_type)->user_type, array('superuser', 'admin', 'system'));
+        return in_array($this->type->user_type, array('superuser', 'admin', 'system'));
     }
 
     public function isAdmin() {
-        return in_array(UserType::find($this->user_type)->user_type, array('admin', 'system'));
+        return in_array($this->type->user_type, array('admin', 'system'));
     }
 
     public function isSystem() {
-        return UserType::find($this->user_type)->user_type == 'system';
+        return $this->type->user_type == 'system';
+    }
+
+    public function isDemo() {
+        return $this->type->user_type == 'demo';
     }
 
     public function hasPayed() {

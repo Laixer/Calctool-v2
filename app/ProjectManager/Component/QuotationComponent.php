@@ -22,6 +22,11 @@ use BynqIO\CalculatieTool\ProjectManager\Contracts\Component;
  */
 class QuotationComponent extends BaseComponent implements Component
 {
+    public function kaas()
+    {
+        dd('kaas');
+    }
+
     public function render()
     {
         return view("component.{$this->component}");

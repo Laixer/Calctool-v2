@@ -16,13 +16,14 @@
 namespace BynqIO\CalculatieTool\ProjectManager\Component;
 
 use BynqIO\CalculatieTool\Models\Project;
+use Illuminate\Container\Container;
 
 /**
  * Class BaseComponent.
  */
 abstract class BaseComponent
 {
-    protected $control;
+    protected $container;
     protected $project;
     protected $type;
     protected $component;
@@ -30,31 +31,21 @@ abstract class BaseComponent
     public function response()
     {
         $data = [
-            'project' => $this->project,
-            'wizard' => $this->type,
-            'page' => $this->component,
+            'project'   => $this->project,
+            'wizard'    => $this->type, //TODO: rename
+            'type'      => $this->type,
+            'page'      => $this->component, //TODO: rename
+            'component' => $this->component,
         ];
 
         return $this->render()->with($data);
     }
 
-    public function setProject($project)
+    public function __construct(Container $container, $project, $type, $component)
     {
+        $this->container = $container;
         $this->project = $project;
-    }
-
-    public function setType($type)
-    {
         $this->type = $type;
-    }
-
-    public function setComponent($component)
-    {
         $this->component = $component;
-    }
-
-    public function __construct()
-    {
-        $this->control = app()->make('flow');
     }
 }

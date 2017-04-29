@@ -100,7 +100,6 @@ use \BynqIO\CalculatieTool\Models\Offer;
                   <li class="active">Urenregistratie</li>
                 </ol>
             <div>
-            <br>
 
             <h2><strong>Urenregistratie</strong></h2>
 

@@ -919,7 +919,6 @@ $(document).ready(function() {
                   <li class="active">Producten</li>
                 </ol>
             <div>
-            <br>
 
             <h2><strong>Producten</strong></h2>
 

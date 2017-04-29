@@ -1,12 +1,8 @@
 <?php
 
-use BynqIO\CalculatieTool\Calculus\CalculationEndresult;
 use BynqIO\CalculatieTool\Models\Relation;
 use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\Offer;
 use BynqIO\CalculatieTool\Models\RelationKind;
-use BynqIO\CalculatieTool\Models\Province;
-use BynqIO\CalculatieTool\Models\Country;
 
 ?>
 

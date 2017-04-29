@@ -24,8 +24,12 @@ use Flow;
  */
 class ComponentController extends Controller
 {
-    public function index($id, $name, $component)
+    public function index($id, $name, $component, $subcomponent = null)
     {
+        if (!is_null($subcomponent)) {
+            $component .= '/' . $subcomponent;
+        }
+
         return Flow::make($id, $component)->response();
     }
 }

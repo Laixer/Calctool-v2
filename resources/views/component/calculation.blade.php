@@ -24,17 +24,6 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
 
 @extends('component.layout', ['title' => $page])
 
-@push('scripts')
-<script src="/plugins/summernote/summernote.min.js"></script>
-<script src="/plugins/jquery.number.min.js"></script>
-@endpush
-
-@section('component_buttons')
-<div class="pull-right">
-    <a href="/project-{{ $project->id }}/printoverview" class="btn btn-primary" target="new" type="button"><i class="fa fa-file-pdf-o">&nbsp;</i>Projectoverzicht</a>
-</div>
-@endsection
-
 @section('component_content')
 <script type="text/javascript">
     Number.prototype.formatMoney = function(c, d, t){
@@ -88,6 +77,7 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
                 $('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
             }
         }
+
         $('#tab-calculate').click(function(e){
             sessionStorage.toggleTabCalc{{Auth::id()}} = 'calculate';
         });
@@ -112,10 +102,7 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
             $('#tab-calculate').addClass('active');
             $('#calculate').addClass('active');
         }
-        $(".complete").click(function(e){
-            $loc = $(this).attr('data-location');
-            window.location.href = $loc;
-        });
+
         $("body").on("change", ".form-control-sm-number", function(){
             $(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
         });
@@ -1063,15 +1050,6 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
                 $('.summernote').code('');
             }).fail(function(e) { console.log(e); });
         });
-
-        $('.summernote').summernote({
-            height: $(this).attr("data-height") || 200,
-            toolbar: [
-                ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-                ["para", ["ul", "ol", "paragraph"]],
-                ["media", ["link", "picture"]],
-            ]
-        });
     });
 </script>
 <div class="modal fade" id="nameChangeChapModal" tabindex="-1" role="dialog" aria-hidden="true">
@@ -1311,7 +1289,7 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
             <div class="modal-body">
                 <div class="form-group">
                     <div class="col-md-12">
-                        <textarea name="note" id="note" rows="5" class="form-control summernote"></textarea>
+                        <textarea name="note" id="note" rows="5" class="form-control"></textarea>
                         <input type="hidden" name="noteact" id="noteact" />
                     </div>
                 </div>
@@ -1325,7 +1303,7 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
     </div>
 </div>
 
-<div class="tabs nomargin" ng-controller="SummaryCtrl">
+<div class="tabs nomargin">
 
     <ul class="nav nav-tabs">
         <li id="tab-calculate">
@@ -2000,17 +1978,8 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
         </div>
         @endif
 
-        <div id="summary" class="tab-pane">
-            <div class="row text-center">
-                <img src="/images/loading_icon.gif" height="120" />
-            </div>
-        </div>
-
-        <div id="endresult" class="tab-pane">
-            <div class="row text-center">
-                <img src="/images/loading_icon.gif" height="120" />
-            </div>
-        </div>
+        <div id="summary" class="tab-pane"></div>
+        <div id="endresult" class="tab-pane"></div>
     </div>
 
 </div>

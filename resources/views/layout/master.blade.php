@@ -3,11 +3,11 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1" />
         <title>{{ config('app.name') }} - @yield('title', 'Online calculeren & offreren')</title>
         <meta name="application-name" content="CalculatieTool.com">
 
-        <?php // -- favicon -- ?>
+        {{-- Favicon --}}
         <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png">
         <link rel="apple-touch-icon" sizes="60x60" href="/images/apple-touch-icon-60x60.png">
         <link rel="apple-touch-icon" sizes="72x72" href="/images/apple-touch-icon-72x72.png">
@@ -28,26 +28,26 @@
         <meta name="csrf-token" content="{{ csrf_token() }}" />
         <meta name="viewport" content="width=device-width, maximum-scale=1, initial-scale=1, user-scalable=0" />
 
-        <?php // -- CORE CSS -- ?>
+        {{-- Global CSS --}}
         <link media="all" type="text/css" rel="stylesheet" href="/css/opensans.css">
         <link media="all" type="text/css" rel="stylesheet" href="/components/bootstrap/dist/css/bootstrap.min.css">
         <link media="all" type="text/css" rel="stylesheet" href="/components/font-awesome/css/font-awesome.css">
+
         @stack('style')
 
-        <?php // -- SHOP CSS -- ?>
+        {{-- Theme CSS --}}
         <link media="all" type="text/css" rel="stylesheet" href="/css/shop.css">
-
-        <?php //-- THEME CSS -- ?>
         <link media="all" type="text/css" rel="stylesheet" href="/css/essentials.css">
         <link media="all" type="text/css" rel="stylesheet" href="/css/layout.css">
         <link media="all" type="text/css" rel="stylesheet" href="/css/layout-responsive.css">
         <link media="all" type="text/css" rel="stylesheet" href="/css/darkgreen.css">
+        <!--<link media="all" type="text/css" rel="stylesheet" href="/css/darkblue.css">-->
         <!--<link media="all" type="text/css" rel="stylesheet" href="/css/layout-dark.css">-->
 
-        <?php // -- CUSTOM CSS -- ?>
+        {{-- Custom CSS --}}
         <link media="all" type="text/css" rel="stylesheet" href="/css/custom.css">
 
-        <?php // -- JQuery -- ?>
+        {{-- jQuery --}}
         <script src="/components/jquery/dist/jquery.min.js"></script>
 
         @include('layout.script')
@@ -64,11 +64,14 @@
             @include('layout.footer')
         @show
 
-        <?php // -- JAVASCRIPT FILES -- ?>
+        {{-- Javascript --}}
         <script src="/plugins/masonry.js"></script>
         <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+        <script src="/js/scripts.js"></script>
+
         @stack('scripts')
 
-        <script src="/js/scripts.js"></script>
+        @stack('jsinline')
+
     </body>
 </html>

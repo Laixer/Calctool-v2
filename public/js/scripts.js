@@ -42,7 +42,7 @@
  **************************************************************** **/
     function Atropos() {
         //_topNav();
-        //_animate();
+        // _animate();
         _superslide();
         //_owl_carousel();
         //_popover();
