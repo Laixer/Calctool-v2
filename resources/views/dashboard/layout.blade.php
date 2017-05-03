@@ -52,7 +52,6 @@
                 <div id="wrapper" ng-app="projectApp" class="nopadding-top">
 
                     <div class="col-md-12">
-                        <br>
                         @if ($projectCount)
                         <h2><strong>{{ trans_choice('core.project', 2) }}</strong></h2>
 

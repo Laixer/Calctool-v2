@@ -10,12 +10,6 @@ $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at',
 
 @extends('component.layout', ['title' => $page])
 
-@push('style')
-@endpush
-
-@push('scripts')
-@endpush
-
 @section('component_content')
 <script type="text/javascript">
 $(document).ready(function() {
@@ -80,7 +74,7 @@ $(document).ready(function() {
 @if (number_format(CalculationEndresult::totalProject($project), 3, ",",".") != number_format($offer_last->offer_total, 3, ",","."))
 <div class="alert alert-warning">
     <i class="fa fa-fa fa-info-circle"></i>
-    Gegevens zijn gewijzigd ten op zichte van de laastte offerte
+    Gegevens zijn gewijzigd ten op zichte van de laaste offerte
 </div>
 @endif
 @endif

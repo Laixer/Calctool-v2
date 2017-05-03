@@ -355,28 +355,28 @@ class CalcController extends Controller {
         return response()->view('calc.invoice_all');
     }
 
-    public function doNewChapter(Request $request, $project_id)
-    {
-        $this->validate($request, [
-            'chapter' => array('required','max:50'),
-        ]);
+    // public function doNewChapter(Request $request, $project_id)
+    // {
+    //     $this->validate($request, [
+    //         'chapter' => array('required','max:50'),
+    //     ]);
 
-        $project = Project::find($project_id);
-        if (!$project || !$project->isOwner()) {
-            return back()->withInput($request->all());
-        }
+    //     $project = Project::find($project_id);
+    //     if (!$project || !$project->isOwner()) {
+    //         return back()->withInput($request->all());
+    //     }
 
-        $last_chaper = Chapter::where('project_id', $project->id)->orderBy('priority','desc')->first();
+    //     $last_chaper = Chapter::where('project_id', $project->id)->orderBy('priority','desc')->first();
 
-        $chapter = new Chapter;
-        $chapter->chapter_name = $request->get('chapter');
-        $chapter->priority = $last_chaper ? $last_chaper->priority + 1 : 0;
-        $chapter->project_id = $project->id;
+    //     $chapter = new Chapter;
+    //     $chapter->chapter_name = $request->get('chapter');
+    //     $chapter->priority = $last_chaper ? $last_chaper->priority + 1 : 0;
+    //     $chapter->project_id = $project->id;
 
-        $chapter->save();
+    //     $chapter->save();
 
-        return back()->with('success', 'Nieuw onderdeel aangemaakt');
-    }
+    //     return back()->with('success', 'Nieuw onderdeel aangemaakt');
+    // }
 
     public function doNewCalculationActivity(Request $request, $chapter_id)
     {

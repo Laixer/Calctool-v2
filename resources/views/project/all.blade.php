@@ -23,8 +23,6 @@ use \BynqIO\CalculatieTool\Models\Contact;
                 <li class="active">Projecten</li>
             </ol>
             <div>
-                <br>
-
                 <h2><strong>Projecten</strong></h2>
                 <div class="white-row" ng-controller="projectController">
 

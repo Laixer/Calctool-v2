@@ -15,7 +15,6 @@
 
 namespace BynqIO\CalculatieTool\Models;
 
-use BynqIO\CalculatieTool\Models\UserType;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
 use Illuminate\Database\Eloquent\Model;

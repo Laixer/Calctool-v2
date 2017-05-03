@@ -344,6 +344,9 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         // Route::get('project/{project_id}-{name}/more',                     'CalcController@getMore');
         // Route::get('project/{project_id}-{name}/result',                   'ResultController');
 
+        Route::post('project/level/new',                                   'LevelController@newLevel');
+        Route::get('project/level/delete',                                 'LevelController@deleteLevel');
+
         Route::get('project/relation/{relation_id}',                       'UpdateController@getRelationDetails'); //TODO: MOVE
         Route::post('project/update',                                      'UpdateController@updateDetails');
         Route::post('project/update/note',                                 'UpdateController@updateNote');

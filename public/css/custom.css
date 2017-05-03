@@ -85,16 +85,16 @@ div.tabs ul.nav-tabs a {
 /* gebruikt op Calculatiepagina, nieuw project*/
 .form-control-sm-number {
     border: #e6e6e6 2px solid;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
     display: block;
     width: 100%;
     height: 27px;
-    padding: 1px 12px;
+    padding: 1px 6px;
     font-size: 14px;
     line-height: 1.42857143;
     color: #555;
@@ -106,16 +106,16 @@ div.tabs ul.nav-tabs a {
 /* gebruikt op Calculatiepagina*/
 .form-control-sm-text {
     border: #e6e6e6 2px solid;
-    -webkit-border-radius: 6px;
-    -moz-border-radius: 6px;
-    border-radius: 6px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
     box-shadow: none;
     display: block;
     width: 100%;
     height: 27px;
-    padding: 1px 12px;
+    padding: 1px 6px;
     font-size: 14px;
     line-height: 1.42857143;
     color: #555;
@@ -144,21 +144,21 @@ div.tabs ul.nav-tabs a {
     color: #fff;
     background: #517A00;
     border: #517A00 2px solid;
-}*/
+}
 
-/*div.toggle-chapter > label:hover {
+div.toggle-chapter > label:hover {
     color: #fff;
     background: #517A00;
     border: #517A00 2px solid;
-}*/
+}
 
 .btn-primary-chapter, .btn-primary-chapter:hover {
     background: #517A00;
-}
+}*/
 
 /* Actieve werkzaamheden grijs, niet actief grijze border, incl knop */
 /* gebruikt op Calculatiepagina*/
-div.toggle-activity > label {
+div.toggle > label {
     background: #E8E8E8;
 }
 
@@ -297,6 +297,19 @@ div.toggle-activity > label:hover {
     border-left-color: #4E4E4E;
 }
 /*a;s de knop niet beschikbaar is moet deze grijs (niet selecteerbaar) zijn.*/
+
+/**/
+.label-custom {
+    background-color: #777;
+    padding: 0.2em 0.7em 0.2em;
+    margin-right: 30px;
+    color: #fff;
+    border-radius: 3px;
+    font-size: small;
+    position: absolute;
+    right: 160px;
+    bottom: 3px;
+}
 
 .fix-footer-bottom {
     margin-bottom: 40px;

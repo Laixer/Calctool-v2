@@ -1613,9 +1613,9 @@ figure {
 .modal-content {
     overflow:hidden;
 
-    -webkit-border-radius: 6px;
-       -moz-border-radius: 6px;
-            border-radius: 6px;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
 }
 .modal-header {
     background-color:#333;

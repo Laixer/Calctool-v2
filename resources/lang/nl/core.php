@@ -25,6 +25,8 @@ return [
     */
 
     // Generic
+    'yes'         => 'Ja',
+    'no'          => 'Nee',
     'new'         => 'Nieuw',
     'open'        => 'Open',
     'closed'      => 'Gesloten',

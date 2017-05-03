@@ -42,84 +42,84 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
             $(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
         });
 
-        var $newinputtr;
-        var $newinputtr2;
-        $('.toggle').click(function(e){
-            $id = $(this).attr('id');
-            if ($(this).hasClass('active')) {
-                if (sessionStorage.toggleOpen{{Auth::id()}}){
-                    $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
-                } else {
-                    $toggleOpen = [];
-                }
-                if (!$toggleOpen.length)
-                    $toggleOpen.push($id);
-                for(var i in $toggleOpen){
-                    if ($toggleOpen.indexOf( $id ) == -1)
-                        $toggleOpen.push($id);
-                }
-                sessionStorage.toggleOpen{{Auth::id()}} = JSON.stringify($toggleOpen);
-            } else {
-                $tmpOpen = [];
-                if (sessionStorage.toggleOpen{{Auth::id()}}){
-                    $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
-                    for(var i in $toggleOpen){
-                        if($toggleOpen[i] != $id)
-                            $tmpOpen.push($toggleOpen[i]);
-                    }
-                }
-                sessionStorage.toggleOpen{{Auth::id()}} = JSON.stringify($tmpOpen);
-            }
-        });
-        if (sessionStorage.toggleOpen{{Auth::id()}}){
-            $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
-            for(var i in $toggleOpen){
-                $('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
-            }
-        }
+        // var $newinputtr;
+        // var $newinputtr2;
+        // $('.toggle').click(function(e){
+        //     $id = $(this).attr('id');
+        //     if ($(this).hasClass('active')) {
+        //         if (sessionStorage.toggleOpen{{Auth::id()}}){
+        //             $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
+        //         } else {
+        //             $toggleOpen = [];
+        //         }
+        //         if (!$toggleOpen.length)
+        //             $toggleOpen.push($id);
+        //         for(var i in $toggleOpen){
+        //             if ($toggleOpen.indexOf( $id ) == -1)
+        //                 $toggleOpen.push($id);
+        //         }
+        //         sessionStorage.toggleOpen{{Auth::id()}} = JSON.stringify($toggleOpen);
+        //     } else {
+        //         $tmpOpen = [];
+        //         if (sessionStorage.toggleOpen{{Auth::id()}}){
+        //             $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
+        //             for(var i in $toggleOpen){
+        //                 if($toggleOpen[i] != $id)
+        //                     $tmpOpen.push($toggleOpen[i]);
+        //             }
+        //         }
+        //         sessionStorage.toggleOpen{{Auth::id()}} = JSON.stringify($tmpOpen);
+        //     }
+        // });
+        // if (sessionStorage.toggleOpen{{Auth::id()}}){
+        //     $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{Auth::id()}});
+        //     for(var i in $toggleOpen){
+        //         $('#'+$toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
+        //     }
+        // }
 
-        $('#tab-calculate').click(function(e){
-            sessionStorage.toggleTabCalc{{Auth::id()}} = 'calculate';
-        });
-        $('#tab-estimate').click(function(e){
-            sessionStorage.toggleTabCalc{{Auth::id()}} = 'estimate';
-        });
-        $('#tab-summary').click(function(e){
-            sessionStorage.toggleTabCalc{{Auth::id()}} = 'summary';
-            $('#summary').load('/calculation/summary/project-{{ $project->id }}');
-        });
-        $('#tab-endresult').click(function(e){
-            sessionStorage.toggleTabCalc{{Auth::id()}} = 'endresult';
-            $('#endresult').load('/calculation/endresult/project-{{ $project->id }}');
-        });
-        if (sessionStorage.toggleTabCalc{{Auth::id()}}){
-            $toggleOpenTab = sessionStorage.toggleTabCalc{{Auth::id()}};
-            $('#tab-'+$toggleOpenTab).addClass('active');
-            $('#'+$toggleOpenTab).addClass('active');
-            $('#tab-'+$toggleOpenTab).trigger("click");
-        } else {
-            sessionStorage.toggleTabCalc{{Auth::id()}} = 'calculate';
-            $('#tab-calculate').addClass('active');
-            $('#calculate').addClass('active');
-        }
+        // $('#tab-calculate').click(function(e){
+        //     sessionStorage.toggleTabCalc{{Auth::id()}} = 'calculate';
+        // });
+        // $('#tab-estimate').click(function(e){
+        //     sessionStorage.toggleTabCalc{{Auth::id()}} = 'estimate';
+        // });
+        // $('#tab-summary').click(function(e){
+        //     sessionStorage.toggleTabCalc{{Auth::id()}} = 'summary';
+        //     $('#summary').load('/calculation/summary/project-{{ $project->id }}');
+        // });
+        // $('#tab-endresult').click(function(e){
+        //     sessionStorage.toggleTabCalc{{Auth::id()}} = 'endresult';
+        //     $('#endresult').load('/calculation/endresult/project-{{ $project->id }}');
+        // });
+        // if (sessionStorage.toggleTabCalc{{Auth::id()}}){
+        //     $toggleOpenTab = sessionStorage.toggleTabCalc{{Auth::id()}};
+        //     $('#tab-'+$toggleOpenTab).addClass('active');
+        //     $('#'+$toggleOpenTab).addClass('active');
+        //     $('#tab-'+$toggleOpenTab).trigger("click");
+        // } else {
+        //     sessionStorage.toggleTabCalc{{Auth::id()}} = 'calculate';
+        //     $('#tab-calculate').addClass('active');
+        //     $('#calculate').addClass('active');
+        // }
 
-        $("body").on("change", ".form-control-sm-number", function(){
-            $(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
-        });
-        $(".radio-activity").change(function(){
-            if ($(this).val()==2) {
-                $(this).closest('.toggle-content').find(".rate").html('<input name="rate" type="text" value="{{ number_format($project->hour_rate, 2,",",".") }}" class="form-control-sm-number labor-amount lsave">');
-            } else {
-                $(this).closest('.toggle-content').find(".rate").text('{{ number_format($project->hour_rate, 2,",",".") }}');
-            }
-            $.post("/calculation/updatepart", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
-        });
-        $(".select-tax").change(function(){
-            $.post("/calculation/updatetax", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id"), type: $(this).attr("data-type")}).fail(function(e) { console.log(e); });
-        });
-        $(".select-estim-tax").change(function(){
-            $.post("/calculation/updateestimatetax", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id"), type: $(this).attr("data-type")}).fail(function(e) { console.log(e); });
-        });
+        // $("body").on("change", ".form-control-sm-number", function(){
+        //     $(this).val(parseFloat($(this).val().split('.').join('').replace(',', '.')).formatMoney(2, ',', '.'));
+        // });
+        // $(".radio-activity").change(function(){
+        //     if ($(this).val()==2) {
+        //         $(this).closest('.toggle-content').find(".rate").html('<input name="rate" type="text" value="{{ number_format($project->hour_rate, 2,",",".") }}" class="form-control-sm-number labor-amount lsave">');
+        //     } else {
+        //         $(this).closest('.toggle-content').find(".rate").text('{{ number_format($project->hour_rate, 2,",",".") }}');
+        //     }
+        //     $.post("/calculation/updatepart", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id")}).fail(function(e) { console.log(e); });
+        // });
+        // $(".select-tax").change(function(){
+        //     $.post("/calculation/updatetax", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id"), type: $(this).attr("data-type")}).fail(function(e) { console.log(e); });
+        // });
+        // $(".select-estim-tax").change(function(){
+        //     $.post("/calculation/updateestimatetax", {project: {{ $project->id }}, value: this.value, activity: $(this).attr("data-id"), type: $(this).attr("data-type")}).fail(function(e) { console.log(e); });
+        // });
         $("body").on("change", ".newrow", function(){
             var i = 1;
             if($(this).val()){
@@ -1627,7 +1627,7 @@ use BynqIO\CalculatieTool\Models\EstimateEquipment;
             </div>
 
             <form method="POST" action="/calculation/newchapter/{{ $project->id }}" accept-charset="UTF-8">
-                {!! csrf_field() !!}
+            {!! csrf_field() !!}
             <div><hr></div>
 
             <div class="row">
