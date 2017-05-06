@@ -1,11 +1,11 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\InvoiceVersion;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\Resource;
+use \BynqIO\Dynq\Models\PartType;
+use \BynqIO\Dynq\Models\Invoice;
+use \BynqIO\Dynq\Models\Offer;
+use \BynqIO\Dynq\Models\InvoiceVersion;
 
 $common_access_error = false;
 $invoice = InvoiceVersion::find(Route::Input('invoice_id'));

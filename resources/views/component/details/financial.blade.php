@@ -1,7 +1,7 @@
 <?php
 
-use BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Models\Invoice;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Invoice;
 
 $offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
 if ($offer_last)

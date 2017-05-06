@@ -1,9 +1,9 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Calculus;
+namespace BynqIO\Dynq\Calculus;
 
-use \BynqIO\CalculatieTool\Models\MoreMaterial;
-use \BynqIO\CalculatieTool\Models\MoreEquipment;
+use BynqIO\Dynq\Models\MoreMaterial;
+use BynqIO\Dynq\Models\MoreEquipment;
 
 class MoreRegister {
 

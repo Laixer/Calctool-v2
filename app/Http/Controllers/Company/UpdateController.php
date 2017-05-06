@@ -4,21 +4,21 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Company;
+namespace BynqIO\Dynq\Http\Controllers\Company;
 
-use BynqIO\CalculatieTool\Models\Audit;
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Models\RelationKind;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Audit;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\RelationKind;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class UpdateController extends Controller
@@ -122,9 +122,8 @@ class UpdateController extends Controller
         // $data = array('email' => Auth::user()->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
         // Mail::send('mail.iban_update', $data, function($message) use ($data) {
         //     $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-        //     $message->subject('BynqIO\CalculatieTool.com - Betaalgegevens aangepast');
-        //     $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-        //     $message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
+        //     $message->subject(config('app.name') . ' - Betaalgegevens aangepast');
+        //     $message->from(APP_EMAIL);
         // });
 
         Audit::CreateEvent('account.iban.update.success', 'IBAN and/or account name updated');

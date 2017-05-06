@@ -4,22 +4,22 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http;
+namespace BynqIO\Dynq\Http;
 
-use BynqIO\CalculatieTool\Http\Middleware\AdminPolicy;
-use BynqIO\CalculatieTool\Http\Middleware\TrimStrings;
-use BynqIO\CalculatieTool\Http\Middleware\Authenticate;
-use BynqIO\CalculatieTool\Http\Middleware\EncryptCookies;
-use BynqIO\CalculatieTool\Http\Middleware\VerifyCsrfToken;
+use BynqIO\Dynq\Http\Middleware\AdminPolicy;
+use BynqIO\Dynq\Http\Middleware\TrimStrings;
+use BynqIO\Dynq\Http\Middleware\Authenticate;
+use BynqIO\Dynq\Http\Middleware\EncryptCookies;
+use BynqIO\Dynq\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
@@ -92,12 +92,12 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'utm' => \BynqIO\CalculatieTool\Http\Middleware\UTMState::class,
-        'auth' => \BynqIO\CalculatieTool\Http\Middleware\Authenticate::class,
-        'payzone' => \BynqIO\CalculatieTool\Http\Middleware\PayRestrict::class,
+        'utm' => \BynqIO\Dynq\Http\Middleware\UTMState::class,
+        'auth' => \BynqIO\Dynq\Http\Middleware\Authenticate::class,
+        'payzone' => \BynqIO\Dynq\Http\Middleware\PayRestrict::class,
         'oauth' => \LucaDegasperi\OAuth2Server\Middleware\OAuthMiddleware::class,
-        'reqcompany' => \BynqIO\CalculatieTool\Http\Middleware\RequireCompany::class,
-        'guest' => \BynqIO\CalculatieTool\Http\Middleware\RedirectIfAuthenticated::class,
+        'reqcompany' => \BynqIO\Dynq\Http\Middleware\RequireCompany::class,
+        'guest' => \BynqIO\Dynq\Http\Middleware\RedirectIfAuthenticated::class,
         'oauth-user' => \LucaDegasperi\OAuth2Server\Middleware\OAuthUserOwnerMiddleware::class,
         'oauth-client' => \LucaDegasperi\OAuth2Server\Middleware\OAuthClientOwnerMiddleware::class,
         'check-authorization-params' => \LucaDegasperi\OAuth2Server\Middleware\CheckAuthCodeRequestMiddleware::class,

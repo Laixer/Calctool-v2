@@ -1,6 +1,6 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Console\Commands;
+namespace BynqIO\Dynq\Console\Commands;
 
 use Illuminate\Console\Command;
 

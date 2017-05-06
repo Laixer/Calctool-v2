@@ -1,29 +1,29 @@
 <?php
 
-use BynqIO\CalculatieTool\Models\Province;
-use BynqIO\CalculatieTool\Models\Country;
-use BynqIO\CalculatieTool\Models\ProjectType;
-use BynqIO\CalculatieTool\Models\RelationType;
-use BynqIO\CalculatieTool\Models\RelationKind;
-use BynqIO\CalculatieTool\Models\ContactFunction;
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\Part;
-use BynqIO\CalculatieTool\Models\PartType;
-use BynqIO\CalculatieTool\Models\Tax;
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Models\Activity;
-use BynqIO\CalculatieTool\Models\CalculationLabor;
-use BynqIO\CalculatieTool\Models\CalculationMaterial;
-use BynqIO\CalculatieTool\Models\CalculationEquipment;
-use BynqIO\CalculatieTool\Models\EstimateLabor;
-use BynqIO\CalculatieTool\Models\EstimateMaterial;
-use BynqIO\CalculatieTool\Models\EstimateEquipment;
-use BynqIO\CalculatieTool\Models\Detail;
-use BynqIO\CalculatieTool\Models\MoreLabor;
-use BynqIO\CalculatieTool\Models\MoreMaterial;
-use BynqIO\CalculatieTool\Models\MoreEquipment;
+use BynqIO\Dynq\Models\Province;
+use BynqIO\Dynq\Models\Country;
+use BynqIO\Dynq\Models\ProjectType;
+use BynqIO\Dynq\Models\RelationType;
+use BynqIO\Dynq\Models\RelationKind;
+use BynqIO\Dynq\Models\ContactFunction;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\Tax;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\CalculationMaterial;
+use BynqIO\Dynq\Models\CalculationEquipment;
+use BynqIO\Dynq\Models\EstimateLabor;
+use BynqIO\Dynq\Models\EstimateMaterial;
+use BynqIO\Dynq\Models\EstimateEquipment;
+use BynqIO\Dynq\Models\Detail;
+use BynqIO\Dynq\Models\MoreLabor;
+use BynqIO\Dynq\Models\MoreMaterial;
+use BynqIO\Dynq\Models\MoreEquipment;
 
 
 /*

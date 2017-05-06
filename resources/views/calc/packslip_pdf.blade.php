@@ -1,17 +1,17 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\CalculationMaterial;
-use \BynqIO\CalculatieTool\Models\CalculationEquipment;
-use \BynqIO\CalculatieTool\Models\EstimateMaterial;
-use \BynqIO\CalculatieTool\Models\EstimateEquipment;
-use \BynqIO\CalculatieTool\Models\MoreMaterial;
-use \BynqIO\CalculatieTool\Models\MoreEquipment;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Part;
+use \BynqIO\Dynq\Models\Activity;
+use \BynqIO\Dynq\Models\Chapter;
+use \BynqIO\Dynq\Models\Resource;
+use \BynqIO\Dynq\Models\PartType;
+use \BynqIO\Dynq\Models\CalculationMaterial;
+use \BynqIO\Dynq\Models\CalculationEquipment;
+use \BynqIO\Dynq\Models\EstimateMaterial;
+use \BynqIO\Dynq\Models\EstimateEquipment;
+use \BynqIO\Dynq\Models\MoreMaterial;
+use \BynqIO\Dynq\Models\MoreEquipment;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\Part;
 
 $project = Project::find($project_id);
 

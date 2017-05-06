@@ -1,6 +1,6 @@
-@inject('relationType', 'BynqIO\CalculatieTool\Models\RelationType')
-@inject('province', 'BynqIO\CalculatieTool\Models\Province')
-@inject('country', 'BynqIO\CalculatieTool\Models\Country')
+@inject('relationType', 'BynqIO\Dynq\Models\RelationType')
+@inject('province', 'BynqIO\Dynq\Models\Province')
+@inject('country', 'BynqIO\Dynq\Models\Country')
 
 @extends('company.layout', ['page' => 'details'])
 

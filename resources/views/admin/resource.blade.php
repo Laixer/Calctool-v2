@@ -1,7 +1,7 @@
 <?php
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\Dynq\Models\Resource;
+use \BynqIO\Dynq\Models\User;
+use \BynqIO\Dynq\Models\Project;
 ?>
 
 @extends('layout.master')

@@ -5,9 +5,9 @@
 @section('relation_content')
 
 <?php
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\ContactFunction;
-use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\Dynq\Models\Contact;
+use \BynqIO\Dynq\Models\ContactFunction;
+use \BynqIO\Dynq\Models\Relation;
 $relation = Relation::find(Route::Input('relation_id'));
 ?>
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Exceptions;
+namespace BynqIO\Dynq\Exceptions;
 
 use Exception;
 use Psr\Log\LoggerInterface;

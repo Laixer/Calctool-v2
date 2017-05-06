@@ -1,6 +1,6 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\WholesaleType;
+use \BynqIO\Dynq\Models\WholesaleType;
 ?>
 
 @extends('layout.master')

@@ -55,7 +55,7 @@
             "app/helpers.php"
         ],
         "psr-4": {
-            "BynqIO\\CalculatieTool\\": "app/"
+            "BynqIO\\Dynq\\": "app/"
         }
     },
     "autoload-dev": {

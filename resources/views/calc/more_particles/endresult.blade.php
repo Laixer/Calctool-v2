@@ -1,7 +1,7 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Calculus\MoreEndresult;
+use \BynqIO\Dynq\Models\ProjectType;
+use \BynqIO\Dynq\Calculus\MoreEndresult;
 
 $type = ProjectType::find($project->type_id);
 ?>

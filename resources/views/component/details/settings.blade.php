@@ -1,20 +1,20 @@
 <?php
 
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\RelationKind;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\RelationKind;
 
 ?>
 <?php
 
-use BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Models\Invoice;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Invoice;
 
 $offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
 ?>
 
-@inject('province', 'BynqIO\CalculatieTool\Models\Province')
-@inject('country', 'BynqIO\CalculatieTool\Models\Country')
+@inject('province', 'BynqIO\Dynq\Models\Province')
+@inject('country', 'BynqIO\Dynq\Models\Country')
 
 @push('style')
 <link media="all" type="text/css" rel="stylesheet" href="/components/x-editable/dist/bootstrap3-editable/css/bootstrap-editable.css">

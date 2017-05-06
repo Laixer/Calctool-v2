@@ -1,16 +1,16 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Console\Commands;
+namespace BynqIO\Dynq\Console\Commands;
 
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Nathanmac\Utilities\Parser\Parser;
 
-use \BynqIO\CalculatieTool\Models\SubGroup;
-use \BynqIO\CalculatieTool\Models\Wholesale;
-use \BynqIO\CalculatieTool\Models\Product;
-use \BynqIO\CalculatieTool\Models\Supplier;
+use BynqIO\Dynq\Models\SubGroup;
+use BynqIO\Dynq\Models\Wholesale;
+use BynqIO\Dynq\Models\Product;
+use BynqIO\Dynq\Models\Supplier;
 
 use DB;
 

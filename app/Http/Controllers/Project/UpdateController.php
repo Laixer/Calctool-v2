@@ -4,41 +4,41 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Project;
+namespace BynqIO\Dynq\Http\Controllers\Project;
 
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Models\Invoice;
-use BynqIO\CalculatieTool\Models\ProjectType;
-use BynqIO\CalculatieTool\Models\Resource;
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Models\Audit;
-use BynqIO\CalculatieTool\Models\Activity;
-use BynqIO\CalculatieTool\Models\RelationKind;
-use BynqIO\CalculatieTool\Models\FavoriteActivity;
-use BynqIO\CalculatieTool\Models\ProjectShare;
-use BynqIO\CalculatieTool\Http\Controllers\InvoiceController;
-use BynqIO\CalculatieTool\Models\EstimateLabor;
-use BynqIO\CalculatieTool\Models\EstimateMaterial;
-use BynqIO\CalculatieTool\Models\EstimateEquipment;
-use BynqIO\CalculatieTool\Models\MoreLabor;
-use BynqIO\CalculatieTool\Models\MoreMaterial;
-use BynqIO\CalculatieTool\Models\MoreEquipment;
-use BynqIO\CalculatieTool\Models\CalculationLabor;
-use BynqIO\CalculatieTool\Models\CalculationMaterial;
-use BynqIO\CalculatieTool\Models\CalculationEquipment;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Invoice;
+use BynqIO\Dynq\Models\ProjectType;
+use BynqIO\Dynq\Models\Resource;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Audit;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\RelationKind;
+use BynqIO\Dynq\Models\FavoriteActivity;
+use BynqIO\Dynq\Models\ProjectShare;
+use BynqIO\Dynq\Http\Controllers\InvoiceController;
+use BynqIO\Dynq\Models\EstimateLabor;
+use BynqIO\Dynq\Models\EstimateMaterial;
+use BynqIO\Dynq\Models\EstimateEquipment;
+use BynqIO\Dynq\Models\MoreLabor;
+use BynqIO\Dynq\Models\MoreMaterial;
+use BynqIO\Dynq\Models\MoreEquipment;
+use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\CalculationMaterial;
+use BynqIO\Dynq\Models\CalculationEquipment;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -398,8 +398,8 @@ class UpdateController extends Controller
         );
         Mail::send('mail.user_reacted', $data, function($message) use ($data) {
             $message->to($data['email'], strtolower(trim($data['client'])));
-            $message->subject('CalculatieTool.com - Uw vakman heeft gereageerd');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
+            $message->subject(config('app.name') . ' - Uw vakman heeft gereageerd');
+            $message->from(APP_EMAIL);
             $message->replyTo($data['email_from'], $data['mycomp']);
         });
 

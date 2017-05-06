@@ -4,16 +4,16 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Providers;
+namespace BynqIO\Dynq\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -26,20 +26,20 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'BynqIO\CalculatieTool\Events\UserNotification' => [
-            'BynqIO\CalculatieTool\Listeners\SendNotificationMail',
+        'BynqIO\Dynq\Events\UserNotification' => [
+            'BynqIO\Dynq\Listeners\SendNotificationMail',
         ],
-        'BynqIO\CalculatieTool\Events\UserSignup' => [
-            'BynqIO\CalculatieTool\Listeners\UserSignup',
+        'BynqIO\Dynq\Events\UserSignup' => [
+            'BynqIO\Dynq\Listeners\UserSignup',
         ],
-        'BynqIO\CalculatieTool\Events\UserPaymentSuccess' => [
-            'BynqIO\CalculatieTool\Listeners\PaymentSuccess',
+        'BynqIO\Dynq\Events\UserPaymentSuccess' => [
+            'BynqIO\Dynq\Listeners\PaymentSuccess',
         ],
-        'BynqIO\CalculatieTool\Events\UserSubscriptionCanceled' => [
-            'BynqIO\CalculatieTool\Listeners\SubscriptionCanceled',
+        'BynqIO\Dynq\Events\UserSubscriptionCanceled' => [
+            'BynqIO\Dynq\Listeners\SubscriptionCanceled',
         ],        
         'Illuminate\Auth\Events\Login' => [
-            'BynqIO\CalculatieTool\Listeners\LogAuthenticated',
+            'BynqIO\Dynq\Listeners\LogAuthenticated',
         ],
     ];
 

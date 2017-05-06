@@ -41,17 +41,17 @@ $app = new Illuminate\Foundation\Application(
 
 $app->singleton(
     Illuminate\Contracts\Http\Kernel::class,
-    BynqIO\CalculatieTool\Http\Kernel::class
+    BynqIO\Dynq\Http\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Console\Kernel::class,
-    BynqIO\CalculatieTool\Console\Kernel::class
+    BynqIO\Dynq\Console\Kernel::class
 );
 
 $app->singleton(
     Illuminate\Contracts\Debug\ExceptionHandler::class,
-    BynqIO\CalculatieTool\Exceptions\Handler::class
+    BynqIO\Dynq\Exceptions\Handler::class
 );
 
 /*

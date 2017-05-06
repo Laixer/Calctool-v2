@@ -4,34 +4,34 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Auth;
+namespace BynqIO\Dynq\Http\Controllers\Auth;
 
-use BynqIO\CalculatieTool\Events\UserSignup;
-use BynqIO\CalculatieTool\Models\User;
-use BynqIO\CalculatieTool\Models\UserGroup;
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\UserType;
-use BynqIO\CalculatieTool\Models\Audit;
-use BynqIO\CalculatieTool\Models\MessageBox;
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Models\RelationType;
-use BynqIO\CalculatieTool\Models\RelationKind;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\ContactFunction;
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Models\Activity;
-use BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Models\Invoice;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Events\UserSignup;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\UserGroup;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\UserType;
+use BynqIO\Dynq\Models\Audit;
+use BynqIO\Dynq\Models\MessageBox;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\RelationType;
+use BynqIO\Dynq\Models\RelationKind;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\ContactFunction;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Invoice;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 
@@ -520,9 +520,8 @@ class AuthController extends Controller
         );
         Mail::send('mail.confirm', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('BynqIO\CalculatieTool.com - Account activatie');
-            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->subject(config('app.name') . ' - Account activatie');
+            $message->from(APP_EMAIL);
         });
 
         $user->save();
@@ -539,10 +538,9 @@ class AuthController extends Controller
                 'contact_last'=> $contact->lastname
             );
             Mail::send('mail.inform_new_user', $data, function($message) use ($data) {
-                $message->to('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
-                $message->subject('BynqIO\CalculatieTool.com - Account activatie');
-                $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-                $message->replyTo('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                $message->to(ADMIN_EMAIL);
+                $message->subject(config('app.name') . ' - Account activatie');
+                $message->from(APP_EMAIL);
             });
         }
 

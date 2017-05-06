@@ -4,18 +4,18 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Providers;
+namespace BynqIO\Dynq\Providers;
 
-use BynqIO\CalculatieTool\ProjectManager\Providers\FlowServiceProvider as ServiceProvider;
+use BynqIO\Dynq\ProjectManager\Providers\FlowServiceProvider as ServiceProvider;
 
 class FlowServiceProvider extends ServiceProvider
 {
@@ -25,9 +25,9 @@ class FlowServiceProvider extends ServiceProvider
      * @var array
      */
     protected $flow = [
-        'BynqIO\CalculatieTool\ProjectManager\Flow\CalculationFlow',
-        'BynqIO\CalculatieTool\ProjectManager\Flow\DirectWorkFlow',
-        'BynqIO\CalculatieTool\ProjectManager\Flow\QuickInvoiceFlow',
+        'BynqIO\Dynq\ProjectManager\Flow\CalculationFlow',
+        'BynqIO\Dynq\ProjectManager\Flow\DirectWorkFlow',
+        'BynqIO\Dynq\ProjectManager\Flow\QuickInvoiceFlow',
     ];
 
     /**

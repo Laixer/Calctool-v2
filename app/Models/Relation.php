@@ -1,9 +1,9 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Models;
+namespace BynqIO\Dynq\Models;
 
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\Traits\Ownable;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Traits\Ownable;
 use Illuminate\Database\Eloquent\Model;
 
 class Relation extends Model
@@ -38,7 +38,7 @@ class Relation extends Model
     // }
 
     public function kind() {
-        return $this->hasOne('BynqIO\CalculatieTool\Models\RelationKind', 'id', 'kind_id')->first();
+        return $this->hasOne('BynqIO\Dynq\Models\RelationKind', 'id', 'kind_id')->first();
     }
 
     public function isActive() {

@@ -1,12 +1,12 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\Resource;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\Relation;
+use \BynqIO\Dynq\Models\Contact;
+use \BynqIO\Dynq\Models\Invoice;
+use \BynqIO\Dynq\Models\Offer;
+use \BynqIO\Dynq\Models\ProjectType;
+use \BynqIO\Dynq\Models\Resource;
 
 $offer = Offer::find($invoice->offer_id);
 if (!$offer)

@@ -1,6 +1,6 @@
 <?php
-use \BynqIO\CalculatieTool\Models\Payment;
-use \BynqIO\CalculatieTool\Models\User;
+use \BynqIO\Dynq\Models\Payment;
+use \BynqIO\Dynq\Models\User;
 
 $user_id = null;
 $group_id = null;

@@ -1,9 +1,9 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Calculus;
+namespace BynqIO\Dynq\Calculus;
 
-use \BynqIO\CalculatieTool\Models\EstimateMaterial;
-use \BynqIO\CalculatieTool\Models\EstimateEquipment;
+use BynqIO\Dynq\Models\EstimateMaterial;
+use BynqIO\Dynq\Models\EstimateEquipment;
 
 
 

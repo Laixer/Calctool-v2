@@ -1,16 +1,16 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\ContactFunction;
-use \BynqIO\CalculatieTool\Models\RelationKind;
-use \BynqIO\CalculatieTool\Models\RelationType;
-use \BynqIO\CalculatieTool\Models\Province;
-use \BynqIO\CalculatieTool\Models\Country;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\User;
+use \BynqIO\Dynq\Models\Relation;
+use \BynqIO\Dynq\Models\Contact;
+use \BynqIO\Dynq\Models\ContactFunction;
+use \BynqIO\Dynq\Models\RelationKind;
+use \BynqIO\Dynq\Models\RelationType;
+use \BynqIO\Dynq\Models\Province;
+use \BynqIO\Dynq\Models\Country;
+use \BynqIO\Dynq\Models\Invoice;
+use \BynqIO\Dynq\Models\Offer;
 
 $common_access_error = false;
 $relation = Relation::find(Route::Input('relation_id'));

@@ -1,15 +1,15 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Calculus;
+namespace BynqIO\Dynq\Calculus;
 
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\Part;
-use \BynqIO\CalculatieTool\Models\Tax;
-use \BynqIO\CalculatieTool\Models\MoreLabor;
-use \BynqIO\CalculatieTool\Models\MoreMaterial;
-use \BynqIO\CalculatieTool\Models\MoreEquipment;
-use \BynqIO\CalculatieTool\Models\Timesheet;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\Tax;
+use BynqIO\Dynq\Models\MoreLabor;
+use BynqIO\Dynq\Models\MoreMaterial;
+use BynqIO\Dynq\Models\MoreEquipment;
+use BynqIO\Dynq\Models\Timesheet;
 
 /*
  * Eindresultaat

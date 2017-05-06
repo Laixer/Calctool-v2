@@ -1,6 +1,6 @@
 <?php
 
-use BynqIO\CalculatieTool\Models\Resource;
+use BynqIO\Dynq\Models\Resource;
 
 ?>
 

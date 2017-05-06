@@ -4,20 +4,20 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Listeners;
+namespace BynqIO\Dynq\Listeners;
 
-use BynqIO\CalculatieTool\Events\UserSignup as UserSignupEvent;
-use BynqIO\CalculatieTool\Jobs\SendActivationMail;
-use BynqIO\CalculatieTool\Jobs\SendNewUserMail;
+use BynqIO\Dynq\Events\UserSignup as UserSignupEvent;
+use BynqIO\Dynq\Jobs\SendActivationMail;
+use BynqIO\Dynq\Jobs\SendNewUserMail;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

@@ -1,23 +1,23 @@
 <?php
 
-use BynqIO\CalculatieTool\Calculus\CalculationOverview;
-use BynqIO\CalculatieTool\Models\PartType;
-use BynqIO\CalculatieTool\Models\Part;
-use BynqIO\CalculatieTool\Models\Tax;
-use BynqIO\CalculatieTool\Models\Supplier;
-use BynqIO\CalculatieTool\Models\Wholesale;
+use BynqIO\Dynq\Calculus\CalculationOverview;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\Tax;
+use BynqIO\Dynq\Models\Supplier;
+use BynqIO\Dynq\Models\Wholesale;
 
-use BynqIO\CalculatieTool\Models\Product;
-use BynqIO\CalculatieTool\Models\ProductSubGroup;
-use BynqIO\CalculatieTool\Models\ProductGroup;
-use BynqIO\CalculatieTool\Models\ProductSubCategory;
+use BynqIO\Dynq\Models\Product;
+use BynqIO\Dynq\Models\ProductSubGroup;
+use BynqIO\Dynq\Models\ProductGroup;
+use BynqIO\Dynq\Models\ProductSubCategory;
 
-use BynqIO\CalculatieTool\Models\FavoriteActivity;
+use BynqIO\Dynq\Models\FavoriteActivity;
 
-use BynqIO\CalculatieTool\Models\CalculationLabor;
-use BynqIO\CalculatieTool\Calculus\CalculationRegister;
-use BynqIO\CalculatieTool\Models\CalculationMaterial;
-use BynqIO\CalculatieTool\Models\CalculationEquipment;
+use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Calculus\CalculationRegister;
+use BynqIO\Dynq\Models\CalculationMaterial;
+use BynqIO\Dynq\Models\CalculationEquipment;
 
 ?>
 
@@ -31,20 +31,20 @@ $(document).ready(function() {
 
     /* Convert string to float */
     function parseNumber(number) {
-        return parseFloat($.number(number, 3, '.', ''));
+        return parseFloat($.number(number, 3, '.', ''));//TODO
     }
 
     /* Convert and format string */
     function convertNumber(number) {
-        return $.number(number, 3, ',', '.');
+        return $.number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('number') !!});
     }
 
     /* Save toggle state to session */
-    $('.toggle').click(function(e){
+    $('.toggle-{{ $section }}').click(function(e){
         $id = $(this).attr('id');
         if ($(this).hasClass('active')) {
-            if (sessionStorage.toggleOpen{{ Auth::id() }}) {
-                $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{ Auth::id() }});
+            if (sessionStorage.toggleOpen{{ $component . $section . Auth::id() }}) {
+                $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{ $component . $section . Auth::id() }});
             } else {
                 $toggleOpen = [];
             }
@@ -56,29 +56,29 @@ $(document).ready(function() {
                     $toggleOpen.push($id);
                 }
             }
-            sessionStorage.toggleOpen{{ Auth::id() }} = JSON.stringify($toggleOpen);
+            sessionStorage.toggleOpen{{ $component . $section . Auth::id() }} = JSON.stringify($toggleOpen);
         } else {
             $tmpOpen = [];
-            if (sessionStorage.toggleOpen{{ Auth::id() }}){
-                $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{ Auth::id() }});
+            if (sessionStorage.toggleOpen{{ $component . $section . Auth::id() }}){
+                $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{ $component . $section . Auth::id() }});
                 for(var i in $toggleOpen){
                     if ($toggleOpen[i] != $id) {
                         $tmpOpen.push($toggleOpen[i]);
                     }
                 }
             }
-            sessionStorage.toggleOpen{{ Auth::id() }} = JSON.stringify($tmpOpen);
+            sessionStorage.toggleOpen{{ $component . $section . Auth::id() }} = JSON.stringify($tmpOpen);
         }
     });
-    if (sessionStorage.toggleOpen{{ Auth::id() }}){
-        $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{ Auth::id() }});
-        for (var i in $toggleOpen){
+    if (sessionStorage.toggleOpen{{ $component . $section . Auth::id() }}){
+        $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{ $component . $section . Auth::id() }});
+        for (var i in $toggleOpen) {
             $('#' + $toggleOpen[i]).addClass('active').children('.toggle-content').toggle();
         }
     }
 
     /* Auto format numbers */
-    $(".form-control-sm-number").number(true, 3, ',', '.');
+    $(".form-control-sm-number").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
 
     /* Append new rows */
     $("body").on("blur", ".newrow", function() {
@@ -89,7 +89,7 @@ $(document).ready(function() {
                 $curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function() {
                     $(this).val("").removeClass("error-input").attr("id", function(_, id) { return id + i });
                 }).end().find(".total-ex-tax, .total-incl-tax").text("").end().find(".form-control-sm-number").each(function() {
-                    $(this).number(true, 3, ',', '.');
+                    $(this).number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
                 }).end().appendTo($curTable);
                 $("button[data-target='#myModal']").on("click", function() {
                     $newinputtr = $(this).closest("tr");
@@ -171,6 +171,7 @@ $(document).ready(function() {
 </div>
 @endsection
 
+{{-- TODO: move into module --}}
 <div class="modal fade" id="nameChangeChapModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -421,16 +422,17 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+{{-- /TODO: move into module --}}
 
 <div class="toogle">
     @foreach ($project->chapters()->orderBy('priority')->get() as $chapter)
-    <div id="toggle-chapter-{{ $chapter->id }}" class="toggle toggle-chapter">
+    <div id="toggle-chapter-{{ $section }}-{{ $chapter->id }}" class="toggle toggle-{{ $section }} toggle-chapter">
         <label>{{ $chapter->chapter_name }}</label>
         <div class="toggle-content" style="padding: 5px 10px;">
 
             {{-- Activity body --}}
             <div class="toogle">
-                @foreach ($chapter->activities()->whereNull('detail_id')->where('part_type_id',PartType::where('type_name','calculation')->first()->id)->orderBy('priority')->get() as $activity)
+                @foreach ($filter($section, $chapter->activities())->get() as $activity)
                 <?php
                 if (Part::find($activity->part_id)->part_name == 'contracting') {
                     $profit_mat = $project->profit_calc_contr_mat;
@@ -442,10 +444,13 @@ $(document).ready(function() {
                     $activity_total = CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip);
                 }
                 ?>
-                <div id="toggle-activity-{{ $activity->id }}" class="toggle toggle-activity">
+                <div id="toggle-activity-{{ $section }}-{{ $activity->id }}" class="toggle toggle-{{ $section }} toggle-activity">
                     <label>
                         <span>{{ $activity->activity_name }}</span>
-                        <span style="float:right;margin-right:30px;"><span class="label-custom">Onderaanneming</span>{{ '&euro; ' . number_format($activity_total, 2, ",",".") }}</span>
+                        @if ($activity->isSubcontracting())
+                        <span class="label-custom">Onderaanneming</span>
+                        @endif
+                        <span style="float:right;margin-right:30px;">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($activity_total) }}</span>
                     </label>
                     <div class="toggle-content" style="padding:10px 0px">
 
@@ -469,8 +474,8 @@ $(document).ready(function() {
                                         <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename"><i class="fa fa-pencil-square-o" style="padding-right:5px">&nbsp;</i>Naam wijzigen</a></li>
                                         <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename"><i class="fa fa-file-text-o" style="padding-right:5px">&nbsp;</i>Omschrijving</a></li>
                                         <li><a href="#" data-id="{{ $activity->id }}" class="lsavefav"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
-                                        <li><a href="#" data-id="{{ $activity->id }}" class="moveupactivity"><i class="fa fa-arrow-up" style="padding-right:5px">&nbsp;</i>Verplaats omhoog</a></li>
-                                        <li><a href="#" data-id="{{ $activity->id }}" class="movedownactivity"><i class="fa fa-arrow-down" style="padding-right:5px">&nbsp;</i>Verplaats omlaag</a></li>
+                                        <li><a href="/project/level/move?activity={{ $activity->id }}&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up" style="padding-right:5px">&nbsp;</i>Verplaats omhoog</a></li>
+                                        <li><a href="/project/level/move?activity={{ $activity->id }}&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down" style="padding-right:5px">&nbsp;</i>Verplaats omlaag</a></li>
                                         <li><a href="/project/level/delete?activity={{ $activity->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Werkzaamheid verwijderen?')"><i class="fa fa-times" style="padding-right:5px">&nbsp;</i>Verwijderen</a></li>
                                     </ul>
                                 </div>
@@ -581,6 +586,8 @@ $(document).ready(function() {
                                     <td class="col-md-1"><span class="total-ex-tax"></span></td>
                                     <td class="col-md-1"><span class="total-incl-tax"></span></td>
                                     <td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
+                                        <button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+                                        <button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
                                         <button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
                                     </td>
                                 </tr>
@@ -776,6 +783,7 @@ $(document).ready(function() {
                             <input type="hidden" name="project" value="{{ $project->id }}">
                             <input type="hidden" name="chapter" value="{{ $chapter->id }}">
                             <input type="hidden" name="level" value="2">
+                            <input type="hidden" name="type" value="{{ $section == 'estimate' ? 'estimate' : 'calculation' }}">
                             <input type="text" maxlength="100" class="form-control" name="name" id="name" value="" placeholder="Nieuwe Werkzaamheid">
                             <span class="input-group-btn">
                                 <button class="btn btn-primary btn-primary-activity"><i class="fa fa-plus">&nbsp;&nbsp;</i> Voeg toe</button>
@@ -794,8 +802,8 @@ $(document).ready(function() {
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
                             <ul class="dropdown-menu">
                             <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></li>
-                            <li><a href="#" data-id="{{ $chapter->id }}" class="moveupchap"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
-                            <li><a href="#" data-id="{{ $chapter->id }}" class="movedownchap"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
+                            <li><a href="/project/level/move?chapter={{ $chapter->id }}&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
+                            <li><a href="/project/level/move?chapter={{ $chapter->id }}&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
                             <li><a href="/project/level/delete?chapter={{ $chapter->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Hoofdstuk verwijderen?')"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>
                             </ul>
                         </div>
@@ -810,6 +818,7 @@ $(document).ready(function() {
     @endforeach
 </div>
 
+{{-- Project options --}}
 <form method="POST" action="/project/level/new" accept-charset="UTF-8">
     {!! csrf_field() !!}
 
@@ -846,3 +855,4 @@ $(document).ready(function() {
     @endif
 
 </form>
+{{-- /Project options --}}

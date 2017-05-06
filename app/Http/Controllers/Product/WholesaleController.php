@@ -4,20 +4,20 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Product;
+namespace BynqIO\Dynq\Http\Controllers\Product;
 
-use BynqIO\CalculatieTool\Models\Wholesale;
-use BynqIO\CalculatieTool\Models\WholesaleType;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Wholesale;
+use BynqIO\Dynq\Models\WholesaleType;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use \Auth;

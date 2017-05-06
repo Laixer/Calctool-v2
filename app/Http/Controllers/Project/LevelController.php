@@ -4,32 +4,32 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Project;
+namespace BynqIO\Dynq\Http\Controllers\Project;
 
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Models\Activity;
-use BynqIO\CalculatieTool\Models\Tax;
-use BynqIO\CalculatieTool\Models\Part;
-use BynqIO\CalculatieTool\Models\PartType;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\Tax;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class LevelController extends Controller
 {
-    protected function newActivity($project, $chapter, $name)
+    protected function newActivity($project, $chapter, $name, $type)
     {
         $part = Part::where('part_name', 'contracting')->firstOrFail();
-        $part_type = PartType::where('type_name', 'calculation')->firstOrFail();
+        $part_type = PartType::where('type_name', $type)->firstOrFail();
 
         if ($project->tax_reverse) {
             $tax = Tax::where('tax_rate', 0)->firstOrFail();
@@ -40,7 +40,7 @@ class LevelController extends Controller
         $last_activity = $chapter->activities()->where('chapter_id', $chapter->id)
             ->where('part_type_id', $part_type->id)
             ->orderBy('priority', 'desc')
-            ->firstOrFail();
+            ->first();
 
         Activity::create([
             'activity_name'    => $name,
@@ -63,6 +63,11 @@ class LevelController extends Controller
             'priority'     => $last_chaper ? $last_chaper->priority + 1 : 0,
             'project_id'   => $project->id,
         ]);
+    }
+
+    public function renameLevel(Request $request)
+    {
+        //TODO
     }
 
     public function newLevel(Request $request)
@@ -91,7 +96,7 @@ class LevelController extends Controller
                 $this->newChapter($project, $request->get('name'));
                 break;
             case 2:
-                $this->newActivity($project, $chapter, $request->get('name'));
+                $this->newActivity($project, $chapter, $request->get('name'), $request->get('type'));
                 break;
         }
 

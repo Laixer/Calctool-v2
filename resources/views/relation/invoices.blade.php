@@ -5,10 +5,10 @@
 @section('relation_content')
 
 <?php
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\Project;
+use \BynqIO\Dynq\Models\Relation;
+use \BynqIO\Dynq\Models\Invoice;
+use \BynqIO\Dynq\Models\Offer;
+use \BynqIO\Dynq\Models\Project;
 $relation = Relation::find(Route::Input('relation_id'));
 ?>
 

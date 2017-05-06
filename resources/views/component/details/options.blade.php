@@ -1,19 +1,19 @@
 <?php
 
-use BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Models\Invoice;
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Models\Activity;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Invoice;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Activity;
 
-use BynqIO\CalculatieTool\Models\EstimateLabor;
-use BynqIO\CalculatieTool\Models\EstimateMaterial;
-use BynqIO\CalculatieTool\Models\EstimateEquipment;
-use BynqIO\CalculatieTool\Models\MoreLabor;
-use BynqIO\CalculatieTool\Models\MoreMaterial;
-use BynqIO\CalculatieTool\Models\MoreEquipment;
-use BynqIO\CalculatieTool\Models\CalculationLabor;
-use BynqIO\CalculatieTool\Models\CalculationMaterial;
-use BynqIO\CalculatieTool\Models\CalculationEquipment;
+use BynqIO\Dynq\Models\EstimateLabor;
+use BynqIO\Dynq\Models\EstimateMaterial;
+use BynqIO\Dynq\Models\EstimateEquipment;
+use BynqIO\Dynq\Models\MoreLabor;
+use BynqIO\Dynq\Models\MoreMaterial;
+use BynqIO\Dynq\Models\MoreEquipment;
+use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\CalculationMaterial;
+use BynqIO\Dynq\Models\CalculationEquipment;
 
 $offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
 if ($offer_last)

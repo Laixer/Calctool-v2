@@ -1,9 +1,9 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\ProjectType;
+use BynqIO\Dynq\Calculus\CalculationEndresult;
 
 $offer_last = Offer::where('project_id','=',$project->id)->orderBy('created_at', 'desc')->first();
 ?>

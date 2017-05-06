@@ -59,19 +59,19 @@ $(document).ready(function() {
 
             <?php
             if ($all) {
-                $selection_today = \BynqIO\CalculatieTool\Models\User::whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
-                $selection_week = \BynqIO\CalculatieTool\Models\User::whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
-                $selection_other = \BynqIO\CalculatieTool\Models\User::whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at')->orderBy('online_at','desc')->get();
+                $selection_today = \BynqIO\Dynq\Models\User::whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
+                $selection_week = \BynqIO\Dynq\Models\User::whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
+                $selection_other = \BynqIO\Dynq\Models\User::whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at')->orderBy('online_at','desc')->get();
             } else if (!empty($group)) {
-                $selection_today = \BynqIO\CalculatieTool\Models\User::where('user_group', $group)->whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
-                $selection_week = \BynqIO\CalculatieTool\Models\User::where('user_group', $group)->whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
-                $selection_other = \BynqIO\CalculatieTool\Models\User::where('user_group', $group)->Where(function($query) {
+                $selection_today = \BynqIO\Dynq\Models\User::where('user_group', $group)->whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
+                $selection_week = \BynqIO\Dynq\Models\User::where('user_group', $group)->whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
+                $selection_other = \BynqIO\Dynq\Models\User::where('user_group', $group)->Where(function($query) {
                     $query->whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at');
                 })->orderBy('online_at','desc')->get();
             } else {
-                $selection_today = \BynqIO\CalculatieTool\Models\User::where('active','true')->whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
-                $selection_week = \BynqIO\CalculatieTool\Models\User::where('active','true')->whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
-                $selection_other = \BynqIO\CalculatieTool\Models\User::where('active','true')->Where(function($query) {
+                $selection_today = \BynqIO\Dynq\Models\User::where('active','true')->whereRaw("DATE(online_at) = current_date")->orderBy('online_at','desc')->get();
+                $selection_week = \BynqIO\Dynq\Models\User::where('active','true')->whereRaw("DATE(online_at) < current_date")->whereRaw("\"online_at\" > NOW() - '1 week'::INTERVAL")->orderBy('online_at','desc')->get();
+                $selection_other = \BynqIO\Dynq\Models\User::where('active','true')->Where(function($query) {
                     $query->whereRaw("\"online_at\" < NOW() - '1 week'::INTERVAL")->orWhereNull('online_at');
                 })->where('login_count','>',1)->orderBy('online_at','desc')->get();
             }
@@ -118,8 +118,8 @@ $(document).ready(function() {
                         <i class="fa fa-exclamation" aria-hidden="true"></i> 
                         @endif
                         </td>
-                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\CalculatieTool\Models\UserType::find($users->user_type)->user_type) }}</td>
-                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\CalculatieTool\Models\UserGroup::find($users->user_group)->name) }}</td>
+                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\Dynq\Models\UserType::find($users->user_type)->user_type) }}</td>
+                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\Dynq\Models\UserGroup::find($users->user_group)->name) }}</td>
                         <td class="col-md-1 hidden-xs">{{ $users->tag ? $users->tag->name : '-' }}</td>
                     </tr>
                 @endforeach
@@ -165,8 +165,8 @@ $(document).ready(function() {
                         <i class="fa fa-exclamation" aria-hidden="true"></i> 
                         @endif
                         </td>
-                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\CalculatieTool\Models\UserType::find($users->user_type)->user_type) }}</td>
-                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\CalculatieTool\Models\UserGroup::find($users->user_group)->name) }}</td>
+                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\Dynq\Models\UserType::find($users->user_type)->user_type) }}</td>
+                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\Dynq\Models\UserGroup::find($users->user_group)->name) }}</td>
                         <td class="col-md-1 hidden-xs">{{ $users->tag ? $users->tag->name : '-' }}</td>
                     </tr>
                 @endforeach
@@ -212,8 +212,8 @@ $(document).ready(function() {
                         <i class="fa fa-exclamation" aria-hidden="true"></i> 
                         @endif
                         </td>
-                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\CalculatieTool\Models\UserType::find($users->user_type)->user_type) }}</td>
-                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\CalculatieTool\Models\UserGroup::find($users->user_group)->name) }}</td>
+                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\Dynq\Models\UserType::find($users->user_type)->user_type) }}</td>
+                        <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\Dynq\Models\UserGroup::find($users->user_group)->name) }}</td>
                         <td class="col-md-1 hidden-xs">{{ $users->tag ? $users->tag->name : '-' }}</td>
                     </tr>
                 @endforeach

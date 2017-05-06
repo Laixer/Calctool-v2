@@ -4,44 +4,44 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Admin;
+namespace BynqIO\Dynq\Http\Controllers\Admin;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use BynqIO\CalculatieTool\Events\UserNotification;
-use BynqIO\CalculatieTool\Models\SysMessage;
-use BynqIO\CalculatieTool\Models\Payment;
-use BynqIO\CalculatieTool\Models\User;
-use BynqIO\CalculatieTool\Models\UserType;
-use BynqIO\CalculatieTool\Models\UserTag;
-use BynqIO\CalculatieTool\Models\UserGroup;
-use BynqIO\CalculatieTool\Models\OfferPost;
-use BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Models\Invoice;
-use BynqIO\CalculatieTool\Models\InvoicePost;
-use BynqIO\CalculatieTool\Models\Resource;
-use BynqIO\CalculatieTool\Models\MessageBox;
-use BynqIO\CalculatieTool\Models\Product;
-use BynqIO\CalculatieTool\Models\Audit;
-use BynqIO\CalculatieTool\Models\Wholesale;
-use BynqIO\CalculatieTool\Models\Supplier;
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Promotion;
-use BynqIO\CalculatieTool\Models\AdminLog;
-use BynqIO\CalculatieTool\Models\ProductGroup;
-use BynqIO\CalculatieTool\Models\ProductCategory;
-use BynqIO\CalculatieTool\Models\ProductSubCategory;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Events\UserNotification;
+use BynqIO\Dynq\Models\SysMessage;
+use BynqIO\Dynq\Models\Payment;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\UserType;
+use BynqIO\Dynq\Models\UserTag;
+use BynqIO\Dynq\Models\UserGroup;
+use BynqIO\Dynq\Models\OfferPost;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Invoice;
+use BynqIO\Dynq\Models\InvoicePost;
+use BynqIO\Dynq\Models\Resource;
+use BynqIO\Dynq\Models\MessageBox;
+use BynqIO\Dynq\Models\Product;
+use BynqIO\Dynq\Models\Audit;
+use BynqIO\Dynq\Models\Wholesale;
+use BynqIO\Dynq\Models\Supplier;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Promotion;
+use BynqIO\Dynq\Models\AdminLog;
+use BynqIO\Dynq\Models\ProductGroup;
+use BynqIO\Dynq\Models\ProductCategory;
+use BynqIO\Dynq\Models\ProductSubCategory;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Database\Templates\DemoProjectTemplate;
 use Database\Templates\ValidationProjectTemplate;
 
@@ -147,9 +147,8 @@ class AdminController extends Controller
             $data = array('email' => $user->email, 'amount' => number_format($order->amount, 2,",","."), 'firstname' => $user->firstname, 'lastname' => $user->lastname);
             Mail::send('mail.refund', $data, function($message) use ($data) {
                 $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-                $message->subject('BynqIO\CalculatieTool.com - Terugstorting');
-                $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-                $message->replyTo('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                $message->subject(config('app.name') . ' - Terugstorting');
+                $message->from(APP_EMAIL);
             });
 
             $user->save();
@@ -559,7 +558,7 @@ class AdminController extends Controller
 
         $message = new MessageBox;
         $message->subject = 'Offerte ' . $project->project_name;
-        $message->message = 'De offerte voor ' . $project->project_name . ' is met de post verstuurd door de BynqIO\CalculatieTool.com.';
+        $message->message = 'De offerte voor ' . $project->project_name . ' is met de post verstuurd door ' . config('app.name');
         $message->from_user = User::where('username', 'admin')->first()['id'];
         $message->user_id =	$project->user_id;
 
@@ -587,7 +586,7 @@ class AdminController extends Controller
 
         $message = new MessageBox;
         $message->subject = 'Factuur ' . $project->project_name;
-        $message->message = 'De factuur voor ' . $project->project_name . ' is met de post verstuurd door de BynqIO\CalculatieTool.com.';
+        $message->message = 'De factuur voor ' . $project->project_name . ' is met de post verstuurd door ' . config('app.name');
         $message->from_user = User::where('username', 'admin')->first()['id'];
         $message->user_id =	$project->user_id;
 
@@ -887,9 +886,8 @@ class AdminController extends Controller
         );
         Mail::send('mail.password', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('BynqIO\CalculatieTool.com - Wachtwoord herstellen');
-            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->subject(config('app.name') . ' - Wachtwoord herstellen');
+            $message->from(APP_EMAIL);
         });
 
         $user->save();

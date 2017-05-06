@@ -1,6 +1,6 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Models;
+namespace BynqIO\Dynq\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -16,5 +16,10 @@ class Activity extends Model {
     // public function tax() {
     //     return $this->hasOne('Tax', 'id', 'tax_id');
     // }
+
+    public function isSubcontracting()
+    {
+        return Part::findOrFail($this->part_id)->part_name == 'subcontracting';
+    }
 
 }

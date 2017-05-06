@@ -1,7 +1,7 @@
 <?php
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\UserGroup;
-use \BynqIO\CalculatieTool\Models\MessageBox;
+use \BynqIO\Dynq\Models\User;
+use \BynqIO\Dynq\Models\UserGroup;
+use \BynqIO\Dynq\Models\MessageBox;
 
 ?>
 

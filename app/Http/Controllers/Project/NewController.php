@@ -4,28 +4,28 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Project;
+namespace BynqIO\Dynq\Http\Controllers\Project;
 
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Models\Invoice;
-use BynqIO\CalculatieTool\Models\ProjectType;
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Models\Audit;
-use BynqIO\CalculatieTool\Models\RelationKind;
-use BynqIO\CalculatieTool\Http\Controllers\InvoiceController;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Invoice;
+use BynqIO\Dynq\Models\ProjectType;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Audit;
+use BynqIO\Dynq\Models\RelationKind;
+use BynqIO\Dynq\Http\Controllers\InvoiceController;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class NewController extends Controller

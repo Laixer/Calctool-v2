@@ -4,18 +4,18 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Jobs;
+namespace BynqIO\Dynq\Jobs;
 
-use BynqIO\CalculatieTool\Jobs\Job;
+use BynqIO\Dynq\Jobs\Job;
 use Illuminate\Bus\Queueable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -75,10 +75,9 @@ class SendNewUserMail extends Job implements ShouldQueue
     {
         $data = $this->data;
         Mail::send('mail.inform_new_user', $data, function($message) use ($data) {
-            $message->to('administratie@calculatietool.com', 'CalculatieTool.com');
-            $message->subject('CalculatieTool.com - Account activatie');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
-            $message->replyTo('administratie@calculatietool.com', 'CalculatieTool.com');
+            $message->to(ADMIN_EMAIL);
+            $message->subject(config('app.name') . ' - Account activatie');
+            $message->from(APP_EMAIL);
         });
     }
 }

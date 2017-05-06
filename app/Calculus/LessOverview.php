@@ -1,14 +1,14 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Calculus;
+namespace BynqIO\Dynq\Calculus;
 
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\CalculationLabor;
-use \BynqIO\CalculatieTool\Models\CalculationMaterial;
-use \BynqIO\CalculatieTool\Models\CalculationEquipment;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\Part;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\CalculationMaterial;
+use BynqIO\Dynq\Models\CalculationEquipment;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\Part;
 
 /*
  * Uittrekstaat

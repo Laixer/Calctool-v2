@@ -1,6 +1,6 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Providers;
+namespace BynqIO\Dynq\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
@@ -14,7 +14,7 @@ class ComposerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        view()->composer('layout.header', 'BynqIO\CalculatieTool\Http\Composers\HeaderComposer');
+        view()->composer('layout.header', 'BynqIO\Dynq\Http\Composers\HeaderComposer');
 
         Blade::directive('logo', function () {
             if (!defined('APP_LOGO')) {

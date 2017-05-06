@@ -217,15 +217,15 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
     Route::group(['namespace' => 'Calculation'], function() {
 
         /* Routes by CalcController */
-        Route::post('calculation/newchapter/{project_id}',        'CalcController@doNewChapter');
-        Route::post('calculation/calc/newactivity/{chapter_id}',  'CalcController@doNewCalculationActivity')->where('chapter_id', '[0-9]+');
-        Route::post('calculation/estim/newactivity/{chapter_id}', 'CalcController@doNewEstimateActivity')->where('chapter_id', '[0-9]+');
+        // Route::post('calculation/newchapter/{project_id}',        'CalcController@doNewChapter');
+        // Route::post('calculation/calc/newactivity/{chapter_id}',  'CalcController@doNewCalculationActivity')->where('chapter_id', '[0-9]+');
+        // Route::post('calculation/estim/newactivity/{chapter_id}', 'CalcController@doNewEstimateActivity')->where('chapter_id', '[0-9]+');
         Route::post('calculation/updatepart',                     'CalcController@doUpdatePart');
         Route::post('calculation/updatetax',                      'CalcController@doUpdateTax');
         Route::post('calculation/updateestimatetax',              'CalcController@doUpdateEstimateTax');
         Route::post('calculation/noteactivity',                   'CalcController@doUpdateNote');
-        Route::post('calculation/deleteactivity',                 'CalcController@doDeleteActivity');
-        Route::post('calculation/deletechapter',                  'CalcController@doDeleteChapter');
+        // Route::post('calculation/deleteactivity',                 'CalcController@doDeleteActivity');
+        // Route::post('calculation/deletechapter',                  'CalcController@doDeleteChapter');
         Route::post('calculation/moveactivity',                   'CalcController@doMoveActivity');
         Route::post('calculation/movechapter',                    'CalcController@doMoveChapter');
         Route::post('calculation/activity/usetimesheet',          'CalcController@doUpdateUseTimesheet');
@@ -278,8 +278,10 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
 
         /* Calculation pages */
         Route::get('calculation/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getCalculationWithFavorite');
+
         Route::get('calculation/summary/project-{project_id}',    'CalcController@getCalculationSummary');
         Route::get('calculation/endresult/project-{project_id}',  'CalcController@getCalculationEndresult');
+
         Route::get('blancrow/project-{project_id}',               'BlancController@getBlanc');
         Route::get('estimate/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getEstimateWithFavorite');
         Route::get('estimate/summary/project-{project_id}',       'CalcController@getEstimateSummary');
@@ -324,7 +326,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('more/deletematerial',                       'MoreController@doDeleteMaterial');
         Route::post('more/deleteequipment',                      'MoreController@doDeleteEquipment');
         Route::post('more/deletelabor',                          'MoreController@doDeleteLabor');
-        Route::post('more/newactivity/{chapter_id}',             'MoreController@doNewActivity')->where('chapter_id', '[0-9]+');
+        // Route::post('more/newactivity/{chapter_id}',             'MoreController@doNewActivity')->where('chapter_id', '[0-9]+');
         Route::post('more/newchapter/{project_id}',              'MoreController@doNewChapter');
         Route::post('more/deletechapter',                        'MoreController@doDeleteChapter');
         Route::post('more/moveactivity',                         'MoreController@doMoveActivity');
@@ -335,6 +337,9 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('project/all',                                          'ListController');
         Route::get('project/new',                                          'NewController@index');
         Route::post('project/new',                                         'NewController@new');
+
+        Route::get('project/{project_id}-{name}/packingslip',              'ReportController@packingSlip');
+        Route::get('project/{project_id}-{name}/printoverview',            'ReportController@printOverview');
 
         Route::get('project/{project_id}-{name}/{module}/{submodule?}',    'ComponentController@index');
         // Route::get('project/{project_id}-{name}/calculation',              'CalcController@getCalculation');
@@ -358,8 +363,6 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('project/close',                                        'UpdateController@updateProjectClose');
         Route::get('project/cancel'                    ,                   'UpdateController@cancel');
         Route::get('project/copy',                                         'CopyController');
-        Route::get('project/{project_id}-{name}/packingslip',              'ReportController@packingSlip');
-        Route::get('project/{project_id}-{name}/printoverview',            'ReportController@printOverview');
         Route::post('project/document/upload',                             'DocumentController');
     });
 

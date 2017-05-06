@@ -4,19 +4,19 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Listeners;
+namespace BynqIO\Dynq\Listeners;
 
-use BynqIO\CalculatieTool\Events\UserPaymentSuccess as UserPaymentSuccessEvent;
-use BynqIO\CalculatieTool\Jobs\CreatePaymentInvoice;
+use BynqIO\Dynq\Events\UserPaymentSuccess as UserPaymentSuccessEvent;
+use BynqIO\Dynq\Jobs\CreatePaymentInvoice;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 

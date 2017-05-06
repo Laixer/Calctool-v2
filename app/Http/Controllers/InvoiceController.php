@@ -4,31 +4,31 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers;
+namespace BynqIO\Dynq\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\InvoiceVersion;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\InvoicePost;
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\UserType;
-use \BynqIO\CalculatieTool\Models\MessageBox;
-use \BynqIO\CalculatieTool\Calculus\InvoiceTerm;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Invoice;
+use BynqIO\Dynq\Models\InvoiceVersion;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Resource;
+use BynqIO\Dynq\Models\InvoicePost;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\UserType;
+use BynqIO\Dynq\Models\MessageBox;
+use BynqIO\Dynq\Calculus\InvoiceTerm;
 
 use \Auth;
 use \PDF;
@@ -683,10 +683,9 @@ class InvoiceController extends Controller {
             'user' => $user->username
         );
         Mail::send('mail.print', $data, function($message) use ($data) {
-            $message->to('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
-            $message->subject('BynqIO\CalculatieTool.com - Printopdracht');
-            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->to(ADMIN_EMAIL);
+            $message->subject(config('app.name') . ' - Printopdracht');
+            $message->from(APP_EMAIL);
         });
 
         return response()->json(['success' => 1]);

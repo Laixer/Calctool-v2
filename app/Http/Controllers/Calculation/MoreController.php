@@ -4,35 +4,35 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Calculation;
+namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
 use Illuminate\Http\Request;
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\FavoriteActivity;
-use \BynqIO\CalculatieTool\Models\Detail;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\Part;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\Tax;
-use \BynqIO\CalculatieTool\Models\MoreEquipment;
-use \BynqIO\CalculatieTool\Models\MoreLabor;
-use \BynqIO\CalculatieTool\Models\MoreMaterial;
-use \BynqIO\CalculatieTool\Models\FavoriteLabor;
-use \BynqIO\CalculatieTool\Models\FavoriteMaterial;
-use \BynqIO\CalculatieTool\Models\FavoriteEquipment;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\FavoriteActivity;
+use BynqIO\Dynq\Models\Detail;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\ProjectType;
+use BynqIO\Dynq\Models\Tax;
+use BynqIO\Dynq\Models\MoreEquipment;
+use BynqIO\Dynq\Models\MoreLabor;
+use BynqIO\Dynq\Models\MoreMaterial;
+use BynqIO\Dynq\Models\FavoriteLabor;
+use BynqIO\Dynq\Models\FavoriteMaterial;
+use BynqIO\Dynq\Models\FavoriteEquipment;
+use BynqIO\Dynq\Http\Controllers\Controller;
 
 use \Auth;
 

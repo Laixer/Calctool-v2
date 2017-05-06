@@ -4,19 +4,19 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Auth;
+namespace BynqIO\Dynq\Http\Controllers\Auth;
 
-use BynqIO\CalculatieTool\Models\Audit;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Audit;
+use BynqIO\Dynq\Http\Controllers\Controller;
 
 use Auth;
 

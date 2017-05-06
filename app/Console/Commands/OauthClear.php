@@ -1,11 +1,11 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Console\Commands;
+namespace BynqIO\Dynq\Console\Commands;
 
 use Illuminate\Console\Command;
 
-use \BynqIO\CalculatieTool\Models\User;
-use \BynqIO\CalculatieTool\Models\UserType;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\UserType;
 
 use \DB;
 

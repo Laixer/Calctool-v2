@@ -1,14 +1,14 @@
 <?php
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\Timesheet;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\Detail;
-use \BynqIO\CalculatieTool\Models\TimesheetKind;
-use \BynqIO\CalculatieTool\Calculus\TimesheetOverview;
-use \BynqIO\CalculatieTool\Models\MoreLabor;
-use \BynqIO\CalculatieTool\Models\Offer;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\Chapter;
+use \BynqIO\Dynq\Models\Activity;
+use \BynqIO\Dynq\Models\Timesheet;
+use \BynqIO\Dynq\Models\PartType;
+use \BynqIO\Dynq\Models\Detail;
+use \BynqIO\Dynq\Models\TimesheetKind;
+use \BynqIO\Dynq\Calculus\TimesheetOverview;
+use \BynqIO\Dynq\Models\MoreLabor;
+use \BynqIO\Dynq\Models\Offer;
 ?>
 
 @extends('layout.master')

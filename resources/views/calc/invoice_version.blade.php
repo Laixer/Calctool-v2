@@ -1,9 +1,9 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\InvoiceVersion;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\Invoice;
+use \BynqIO\Dynq\Models\Offer;
+use \BynqIO\Dynq\Models\InvoiceVersion;
 
 $common_access_error = false;
 $invoice = Invoice::find(Route::Input('invoice_id'));

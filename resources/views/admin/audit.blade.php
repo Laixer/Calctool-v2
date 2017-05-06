@@ -81,15 +81,15 @@ $(document).ready(function() {
                             <tbody>
                                 <?php
                                 if ($allevents) {
-                                    $selection = \BynqIO\CalculatieTool\Models\Audit::orderBy('created_at','desc')->get();
+                                    $selection = \BynqIO\Dynq\Models\Audit::orderBy('created_at','desc')->get();
                                 } else {
-                                    $selection = \BynqIO\CalculatieTool\Models\Audit::orderBy('created_at','desc')->limit(50)->get();
+                                    $selection = \BynqIO\Dynq\Models\Audit::orderBy('created_at','desc')->limit(50)->get();
                                 }
                                 ?>
                                 @foreach ($selection as $rec)
                                 <tr>
                                     <td class="col-md-2 hidden-sm hidden-xs">{{ date('d-m-Y H:i:s', strtotime(DB::table('audit')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
-                                    <td class="col-md-2 hidden-sm hidden-xs"><a href="/admin/user-{{ $rec->user_id }}/edit">{{ \BynqIO\CalculatieTool\Models\User::find($rec->user_id)->username }}</a></td>
+                                    <td class="col-md-2 hidden-sm hidden-xs"><a href="/admin/user-{{ $rec->user_id }}/edit">{{ \BynqIO\Dynq\Models\User::find($rec->user_id)->username }}</a></td>
                                     <td class="col-md-2 hidden-sm hidden-xs">{{ $rec->ip }}</td>
                                     <td class="col-md-6">{!! nl2br($rec->event) !!}</td>
                                 </tr>

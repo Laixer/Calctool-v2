@@ -1,16 +1,16 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\Iban;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\InvoiceTerm;
-use \BynqIO\CalculatieTool\Models\InvoiceVersion;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Http\Controllers\InvoiceController;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\Relation;
+use \BynqIO\Dynq\Models\Contact;
+use \BynqIO\Dynq\Models\Invoice;
+use \BynqIO\Dynq\Models\Offer;
+use \BynqIO\Dynq\Models\Iban;
+use \BynqIO\Dynq\Models\ProjectType;
+use \BynqIO\Dynq\Models\InvoiceTerm;
+use \BynqIO\Dynq\Models\InvoiceVersion;
+use \BynqIO\Dynq\Models\Resource;
+use \BynqIO\Dynq\Http\Controllers\InvoiceController;
 
 $displaytax=Input::get("displaytax");
 $common_access_error = false;

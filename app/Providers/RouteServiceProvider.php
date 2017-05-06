@@ -4,16 +4,16 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Providers;
+namespace BynqIO\Dynq\Providers;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
@@ -28,9 +28,9 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */ 
-    protected $namespace            = 'BynqIO\CalculatieTool\Http\Controllers';
-    protected $namespaceApi         = 'BynqIO\CalculatieTool\Http\Controllers\Api';
-    protected $namespaceAdmin       = 'BynqIO\CalculatieTool\Http\Controllers\Admin';
+    protected $namespace            = 'BynqIO\Dynq\Http\Controllers';
+    protected $namespaceApi         = 'BynqIO\Dynq\Http\Controllers\Api';
+    protected $namespaceAdmin       = 'BynqIO\Dynq\Http\Controllers\Admin';
 
     /**
      * Define your route model bindings, pattern filters, etc.

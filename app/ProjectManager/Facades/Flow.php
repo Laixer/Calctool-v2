@@ -1,6 +1,6 @@
 <?php
 
-namespace BynqIO\CalculatieTool\ProjectManager\Facades;
+namespace BynqIO\Dynq\ProjectManager\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

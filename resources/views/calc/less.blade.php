@@ -1,24 +1,24 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\TimesheetKind;
-use \BynqIO\CalculatieTool\Models\SubGroup;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\Part;
-use \BynqIO\CalculatieTool\Models\Tax;
-use \BynqIO\CalculatieTool\Models\LessLabor;
-use \BynqIO\CalculatieTool\Calculus\LessRegister;
-use \BynqIO\CalculatieTool\Models\LessMaterial;
-use \BynqIO\CalculatieTool\Models\LessEquipment;
-use \BynqIO\CalculatieTool\Calculus\LessOverview;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\CalculationLabor;
-use \BynqIO\CalculatieTool\Models\CalculationMaterial;
-use \BynqIO\CalculatieTool\Models\CalculationEquipment;
-use \BynqIO\CalculatieTool\Calculus\LessEndresult;
-use \BynqIO\CalculatieTool\Calculus\CalculationRegister;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\TimesheetKind;
+use \BynqIO\Dynq\Models\SubGroup;
+use \BynqIO\Dynq\Models\Chapter;
+use \BynqIO\Dynq\Models\Activity;
+use \BynqIO\Dynq\Models\PartType;
+use \BynqIO\Dynq\Models\Part;
+use \BynqIO\Dynq\Models\Tax;
+use \BynqIO\Dynq\Models\LessLabor;
+use \BynqIO\Dynq\Calculus\LessRegister;
+use \BynqIO\Dynq\Models\LessMaterial;
+use \BynqIO\Dynq\Models\LessEquipment;
+use \BynqIO\Dynq\Calculus\LessOverview;
+use \BynqIO\Dynq\Models\ProjectType;
+use \BynqIO\Dynq\Models\CalculationLabor;
+use \BynqIO\Dynq\Models\CalculationMaterial;
+use \BynqIO\Dynq\Models\CalculationEquipment;
+use \BynqIO\Dynq\Calculus\LessEndresult;
+use \BynqIO\Dynq\Calculus\CalculationRegister;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

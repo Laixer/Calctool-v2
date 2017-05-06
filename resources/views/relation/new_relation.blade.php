@@ -1,7 +1,7 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\RelationKind;
-use \BynqIO\CalculatieTool\Models\RelationType;
+use \BynqIO\Dynq\Models\RelationKind;
+use \BynqIO\Dynq\Models\RelationType;
 
 ?>
 

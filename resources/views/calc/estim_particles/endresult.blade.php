@@ -1,5 +1,5 @@
 <?php
-use \BynqIO\CalculatieTool\Calculus\SetEstimateEndresult;
+use \BynqIO\Dynq\Calculus\SetEstimateEndresult;
 ?>
 <h4>Aanneming</h4>
 <table class="table table-striped">

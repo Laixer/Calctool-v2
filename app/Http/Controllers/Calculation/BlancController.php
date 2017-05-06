@@ -4,37 +4,37 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Calculation;
+namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Models\BlancRow;
-use BynqIO\CalculatieTool\Models\Part;
-use BynqIO\CalculatieTool\Models\PartType;
-use BynqIO\CalculatieTool\Models\ProjectType;
-use BynqIO\CalculatieTool\Models\Tax;
-use BynqIO\CalculatieTool\Models\Activity;
-use BynqIO\CalculatieTool\Calculus\InvoiceTerm;
-use BynqIO\CalculatieTool\Calculus\ResultEndresult;
-use BynqIO\CalculatieTool\Calculus\CalculationRegister;
-use BynqIO\CalculatieTool\Models\CalculationMaterial;
-use BynqIO\CalculatieTool\Models\CalculationEquipment;
-use BynqIO\CalculatieTool\Models\CalculationLabor;
-use BynqIO\CalculatieTool\Models\EstimateLabor;
-use BynqIO\CalculatieTool\Models\EstimateMaterial;
-use BynqIO\CalculatieTool\Models\EstimateEquipment;
-use BynqIO\CalculatieTool\Models\Invoice;
-use BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\BlancRow;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\ProjectType;
+use BynqIO\Dynq\Models\Tax;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Calculus\InvoiceTerm;
+use BynqIO\Dynq\Calculus\ResultEndresult;
+use BynqIO\Dynq\Calculus\CalculationRegister;
+use BynqIO\Dynq\Models\CalculationMaterial;
+use BynqIO\Dynq\Models\CalculationEquipment;
+use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\EstimateLabor;
+use BynqIO\Dynq\Models\EstimateMaterial;
+use BynqIO\Dynq\Models\EstimateEquipment;
+use BynqIO\Dynq\Models\Invoice;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use \Auth;
@@ -44,7 +44,7 @@ class BlancController extends Controller {
 
     /*
     |--------------------------------------------------------------------------
-    | Default Home Controlluse \BynqIO\CalculatieTool\Models\Invoice;er
+    | Default Home Controlluse BynqIO\Dynq\Models\Invoice;er
     |--------------------------------------------------------------------------
     |
     | You may wish to use controllers instead of, or in addition to, Closure

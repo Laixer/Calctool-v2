@@ -4,24 +4,24 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Product;
+namespace BynqIO\Dynq\Http\Controllers\Product;
 
 use Illuminate\Http\Request;
 
-use BynqIO\CalculatieTool\Models\ProductSubCategory;
-use BynqIO\CalculatieTool\Models\Supplier;
-use BynqIO\CalculatieTool\Models\SubGroup;
-use BynqIO\CalculatieTool\Models\Product;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\ProductSubCategory;
+use BynqIO\Dynq\Models\Supplier;
+use BynqIO\Dynq\Models\SubGroup;
+use BynqIO\Dynq\Models\Product;
+use BynqIO\Dynq\Http\Controllers\Controller;
 
 use Auth;
 use DB;

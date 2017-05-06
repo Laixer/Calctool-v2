@@ -1,8 +1,8 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Models;
+namespace BynqIO\Dynq\Models;
 
-use BynqIO\CalculatieTool\Models\ContactFunction;
+use BynqIO\Dynq\Models\ContactFunction;
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model {

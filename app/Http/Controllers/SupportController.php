@@ -4,22 +4,22 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers;
+namespace BynqIO\Dynq\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use BynqIO\CalculatieTool\Http\Requests;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
-use BynqIO\CalculatieTool\Jobs\SendSupportMail;
+use BynqIO\Dynq\Http\Requests;
+use BynqIO\Dynq\Http\Controllers\Controller;
+use BynqIO\Dynq\Jobs\SendSupportMail;
 
 use \Auth;
 use \Mail;

@@ -1,9 +1,9 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\PartType;
+use \BynqIO\Dynq\Models\Offer;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\Resource;
+use \BynqIO\Dynq\Models\PartType;
 
 $common_access_error = false;
 $offer = Offer::find(Route::Input('offer_id'));

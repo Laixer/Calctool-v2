@@ -45,7 +45,7 @@
                             @endif
                         @endif
                     @else
-                    <a href="/auth/signin">Login</a></li>
+                    <li class="{{ (request()->is('auth/signin')) ? 'active' : '' }}"><a href="/auth/signin">Login</a></li>
                     @endif
 
                     @unless (Auth::check())
@@ -54,6 +54,7 @@
                     </li>
                     @endunless
 
+                    @if (Auth::check())
                     <li class="search">
                         <form method="get" action="/search" class="input-group pull-right">
                             <input type="text" class="form-control" name="q" id="q" value="" placeholder="Zoeken">
@@ -63,7 +64,6 @@
                         </form>
                     </li>
 
-                    @if (Auth::check())
                     <li class="quick-cart">
                         @if ($notifications->count() > 0)
                         <span class="badge pull-right">{{ $notifications->count() }}</span>

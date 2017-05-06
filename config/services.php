@@ -30,7 +30,7 @@ return [
     ],
 
     'stripe' => [
-        'model'  => BynqIO\CalculatieTool\User::class,
+        'model'  => BynqIO\Dynq\User::class,
         'key'    => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],

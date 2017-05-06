@@ -4,33 +4,33 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Account;
+namespace BynqIO\Dynq\Http\Controllers\Account;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use BynqIO\CalculatieTool\Models\Payment;
-use BynqIO\CalculatieTool\Models\User;
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Audit;
-use BynqIO\CalculatieTool\Models\Promotion;
-use BynqIO\CalculatieTool\Models\UserGroup;
-use BynqIO\CalculatieTool\Models\BankAccount;
-use BynqIO\CalculatieTool\Models\Resource;
-use BynqIO\CalculatieTool\Models\CTInvoice;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Jobs\SendPasswordChangeMail;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Payment;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Audit;
+use BynqIO\Dynq\Models\Promotion;
+use BynqIO\Dynq\Models\UserGroup;
+use BynqIO\Dynq\Models\BankAccount;
+use BynqIO\Dynq\Models\Resource;
+use BynqIO\Dynq\Models\CTInvoice;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Jobs\SendPasswordChangeMail;
+use BynqIO\Dynq\Http\Controllers\Controller;
 
 use Auth;
 use Hash;
@@ -62,9 +62,8 @@ class AccountController extends Controller
         $data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname);
         Mail::send('mail.deactivate', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('BynqIO\CalculatieTool.com - Account gedeactiveerd');
-            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->subject(config('app.name') . ' - Account gedeactiveerd');
+            $message->from(APP_EMAIL);
         });
 
         Audit::CreateEvent('account.deactivate.success', 'Account deactivated by user', $user->id);
@@ -77,10 +76,9 @@ class AccountController extends Controller
                 'reason' => $request->get('reason'),
             );
             Mail::send('mail.inform_deactivate_user', $data, function($message) use ($data) {
-                $message->to('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
-                $message->subject('BynqIO\CalculatieTool.com - Account deactivatie');
-                $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-                $message->replyTo('administratie@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                $message->to(ADMIN_EMAIL);
+                $message->subject(config('app.name') . ' - Account deactivatie');
+                $message->from(APP_EMAIL);
             });
         }
 

@@ -42,7 +42,11 @@ $(document).ready(function() {
     <div class="tab-content">
         @foreach($tabs as $tab)
         <div id="{{ $tab['name'] }}" class="tab-pane">
-            @include("component.{$page}.{$tab['name']}")
+            @isset($tab['include'])
+            @include("component.{$page}.{$tab['include']}", ['section' => $tab['name']])
+            @else
+            @include("component.{$page}.{$tab['name']}", ['section' => $tab['name']])
+            @endisset
         </div>
         @endforeach
     </div>

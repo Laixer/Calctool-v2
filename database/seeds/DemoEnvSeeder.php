@@ -3,12 +3,12 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use BynqIO\CalculatieTool\Models\UserType;
-use BynqIO\CalculatieTool\Models\User;
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\MessageBox;
-use BynqIO\CalculatieTool\Models\Resource;
+use BynqIO\Dynq\Models\UserType;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\MessageBox;
+use BynqIO\Dynq\Models\Resource;
 
 /*
  * Static Models Only

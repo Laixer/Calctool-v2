@@ -1,22 +1,22 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\Tax;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\DeliverTime;
-use \BynqIO\CalculatieTool\Models\Valid;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\BlancRow;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\Part;
-use \BynqIO\CalculatieTool\Calculus\CalculationOverview;
-use \BynqIO\CalculatieTool\Calculus\BlancRowsEndresult;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Http\Controllers\OfferController;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\Relation;
+use \BynqIO\Dynq\Models\Tax;
+use \BynqIO\Dynq\Models\Offer;
+use \BynqIO\Dynq\Calculus\CalculationEndresult;
+use \BynqIO\Dynq\Models\Contact;
+use \BynqIO\Dynq\Models\ProjectType;
+use \BynqIO\Dynq\Models\DeliverTime;
+use \BynqIO\Dynq\Models\Valid;
+use \BynqIO\Dynq\Models\Chapter;
+use \BynqIO\Dynq\Models\BlancRow;
+use \BynqIO\Dynq\Models\Activity;
+use \BynqIO\Dynq\Models\Part;
+use \BynqIO\Dynq\Calculus\CalculationOverview;
+use \BynqIO\Dynq\Calculus\BlancRowsEndresult;
+use \BynqIO\Dynq\Models\Resource;
+use \BynqIO\Dynq\Http\Controllers\OfferController;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

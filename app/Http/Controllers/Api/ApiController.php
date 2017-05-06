@@ -4,32 +4,32 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Api;
+namespace BynqIO\Dynq\Http\Controllers\Api;
 
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Models\Activity;
-use BynqIO\CalculatieTool\Models\Timesheet;
-use BynqIO\CalculatieTool\Models\TimesheetKind;
-use BynqIO\CalculatieTool\Models\Purchase;
-use BynqIO\CalculatieTool\Models\PurchaseKind;
-use BynqIO\CalculatieTool\Models\Wholesale;
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Models\RelationKind;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\MoreLabor;
-use BynqIO\CalculatieTool\Models\User;
-use BynqIO\CalculatieTool\Models\EstimateLabor;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\Timesheet;
+use BynqIO\Dynq\Models\TimesheetKind;
+use BynqIO\Dynq\Models\Purchase;
+use BynqIO\Dynq\Models\PurchaseKind;
+use BynqIO\Dynq\Models\Wholesale;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\RelationKind;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\MoreLabor;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\EstimateLabor;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Auth;

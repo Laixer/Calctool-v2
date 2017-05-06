@@ -1,23 +1,23 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\SubGroup;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\BlancRow;
-use \BynqIO\CalculatieTool\Calculus\CalculationOverview;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\Activity as ProjectActivity;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\Part;
-use \BynqIO\CalculatieTool\Calculus\CalculationEndresult;
-use \BynqIO\CalculatieTool\Models\Tax;
-use \BynqIO\CalculatieTool\Models\CalculationLabor;
-use \BynqIO\CalculatieTool\Calculus\CalculationRegister;
-use \BynqIO\CalculatieTool\Models\CalculationMaterial;
-use \BynqIO\CalculatieTool\Models\CalculationEquipment;
-use \BynqIO\CalculatieTool\Models\EstimateLabor;
-use \BynqIO\CalculatieTool\Models\EstimateMaterial;
-use \BynqIO\CalculatieTool\Models\EstimateEquipment;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\SubGroup;
+use \BynqIO\Dynq\Models\Chapter;
+use \BynqIO\Dynq\Models\BlancRow;
+use \BynqIO\Dynq\Calculus\CalculationOverview;
+use \BynqIO\Dynq\Models\ProjectType;
+use \BynqIO\Dynq\Models\Activity as ProjectActivity;
+use \BynqIO\Dynq\Models\PartType;
+use \BynqIO\Dynq\Models\Part;
+use \BynqIO\Dynq\Calculus\CalculationEndresult;
+use \BynqIO\Dynq\Models\Tax;
+use \BynqIO\Dynq\Models\CalculationLabor;
+use \BynqIO\Dynq\Calculus\CalculationRegister;
+use \BynqIO\Dynq\Models\CalculationMaterial;
+use \BynqIO\Dynq\Models\CalculationEquipment;
+use \BynqIO\Dynq\Models\EstimateLabor;
+use \BynqIO\Dynq\Models\EstimateMaterial;
+use \BynqIO\Dynq\Models\EstimateEquipment;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

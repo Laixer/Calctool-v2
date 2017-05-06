@@ -1,7 +1,7 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Wholesale;
-use \BynqIO\CalculatieTool\Models\WholesaleType;
+use \BynqIO\Dynq\Models\Wholesale;
+use \BynqIO\Dynq\Models\WholesaleType;
 ?>
 
 @extends('layout.master')

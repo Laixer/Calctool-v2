@@ -1,9 +1,9 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Calculus;
+namespace BynqIO\Dynq\Calculus;
 
-use BynqIO\CalculatieTool\Models\BlancRow;
-use BynqIO\CalculatieTool\Models\Tax;
+use BynqIO\Dynq\Models\BlancRow;
+use BynqIO\Dynq\Models\Tax;
 
 /*
  * Eindresultaat

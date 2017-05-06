@@ -14,7 +14,7 @@
 @endpush
 
 <?php
-$group = \BynqIO\CalculatieTool\Models\UserGroup::find(Route::input('group_id'));
+$group = \BynqIO\Dynq\Models\UserGroup::find(Route::input('group_id'));
 if (!$group){ ?>
 @section('content')
 <div id="wrapper">
@@ -86,7 +86,7 @@ $(document).ready(function() {
 
                 <div class="pull-right">
                     <a class="btn btn-primary" href="/admin/user?group={{ $group->id }}">Gebruikers</a>
-                    @if (!\BynqIO\CalculatieTool\Models\User::where('user_group', $group->id)->count())
+                    @if (!\BynqIO\Dynq\Models\User::where('user_group', $group->id)->count())
                     <a class="btn btn-danger" href="/admin/group-{{ $group->id }}/delete">Verwijderen</a>
                     @endif
                 </div>

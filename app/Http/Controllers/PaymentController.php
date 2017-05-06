@@ -4,33 +4,33 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers;
+namespace BynqIO\Dynq\Http\Controllers;
 
 use Illuminate\Support\MessageBag;
 use Illuminate\Http\Request;
 
-use BynqIO\CalculatieTool\Models\Payment;
-use BynqIO\CalculatieTool\Models\User;
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Audit;
-use BynqIO\CalculatieTool\Models\Promotion;
-use BynqIO\CalculatieTool\Models\UserGroup;
-use BynqIO\CalculatieTool\Models\BankAccount;
-use BynqIO\CalculatieTool\Models\Resource;
-use BynqIO\CalculatieTool\Models\CTInvoice;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Events\UserPaymentSuccess;
-use BynqIO\CalculatieTool\Events\UserSubscriptionCanceled;
+use BynqIO\Dynq\Models\Payment;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Audit;
+use BynqIO\Dynq\Models\Promotion;
+use BynqIO\Dynq\Models\UserGroup;
+use BynqIO\Dynq\Models\BankAccount;
+use BynqIO\Dynq\Models\Resource;
+use BynqIO\Dynq\Models\CTInvoice;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Events\UserPaymentSuccess;
+use BynqIO\Dynq\Events\UserSubscriptionCanceled;
 
 use Auth;
 use Redis;
@@ -79,7 +79,7 @@ class PaymentController extends Controller
         $subscription = $this->userSubscription($customerId)->create([
             "amount"		=> $order->amount,
             "interval"		=> "1 month",
-            "description"	=> "Maandelijkse incasso BynqIO\CalculatieTool.com",
+            "description"	=> "Maandelijkse incasso " . config('app.name'),
             "webhookUrl"	=> secure_url('payment/webhook/'),
             "metadata"		=> [
                 "token"		=> $order->token,

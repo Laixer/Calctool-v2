@@ -5,11 +5,11 @@
 @section('relation_content')
 
 <?php
-use \BynqIO\CalculatieTool\Models\RelationKind;
-use \BynqIO\CalculatieTool\Models\RelationType;
-use \BynqIO\CalculatieTool\Models\Province;
-use \BynqIO\CalculatieTool\Models\Country;
-use \BynqIO\CalculatieTool\Models\Relation;
+use \BynqIO\Dynq\Models\RelationKind;
+use \BynqIO\Dynq\Models\RelationType;
+use \BynqIO\Dynq\Models\Province;
+use \BynqIO\Dynq\Models\Country;
+use \BynqIO\Dynq\Models\Relation;
 $relation = Relation::find(Route::Input('relation_id'));
 ?>
 

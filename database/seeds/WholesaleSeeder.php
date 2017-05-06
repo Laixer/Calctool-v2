@@ -3,11 +3,11 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use BynqIO\CalculatieTool\Models\WholesaleType;
-use BynqIO\CalculatieTool\Models\Wholesale;
-use BynqIO\CalculatieTool\Models\Supplier;
-use BynqIO\CalculatieTool\Models\Province;
-use BynqIO\CalculatieTool\Models\Country;
+use BynqIO\Dynq\Models\WholesaleType;
+use BynqIO\Dynq\Models\Wholesale;
+use BynqIO\Dynq\Models\Supplier;
+use BynqIO\Dynq\Models\Province;
+use BynqIO\Dynq\Models\Country;
 
 /*
  * Static Models Only

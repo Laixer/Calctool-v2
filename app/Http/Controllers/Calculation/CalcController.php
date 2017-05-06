@@ -4,41 +4,41 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Calculation;
+namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
 use \Illuminate\Http\Request;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Part;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\Tax;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\FavoriteActivity;
-use \BynqIO\CalculatieTool\Calculus\InvoiceTerm;
-use \BynqIO\CalculatieTool\Calculus\ResultEndresult;
-use \BynqIO\CalculatieTool\Calculus\CalculationRegister;
-use \BynqIO\CalculatieTool\Models\CalculationMaterial;
-use \BynqIO\CalculatieTool\Models\CalculationEquipment;
-use \BynqIO\CalculatieTool\Models\CalculationLabor;
-use \BynqIO\CalculatieTool\Models\FavoriteLabor;
-use \BynqIO\CalculatieTool\Models\FavoriteMaterial;
-use \BynqIO\CalculatieTool\Models\FavoriteEquipment;
-use \BynqIO\CalculatieTool\Models\EstimateLabor;
-use \BynqIO\CalculatieTool\Models\EstimateMaterial;
-use \BynqIO\CalculatieTool\Models\EstimateEquipment;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\ProjectType;
+use BynqIO\Dynq\Models\Tax;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\FavoriteActivity;
+use BynqIO\Dynq\Calculus\InvoiceTerm;
+use BynqIO\Dynq\Calculus\ResultEndresult;
+use BynqIO\Dynq\Calculus\CalculationRegister;
+use BynqIO\Dynq\Models\CalculationMaterial;
+use BynqIO\Dynq\Models\CalculationEquipment;
+use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\FavoriteLabor;
+use BynqIO\Dynq\Models\FavoriteMaterial;
+use BynqIO\Dynq\Models\FavoriteEquipment;
+use BynqIO\Dynq\Models\EstimateLabor;
+use BynqIO\Dynq\Models\EstimateMaterial;
+use BynqIO\Dynq\Models\EstimateEquipment;
+use BynqIO\Dynq\Models\Invoice;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Http\Controllers\Controller;
 
 use \Auth;
 use \PDF;
@@ -47,7 +47,7 @@ class CalcController extends Controller {
 
     /*
     |--------------------------------------------------------------------------
-    | Default Home Controlluse \BynqIO\CalculatieTool\Models\Invoice;er
+    | Default Home Controlluse BynqIO\Dynq\Models\Invoice;er
     |--------------------------------------------------------------------------
     |
     | You may wish to use controllers instead of, or in addition to, Closure
@@ -219,17 +219,19 @@ class CalcController extends Controller {
         return back();
     }
 
+
     public function getCalculationSummary(Request $request, $projectid)
     {
         $project = Project::find($projectid);
-        return view('calc.calc_particles.summary', ['project' => $project]);
+        return view('component.calculation.summary', ['project' => $project]);
     }
 
     public function getCalculationEndresult(Request $request, $projectid)
     {
         $project = Project::find($projectid);
-        return view('calc.calc_particles.endresult', ['project' => $project]);
+        return view('component.calculation.endresult', ['project' => $project]);
     }
+
 
     public function getEstimate(Request $request, $projectid)
     {
@@ -378,42 +380,42 @@ class CalcController extends Controller {
     //     return back()->with('success', 'Nieuw onderdeel aangemaakt');
     // }
 
-    public function doNewCalculationActivity(Request $request, $chapter_id)
-    {
-        $this->validate($request, [
-            'activity' => array('required','max:100'),
-        ]);
+    // public function doNewCalculationActivity(Request $request, $chapter_id)
+    // {
+    //     $this->validate($request, [
+    //         'activity' => array('required','max:100'),
+    //     ]);
 
-        $chapter = Chapter::find($chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return back()->withInput($request->all());
-        }
+    //     $chapter = Chapter::find($chapter_id);
+    //     if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+    //         return back()->withInput($request->all());
+    //     }
 
-        $part = Part::where('part_name','contracting')->first();
-        $part_type = PartType::where('type_name','calculation')->first();
-        $project = Project::find($chapter->project_id);
+    //     $part = Part::where('part_name','contracting')->first();
+    //     $part_type = PartType::where('type_name','calculation')->first();
+    //     $project = Project::find($chapter->project_id);
 
-        if ($project->tax_reverse)
-            $tax = Tax::where('tax_rate','=',0)->first();
-        else
-            $tax = Tax::where('tax_rate','=',21)->first();
+    //     if ($project->tax_reverse)
+    //         $tax = Tax::where('tax_rate','=',0)->first();
+    //     else
+    //         $tax = Tax::where('tax_rate','=',21)->first();
 
-        $last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->orderBy('priority','desc')->first();
+    //     $last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->orderBy('priority','desc')->first();
 
-        $activity = new Activity;
-        $activity->activity_name = $request->get('activity');
-        $activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
-        $activity->chapter_id = $chapter->id;
-        $activity->part_id = $part->id;
-        $activity->part_type_id = $part_type->id;
-        $activity->tax_labor_id = $tax->id;
-        $activity->tax_material_id = $tax->id;
-        $activity->tax_equipment_id = $tax->id;
+    //     $activity = new Activity;
+    //     $activity->activity_name = $request->get('activity');
+    //     $activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
+    //     $activity->chapter_id = $chapter->id;
+    //     $activity->part_id = $part->id;
+    //     $activity->part_type_id = $part_type->id;
+    //     $activity->tax_labor_id = $tax->id;
+    //     $activity->tax_material_id = $tax->id;
+    //     $activity->tax_equipment_id = $tax->id;
 
-        $activity->save();
+    //     $activity->save();
 
-        return back()->with('success', 'Werkzaamheid aangemaakt');
-    }
+    //     return back()->with('success', 'Werkzaamheid aangemaakt');
+    // }
 
     public function doRenameCalculationActivity(Request $request)
     {
@@ -456,41 +458,41 @@ class CalcController extends Controller {
         return back()->with('success', 'Onderdeel aangepast');
     }
 
-    public function doNewEstimateActivity(Request $request, $chapter_id)
-    {
-        $this->validate($request, [
-            'activity' => array('required','max:100'),
-        ]);
+    // public function doNewEstimateActivity(Request $request, $chapter_id)
+    // {
+    //     $this->validate($request, [
+    //         'activity' => array('required','max:100'),
+    //     ]);
 
-        $chapter = Chapter::find($chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return back()->withInput($request->all());
-        }
+    //     $chapter = Chapter::find($chapter_id);
+    //     if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+    //         return back()->withInput($request->all());
+    //     }
 
-        $part = Part::where('part_name','contracting')->first();
-        $part_type = PartType::where('type_name','estimate')->first();
-        $project = Project::find($chapter->project_id);
-        if ($project->tax_reverse)
-            $tax = Tax::where('tax_rate','=',0)->first();
-        else
-            $tax = Tax::where('tax_rate','=',21)->first();
+    //     $part = Part::where('part_name','contracting')->first();
+    //     $part_type = PartType::where('type_name','estimate')->first();
+    //     $project = Project::find($chapter->project_id);
+    //     if ($project->tax_reverse)
+    //         $tax = Tax::where('tax_rate','=',0)->first();
+    //     else
+    //         $tax = Tax::where('tax_rate','=',21)->first();
 
-        $last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->orderBy('priority','desc')->first();
+    //     $last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->orderBy('priority','desc')->first();
 
-        $activity = new Activity;
-        $activity->activity_name = $request->get('activity');
-        $activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
-        $activity->chapter_id = $chapter->id;
-        $activity->part_id = $part->id;
-        $activity->part_type_id = $part_type->id;
-        $activity->tax_labor_id = $tax->id;
-        $activity->tax_material_id = $tax->id;
-        $activity->tax_equipment_id = $tax->id;
+    //     $activity = new Activity;
+    //     $activity->activity_name = $request->get('activity');
+    //     $activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
+    //     $activity->chapter_id = $chapter->id;
+    //     $activity->part_id = $part->id;
+    //     $activity->part_type_id = $part_type->id;
+    //     $activity->tax_labor_id = $tax->id;
+    //     $activity->tax_material_id = $tax->id;
+    //     $activity->tax_equipment_id = $tax->id;
 
-        $activity->save();
+    //     $activity->save();
 
-        return back()->with('success', 'Nieuwe stelpostwerzaamheid aangemaakt');
-    }
+    //     return back()->with('success', 'Nieuwe stelpostwerzaamheid aangemaakt');
+    // }
 
     public function doUpdateTax(Request $request)
     {

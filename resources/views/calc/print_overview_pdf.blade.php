@@ -1,23 +1,23 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\CalculationMaterial;
-use \BynqIO\CalculatieTool\Models\CalculationEquipment;
-use \BynqIO\CalculatieTool\Models\EstimateMaterial;
-use \BynqIO\CalculatieTool\Models\EstimateEquipment;
-use \BynqIO\CalculatieTool\Models\MoreMaterial;
-use \BynqIO\CalculatieTool\Models\MoreEquipment;
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Part;
-use \BynqIO\CalculatieTool\Models\Detail;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Calculus\CalculationOverview;
-use \BynqIO\CalculatieTool\Calculus\MoreOverview;
-use \BynqIO\CalculatieTool\Calculus\EstimateOverview;
-use \BynqIO\CalculatieTool\Calculus\LessOverview;
+use \BynqIO\Dynq\Models\Activity;
+use \BynqIO\Dynq\Models\Chapter;
+use \BynqIO\Dynq\Models\Resource;
+use \BynqIO\Dynq\Models\PartType;
+use \BynqIO\Dynq\Models\CalculationMaterial;
+use \BynqIO\Dynq\Models\CalculationEquipment;
+use \BynqIO\Dynq\Models\EstimateMaterial;
+use \BynqIO\Dynq\Models\EstimateEquipment;
+use \BynqIO\Dynq\Models\MoreMaterial;
+use \BynqIO\Dynq\Models\MoreEquipment;
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\Part;
+use \BynqIO\Dynq\Models\Detail;
+use \BynqIO\Dynq\Models\ProjectType;
+use \BynqIO\Dynq\Calculus\CalculationOverview;
+use \BynqIO\Dynq\Calculus\MoreOverview;
+use \BynqIO\Dynq\Calculus\EstimateOverview;
+use \BynqIO\Dynq\Calculus\LessOverview;
 
 $project = Project::find($project_id);
 $type = ProjectType::find($project->type_id);

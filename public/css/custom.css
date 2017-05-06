@@ -71,6 +71,9 @@ div.featured-box i.fa:hover {
 /* kleur tabbladen*/
 div.tabs ul.nav-tabs a {
     background: #E8E8E8;
+    -webkit-border-radius: 2px 2px 0 0;
+    -moz-border-radius: 2px 2px 0 0;
+    border-radius: 2px 2px 0 0;
 }
 
 /* ============================================================================ */

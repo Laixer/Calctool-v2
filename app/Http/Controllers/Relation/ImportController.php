@@ -4,25 +4,25 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Relation;
+namespace BynqIO\Dynq\Http\Controllers\Relation;
 
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Models\RelationKind;
-use BynqIO\CalculatieTool\Models\RelationType;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\Province;
-use BynqIO\CalculatieTool\Models\Country;
-use BynqIO\CalculatieTool\Models\ContactFunction;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\RelationKind;
+use BynqIO\Dynq\Models\RelationType;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Province;
+use BynqIO\Dynq\Models\Country;
+use BynqIO\Dynq\Models\ContactFunction;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ImportController extends Controller

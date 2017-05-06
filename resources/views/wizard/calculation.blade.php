@@ -1,6 +1,6 @@
 <?php
 
-use BynqIO\CalculatieTool\Models\Offer;
+use BynqIO\Dynq\Models\Offer;
 
 ?>
 

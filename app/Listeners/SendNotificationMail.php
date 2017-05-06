@@ -4,18 +4,18 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Listeners;
+namespace BynqIO\Dynq\Listeners;
 
-use BynqIO\CalculatieTool\Events\UserNotification;
+use BynqIO\Dynq\Events\UserNotification;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
@@ -40,9 +40,8 @@ class SendNotificationMail
         );
         Mail::send('mail.notification', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('BynqIO\CalculatieTool.com - Notificatie: ' . $data['subject']);
-            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->subject(config('app.name') . ' - Notificatie: ' . $data['subject']);
+            $message->from(APP_EMAIL);
         });
     }
 }

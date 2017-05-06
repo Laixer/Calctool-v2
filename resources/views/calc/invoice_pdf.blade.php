@@ -2,31 +2,31 @@
 
 ini_set('memory_limit', '2048M');
 
-use \BynqIO\CalculatieTool\Models\Project;
-use \BynqIO\CalculatieTool\Models\Relation;
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\Part;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\Contact;
-use \BynqIO\CalculatieTool\Models\Invoice;
-use \BynqIO\CalculatieTool\Models\Offer;
-use \BynqIO\CalculatieTool\Models\Detail;
-use \BynqIO\CalculatieTool\Models\ProjectType;
-use \BynqIO\CalculatieTool\Models\Resource;
-use \BynqIO\CalculatieTool\Models\BlancRow;
-use \BynqIO\CalculatieTool\Models\Tax;
-use \BynqIO\CalculatieTool\Calculus\EstimateEndresult;
-use \BynqIO\CalculatieTool\Calculus\MoreEndresult;
-use \BynqIO\CalculatieTool\Calculus\LessEndresult;
-use \BynqIO\CalculatieTool\Calculus\ResultEndresult;
-use \BynqIO\CalculatieTool\Calculus\CalculationOverview;
-use \BynqIO\CalculatieTool\Calculus\EstimateOverview;
-use \BynqIO\CalculatieTool\Calculus\LessOverview;
-use \BynqIO\CalculatieTool\Calculus\MoreOverview;
-use \BynqIO\CalculatieTool\Calculus\BlancRowsEndresult;
-use \BynqIO\CalculatieTool\Http\Controllers\OfferController;
-use \BynqIO\CalculatieTool\Calculus\SetEstimateCalculationEndresult; 
+use \BynqIO\Dynq\Models\Project;
+use \BynqIO\Dynq\Models\Relation;
+use \BynqIO\Dynq\Models\Chapter;
+use \BynqIO\Dynq\Models\Activity;
+use \BynqIO\Dynq\Models\Part;
+use \BynqIO\Dynq\Models\PartType;
+use \BynqIO\Dynq\Models\Contact;
+use \BynqIO\Dynq\Models\Invoice;
+use \BynqIO\Dynq\Models\Offer;
+use \BynqIO\Dynq\Models\Detail;
+use \BynqIO\Dynq\Models\ProjectType;
+use \BynqIO\Dynq\Models\Resource;
+use \BynqIO\Dynq\Models\BlancRow;
+use \BynqIO\Dynq\Models\Tax;
+use \BynqIO\Dynq\Calculus\EstimateEndresult;
+use \BynqIO\Dynq\Calculus\MoreEndresult;
+use \BynqIO\Dynq\Calculus\LessEndresult;
+use \BynqIO\Dynq\Calculus\ResultEndresult;
+use \BynqIO\Dynq\Calculus\CalculationOverview;
+use \BynqIO\Dynq\Calculus\EstimateOverview;
+use \BynqIO\Dynq\Calculus\LessOverview;
+use \BynqIO\Dynq\Calculus\MoreOverview;
+use \BynqIO\Dynq\Calculus\BlancRowsEndresult;
+use \BynqIO\Dynq\Http\Controllers\OfferController;
+use \BynqIO\Dynq\Calculus\SetEstimateCalculationEndresult; 
 
 $_invoice = Invoice::find($invoice->invoice_id);
 if (!$_invoice)

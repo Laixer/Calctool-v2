@@ -4,20 +4,20 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers\Auth;
+namespace BynqIO\Dynq\Http\Controllers\Auth;
 
-use BynqIO\CalculatieTool\Models\User;
-use BynqIO\CalculatieTool\Models\Audit;
-use BynqIO\CalculatieTool\Http\Controllers\Controller;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\Audit;
+use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -125,9 +125,8 @@ class PasswordResetController extends Controller
         ];
         Mail::send('mail.password', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('CalculatieTool.com - Wachtwoord herstellen');
-            $message->from('info@calculatietool.com', 'CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'CalculatieTool.com');
+            $message->subject(config('app.name') . ' - Wachtwoord herstellen');
+            $message->from(APP_EMAIL);
         });
 
         Audit::CreateEvent('auth.reset.password.mail.success', 'Reset with: ' . Audit::UserAgent(), $user->id);

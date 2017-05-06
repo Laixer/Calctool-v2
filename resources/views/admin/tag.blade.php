@@ -31,13 +31,13 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($selection = \BynqIO\CalculatieTool\Models\UserTag::orderBy('id')->get() as $tag)
+                    @foreach ($selection = \BynqIO\Dynq\Models\UserTag::orderBy('id')->get() as $tag)
                     <tr>
                         <td class="col-md-1 hidden-sm hidden-xs">{{ $tag->id }}</td>
                         <td class="col-md-3">{{ $tag->name }}</td>
-                        <td class="col-md-2">{{ \BynqIO\CalculatieTool\Models\User::where('user_tag_id', $tag->id)->count() }}</td>
+                        <td class="col-md-2">{{ \BynqIO\Dynq\Models\User::where('user_tag_id', $tag->id)->count() }}</td>
                         <td class="col-md-1">
-                        @if (!\BynqIO\CalculatieTool\Models\User::where('user_tag_id', $tag->id)->count())
+                        @if (!\BynqIO\Dynq\Models\User::where('user_tag_id', $tag->id)->count())
                         <a class="btn btn-xs btn-danger" href="/admin/user/tag-{{ $tag->id }}/delete">Verwijderen</a>
                         @endif
                         </td>

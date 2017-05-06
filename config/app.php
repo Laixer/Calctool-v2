@@ -188,12 +188,12 @@ return [
         /*
          * Application Service Providers...
          */
-        BynqIO\CalculatieTool\Providers\AppServiceProvider::class,
-        BynqIO\CalculatieTool\Providers\FlowServiceProvider::class,
-        BynqIO\CalculatieTool\Providers\AuthServiceProvider::class,
-        BynqIO\CalculatieTool\Providers\EventServiceProvider::class,
-        BynqIO\CalculatieTool\Providers\ComposerServiceProvider::class,
-        BynqIO\CalculatieTool\Providers\RouteServiceProvider::class,
+        BynqIO\Dynq\Providers\AppServiceProvider::class,
+        BynqIO\Dynq\Providers\FlowServiceProvider::class,
+        BynqIO\Dynq\Providers\AuthServiceProvider::class,
+        BynqIO\Dynq\Providers\EventServiceProvider::class,
+        BynqIO\Dynq\Providers\ComposerServiceProvider::class,
+        BynqIO\Dynq\Providers\RouteServiceProvider::class,
 
     ],
 
@@ -249,7 +249,7 @@ return [
         'Newsletter'=> Spatie\Newsletter\NewsletterFacade::class,
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,
         'Image'     => Intervention\Image\Facades\Image::class,
-        'Flow'      => BynqIO\CalculatieTool\ProjectManager\Facades\Flow::class,
+        'Flow'      => BynqIO\Dynq\ProjectManager\Facades\Flow::class,
 
     ],
 

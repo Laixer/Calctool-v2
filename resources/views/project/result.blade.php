@@ -1,22 +1,22 @@
 <?php
 
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Models\Activity;
-use BynqIO\CalculatieTool\Models\PartType;
-use BynqIO\CalculatieTool\Models\Part;
-use BynqIO\CalculatieTool\Models\Time;
-use BynqIO\CalculatieTool\Models\Detail;
-use BynqIO\CalculatieTool\Models\TimesheetKind;
-use BynqIO\CalculatieTool\Models\MoreLabor;
-use BynqIO\CalculatieTool\Models\ProjectType;
-use BynqIO\CalculatieTool\Calculus\SetEstimateCalculationEndresult;
-use BynqIO\CalculatieTool\Calculus\MoreEndresult;
-use BynqIO\CalculatieTool\Calculus\LessEndresult;
-use BynqIO\CalculatieTool\Calculus\ResultEndresult;
-use BynqIO\CalculatieTool\Calculus\TimesheetOverview;
-use BynqIO\CalculatieTool\Models\Timesheet;
-use BynqIO\CalculatieTool\Calculus\CalculationLabor;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\Time;
+use BynqIO\Dynq\Models\Detail;
+use BynqIO\Dynq\Models\TimesheetKind;
+use BynqIO\Dynq\Models\MoreLabor;
+use BynqIO\Dynq\Models\ProjectType;
+use BynqIO\Dynq\Calculus\SetEstimateCalculationEndresult;
+use BynqIO\Dynq\Calculus\MoreEndresult;
+use BynqIO\Dynq\Calculus\LessEndresult;
+use BynqIO\Dynq\Calculus\ResultEndresult;
+use BynqIO\Dynq\Calculus\TimesheetOverview;
+use BynqIO\Dynq\Models\Timesheet;
+use BynqIO\Dynq\Calculus\CalculationLabor;
 
 $common_access_error = false;
 $project = Project::find(Route::Input('project_id'));

@@ -6,9 +6,9 @@ use App\Ninja\Datatables\TaxRateDatatable;
 use App\Ninja\Repositories\TaxRateRepository;
 
 /**
- * Class TaxRateService.
+ * Class FormatService.
  */
-class TaxRateService extends BaseService
+class FormatService extends BaseService
 {
     /**
      * @var TaxRateRepository
@@ -51,5 +51,15 @@ class TaxRateService extends BaseService
         $query = $this->taxRateRepo->find($accountId);
 
         return $this->datatableService->createDatatable($datatable, $query);
+    }
+
+    public static function monetary($amount)
+    {
+        return number_format($amount, LOCALE_DECIMALS, LOCALE_DECIMAL, LOCALE_SEPARATOR);
+    }
+
+    public static function monetaryJS($input)
+    {
+        return "{$input}, '" . LOCALE_DECIMALS . "', '" . LOCALE_DECIMAL . "', '" . LOCALE_SEPARATOR . "'";
     }
 }

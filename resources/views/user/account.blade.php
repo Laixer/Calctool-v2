@@ -1,6 +1,6 @@
 <?php
-use BynqIO\CalculatieTool\Models\UserGroup;
-use BynqIO\CalculatieTool\Models\UserType;
+use BynqIO\Dynq\Models\UserGroup;
+use BynqIO\Dynq\Models\UserType;
 
 $user = Auth::user();
 $user_type_name = UserType::find($user->user_type)->user_type;
@@ -440,7 +440,7 @@ $(document).ready(function() {
 
                                 <tbody>
                                     <?php $i=0; ?>
-                                    @foreach (BynqIO\CalculatieTool\Models\Payment::where('user_id',Auth::user()->id)->where('status','paid')->orderBy('created_at', 'desc')->get() as $order)
+                                    @foreach (BynqIO\Dynq\Models\Payment::where('user_id',Auth::user()->id)->where('status','paid')->orderBy('created_at', 'desc')->get() as $order)
                                     <?php $i++; ?>
                                     <tr>
                                         <td class="col-md-2"><strong>{{ date('d-m-Y H:i:s', strtotime(DB::table('payment')->select('created_at')->where('id','=',$order->id)->get()[0]->created_at)) }}</strong></td>

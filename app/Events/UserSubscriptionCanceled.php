@@ -4,19 +4,19 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Events;
+namespace BynqIO\Dynq\Events;
 
-use BynqIO\CalculatieTool\Events\Event;
-use BynqIO\CalculatieTool\Models\User;
+use BynqIO\Dynq\Events\Event;
+use BynqIO\Dynq\Models\User;
 use Illuminate\Queue\SerializesModels;
 
 class UserSubscriptionCanceled extends Event

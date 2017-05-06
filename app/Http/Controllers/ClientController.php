@@ -4,24 +4,24 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers;
+namespace BynqIO\Dynq\Http\Controllers;
 
-use BynqIO\CalculatieTool\Models\User;
-use BynqIO\CalculatieTool\Models\MessageBox;
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Models\Invoice;
-use BynqIO\CalculatieTool\Calculus\InvoiceTerm;
-use BynqIO\CalculatieTool\Models\ProjectShare;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\MessageBox;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Invoice;
+use BynqIO\Dynq\Calculus\InvoiceTerm;
+use BynqIO\Dynq\Models\ProjectShare;
 use Illuminate\Http\Request;
 
 use Auth;
@@ -77,9 +77,8 @@ class ClientController extends Controller
         );
         Mail::send('mail.client_reacted', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('BynqIO\CalculatieTool.com - Uw opdrachtgever heeft gereageerd');
-            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->subject(config('app.name') . ' - Uw opdrachtgever heeft gereageerd');
+            $message->from(APP_EMAIL);
         });
 
         return back()->with('success', 'Opmerking toegevoegd aan project');
@@ -131,9 +130,8 @@ class ClientController extends Controller
         $data = array('email' => $user->email, 'firstname' => $user->firstname, 'lastname' => $user->lastname, 'project_name' => $project->project_name);
         Mail::send('mail.offer_accepted', $data, function($message) use ($data) {
             $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-            $message->subject('BynqIO\CalculatieTool.com - Offerte bevestigd');
-            $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-            $message->replyTo('support@calculatietool.com', 'BynqIO\CalculatieTool.com');
+            $message->subject(config('app.name') . ' - Offerte bevestigd');
+            $message->from(APP_EMAIL);
         });
         
         return back()->with('success', 'Offerte is bevestigd');

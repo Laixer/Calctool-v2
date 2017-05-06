@@ -1,10 +1,10 @@
 <?php
 
-use \BynqIO\CalculatieTool\Models\Chapter;
-use \BynqIO\CalculatieTool\Models\Activity;
-use \BynqIO\CalculatieTool\Models\PartType;
-use \BynqIO\CalculatieTool\Models\Part;
-use \BynqIO\CalculatieTool\Calculus\EstimateOverview;
+use \BynqIO\Dynq\Models\Chapter;
+use \BynqIO\Dynq\Models\Activity;
+use \BynqIO\Dynq\Models\PartType;
+use \BynqIO\Dynq\Models\Part;
+use \BynqIO\Dynq\Calculus\EstimateOverview;
 
 ?>
 <div>

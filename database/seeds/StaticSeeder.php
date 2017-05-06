@@ -3,25 +3,25 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Eloquent\Model;
 
-use BynqIO\CalculatieTool\Models\Supplier;
-use BynqIO\CalculatieTool\Models\UserType;
-use BynqIO\CalculatieTool\Models\UserGroup;
-use BynqIO\CalculatieTool\Models\Province;
-use BynqIO\CalculatieTool\Models\Country;
-use BynqIO\CalculatieTool\Models\ProjectType;
-use BynqIO\CalculatieTool\Models\Part;
-use BynqIO\CalculatieTool\Models\PartType;
-use BynqIO\CalculatieTool\Models\Detail;
-use BynqIO\CalculatieTool\Models\ContactFunction;
-use BynqIO\CalculatieTool\Models\RelationType;
-use BynqIO\CalculatieTool\Models\RelationKind;
-use BynqIO\CalculatieTool\Models\WholesaleType;
-use BynqIO\CalculatieTool\Models\Valid;
-use BynqIO\CalculatieTool\Models\DeliverTime;
-use BynqIO\CalculatieTool\Models\Tax;
-use BynqIO\CalculatieTool\Models\TimesheetKind;
-use BynqIO\CalculatieTool\Models\PurchaseKind;
-use BynqIO\CalculatieTool\Models\SysMessage;
+use BynqIO\Dynq\Models\Supplier;
+use BynqIO\Dynq\Models\UserType;
+use BynqIO\Dynq\Models\UserGroup;
+use BynqIO\Dynq\Models\Province;
+use BynqIO\Dynq\Models\Country;
+use BynqIO\Dynq\Models\ProjectType;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\Detail;
+use BynqIO\Dynq\Models\ContactFunction;
+use BynqIO\Dynq\Models\RelationType;
+use BynqIO\Dynq\Models\RelationKind;
+use BynqIO\Dynq\Models\WholesaleType;
+use BynqIO\Dynq\Models\Valid;
+use BynqIO\Dynq\Models\DeliverTime;
+use BynqIO\Dynq\Models\Tax;
+use BynqIO\Dynq\Models\TimesheetKind;
+use BynqIO\Dynq\Models\PurchaseKind;
+use BynqIO\Dynq\Models\SysMessage;
 
 /*
  * Static Models Only

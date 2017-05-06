@@ -4,34 +4,34 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Http\Controllers;
+namespace BynqIO\Dynq\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Models\Activity;
-use BynqIO\CalculatieTool\Models\Detail;
-use BynqIO\CalculatieTool\Models\Part;
-use BynqIO\CalculatieTool\Models\PartType;
-use BynqIO\CalculatieTool\Models\Purchase;
-use BynqIO\CalculatieTool\Models\PurchaseKind;
-use BynqIO\CalculatieTool\Models\Relation;
-use BynqIO\CalculatieTool\Models\Timesheet;
-use BynqIO\CalculatieTool\Models\TimesheetKind;
-use BynqIO\CalculatieTool\Models\EstimateLabor;
-use BynqIO\CalculatieTool\Models\Wholesale;
-use BynqIO\CalculatieTool\Models\MoreLabor;
-use BynqIO\CalculatieTool\Models\ProjectType;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\Detail;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\Purchase;
+use BynqIO\Dynq\Models\PurchaseKind;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\Timesheet;
+use BynqIO\Dynq\Models\TimesheetKind;
+use BynqIO\Dynq\Models\EstimateLabor;
+use BynqIO\Dynq\Models\Wholesale;
+use BynqIO\Dynq\Models\MoreLabor;
+use BynqIO\Dynq\Models\ProjectType;
 
 class CostController extends Controller
 {

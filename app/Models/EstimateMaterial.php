@@ -1,6 +1,6 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Models;
+namespace BynqIO\Dynq\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

@@ -4,21 +4,21 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\ProjectManager\Flow;
+namespace BynqIO\Dynq\ProjectManager\Flow;
 
 use Exception;
 use ReflectionException;
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\ProjectManager\Flow\BaseFlow;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\ProjectManager\Flow\BaseFlow;
 
 class FlowControl
 {

@@ -1,24 +1,24 @@
 <?php
 
-use BynqIO\CalculatieTool\Models\Chapter;
-use BynqIO\CalculatieTool\Calculus\CalculationOverview;
-use BynqIO\CalculatieTool\Models\Activity as ProjectActivity;
-use BynqIO\CalculatieTool\Models\PartType;
-use BynqIO\CalculatieTool\Models\Part;
-use BynqIO\CalculatieTool\Models\Tax;
-use BynqIO\CalculatieTool\Models\Supplier;
-use BynqIO\CalculatieTool\Models\Wholesale;
-use BynqIO\CalculatieTool\Models\Product;
-use BynqIO\CalculatieTool\Models\ProductGroup;
-use BynqIO\CalculatieTool\Models\ProductSubCategory;
-use BynqIO\CalculatieTool\Models\FavoriteActivity;
-use BynqIO\CalculatieTool\Models\CalculationLabor;
-use BynqIO\CalculatieTool\Calculus\CalculationRegister;
-use BynqIO\CalculatieTool\Models\CalculationMaterial;
-use BynqIO\CalculatieTool\Models\CalculationEquipment;
-use BynqIO\CalculatieTool\Models\EstimateLabor;
-use BynqIO\CalculatieTool\Models\EstimateMaterial;
-use BynqIO\CalculatieTool\Models\EstimateEquipment;
+use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Calculus\CalculationOverview;
+use BynqIO\Dynq\Models\Activity as ProjectActivity;
+use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\Tax;
+use BynqIO\Dynq\Models\Supplier;
+use BynqIO\Dynq\Models\Wholesale;
+use BynqIO\Dynq\Models\Product;
+use BynqIO\Dynq\Models\ProductGroup;
+use BynqIO\Dynq\Models\ProductSubCategory;
+use BynqIO\Dynq\Models\FavoriteActivity;
+use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Calculus\CalculationRegister;
+use BynqIO\Dynq\Models\CalculationMaterial;
+use BynqIO\Dynq\Models\CalculationEquipment;
+use BynqIO\Dynq\Models\EstimateLabor;
+use BynqIO\Dynq\Models\EstimateMaterial;
+use BynqIO\Dynq\Models\EstimateEquipment;
 
 ?>
 

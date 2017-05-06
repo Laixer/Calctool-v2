@@ -1,8 +1,8 @@
 <?php
 
-namespace BynqIO\CalculatieTool\Models;
+namespace BynqIO\Dynq\Models;
 
-use BynqIO\CalculatieTool\Models\Traits\Ownable;
+use BynqIO\Dynq\Models\Traits\Ownable;
 use Illuminate\Database\Eloquent\Model;
 
 class FavoriteActivity extends Model

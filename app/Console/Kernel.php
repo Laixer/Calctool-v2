@@ -4,25 +4,25 @@
  * Copyright (C) 2017 Bynq.io B.V.
  * All Rights Reserved
  *
- * This file is part of the BynqIO\CalculatieTool.com.
+ * This file is part of the Dynq project.
  *
  * Content can not be copied and/or distributed without the express
  * permission of the author.
  *
- * @package  CalculatieTool
+ * @package  Dynq
  * @author   Yorick de Wid <y.dewid@calculatietool.com>
  */
 
-namespace BynqIO\CalculatieTool\Console;
+namespace BynqIO\Dynq\Console;
 
-use BynqIO\CalculatieTool\Models\Project;
-use BynqIO\CalculatieTool\Models\Contact;
-use BynqIO\CalculatieTool\Models\Offer;
-use BynqIO\CalculatieTool\Models\Invoice;
-use BynqIO\CalculatieTool\Models\User;
-use BynqIO\CalculatieTool\Models\UserGroup;
-use BynqIO\CalculatieTool\Models\MessageBox;
-use BynqIO\CalculatieTool\Models\Payment;
+use BynqIO\Dynq\Models\Project;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Invoice;
+use BynqIO\Dynq\Models\User;
+use BynqIO\Dynq\Models\UserGroup;
+use BynqIO\Dynq\Models\MessageBox;
+use BynqIO\Dynq\Models\Payment;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -37,13 +37,13 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \BynqIO\CalculatieTool\Console\Commands\DropHard::class,
-        \BynqIO\CalculatieTool\Console\Commands\MaterialImport::class,
-        \BynqIO\CalculatieTool\Console\Commands\StorageClear::class,
-        \BynqIO\CalculatieTool\Console\Commands\SessionClear::class,
-        \BynqIO\CalculatieTool\Console\Commands\OauthClear::class,
-        \BynqIO\CalculatieTool\Console\Commands\AdminReset::class,
-        \BynqIO\CalculatieTool\Console\Commands\Upgrade::class,
+        \BynqIO\Dynq\Console\Commands\DropHard::class,
+        \BynqIO\Dynq\Console\Commands\MaterialImport::class,
+        \BynqIO\Dynq\Console\Commands\StorageClear::class,
+        \BynqIO\Dynq\Console\Commands\SessionClear::class,
+        \BynqIO\Dynq\Console\Commands\OauthClear::class,
+        \BynqIO\Dynq\Console\Commands\AdminReset::class,
+        \BynqIO\Dynq\Console\Commands\Upgrade::class,
     ];
 
     /**
@@ -76,14 +76,13 @@ class Kernel extends ConsoleKernel
                     );
                     Mail::send('mail.invoice_demand', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
-                        $message->subject('BynqIO\CalculatieTool.com - Vordering');
-                        $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-                        $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                        $message->subject(config('app.name') . ' - Vordering');
+                        $message->from(APP_EMAIL);
                     });
 
                     $message = new MessageBox;
                     $message->subject = 'Factuur over betalingsdatum';
-                    $message->message = 'Een vordering voor '.$project->project_name.' is verzonden naar '.$contact_client->getFormalName().'. De BynqIO\CalculatieTool.com neemt nu geen verdere stappen meer voor afhandeling van deze factuur.';
+                    $message->message = 'Een vordering voor '.$project->project_name.' is verzonden naar '.$contact_client->getFormalName().'. De CalculatieTool.com neemt nu geen verdere stappen meer voor afhandeling van deze factuur.';
                     $message->from_user = User::where('username', 'system')->first()['id'];
                     $message->user_id = $project->user_id;
 
@@ -99,9 +98,8 @@ class Kernel extends ConsoleKernel
                     );
                     Mail::send('mail.invoice_last_reminder', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
-                        $message->subject('BynqIO\CalculatieTool.com - Tweede betalingsherinnering');
-                        $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-                        $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                        $message->subject(config('app.name') . ' - Tweede betalingsherinnering');
+                        $message->from(APP_EMAIL);
                     });
 
                     $message = new MessageBox;
@@ -122,9 +120,8 @@ class Kernel extends ConsoleKernel
                     );
                     Mail::send('mail.invoice_first_reminder', $data, function($message) use ($data) {
                         $message->to($data['email'], strtolower(trim($data['client'])));
-                        $message->subject('BynqIO\CalculatieTool.com - Betalingsherinnering');
-                        $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-                        $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                        $message->subject(config('app.name') . ' - Betalingsherinnering');
+                        $message->from(APP_EMAIL);
                     });
 
                     $message = new MessageBox;
@@ -153,9 +150,8 @@ class Kernel extends ConsoleKernel
 
                     Mail::send('mail.due', $data, function($message) use ($data) {
                         $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
-                        $message->subject('BynqIO\CalculatieTool.com - Account verlengen');
-                        $message->from('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
-                        $message->replyTo('info@calculatietool.com', 'BynqIO\CalculatieTool.com');
+                        $message->subject(config('app.name') . ' - Account verlengen');
+                        $message->from(APP_EMAIL);
                     });
                 }
             }
