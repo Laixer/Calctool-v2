@@ -165,12 +165,6 @@ $(document).ready(function() {
 </script>
 @endpush
 
-@section('component_buttons')
-<div class="pull-right">
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/printoverview" class="btn btn-primary" target="new" type="button"><i class="fa fa-file-pdf-o">&nbsp;</i>Projectoverzicht</a>
-</div>
-@endsection
-
 {{-- TODO: move into module --}}
 <div class="modal fade" id="nameChangeChapModal" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog">

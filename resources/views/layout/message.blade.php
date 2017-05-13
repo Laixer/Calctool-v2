@@ -5,6 +5,13 @@
 </div>
 @endif
 
+@if (Session::has('warning'))
+<div class="alert alert-warning">
+    <i class="fa fa-fa"></i>
+    <strong>{{ Session::get('warning') }}</strong>
+</div>
+@endif
+
 @if (count($errors) > 0)
 <div class="alert alert-danger">
     <i class="fa fa-frown-o"></i>

@@ -2,7 +2,6 @@
 
 namespace BynqIO\Dynq\Models;
 
-use BynqIO\Dynq\Models\Contact;
 use BynqIO\Dynq\Models\Traits\Ownable;
 use Illuminate\Database\Eloquent\Model;
 

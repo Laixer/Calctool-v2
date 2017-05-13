@@ -21,8 +21,8 @@ use BynqIO\Dynq\Http\Requests;
 use BynqIO\Dynq\Http\Controllers\Controller;
 use BynqIO\Dynq\Jobs\SendSupportMail;
 
-use \Auth;
-use \Mail;
+use Auth;
+use Mail;
 
 class SupportController extends Controller
 {

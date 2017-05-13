@@ -45,8 +45,8 @@ return [
     // Dashboard
     'dashboard'       => 'Dashboard',
     'mobilewarning'   => 'De applicatie werkt het beste op desktop of tablet',
-    'needhelp'        => 'Help needed?',
-    'companyinfo'     => 'Company Info',
+    'needhelp'        => 'Need help?',
+    'companyinfo'     => 'Company',
     'products'        => 'Products',
     'timesheet'       => 'Timesheet',
     'purchaseinvoice' => 'Purchase Invoice',

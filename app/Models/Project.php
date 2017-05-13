@@ -56,6 +56,10 @@ class Project extends Model
         return $this->hasOne(ProjectType::class, 'id', 'type_id');
     }
 
+    public function client() {
+        return $this->hasOne(Relation::class, 'id', 'client_id');
+    }
+
     public function isCalculation()
     {
         return $this->type->type_name == 'calculatie';

@@ -50,26 +50,10 @@ $(document).ready(function() {
 </script>
 @endpush
 
-<div class="pull-right">
-    <a data-toggle="modal" data-target="#notepad" class="btn btn-primary"><i class="fa fa-file-text-o"></i>&nbsp;Kladblok</a>
-    <div class="btn-group" role="group">	
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Acties&nbsp;&nbsp;<span class="caret"></span></button>
-        <ul class="dropdown-menu">
-            <li><a href="/project/{{ $project->id }}-{{ $project->slug() }}/printoverview" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Projectoverzicht</a></i>
-            <li><a href="/project/{{ $project->id }}-{{ $project->slug() }}/packlist" target="new"><i class="fa fa-file-pdf-o"></i>&nbsp;Raaplijst</a></i>
-            <li><a href="/project/copy?id={{ $project->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Project totaan offerte kopieren?')"><i class="fa fa-copy"></i>&nbsp;Project kopieren</a></i>
-            @if (!$project->project_close)
-            <li><a href="/project/close?id={{ $project->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Project sluiten?')"><i class="fa fa-close"></i>&nbsp;Project sluiten</a></li>
-            @else
-            <li><a href="/project/cancel?id={{ $project->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Project laten vervallen?')"><i class="fa fa-times"></i>&nbsp;Project vervallen</a></li>
-            @endif
-        </ul>
-    </div>
-</div>
-
 <form method="post" {!! $offer_last && $offer_last->offer_finish ? 'action="/project/update/note"' : 'action="/project/update"' !!}>
     {!! csrf_field() !!}
 
+    @if (0)
     <div class="modal fade" id="notepad" tabindex="-1" role="dialog" aria-labelledby="notepad" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -94,8 +78,8 @@ $(document).ready(function() {
             </div>
         </div>
     </div>
+    @endif
 
-    <h5><strong>Gegevens</strong></h5>
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -123,7 +107,7 @@ $(document).ready(function() {
             </div>
         </div>
     </div>
-    <h5><strong>Adresgegevens</strong></h5>
+
     <div class="row">
 
         <div class="col-md-4">
@@ -176,8 +160,8 @@ $(document).ready(function() {
         </div>
     </div>
 
+    @if (0)
     <h4>Projectstatussen</h4>
-
     <div class="col-md-6">
 
         <div class="row">
@@ -247,6 +231,7 @@ $(document).ready(function() {
         </div>
         @endif
     </div>
+    @endif
 
     <div class="row">
         <div class="col-md-12" style="margin-top: 15px;">

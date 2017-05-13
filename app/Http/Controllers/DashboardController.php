@@ -91,9 +91,16 @@ class DashboardController extends Controller
 
         $this->setUserOnline();
 
+        $projects = Project::where('user_id', Auth::id())
+            ->where('is_dilapidated', false)
+            ->whereNull('project_close')
+            ->orderBy('updated_at', 'desc')
+            ->get();
+
         $data = [
             'welcomeMessage'  => $this->welcomeMessage(),
             'projectCount'    => Project::where('user_id', Auth::id())->count(),
+            'projects'        => $projects,
             'systemMessage'   => SysMessage::where('active', true)->orderBy('created_at', 'desc')->first(),
         ];
 

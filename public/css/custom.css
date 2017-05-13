@@ -7,6 +7,24 @@
     content: "»";
 }
 
+.white-row {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+.item-box {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
+div.tabs div.tab-content {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+}
+
 .table > thead > tr > th,
 .table > tbody > tr > th,
 .table > tfoot > tr > th,
@@ -205,7 +223,8 @@ div.toggle-activity > label:hover {
     position: relative;
     display: inline-block;
     text-decoration: none;
-    color: #4e4e4e;
+    color: #999;
+    cursor: default;
 }
 
 .wizard span:before {

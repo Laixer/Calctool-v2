@@ -28,15 +28,16 @@ class CalculationFlow extends BaseFlow implements Flow
      */
     public function map()
     {
-        $this->bind('details',     'DetailComponent');
-        $this->bind('calculation', 'CalculationComponent');
-        $this->bind('quotations',  'QuotationComponent');
-        $this->bind('quotation/new',  'QuotationComponent');
-        $this->bind('estimate',    'EstimateComponent');
-        $this->bind('less',        'LessComponent');
-        $this->bind('more',        'MoreComponent');
-        $this->bind('invoices',    'InvoiceComponent');
-        $this->bind('result',      'ResultComponent');
+        $this->bind('details',              'DetailComponent');
+        $this->bind('calculation',          'CalculationComponent');
+        $this->bind('quotations',           'QuotationComponent');
+        $this->bind('quotations/new',       'QuotationNewComponent');
+        $this->bind('quotations/report',    'QuotationReportComponent');
+        $this->bind('estimate',             'EstimateComponent');
+        $this->bind('less',                 'LessComponent');
+        $this->bind('more',                 'MoreComponent');
+        $this->bind('invoices',             'InvoiceComponent');
+        $this->bind('result',               'ResultComponent');
     }
 
 }

@@ -17,6 +17,7 @@ namespace BynqIO\Dynq\ProjectManager\Component;
 
 use BynqIO\Dynq\Models\Project;
 use Illuminate\Container\Container;
+use Illuminate\View\View;
 
 /**
  * Class BaseComponent.
@@ -27,25 +28,47 @@ abstract class BaseComponent
     protected $project;
     protected $type;
     protected $component;
+    protected $request;
 
-    public function tabLayout(array $tabs, array $other = null)
+    public function blockLayout(array $other = [])
+    {
+        return view('component.block', $other);
+    }
+
+    public function tabLayout(array $tabs, array $other = [])
     {
         $data['tabs'] = $tabs;
         $data = array_merge($data, $other);
-        return view("component.tabs", $data);
+        return view('component.tabs', $data);
     }
 
-    public function response()
+    public function builderLayout($url, $options)
     {
-        $data = [
+        $data['url'] = $url;
+        $data['options'] = $options;
+        return view('component.pdfbuilder', $data);
+    }
+
+    protected function data()
+    {
+        return [
             'project'   => $this->project,
             'wizard'    => $this->type, //TODO: rename
             'type'      => $this->type,
             'page'      => $this->component, //TODO: rename
             'component' => $this->component,
         ];
+    }
 
-        return $this->render()->with($data);
+    public function response()
+    {
+        $content = $this->render();
+
+        if ($content instanceof View) {
+            $content->with($this->data());
+        }
+
+        return $content;
     }
 
     public function __construct(Container $container, $project, $type, $component)
@@ -54,5 +77,6 @@ abstract class BaseComponent
         $this->project = $project;
         $this->type = $type;
         $this->component = $component;
+        $this->request = request();
     }
 }

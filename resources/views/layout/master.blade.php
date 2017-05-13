@@ -4,8 +4,8 @@
     <head>
         <meta charset="UTF-8">
         <meta http-equiv="x-ua-compatible" content="ie=edge,chrome=1" />
-        <title>{{ config('app.name') }} - @yield('title', 'Online calculeren & offreren')</title>
-        <meta name="application-name" content="CalculatieTool.com">
+        <title>{{ config('app.name') }} @yield('title')</title>
+        <meta name="application-name" content="{{ config('app.name') }}">
 
         {{-- Favicon --}}
         <link rel="apple-touch-icon" sizes="57x57" href="/images/apple-touch-icon-57x57.png">
@@ -65,9 +65,9 @@
         @show
 
         {{-- Javascript --}}
-        <script src="/plugins/masonry.js"></script>
         <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
-        <script src="/js/scripts.js"></script>
+        <script src="/plugins/masonry.js" defer></script>
+        <script src="/js/scripts.js" defer></script>
 
         @stack('scripts')
 

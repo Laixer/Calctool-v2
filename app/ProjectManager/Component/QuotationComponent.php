@@ -24,6 +24,6 @@ class QuotationComponent extends BaseComponent implements Component
 {
     public function render()
     {
-        return view("component.{$this->component}");
+        return $this->blockLayout(['name' => 'overview']);
     }
 }

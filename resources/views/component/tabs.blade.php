@@ -31,6 +31,8 @@ $(document).ready(function() {
 @section('component_content')
 <div class="tabs nomargin-top">
 
+    @includeIf("component.{$page}.scope")
+
     <ul class="nav nav-tabs">
         @foreach($tabs as $tab)
         <li id="tab-{{ $tab['name'] }}">
@@ -40,6 +42,7 @@ $(document).ready(function() {
     </ul>
 
     <div class="tab-content">
+
         @foreach($tabs as $tab)
         <div id="{{ $tab['name'] }}" class="tab-pane">
             @isset($tab['include'])
@@ -49,6 +52,7 @@ $(document).ready(function() {
             @endisset
         </div>
         @endforeach
+
     </div>
 
 </div>

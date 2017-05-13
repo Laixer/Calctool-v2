@@ -18,8 +18,8 @@ namespace BynqIO\Dynq\Http\Controllers;
 use Illuminate\Http\Request;
 use BynqIO\Dynq\Models\Resource;
 
-use \Auth;
-use \Storage;
+use Auth;
+use Storage;
 
 class ResourceController extends Controller
 {
