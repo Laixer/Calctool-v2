@@ -74,7 +74,16 @@ $offer_last = Offer::where('project_id', $project->id)->orderBy('created_at', 'd
 <div class="pull-right">
 
     @if ($offer_last && !$offer_last->offer_finish && !$project->project_close)
-    <a data-toggle="modal" data-target="#confirmModal" class="btn btn-primary"><i class="fa fa-check-square-o">&nbsp;</i>Opdracht Bevestigen</a>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i>Versturen</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="caret"></span>
+            <span class="sr-only">Toggle Dropdown</span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a data-toggle="modal" data-target="#confirmModal"><i class="fa fa-check-square-o">&nbsp;</i>Opdracht Bevestigen</a></li>
+        </ul>
+    </div>
     @endif
 
     @if (!($offer_last && $offer_last->offer_finish) && !$project->project_close)

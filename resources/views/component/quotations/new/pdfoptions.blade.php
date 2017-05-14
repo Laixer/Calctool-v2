@@ -29,11 +29,11 @@ $(document).ready(function() {
 <div class="pull-right">
     <form action="/quotation/new" method="post">
         {!! csrf_field() !!}
-        <button class="btn btn-primary"><i class="fa fa-check-square-o"></i>Offereren</button>
         <input type="hidden" name="project" value="{{ $project->id }}" />
         @foreach(Input::all() as $input => $value)
         <input type="hidden" name="{{ $input }}" value="{{ $value }}" />
         @endforeach
+        <button class="btn btn-primary"><i class="fa fa-check-square-o"></i>Offereren</button>
     </form>
 </div>
 @endsection

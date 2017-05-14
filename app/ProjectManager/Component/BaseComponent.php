@@ -77,6 +77,6 @@ abstract class BaseComponent
         $this->project = $project;
         $this->type = $type;
         $this->component = $component;
-        $this->request = request();
+        $this->request = request();//TODO
     }
 }

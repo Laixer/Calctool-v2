@@ -202,15 +202,15 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
 
     /* Module Group Quotations */
     Route::group([], function() {
-        Route::get('offer/project-{project_id}',                  'Calculation\CalcController@getOffer');;
-        Route::post('offer/project-{project_id}',                 'OfferController@doNewOffer');
-        Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
-            return view('calc.offer_show_pdf');
-        })->where('offer_id', '[0-9]+');;
-        Route::get('offer/project-{project_id}/offer-{offer_id}/mail-preview', 'OfferController@getSendOfferPreview')->where('offer_id', '[0-9]+');;
-        Route::post('offer/close',                                'OfferController@doOfferClose');
-        Route::post('offer/sendmail',                             'OfferController@doSendOffer');
-        Route::post('offer/sendpost',                             'OfferController@doSendPostOffer');
+        // Route::get('offer/project-{project_id}',                  'Calculation\CalcController@getOffer');;
+        // Route::post('offer/project-{project_id}',                 'OfferController@doNewOffer');
+        // Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
+        //     return view('calc.offer_show_pdf');
+        // })->where('offer_id', '[0-9]+');;
+        // Route::get('offer/project-{project_id}/offer-{offer_id}/mail-preview', 'OfferController@getSendOfferPreview')->where('offer_id', '[0-9]+');;
+        // Route::post('offer/close',                                'OfferController@doOfferClose');
+        // Route::post('offer/sendmail',                             'OfferController@doSendOffer');
+        // Route::post('offer/sendpost',                             'OfferController@doSendPostOffer');
         
         Route::post('quotation/new',                              'Quotation\NewController');
         Route::post('quotation/confirm',                          'Quotation\ConfirmController');

@@ -320,51 +320,51 @@ class OfferController extends Controller
         return view('mail.offer_send', $data);
     }
 
-    public function doSendPostOffer(Request $request)
-    {
-        $offer = Offer::find($request->input('offer'));
-        if (!$offer)
-            return response()->json(['success' => 0]);
-        $project = Project::find($offer->project_id);
-        if (!$project || !$project->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-        $user = User::find($project->user_id);
+    // public function doSendPostOffer(Request $request)
+    // {
+    //     $offer = Offer::find($request->input('offer'));
+    //     if (!$offer)
+    //         return response()->json(['success' => 0]);
+    //     $project = Project::find($offer->project_id);
+    //     if (!$project || !$project->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
+    //     $user = User::find($project->user_id);
 
-        if (OfferPost::where('offer_id', $offer->id)->count()>0) {
-            return response()->json(['success' => 0,'message' => 'Offerte al aangeboden']);
-        }
-        $post = new OfferPost;
-        $post->offer_id = $offer->id;
+    //     if (OfferPost::where('offer_id', $offer->id)->count()>0) {
+    //         return response()->json(['success' => 0,'message' => 'Offerte al aangeboden']);
+    //     }
+    //     $post = new OfferPost;
+    //     $post->offer_id = $offer->id;
 
-        $post->save();
+    //     $post->save();
 
-        foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {
-            $message = new MessageBox;
-            $message->subject = 'Te printen offerte';
-            $message->message = 'Offerte ' . $offer->offer_code . ' van gebruiker ' . $user->username . ' staat klaar om geprint te worden';
-            $message->from_user = User::where('username', 'admin')->first()['id'];
-            $message->user_id =	$admin->id;
+    //     foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {
+    //         $message = new MessageBox;
+    //         $message->subject = 'Te printen offerte';
+    //         $message->message = 'Offerte ' . $offer->offer_code . ' van gebruiker ' . $user->username . ' staat klaar om geprint te worden';
+    //         $message->from_user = User::where('username', 'admin')->first()['id'];
+    //         $message->user_id =	$admin->id;
 
-            $message->save();
-        }
+    //         $message->save();
+    //     }
 
-        $data = array(
-            'code' => $offer->offer_code,
-            'user' => $user->username
-        );
-        Mail::send('mail.print', $data, function($message) use ($data) {
-            $message->to(ADMIN_EMAIL);
-            $message->subject(config('app.name') . ' - Printopdracht');
-            $message->from(APP_EMAIL);
-        });
+    //     $data = array(
+    //         'code' => $offer->offer_code,
+    //         'user' => $user->username
+    //     );
+    //     Mail::send('mail.print', $data, function($message) use ($data) {
+    //         $message->to(ADMIN_EMAIL);
+    //         $message->subject(config('app.name') . ' - Printopdracht');
+    //         $message->from(APP_EMAIL);
+    //     });
 
-        return response()->json(['success' => 1]);
-    }
+    //     return response()->json(['success' => 1]);
+    // }
 
     /* id = $project->id */
-    public static function getOfferCode($id)
-    {
-        return sprintf("%s%05d-%03d-%s", Auth::user()->offernumber_prefix, $id, Auth::user()->offer_counter, date('y'));
-    }
+    // public static function getOfferCode($id)
+    // {
+    //     return sprintf("%s%05d-%03d-%s", Auth::user()->offernumber_prefix, $id, Auth::user()->offer_counter, date('y'));
+    // }
 }
