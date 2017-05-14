@@ -34,8 +34,6 @@ class QuotationNewComponent extends BaseComponent implements Component
     {
         $this->buildUrl();
 
-        //TODO: append options to URL
-        // return view('component.quotations.report');
         return $this->builderLayout($this->url, 'pdfoptions');
     }
 }

@@ -1,17 +1,33 @@
+{{--
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the Dynq project.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  Dynq
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+--}}
+
 @extends('report')
 
 @section('footer')
 <div>
-    KVK: 1293629 <span class="divider">|</span>
-    BTW: NL1275430B01 <span class="divider">|</span>
-    IBAN: NL15INGB0000106644 
-    TNV: Arie kaas B.V. <span class="divider">|</span>
-    SWIFT: 42-12-43
+    @isset($relation_self->kvk)
+    KVK: {{ $relation_self->kvk }} <span class="divider">|</span>
+    @endisset
+    @isset($relation_self->btw)
+    BTW: {{ $relation_self->btw }} <span class="divider">|</span>
+    @endisset
+    IBAN: {{ $relation_self->iban }}
+    TNV: {{ $relation_self->iban_name }}
 </div>
 @endsection
 
 @section('topright')
-<h1>FACTUUR {{ $invoice }}</h1>
+<h1>OFFERTE {{ $document_number }}</h1>
 <div class="date">Project: {{ $project->project_name }}</div>
 <div class="date">Date of Invoice: 01/06/2014</div>
 <div class="date">Due Date: 30/06/2014</div>
@@ -21,12 +37,14 @@
 @endsection
 
 @section('topleft')
+@isset($contact_to)
 <div class="to">FACTUUR AAN:</div>
-<h2 class="name">John Doe</h2>
-<div class="address">796 Silver Harbour, TX 79273, US</div>
-<div class="email"><a href="mailto:john@example.com">john@example.com</a></div>
-<div class="address">Customer No: 17320263</div>
-<div class="address">VAT Numner: NL1287329</div>
+<h2 class="name">{{ $contact_to->getFormalName() }}</h2>
+<div class="address">{{ $relation->address_street . ' ' . $relation->address_number . ', ' . $relation->address_postal . ', ' . $relation->address_city }}</div>
+<div class="email"><a href="mailto:{{ $contact_to->email }}">{{ $contact_to->email }}</a></div>
+<div class="address">Klant Nummer: {{ $relation->debtor_code }}</div>
+<div class="address">BTW Nummer: {{ $relation->btw }}</div>
+@endisset
 @endsection
 
 
@@ -39,7 +57,9 @@
 </div>
 
 @isset($pretext)
-<div style="font-size: 16px;padding-bottom: 10px;">Geachte heer Janssen,</div>
+@isset($contact_to)
+<div style="font-size: 16px;padding-bottom: 10px;">Geachte {{ $contact_to->getFormalName() }},</div>
+@endisset
 <div style="font-size: 16px;padding-bottom: 30px;">{{ $pretext }}</div>
 @endisset
 
@@ -47,7 +67,9 @@
 
 @isset($posttext)
 <div style="font-size: 16px;padding-bottom: 10px;">{{ $posttext }}</div>
-<div style="font-size: 16px;padding-bottom: 30px;">Met vriendelijke groet, <br />Arie kaas</div>
+@isset($contact_from)
+<div style="font-size: 16px;padding-bottom: 30px;">Met vriendelijke groet, <br />{{ $contact_from->getFormalName() }}</div>
+@endisset
 @endisset
 
 @isset($messages)

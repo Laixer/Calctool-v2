@@ -211,6 +211,9 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('offer/close',                                'OfferController@doOfferClose');
         Route::post('offer/sendmail',                             'OfferController@doSendOffer');
         Route::post('offer/sendpost',                             'OfferController@doSendPostOffer');
+        
+        Route::post('quotation/new',                              'Quotation\NewController');
+        Route::post('quotation/confirm',                          'Quotation\ConfirmController');
     });
 
     /* Module Group Calculation */

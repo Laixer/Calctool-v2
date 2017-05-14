@@ -27,9 +27,10 @@ $(document).ready(function() {
 
 @section('component_buttons')
 <div class="pull-right">
-    <form action="/proposal/something" method="post">
+    <form action="/quotation/new" method="post">
         {!! csrf_field() !!}
         <button class="btn btn-primary"><i class="fa fa-check-square-o"></i>Offereren</button>
+        <input type="hidden" name="project" value="{{ $project->id }}" />
         @foreach(Input::all() as $input => $value)
         <input type="hidden" name="{{ $input }}" value="{{ $value }}" />
         @endforeach
@@ -57,23 +58,26 @@ $(document).ready(function() {
 
             <div class="col-md-12 col-sm-6">
                 <label>Contactpersoon</label>
-                <select class="form-control" name="to_contact">
+                <select class="form-control" name="contact_to">
+                    <option value="">Selecteer</option>
                     @foreach (Contact::where('relation_id',$relation->id)->get() as $contact)
-                    <option {{ Input::has('to_contact') ? (Input::get('to_contact') == $contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ Contact::find($contact->id)->getFormalName() }}</option>
+                    <option {{ Input::has('contact_to') ? (Input::get('contact_to') == $contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ Contact::find($contact->id)->getFormalName() }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-md-12 col-sm-6">
                 <label>Namens</label>
-                <select class="form-control" name="from_contact">
+                <select class="form-control" name="contact_from">
+                    <option value="">Selecteer</option>
                     @foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
-                    <option {{ Input::has('from_contact') ? (Input::get('from_contact') == $contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
+                    <option {{ Input::has('contact_from') ? (Input::get('contact_from') == $contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
                     @endforeach
                 </select>
             </div>
             <div class="col-md-6 col-sm-6">
                 <label>Oplevering</label>
                 <select class="form-control" name="deliver">
+                    <option value="">Selecteer</option>
                     @foreach (DeliverTime::all() as $deliver)
                     <option {{ Input::has('deliver') ? (Input::get('deliver') == $deliver->id ? 'selected' : '') : '' }} value="{{ $deliver->id }}">{{ $deliver->delivertime_name }}</option>
                     @endforeach
@@ -82,15 +86,11 @@ $(document).ready(function() {
             <div class="col-md-6 col-sm-6">
                 <label>Offerte geldig</label>
                 <select class="form-control" name="valid">
+                    <option value="">Selecteer</option>
                     @foreach (Valid::all() as $valid)
                     <option {{ Input::has('valid') ? (Input::get('valid') == $valid->id ? 'selected' : '') : '' }} value="{{ $valid->id }}">{{ $valid->valid_name }}</option>
                     @endforeach
                 </select>
-            </div>
-            <div class="col-sm-offset-0 col-sm-12">
-                <div class="checkbox">
-                    <input name="only_totals" type="checkbox" {{ Input::has('only_totals') ? 'checked' : '' }}><span style="margin-left:10px;">Alleen totaalkosten weergeven</span>
-                </div>
             </div>
             <div class="col-sm-offset-0 col-sm-12">
                 <div class="checkbox">
@@ -101,12 +101,17 @@ $(document).ready(function() {
     </div>
     {{-- /Proposal options --}}
 
-    <h3 class="page-header nomargin-top">Extra pagina's</h3>
+    <h3 class="page-header nomargin-top">Bijlages</h3>
 
     {{-- Proposal pages --}}
     <div class="row">
         <div class="form-group">
 
+            <div class="col-sm-offset-0 col-sm-12">
+                <div class="checkbox">
+                    <input name="display_specification" type="checkbox" {{ Input::has('display_specification') ? 'checked' : '' }}><span style="margin-left:10px;">Werkzaamheden specificeren</span>
+                </div>
+            </div>
             <div class="col-sm-offset-0 col-sm-12">
                 <div class="checkbox">
                     <input name="display_worktotals" type="checkbox" {{ Input::has('display_worktotals') ? 'checked' : '' }}><span style="margin-left:10px;">Totaalkosten per werkzaamheid</span>
@@ -115,11 +120,6 @@ $(document).ready(function() {
             <div class="col-sm-offset-0 col-sm-12">
                 <div class="checkbox">
                     <input name="display_description" type="checkbox" {{ Input::has('display_description') ? 'checked' : '' }}><span style="margin-left:10px;">Omschrijving per werkzaamheid</span>
-                </div>
-            </div>
-            <div class="col-sm-offset-0 col-sm-12">
-                <div class="checkbox">
-                    <input name="display_specification" type="checkbox" {{ Input::has('display_specification') ? 'checked' : '' }}><span style="margin-left:10px;">Werkzaamheden specificeren</span>
                 </div>
             </div>
 
