@@ -16,17 +16,18 @@
 namespace BynqIO\Dynq\ProjectManager\Component;
 
 use BynqIO\Dynq\ProjectManager\Contracts\Component;
+use BynqIO\Dynq\Models\Detail;
 use BynqIO\Dynq\Models\PartType;
 
 /**
- * Class EstimateComponent.
+ * Class MoreComponent.
  */
-class EstimateComponent extends BaseComponent implements Component
+class MoreComponent extends BaseComponent implements Component
 {
     public function calculateFilter($builder)
     {
-        return $builder->whereNull('detail_id')
-                       ->where('part_type_id', PartType::where('type_name','estimate')->firstOrFail()->id)
+        return $builder->where('detail_id', Detail::where('detail_name','more')->firstOrFail()->id)
+                       ->where('part_type_id', PartType::where('type_name','calculation')->firstOrFail()->id)
                        ->orderBy('priority');
     }
 
@@ -37,27 +38,13 @@ class EstimateComponent extends BaseComponent implements Component
         };
 
         $data['features'] = [
-            'level.new'              => false,
 
-            // 'activity.options'       => true,
-            'activity.move'          => false,
-            'activity.changename'    => false,
-            // 'activity.changenote'    => true,
-            // 'activity.favorite'      => true,
-            'activity.remove'        => false,
-            'activity.convertsubcon' => false,
+            // 'rows.editable' => true,
 
-            'chapter.options'        => false,
-            'chapter.move'           => false,
-            'chapter.changename'     => false,
-            'chapter.remove'         => false,
-
-            // 'rows.editable'          => true,
-
-            'tax.update'             => false,
+            // 'tax.update' => false,
         ];
 
-        $tabs[] = ['name' => 'calculate', 'title' => 'Stelposten stellen', 'icon' => 'fa-list'];
+        $tabs[] = ['name' => 'calculate', 'title' => 'Minderwerk', 'icon' => 'fa-list'];
 
         $async = [
             ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', 'async' => "/calculation/summary/project-{$this->project->id}"],

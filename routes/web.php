@@ -62,6 +62,11 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('res-{resource_id}/view',     'ResourceController@view');
     Route::get('res-{resource_id}/delete',   'ResourceController@doDeleteResource');
 
+    //TODO: move into controller
+    Route::get('inline/{content}',   function($content) {
+        return view("component.modal.$content");
+    });
+
     /* Routes by PaymentController */
     Route::get('payment',                      'PaymentController@getPayment');
     Route::get('payment/order/{token}',        'PaymentController@getPaymentFinish');
@@ -173,7 +178,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('invoice/updatecode', 'InvoiceController@doUpdateCode');
         Route::post('invoice/updatedesc', 'InvoiceController@doUpdateDescription');
         Route::post('invoice/updateamount', 'InvoiceController@doUpdateAmount');
-        Route::get('invoice/project-{project_id}', 'Calculation\CalcController@getInvoiceAll');;
+        // Route::get('invoice/project-{project_id}', 'Calculation\CalcController@getInvoiceAll');;
         Route::get('invoice/project-{project_id}/invoice-{invoice_id}', 'Calculation\CalcController@getInvoice');
         Route::get('invoice/project-{project_id}/term-invoice-{invoice_id}', 'Calculation\CalcController@getTermInvoice');
         Route::post('invoice/save', 'InvoiceController@doInvoiceVersionNew');
@@ -345,14 +350,12 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('project/{project_id}-{name}/printoverview',            'ReportController@printOverview');
 
         Route::get('project/{project_id}-{name}/{module}/{submodule?}',    'ComponentController@index');
-        // Route::get('project/{project_id}-{name}/calculation',              'CalcController@getCalculation');
-        // Route::get('project/{project_id}-{name}/quotations',               'Calculation\CalcController@getOfferAll');;
-        // Route::get('project/{project_id}-{name}/estimate',                 'CalcController@getEstimate');
-        // Route::get('project/{project_id}-{name}/less',                     'CalcController@getLess');
-        // Route::get('project/{project_id}-{name}/more',                     'CalcController@getMore');
         // Route::get('project/{project_id}-{name}/result',                   'ResultController');
 
         Route::post('project/level/new',                                   'LevelController@newLevel');
+        Route::post('project/level/rename',                                'LevelController@renameLevel');
+        Route::post('project/level/description',                           'LevelController@descriptionLevel');
+        Route::get('project/level/option',                                 'LevelController@setOption');
         Route::get('project/level/delete',                                 'LevelController@deleteLevel');
 
         Route::get('project/relation/{relation_id}',                       'UpdateController@getRelationDetails'); //TODO: MOVE

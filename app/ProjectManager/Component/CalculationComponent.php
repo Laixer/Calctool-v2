@@ -26,14 +26,14 @@ class CalculationComponent extends BaseComponent implements Component
     public function calculateFilter($builder)
     {
         return $builder->whereNull('detail_id')
-                       ->where('part_type_id', PartType::where('type_name','calculation')->first()->id)
+                       ->where('part_type_id', PartType::where('type_name','calculation')->firstOrFail()->id)
                        ->orderBy('priority');
     }
 
     public function estimateFilter($builder)
     {
         return $builder->whereNull('detail_id')
-                       ->where('part_type_id', PartType::where('type_name','estimate')->first()->id)
+                       ->where('part_type_id', PartType::where('type_name','estimate')->firstOrFail()->id)
                        ->orderBy('priority');
     }
 
@@ -42,6 +42,25 @@ class CalculationComponent extends BaseComponent implements Component
         $data['filter'] = function($section, $object) {
             return $this->{$section . 'Filter'}($object);
         };
+
+        $data['features'] = [
+        //     'rows.labor' => false,
+            'rows.timesheet' => false,
+        //     'rows.material' => false,
+            'rows.other' => false,
+        ];
+
+        if ($this->project->use_equipment) {
+            $data['features']['rows.other'] = true;
+        }
+
+        /* Disable all editable options for closed projects */
+        if ($this->project->project_close) {
+            $data['features']['level.new'] = false;
+            $data['features']['activity.options'] = false;
+            $data['features']['chapter.options'] = false;
+            $data['features']['tax.update'] = false;
+        }
 
         $tabs[] = ['name' => 'calculate', 'title' => 'Calculatie', 'icon' => 'fa-list'];
 

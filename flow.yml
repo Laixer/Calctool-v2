@@ -1,0 +1,46 @@
+# Employee records
+-  martin:
+    name: Martin D'vloper
+    job: Developer
+    skills:
+      - python
+      - perl
+      - pascal
+-  tabitha:
+    name: Tabitha Bitumen
+    job: Developer
+    skills:
+      - lisp
+      - fortran
+      - erlang
+
+martin: {name: Martin D'vloper, job: Developer, skill: Elite}
+fruits: ['Apple', 'Orange', 'Strawberry', 'Mango']
+
+        $this->bind('invoices',             'InvoiceComponent');
+        $this->bind('result',               'ResultComponent');
+
+---
+# An employee record
+name: calculation
+job: Developer
+skill: Elite
+employed: True
+foods:
+    - Apple
+    - Orange
+    - Strawberry
+    - Mango
+components:
+    details: Detail
+    calculation: Calculation
+    quotations: Quotation
+    quotations/new: QuotationNew
+    quotations/report: QuotationReport
+    estimate: Estimate
+    less: Less
+    more: More
+education: |
+    4 GCSEs
+    3 A-Levels
+    BSc in the Internet of Things

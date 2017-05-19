@@ -1,3 +1,16 @@
+{{--
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the Dynq project.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  Dynq
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+--}}
+
 <?php
 
 use BynqIO\Dynq\Calculus\CalculationOverview;
@@ -36,7 +49,7 @@ $(document).ready(function() {
 
     /* Convert and format string */
     function convertNumber(number) {
-        return $.number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('number') !!});
+        return $.number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('number') !!});//TODO
     }
 
     /* Save toggle state to session */
@@ -48,9 +61,11 @@ $(document).ready(function() {
             } else {
                 $toggleOpen = [];
             }
+
             if (!$toggleOpen.length) {
                 $toggleOpen.push($id);
             }
+
             for (var i in $toggleOpen) {
                 if ($toggleOpen.indexOf($id) == -1) {
                     $toggleOpen.push($id);
@@ -62,7 +77,7 @@ $(document).ready(function() {
             $tmpOpen = [];
             if (sessionStorage.toggleOpen{{ $component . $section . Auth::id() }}){
                 $toggleOpen = JSON.parse(sessionStorage.toggleOpen{{ $component . $section . Auth::id() }});
-                for(var i in $toggleOpen){
+                for (var i in $toggleOpen){
                     if ($toggleOpen[i] != $id) {
                         $tmpOpen.push($toggleOpen[i]);
                     }
@@ -153,7 +168,7 @@ $(document).ready(function() {
     }
 
     function submit_to_backend($tr) {
-        $.post("/{{ $component }}/calc/updatematerial", {
+        $.post("/{{ $component }}/calc/updatematerial", { //TODO: rename URL
             id:        $tr.attr("data-id"),
             name:      $tr.find("input[name='name']").val(),
             unit:      $tr.find("input[name='unit']").val(),
@@ -164,73 +179,16 @@ $(document).ready(function() {
         }, function(data) { if (data.success) { save_callback($tr); } });
     }
 
+    $(document).on('hidden.bs.modal', function (e) {
+        $(e.target).removeData('bs.modal');
+    });
+
 });
 </script>
 @endpush
 
 {{-- TODO: move into module --}}
-<div class="modal fade" id="nameChangeChapModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <form method="POST" action="/calculation/calc/rename_chapter" accept-charset="UTF-8">
 
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel2">Naam onderdeel</h4>
-            </div>
-
-            <div class="modal-body">
-                <div class="form-horizontal">
-                    {!! csrf_field() !!}
-                    <div class="form-group">
-                        <div class="col-md-4">
-                            <label>Naam</label>
-                        </div>
-                        <div class="col-md-12">
-                            <input value="" maxlength="100" name="chapter_name" id="nc_chapter_name" class="form-control" />
-                            <input value="" name="chapter" id="nc_chapter" type="hidden" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-            </div>
-        </div>
-        </form>
-    </div>
-</div>
-<div class="modal fade" id="nameChangeModal" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        <form method="POST" action="/calculation/calc/rename_activity" accept-charset="UTF-8">
-
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel2">Naam werkzaamheid</h4>
-            </div>
-
-            <div class="modal-body">
-                <div class="form-horizontal">
-                    {!! csrf_field() !!}
-                    <div class="form-group">
-                        <div class="col-md-4">
-                            <label>Naam</label>
-                        </div>
-                        <div class="col-md-12">
-                            <input value="" maxlength="100" name="activity_name" id="nc_activity_name" class="form-control" />
-                            <input value="" name="activity" id="nc_activity" type="hidden" class="form-control" />
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
-            </div>
-        </div>
-        </form>
-    </div>
-</div>
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -357,7 +315,7 @@ $(document).ready(function() {
 
         </div>
     </div>
-</div>
+</div>  
 <div class="modal fade" id="myFavAct" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -395,31 +353,13 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-<div class="modal fade" id="descModal" tabindex="-1" role="dialog" aria-labelledby="descModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">Omschrijving werkzaamheid</h4>
-            </div>
-            
-            <div class="modal-body">
-                <div class="form-group">
-                    <div class="col-md-12">
-                        <textarea name="note" id="note" rows="5" class="form-control"></textarea>
-                        <input type="hidden" name="noteact" id="noteact" />
-                    </div>
-                </div>
-            </div>
+{{-- /TODO: move into module --}}
 
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-check"></i> Opslaan</button>
-            </div>
-
-        </div>
+<div class="modal fade" id="asyncModal" tabindex="-1" role="dialog" aria-labelledby="asyncModal" aria-hidden="true">
+    <div class="modal-dialog {{-- modal-lg --}} {{-- modal-sm --}}">
+        <div class="modal-content"></div>
     </div>
 </div>
-{{-- /TODO: move into module --}}
 
 <div class="toogle">
     @foreach ($project->chapters()->orderBy('priority')->get() as $chapter)
@@ -430,17 +370,21 @@ $(document).ready(function() {
             {{-- Activity body --}}
             <div class="toogle">
                 @foreach ($filter($section, $chapter->activities())->get() as $activity)
-                <?php
-                if (Part::find($activity->part_id)->part_name == 'contracting') {
-                    $profit_mat = $project->profit_calc_contr_mat;
-                    $profit_equip = $project->profit_calc_contr_equip;
-                    $activity_total = CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip);
-                } else if (Part::find($activity->part_id)->part_name == 'subcontracting') {
+
+                @if ($activity->isSubcontracting())
+                @php
                     $profit_mat = $project->profit_calc_subcontr_mat;
                     $profit_equip = $project->profit_calc_subcontr_equip;
                     $activity_total = CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip);
-                }
-                ?>
+                @endphp
+                @else
+                @php
+                    $profit_mat = $project->profit_calc_contr_mat;
+                    $profit_equip = $project->profit_calc_contr_equip;
+                    $activity_total = CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip);
+                @endphp
+                @endif
+
                 <div id="toggle-activity-{{ $section }}-{{ $activity->id }}" class="toggle toggle-{{ $section }} toggle-activity">
                     <label>
                         <span>{{ $activity->activity_name }}</span>
@@ -452,39 +396,55 @@ $(document).ready(function() {
                     <div class="toggle-content" style="padding:10px 0px">
 
                         {{-- Activity options --}}
+                        @if (!isset($features['activity.options']))
                         <div class="row" style="margin-bottom:15px">
-                            @if(0)
-                            <div class="col-md-6">
-                                @if ($project->use_subcontract)
-                                <label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','contracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='contracting' ? 'checked' : '') }}/>Aanneming</label>
-                                <label class="radio-inline"><input data-id="{{ $activity->id }}" class="radio-activity" name="soort{{ $activity->id }}" value="{{ Part::where('part_name','=','subcontracting')->first()->id }}" type="radio" {{ ( Part::find($activity->part_id)->part_name=='subcontracting' ? 'checked' : '') }}/>Onderaanneming</label>
-                                @endif
-                            </div>
-                            @endif
-                            
                             <div class="col-md-12 text-right">
-                                <button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Gebruik Urenregistratie</button>
+
+                                @if (!isset($features['activity.timesheet']))
+                                @if ($activity->use_timesheet)
+                                <a href="/project/level/option?activity={{ $activity->id }}&action=disable_timesheet&csrf={{ csrf_token() }}" class="btn btn-default btn-xs notemod"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Gebruik Arbeid</a>
+                                @else
+                                <a href="/project/level/option?activity={{ $activity->id }}&action=enable_timesheet&csrf={{ csrf_token() }}" class="btn btn-default btn-xs notemod"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Gebruik Urenregistratie</a>
+                                @endif
+                                @endif
 
                                 @if (!isset($features['activity.convertsubcon']))
-                                <button id="pop-{{$chapter->id.'-'.$activity->id}}" data-id="{{ $activity->id }}" data-note="{{ $activity->note }}" data-toggle="modal" data-target="#descModal" class="btn btn-default btn-xs notemod"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak onderaanneming</button>
+                                @if ($activity->isSubcontracting())
+                                <a href="/project/level/option?activity={{ $activity->id }}&action=convert_contracting&csrf={{ csrf_token() }}" class="btn btn-default btn-xs notemod"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak aanneming</a>
+                                @else
+                                <a href="/project/level/option?activity={{ $activity->id }}&action=convert_subcontracting&csrf={{ csrf_token() }}" class="btn btn-default btn-xs notemod"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak onderaanneming</a>
+                                @endif
                                 @endif
 
                                 <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-pencil">&nbsp;&nbsp;</i>Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                        <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename"><i class="fa fa-pencil-square-o" style="padding-right:5px">&nbsp;</i>Naam wijzigen</a></li>
-                                        <li><a href="#" data-id="{{ $activity->id }}" data-name="{{ $activity->activity_name }}" data-toggle="modal" data-target="#nameChangeModal" class="changename"><i class="fa fa-file-text-o" style="padding-right:5px">&nbsp;</i>Omschrijving</a></li>
-                                        <li><a href="#" data-id="{{ $activity->id }}" class="lsavefav"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
+                                        @if (!isset($features['activity.changename']))
+                                        <li><a href="/inline/changename?id={{ $activity->id }}&level=2&name={{ urlencode($activity->activity_name) }}" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
+                                        @endif
+
+                                        <li><a href="/inline/description?id={{ $activity->id }}" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-file-text-o" style="padding-right:5px">&nbsp;</i>Omschrijving</a></li>
+                                        <li><a href="/project/level/favorite?activity={{ $activity->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Niveau opslaan als favoriet?')"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
+
+                                        @if (!isset($features['activity.move']))
                                         <li><a href="/project/level/move?activity={{ $activity->id }}&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up" style="padding-right:5px">&nbsp;</i>Verplaats omhoog</a></li>
                                         <li><a href="/project/level/move?activity={{ $activity->id }}&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down" style="padding-right:5px">&nbsp;</i>Verplaats omlaag</a></li>
-                                        <li><a href="/project/level/delete?activity={{ $activity->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Werkzaamheid verwijderen?')"><i class="fa fa-times" style="padding-right:5px">&nbsp;</i>Verwijderen</a></li>
+                                        @endif
+
+                                        @if (!isset($features['activity.remove']))
+                                        <li><a href="/project/level/delete?activity={{ $activity->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Niveau verwijderen?')"><i class="fa fa-times" style="padding-right:5px">&nbsp;</i>Verwijderen</a></li>
+                                        @endif
                                     </ul>
                                 </div>
+
                             </div>
                         </div>
+                        @endif
                         {{-- /Activity options --}}
 
                         {{-- Labor --}}
+                        @if (!isset($features['rows.labor']))
+                        @if (!$activity->use_timesheet)
                         <div class="row">
                             <div class="col-md-2"><h4>Arbeid</h4></div>
                             <div class="col-md-6"></div>
@@ -533,9 +493,13 @@ $(document).ready(function() {
                                 </tr>
                             </tbody>
                         </table>
+                        @endif
+                        @endif
                         {{-- /Labor --}}
 
                         {{-- Timesheet --}}
+                        @if (!isset($features['rows.timesheet']))
+                        @if ($activity->use_timesheet)
                         <div class="row">
                             <div class="col-md-2"><h4>Urenregistratie</h4></div>
                             <div class="col-md-6"></div>
@@ -590,7 +554,7 @@ $(document).ready(function() {
                                     <td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
                                     <td class="col-md-1"><span class="total-ex-tax"></span></td>
                                     <td class="col-md-1"><span class="total-incl-tax"></span></td>
-                                    <td class="col-md-1 text-right" data-profit="{{ $profit_mat }}">
+                                    <td class="col-md-1 text-right">
                                         <button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         <button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
                                         <button class="btn btn-danger btn-xs sdeleterow fa fa-times"></button>
@@ -609,9 +573,12 @@ $(document).ready(function() {
                                 </tr>
                             </tbody>
                         </table>
+                        @endif
+                        @endif
                         {{-- /Timesheet --}}
 
                         {{-- Material --}}
+                        @if (!isset($features['rows.material']))
                         <div class="row">
                             <div class="col-md-2"><h4>Materiaal</h4></div>
                             <div class="col-md-6"></div>
@@ -690,10 +657,11 @@ $(document).ready(function() {
                                 </tr>
                             </tbody>
                         </table>
+                        @endif
                         {{-- /Material --}}
 
                         {{-- Equipment --}}
-                        @if (!$project->use_equipment)
+                        @if (!isset($features['rows.other']))
                         <div class="row">
                             <div class="col-md-2"><h4>Overig</h4></div>
                             <div class="col-md-6"></div>
@@ -738,7 +706,7 @@ $(document).ready(function() {
                                     <td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
                                     <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
                                     <td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit_equip)/100), 2,",",".") }}</span></td>
-                                    <td class="col-md-1 text-right" data-profit="{{ $profit_equip }}">
+                                    <td class="col-md-1 text-right">
                                         <button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         <button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
                                         <button class="btn btn-danger btn-xs edeleterow fa fa-times"></button>
@@ -774,7 +742,7 @@ $(document).ready(function() {
                         @endif
                         {{-- /Equipment --}}
 
-                        {{-- Additional layers can be placed here --}}
+                        {{-- Additional layers can be placed here, eventually this is pulled from module catalog --}}
 
                     </div>
                 </div>
@@ -782,7 +750,7 @@ $(document).ready(function() {
             </div>
             {{-- /Activity body --}}
 
-            {{-- Chapter options --}}
+            {{-- Level:chapter options --}}
             <form method="POST" action="/project/level/new" accept-charset="UTF-8">
                 {!! csrf_field() !!}
 
@@ -794,6 +762,7 @@ $(document).ready(function() {
                             <input type="hidden" name="chapter" value="{{ $chapter->id }}">
                             <input type="hidden" name="level" value="2">
                             <input type="hidden" name="type" value="{{ $section == 'estimate' ? 'estimate' : 'calculation' }}">
+                            <input type="hidden" name="detail" value="{{ $component == 'more' ?: '' }}">
                             <input type="text" maxlength="100" class="form-control" name="name" id="name" value="" placeholder="Nieuwe Werkzaamheid">
                             <span class="input-group-btn">
                                 <button class="btn btn-primary btn-primary-activity"><i class="fa fa-plus">&nbsp;&nbsp;</i> Voeg toe</button>
@@ -808,17 +777,19 @@ $(document).ready(function() {
                         @endif
                     </div>
 
+                    @if (!isset($features['chapter.options']))
                     <div class="col-md-6 text-right">
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                            <li><a href="#" data-id="{{ $chapter->id }}" data-name="{{ $chapter->chapter_name }}" data-toggle="modal" data-target="#nameChangeChapModal" class="changenamechap"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></li>
-                            <li><a href="/project/level/move?chapter={{ $chapter->id }}&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
-                            <li><a href="/project/level/move?chapter={{ $chapter->id }}&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
-                            <li><a href="/project/level/delete?chapter={{ $chapter->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Hoofdstuk verwijderen?')"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>
+                                <li><a href="/inline/changename?id={{ $chapter->id }}&level=1&name={{ urlencode($chapter->chapter_name) }}" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
+                                <li><a href="/project/level/move?chapter={{ $chapter->id }}&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
+                                <li><a href="/project/level/move?chapter={{ $chapter->id }}&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
+                                <li><a href="/project/level/delete?chapter={{ $chapter->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Niveau verwijderen?')"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>
                             </ul>
                         </div>
                     </div>
+                    @endif
                 </div>
 
             </form>

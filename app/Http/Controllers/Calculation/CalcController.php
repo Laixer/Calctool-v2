@@ -335,27 +335,27 @@ class CalcController extends Controller {
         return response()->view('calc.invoice_term');
     }
 
-    public function getOfferAll(Request $request)
-    {
-        return response()->view('calc.offer_all');
-    }
+    // public function getOfferAll(Request $request)
+    // {
+    //     return response()->view('calc.offer_all');
+    // }
 
-    public function getOffer(Request $request)
-    {
-        return response()->view('calc.offer');
-    }
+    // public function getOffer(Request $request)
+    // {
+    //     return response()->view('calc.offer');
+    // }
 
-    public function getOfferPDF(Request $request)
-    {
-        $pdf = PDF::loadView('calc.offer_pdf');
-        $pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
-        return $pdf->stream();
-    }
+    // public function getOfferPDF(Request $request)
+    // {
+    //     $pdf = PDF::loadView('calc.offer_pdf');
+    //     $pdf->setOption('footer-html','http://localhost/c4586v34674v4&vwasrt/footer_pdf?uid='.Auth::id());
+    //     return $pdf->stream();
+    // }
 
-    public function getInvoiceAll(Request $request)
-    {
-        return response()->view('calc.invoice_all');
-    }
+    // public function getInvoiceAll(Request $request)
+    // {
+    //     return response()->view('calc.invoice_all');
+    // }
 
     // public function doNewChapter(Request $request, $project_id)
     // {
@@ -417,46 +417,46 @@ class CalcController extends Controller {
     //     return back()->with('success', 'Werkzaamheid aangemaakt');
     // }
 
-    public function doRenameCalculationActivity(Request $request)
-    {
-        $this->validate($request, [
-            'activity_name' => array('required','max:100'),
-            'activity' => array('required','max:100'),
-        ]);
+    // public function doRenameCalculationActivity(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'activity_name' => array('required','max:100'),
+    //         'activity' => array('required','max:100'),
+    //     ]);
 
-        $activity = Activity::find($request->input('activity'));
-        if (!$activity)
-            return back();
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return back();
-        }
+    //     $activity = Activity::find($request->input('activity'));
+    //     if (!$activity)
+    //         return back();
+    //     $chapter = Chapter::find($activity->chapter_id);
+    //     if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+    //         return back();
+    //     }
 
-        $activity->activity_name = $request->get('activity_name');
+    //     $activity->activity_name = $request->get('activity_name');
 
-        $activity->save();
+    //     $activity->save();
 
-        return back()->with('success', 'Werkzaamheid aangepast');
-    }
+    //     return back()->with('success', 'Werkzaamheid aangepast');
+    // }
 
-    public function doRenameCalculationChapter(Request $request)
-    {
-        $this->validate($request, [
-            'chapter_name' => array('required','max:100'),
-            'chapter' => array('required','max:100'),
-        ]);
+    // public function doRenameCalculationChapter(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'chapter_name' => array('required','max:100'),
+    //         'chapter' => array('required','max:100'),
+    //     ]);
 
-        $chapter = Chapter::find($request->input('chapter'));
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return back();
-        }
+    //     $chapter = Chapter::find($request->input('chapter'));
+    //     if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+    //         return back();
+    //     }
 
-        $chapter->chapter_name = $request->get('chapter_name');
+    //     $chapter->chapter_name = $request->get('chapter_name');
 
-        $chapter->save();
+    //     $chapter->save();
 
-        return back()->with('success', 'Onderdeel aangepast');
-    }
+    //     return back()->with('success', 'Onderdeel aangepast');
+    // }
 
     // public function doNewEstimateActivity(Request $request, $chapter_id)
     // {
@@ -551,90 +551,90 @@ class CalcController extends Controller {
         return response()->json(['success' => 1]);
     }
 
-    public function doUpdatePart(Request $request)
-    {
-        $this->validate($request, [
-            'value' => array('required','integer','min:0'),
-            'activity' => array('required','integer','min:0')
-        ]);
+    // public function doUpdatePart(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'value' => array('required','integer','min:0'),
+    //         'activity' => array('required','integer','min:0')
+    //     ]);
 
-        $activity = Activity::find($request->input('activity'));
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
+    //     $activity = Activity::find($request->input('activity'));
+    //     if (!$activity)
+    //         return response()->json(['success' => 0]);
+    //     $chapter = Chapter::find($activity->chapter_id);
+    //     if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
 
-        $activity->part_id = $request->get('value');
-        $activity->save();
+    //     $activity->part_id = $request->get('value');
+    //     $activity->save();
 
-        return response()->json(['success' => 1]);
-    }
+    //     return response()->json(['success' => 1]);
+    // }
 
 
-    public function doUpdateNote(Request $request)
-    {
-        $this->validate($request, [
-            'note' => array('required'),
-            'activity' => array('required','integer')
-        ]);
+    // public function doUpdateNote(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'note' => array('required'),
+    //         'activity' => array('required','integer')
+    //     ]);
 
-        $activity = Activity::find($request->input('activity'));
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
+    //     $activity = Activity::find($request->input('activity'));
+    //     if (!$activity)
+    //         return response()->json(['success' => 0]);
+    //     $chapter = Chapter::find($activity->chapter_id);
+    //     if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
 
-        $activity->note = $request->get('note');
+    //     $activity->note = $request->get('note');
 
-        $activity->save();
+    //     $activity->save();
 
-        return response()->json(['success' => 1]);
-    }
+    //     return response()->json(['success' => 1]);
+    // }
 
-    public function doUpdateUseTimesheet(Request $request)
-    {
-        $this->validate($request, [
-            'state' => array('required'),
-            'activity' => array('required','integer')
-        ]);
+    // public function doUpdateUseTimesheet(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'state' => array('required'),
+    //         'activity' => array('required','integer')
+    //     ]);
 
-        $activity = Activity::find($request->input('activity'));
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
+    //     $activity = Activity::find($request->input('activity'));
+    //     if (!$activity)
+    //         return response()->json(['success' => 0]);
+    //     $chapter = Chapter::find($activity->chapter_id);
+    //     if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
 
-        $activity->use_timesheet = $request->get('state');
+    //     $activity->use_timesheet = $request->get('state');
 
-        $activity->save();
+    //     $activity->save();
 
-        return response()->json(['success' => 1]);
-    }
+    //     return response()->json(['success' => 1]);
+    // }
 
-    public function doDeleteActivity(Request $request)
-    {
-        $this->validate($request, [
-            'activity' => array('required','integer','min:0')
-        ]);
+    // public function doDeleteActivity(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'activity' => array('required','integer','min:0')
+    //     ]);
 
-        $activity = Activity::find($request->input('activity'));
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
+    //     $activity = Activity::find($request->input('activity'));
+    //     if (!$activity)
+    //         return response()->json(['success' => 0]);
+    //     $chapter = Chapter::find($activity->chapter_id);
+    //     if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
 
-        $activity->delete();
+    //     $activity->delete();
 
-        return response()->json(['success' => 1]);
-    }
+    //     return response()->json(['success' => 1]);
+    // }
 
     public function doMoveActivity(Request $request)
     {
@@ -676,21 +676,21 @@ class CalcController extends Controller {
         return response()->json(['success' => 1]);
     }
 
-    public function doDeleteChapter(Request $request)
-    {
-        $this->validate($request, [
-            'chapter' => array('required','integer','min:0')
-        ]);
+    // public function doDeleteChapter(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'chapter' => array('required','integer','min:0')
+    //     ]);
 
-        $chapter = Chapter::find($request->input('chapter'));
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
+    //     $chapter = Chapter::find($request->input('chapter'));
+    //     if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
 
-        $chapter->delete();
+    //     $chapter->delete();
 
-        return response()->json(['success' => 1]);
-    }
+    //     return response()->json(['success' => 1]);
+    // }
 
     public function doMoveChapter(Request $request)
     {
