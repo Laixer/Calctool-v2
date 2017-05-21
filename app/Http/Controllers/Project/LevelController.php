@@ -178,6 +178,93 @@ class LevelController extends Controller
         $activity->save();
     }
 
+    protected function convertEstimate(Activity $activity)
+    {
+        $activity->part_type_id = PartType::where('type_name', 'estimate')->firstOrFail()->id;
+        $activity->save();
+    }
+
+    protected function convertCalculation(Activity $activity)
+    {
+        $activity->part_type_id = PartType::where('type_name', 'calculation')->firstOrFail()->id;
+        $activity->save();
+    }
+
+    protected function moveChapter($id, $direction)
+    {
+        $chapter = Chapter::findOrFail($id);
+        switch ($direction) {
+            case 'up':
+                $switch_chapter = Chapter::where('project_id', $chapter->project_id)->where('priority', '<', $chapter->priority)->orderBy('priority','desc')->firstOrFail();
+
+                $old_priority = $chapter->priority;
+
+                $chapter->priority = $switch_chapter->priority;
+                $chapter->save();
+
+                $switch_chapter->priority = $old_priority;
+                $switch_chapter->save();
+                break;
+            case 'down':
+                $switch_chapter = Chapter::where('project_id', $chapter->project_id)->where('priority', '>', $chapter->priority)->orderBy('priority')->firstOrFail();
+
+                $old_priority = $chapter->priority;
+
+                $chapter->priority = $switch_chapter->priority;
+                $chapter->save();
+
+                $switch_chapter->priority = $old_priority;
+                $switch_chapter->save();
+                break;
+        }
+    }
+
+    protected function moveActivity($id, $direction)
+    {
+        $activity = Activity::findOrFail($id);
+        $chapter = Chapter::findOrFail($activity->chapter_id);
+        switch ($direction) {
+            case 'up':
+                $switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority', '<', $activity->priority)->whereNull('detail_id')->orderBy('priority','desc')->firstOrFail();
+
+                $old_priority = $activity->priority;
+                $activity->priority = $switch_activity->priority;
+                $activity->save();
+
+                $switch_activity->priority = $old_priority;
+                $switch_activity->save();
+                break;
+            case 'down':
+                $switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority', '>', $activity->priority)->whereNull('detail_id')->orderBy('priority')->firstOrFail();
+
+                $old_priority = $activity->priority;
+                $activity->priority = $switch_activity->priority;
+                $activity->save();
+
+                $switch_activity->priority = $old_priority;
+                $switch_activity->save();
+                break;
+        }
+    }
+
+    public function moveLevel(Request $request)
+    {
+        if (csrf_token() != $request->get('csrf')) {
+            abort(404);
+        }
+
+        switch ($request->get('level')) {
+            case 1:
+                $this->moveChapter($request->get('id'), $request->input('direction'));
+                break;
+            case 2:
+                $this->moveActivity($request->get('id'), $request->input('direction'));
+                break;
+        }
+
+        return back()->with('success', 'Niveau bijgewerkt');
+    }
+
     public function setOption(Request $request)
     {
         if (csrf_token() != $request->get('csrf')) {
@@ -197,6 +284,12 @@ class LevelController extends Controller
                 break;
             case 'convert_subcontracting':
                 $this->convertSubcontracting($activity);
+                break;
+            case 'convert_estimate':
+                $this->convertEstimate($activity);
+                break;
+            case 'convert_calculation':
+                $this->convertCalculation($activity);
                 break;
             default:
                 abort(404);

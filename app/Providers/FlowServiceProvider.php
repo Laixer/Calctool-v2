@@ -15,6 +15,7 @@
 
 namespace BynqIO\Dynq\Providers;
 
+use Illuminate\Support\Facades\Blade;
 use BynqIO\Dynq\ProjectManager\Providers\FlowServiceProvider as ServiceProvider;
 
 class FlowServiceProvider extends ServiceProvider
@@ -39,6 +40,12 @@ class FlowServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        Blade::directive('ifallowed', function ($expression) {
+            return "<?php if(isset($expression) && $expression === true): ?>";
+        });
+
+        Blade::directive('endifallowed', function () {
+            return "<?php endif; ?>";
+        });
     }
 }

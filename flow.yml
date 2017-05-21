@@ -1,46 +1,65 @@
-# Employee records
--  martin:
-    name: Martin D'vloper
-    job: Developer
-    skills:
-      - python
-      - perl
-      - pascal
--  tabitha:
-    name: Tabitha Bitumen
-    job: Developer
-    skills:
-      - lisp
-      - fortran
-      - erlang
-
-martin: {name: Martin D'vloper, job: Developer, skill: Elite}
-fruits: ['Apple', 'Orange', 'Strawberry', 'Mango']
-
-        $this->bind('invoices',             'InvoiceComponent');
-        $this->bind('result',               'ResultComponent');
-
 ---
-# An employee record
+# Calculation Flow Record
 name: calculation
-job: Developer
-skill: Elite
-employed: True
-foods:
-    - Apple
-    - Orange
-    - Strawberry
-    - Mango
+locale: [nl,en]
+load: true
+features:
+    - cloud
+    - copy
+inject:
+    - project
+description:
+    Calculation is the default flow for large
+    and advanced projects.
+
 components:
-    details: Detail
-    calculation: Calculation
-    quotations: Quotation
-    quotations/new: QuotationNew
-    quotations/report: QuotationReport
-    estimate: Estimate
-    less: Less
-    more: More
-education: |
-    4 GCSEs
-    3 A-Levels
-    BSc in the Internet of Things
+    - details: &default
+        order: 1
+        url: details
+        controller: Detail
+        preload: true
+        description: >
+          project details and basic insights
+
+    - calculation:
+        controller: Calculation
+
+    - quotations: &base_quotation
+        name: quotations
+        preload: true
+        controller: Quotation
+
+    - quotations/new:
+        <<: *base_quotation
+        controller: QuotationNew
+
+    - quotations/report:
+        <<: *base_quotation
+        controller: QuotationReport
+
+    - estimate:
+        guard:
+          not_before: [details,calculation,quotations]
+        controller: Estimate
+
+    - less:
+        guard:
+          not_before: [details,calculation,quotations]
+        controller: Less
+
+    - more:
+        guard:
+          not_before: [details,calculation,quotations]
+        controller: More
+
+    - invoices:
+        guard:
+          not_before: [details,calculation,quotations]
+        controller: Invoice
+
+    - result:
+        guard:
+          not_before: [details,calculation,quotations]
+        controller: Result
+
+default: *default

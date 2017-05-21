@@ -26,14 +26,6 @@ class CalculationComponent extends BaseComponent implements Component
     public function calculateFilter($builder)
     {
         return $builder->whereNull('detail_id')
-                       ->where('part_type_id', PartType::where('type_name','calculation')->firstOrFail()->id)
-                       ->orderBy('priority');
-    }
-
-    public function estimateFilter($builder)
-    {
-        return $builder->whereNull('detail_id')
-                       ->where('part_type_id', PartType::where('type_name','estimate')->firstOrFail()->id)
                        ->orderBy('priority');
     }
 
@@ -44,10 +36,10 @@ class CalculationComponent extends BaseComponent implements Component
         };
 
         $data['features'] = [
-        //     'rows.labor' => false,
-            'rows.timesheet' => false,
-        //     'rows.material' => false,
-            'rows.other' => false,
+            'rows.labor'     => true,
+            'rows.timesheet' => true,
+            'rows.material'  => true,
+            'rows.other'     => false,
         ];
 
         if ($this->project->use_equipment) {
@@ -63,11 +55,6 @@ class CalculationComponent extends BaseComponent implements Component
         }
 
         $tabs[] = ['name' => 'calculate', 'title' => 'Calculatie', 'icon' => 'fa-list'];
-
-        /* Additional options */
-        if ($this->project->use_estimate) {
-            $tabs[] = ['name' => 'estimate', 'include' => 'calculate', 'title' => 'Stelposten', 'icon' => 'fa-align-justify'];
-        }
 
         $async = [
             ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', 'async' => "/calculation/summary/project-{$this->project->id}"],

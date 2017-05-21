@@ -326,18 +326,23 @@ div.toggle-activity > label:hover {
 .label-custom {
     background-color: #777;
     padding: 0.2em 0.7em 0.2em;
-    margin-right: 30px;
     color: #fff;
     border-radius: 3px;
     font-size: small;
-    position: absolute;
-    right: 160px;
-    bottom: 3px;
+    display:inline;
 }
 
 .fix-footer-bottom {
     margin-bottom: 40px;
 }
+
+.label-align-right {
+    margin-right: 30px;
+    position: absolute;
+    right: 140px;
+    bottom: 5px;
+}
+
 /*Selectboxxes op offerte*/
 select {
     border: 2px solid #719E00 ;
