@@ -19,7 +19,7 @@ class EstimateOverview {
 
 /*--Estimate Overview - total per activitys--*/
 /*labor activity total*/
-	public static function laborActivity($activity) {
+	public static function laborActivity($rate, $activity) {
 		$total = 0;
 
 		//$count = EstimateLabor::where('activity_id','=', $activity->id)->where('isset','=','true')->where('original','=','false')->count('id');
@@ -116,10 +116,10 @@ class EstimateOverview {
 	}
 
 /*Activity total*/
-	public static function activityTotalProfit($activity, $profit_mat, $profit_equip) {
+	public static function activityTotalProfit($rate, $activity, $profit_mat, $profit_equip) {
 		$total = 0;
 
-		$total += EstimateOverview::laborActivity($activity);
+		$total += EstimateOverview::laborActivity($rate, $activity);
 		$total += EstimateOverview::materialActivityProfit($activity, $profit_mat);
 		$total += EstimateOverview::equipmentActivityProfit($activity, $profit_equip);
 
@@ -220,7 +220,7 @@ class EstimateOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 			{
-				$total += EstimateOverview::laborActivity($activity);
+				$total += EstimateOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;
@@ -233,7 +233,7 @@ class EstimateOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 			{
-				$total += EstimateOverview::laborActivity($activity);
+				$total += EstimateOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;
@@ -272,7 +272,7 @@ class EstimateOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 			{
-				$total += EstimateOverview::laborActivity($activity);
+				$total += EstimateOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;

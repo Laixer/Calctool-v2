@@ -18,19 +18,17 @@ class LessOverview {
 /*--Less Overview - total per activitys--*/
 /*labor activity total*/
 
-/*NOG DOEN>>*/
-
 /*Less labor*/
 
-	public static function laborActivity($activity, $project) {
+	public static function laborActivity($_rate, $activity) {
 		$row = NULL;
-		if (PartType::find($activity->part_type_id)->type_name=='calculation') {
-			$row = CalculationLabor::where('activity_id', '=', $activity->id)->where('isless','=','true')->first();
+		if (PartType::find($activity->part_type_id)->type_name == 'calculation') {
+			$row = CalculationLabor::where('activity_id', $activity->id)->where('isless','true')->first();
 		}
 
 		$rate = $row['rate'];
 		if (Part::find($activity->part_id)->part_name == 'contracting') {
-			$rate = $project->hour_rate;
+			$rate = $_rate;
 		}
 
 		return ($rate * $row['less_amount']) - ($rate * $row['amount']);
@@ -94,10 +92,10 @@ class LessOverview {
 	}
 
 /*Less Activity total*/
-	public static function activityTotalProfit($activity, $profit_mat, $profit_equip, $project) {
+	public static function activityTotalProfit($rate, $activity, $profit_mat, $profit_equip) {
 		$total = 0;
 
-		$total += LessOverview::laborActivity($activity, $project);
+		$total += LessOverview::laborActivity($rate, $activity);
 		$total += LessOverview::materialActivityProfit($activity, $profit_mat);
 		$total += LessOverview::equipmentActivityProfit($activity, $profit_equip);
 
@@ -198,7 +196,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->get() as $activity)
 			{
-				$total += LessOverview::laborActivity($activity, $project);
+				$total += LessOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;
@@ -211,7 +209,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->get() as $activity)
 			{
-				$total += LessOverview::laborActivity($activity, $project);
+				$total += LessOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;
@@ -250,7 +248,7 @@ class LessOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 			{
-				$total += LessOverview::laborActivity($activity,  $project);
+				$total += LessOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;

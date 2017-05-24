@@ -399,7 +399,7 @@ $(document).ready(function() {
                         <div class="col-md-5">
                             <div class="form-group">
                                 <label for="name">Projectnaam</label>
-                                <input name="name" id="name" type="text" maxlength="50" placeholder="{{ 'PROJ-' . date("Ymd") . '-XX' }}" value="{{ old('name') }}" class="form-control" />
+                                <input name="name" id="name" type="text" maxlength="50" placeholder="{{ 'PROJ-' . date("Ymd") . '-XXXX' }}" value="{{ old('name') }}" class="form-control" />
                             </div>
                         </div>
                         <div class="col-md-3">

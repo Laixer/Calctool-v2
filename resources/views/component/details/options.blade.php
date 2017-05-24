@@ -111,39 +111,27 @@ $(document).ready(function() {
                 </ul>
             </div>
         </div>
-        <div class="col-md-6">	
+        @if ($type != 'directwork')
+        <div class="col-md-6">
             <div class="col-md-3">
-                <label for="type"><b>Stelposten</b></label>
+                <label for="type"><b>Meer-/Minderwerk</b></label>
                 <div class="form-group">
-                    <input name="use_estimate" {{ $project->project_close ? 'disabled' : ($disable_estim ? 'disabled' : '') }} type="checkbox" {{ $project->use_estimate ? 'checked' : '' }}>
+                    <input name="use_more" type="checkbox" {{ $project->project_close ? 'disabled' : ($disable_more ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : ($project->use_less ? 'checked' : '') }}>
                 </div>
             </div>
-            <div class="col-md-9"  style="padding-top:30px;">		
-                <p>Voeg stelposten toe aan je calculatie.</p>
+            <div class="col-md-9" style="padding-top:30px;">
+                <p>Voeg meerwerk toe aan je project.</p>
                 <ul>
-                    <li>Definitief te maken voor factuur na opdracht</li>
+                    <li>Pas invulbaar na opdracht</li>
                     <li>Uit te zetten indien ongebruikt</li>
                 </ul>
             </div>
         </div>
+        @endif
     </div>
     <hr>
     @endif
     <div class="row">
-        <div class="col-md-6">
-            <div class="col-md-3">
-                <label for="type"><b>Onderaanneming</b></label>
-                <div class="form-group">
-                    <input name="use_subcontract" type="checkbox" {{ $project->project_close ? 'disabled' : ($project->use_subcontract ? 'disabled' : '') }} {{ $project->use_subcontract ? 'checked' : '' }}>
-                </div>
-            </div>
-            <div class="col-md-9"  style="padding-top:30px;">
-                <p>Voeg onderaanneming toe aan je {{ $type == 'directwork' ? 'regiewerk' : 'calculatie' }}.</p>
-                <ul>
-                    <li>Kan na toevoegen niet ongedaan gemaakt worden</li>
-                </ul>
-            </div>
-        </div>
         <div class="col-md-6">
             <div class="col-md-3">
                 <label for="type"><b>Overige</b></label>
@@ -160,41 +148,6 @@ $(document).ready(function() {
             </div>
         </div>
     </div>
-    @if ($type != 'directwork')
-    <hr>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="col-md-3">
-                <label for="type"><b>Meerwerk</b></label>
-                <div class="form-group">
-                    <input name="use_more" type="checkbox" {{ $project->project_close ? 'disabled' : ($disable_more ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : '' }}>
-                </div>
-            </div>
-            <div class="col-md-9" style="padding-top:30px;">
-                <p>Voeg meerwerk toe aan je project.</p>
-                <ul>
-                    <li>Pas invulbaar na opdracht</li>
-                    <li>Uit te zetten indien ongebruikt</li>
-                </ul>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="col-md-3">
-                <label for="type"><b>Minderwerk</b></label>
-                <div class="form-group">
-                    <input name="use_less" type="checkbox" {{ $project->project_close ? 'disabled' : ($disable_less ? 'disabled' : '') }} {{ $project->use_less ? 'checked' : '' }}>
-                </div>
-            </div>
-            <div class="col-md-9" style="padding-top:30px;">
-                <p>Voeg minderwerk toe aan je prpject.</p>
-                <ul>
-                    <li>Pas invulbaar na opdracht</li>
-                    <li>Uit te zetten indien ongebruikt</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    @endif
 
     <br/>
     <div class="row">

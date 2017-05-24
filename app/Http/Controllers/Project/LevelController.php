@@ -272,6 +272,8 @@ class LevelController extends Controller
         }
 
         $activity = Activity::findOrFail($request->get('activity'));
+        $chapter = Chapter::findOrFail($activity->chapter_id);
+        $project = Project::findOrFail($chapter->project_id);
         switch ($request->get('action')) {
             case 'enable_timesheet':
                 $this->enableTimesheet($activity);
@@ -284,9 +286,11 @@ class LevelController extends Controller
                 break;
             case 'convert_subcontracting':
                 $this->convertSubcontracting($activity);
+                $project->use_subcontract = true;
                 break;
             case 'convert_estimate':
                 $this->convertEstimate($activity);
+                $project->use_estimate = true;
                 break;
             case 'convert_calculation':
                 $this->convertCalculation($activity);

@@ -14,7 +14,6 @@ $offer_last = Offer::where('project_id', $project->id)->orderBy('created_at', 'd
 
             <form action="/quotation/confirm" method="post">
                 {!! csrf_field() !!}
-                <input type="hidden" name="project" value="{{ $project->id }}" />
 
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -22,19 +21,22 @@ $offer_last = Offer::where('project_id', $project->id)->orderBy('created_at', 'd
                 </div>
 
                 <div class="modal-body">
-                    <div class="form-horizontal">
 
+                    <div class="form-horizontal">
                         <div class="form-group">
-                            <label class="col-xs-3 control-label">Bevestiging</label>
-                            <div class="col-xs-6 date">
+                            <div class="col-md-4">
+                                <label>Bevestiging</label>
+                            </div>
+                            <div class="col-md-12">
                                 <div class="input-group input-append date" id="dateRangePicker">
                                     <input type="text" class="form-control" name="date" value="{{ date('d-m-Y') }}" />
                                     <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
+                                <input value="{{ $project->id }}" type="hidden" name="project" />
                             </div>
                         </div>
-
                     </div>
+
                 </div>
 
                 <div class="modal-footer">

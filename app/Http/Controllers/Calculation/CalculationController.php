@@ -60,6 +60,14 @@ class CalculationController extends Controller {
 
     protected function newLaborRow($activity, Array $parameters)
     {
+        $chapter = Chapter::findOrFail($activity->chapter_id);
+        $project = Project::findOrFail($chapter->project_id);
+
+        $rate = $project->hour_rate;
+        if ($activity->isSubcontracting() && isset($parameters['rate'])) {
+            $rate = $parameters['rate'];
+        }
+
         return CalculationLabor::create([
             "rate"            => $rate,
             "amount"          => $parameters['amount'],
@@ -94,7 +102,7 @@ class CalculationController extends Controller {
         $this->validate($request, [
             'name'      => ['required_unless:layer,labor', 'max:100'],
             'unit'      => ['required_unless:layer,labor', 'max:10'],
-            'rate'      => ['required', 'numeric'],
+            'rate'      => ['required_unless:layer,labor', 'numeric'],
             'amount'    => ['required', 'numeric'],
             'activity'  => ['required', 'integer', 'min:0'],
             'layer'     => ['required'],
@@ -119,15 +127,23 @@ class CalculationController extends Controller {
         return response()->json(['success' => 1, 'id' => $id]);
     }
 
-    protected function updateLaborRow(Array $parameters)
+    protected function updateLaborRow($activity, Array $parameters)
     {
+        $chapter = Chapter::findOrFail($activity->chapter_id);
+        $project = Project::findOrFail($chapter->project_id);
+
+        $rate = $project->hour_rate;
+        if ($activity->isSubcontracting() && isset($parameters['rate'])) {
+            $rate = $parameters['rate'];
+        }
+
         $row = CalculationLabor::findOrFail($parameters['id']);
-        $row->rate           = $parameters['rate'];
+        $row->rate           = $rate;
         $row->amount         = $parameters['amount'];
         $row->save();
     }
 
-    protected function updateMaterialRow(Array $parameters)
+    protected function updateMaterialRow($activity, Array $parameters)
     {
         $row = CalculationMaterial::findOrFail($parameters['id']);
         $row->material_name  = $parameters['name'];
@@ -137,7 +153,7 @@ class CalculationController extends Controller {
         $row->save();
     }
 
-    protected function updateOtherRow(Array $parameters)
+    protected function updateOtherRow($activity, Array $parameters)
     {
         $row = CalculationEquipment::findOrFail($parameters['id']);
         $row->equipment_name  = $parameters['name'];
@@ -153,30 +169,33 @@ class CalculationController extends Controller {
             'id'        => ['required', 'integer', 'min:0'],
             'name'      => ['required_unless:layer,labor', 'max:100'],
             'unit'      => ['required_unless:layer,labor', 'max:10'],
-            'rate'      => ['required', 'numeric'],
+            'rate'      => ['required_unless:layer,labor', 'numeric'],
             'amount'    => ['required', 'numeric'],
+            'activity'  => ['required', 'integer', 'min:0'],
             'layer'     => ['required'],
         ]);
 
+        $activity = Activity::findOrFail($request->get('activity'));
+
         switch ($request->get('layer')) {
             case 'labor':
-                $this->updateLaborRow($request->all());
+                $this->updateLaborRow($activity, $request->all());
                 break;
             case 'material':
-                $this->updateMaterialRow($request->all());
+                $this->updateMaterialRow($activity, $request->all());
                 break;
             case 'other':
-                $this->updateOtherRow($request->all());
+                $this->updateOtherRow($activity, $request->all());
                 break;
         }
 
         return response()->json(['success' => 1]);
     }
 
-    protected function deleteLaborRow(Array $parameters)
-    {
-        CalculationLabor::findOrFail($parameters['id'])->delete();
-    }
+    // protected function deleteLaborRow(Array $parameters)
+    // {
+    //     CalculationLabor::findOrFail($parameters['id'])->delete();
+    // }
 
     protected function deleteMaterialRow(Array $parameters)
     {
@@ -197,9 +216,9 @@ class CalculationController extends Controller {
         ]);
 
         switch ($request->get('layer')) {
-            case 'labor':
-                $id = $this->deleteLaborRow($request->all());
-                break;
+            // case 'labor':
+            //     $id = $this->deleteLaborRow($request->all());
+            //     break;
             case 'material':
                 $id = $this->deleteMaterialRow($request->all());
                 break;

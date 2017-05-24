@@ -1,65 +1,117 @@
+# Copyright (C) 2017 Bynq.io B.V.
+# All Rights Reserved
+#
+# This file is part of the Dynq project.
+#
+# Content can not be copied and/or distributed without the express
+# permission of the author.
+#
+# @package  Dynq
+# @author   Yorick de Wid <y.dewid@calculatietool.com>
+
 ---
-# Calculation Flow Record
+# << Calculation Flow Record >>
+# Original : Calculatie
+# Date     : 2017-05-25
 name: calculation
-locale: [nl,en]
-load: true
+type: calculate
+icon: calculation.png
+level: [normal]
+locale: {
+  'nl-NL':nl,   # Default Dutch translation
+  'en-US':en    # Default English translation
+}
+
+# Enable project features
 features:
-    - cloud
-    - copy
+  - cloud
+  - copy
+  - communication
+
+# Objects are injected in all components
 inject:
-    - project
+  - 'project'
+
 description:
+  en:
     Calculation is the default flow for large
     and advanced projects.
 
+# [[ Register components ]]
+# Components are loaded for the first time when this project
+# flow is selected, unless preload is enabled. This list only 
+# serves as a catalog. In order to use the components
+# they must be referenced at least once in a path below.
 components:
-    - details: &default
-        order: 1
-        url: details
-        controller: Detail
-        preload: true
-        description: >
-          project details and basic insights
+  - details: &default
+      order: 1
+      url: details
+      controller: Detail
+      preload: true
+      description: >
+        project details and basic insights
 
-    - calculation:
-        controller: Calculation
+  - calculation: &calculation
+      controller: Calculation
 
-    - quotations: &base_quotation
-        name: quotations
-        preload: true
-        controller: Quotation
+  - quotations: &base_quotation
+      name: quotations
+      preload: true
+      controller: Quotation
 
-    - quotations/new:
-        <<: *base_quotation
-        controller: QuotationNew
+  - quotations/new:
+      <<: *base_quotation
+      subcomponent: true
+      controller: QuotationNew
 
-    - quotations/report:
-        <<: *base_quotation
-        controller: QuotationReport
+  - quotations/report:
+      <<: *base_quotation
+      subcomponent: true
+      controller: QuotationReport
 
-    - estimate:
-        guard:
-          not_before: [details,calculation,quotations]
-        controller: Estimate
+  - estimate: &estimate
+      satisfy: 'project.activity.estimate > 1'
+      controller: Estimate
 
-    - less:
-        guard:
-          not_before: [details,calculation,quotations]
-        controller: Less
+  - less: &less
+      satisfy: 'project.less'
+      controller: Less
 
-    - more:
-        guard:
-          not_before: [details,calculation,quotations]
-        controller: More
+  - more: &more
+      satisfy: 'project.more'
+      controller: More
 
-    - invoices:
-        guard:
-          not_before: [details,calculation,quotations]
-        controller: Invoice
+  - invoices: &invoices
+      controller: Invoice
 
-    - result:
-        guard:
-          not_before: [details,calculation,quotations]
-        controller: Result
+  - result: &result
+      controller: Result
 
-default: *default
+# [[ Path Flows ]]
+# Paths allow a convenient way to separate project steps based
+# on predicates. They must provide a way to pass control over
+# to the next path in order. If no next path is given, the control
+# wil end the project flow.
+# NOTE: The components are not loaded in order of listing.
+paths:
+  path2: &fase2
+    satisfy: 'project.offer > 1'
+    components: [
+      *default,
+      *calculation,
+      *base_quotation,
+      *estimate,
+      *less,
+      *more,
+      *invoices,
+      *result
+    ]
+  path1: &start_path
+    next: *fase2
+    components: [
+      *default,
+      *calculation,
+      *base_quotation
+    ]
+
+preamble: *start_path

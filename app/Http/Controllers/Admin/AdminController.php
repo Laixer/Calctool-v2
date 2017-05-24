@@ -69,19 +69,23 @@ class AdminController extends Controller
 
     public function getDashboard(Request $request)
     {
-        if ($request->get('actas') == 'system') {
-            Auth::user()->user_type = UserType::where('user_type','system')->first()->id;
-            Auth::user()->save();
-            return redirect('/admin');
+        if ($request->user()->isSystem()) {
+            return view('admin.dashboard.system');
+        } else {
+            return view('admin.dashboard.admin');
         }
 
-        if ($request->get('actas') == 'admin') {
-            Auth::user()->user_type = UserType::where('user_type','admin')->first()->id;
-            Auth::user()->save();
-            return redirect('/admin');
-        }
+        // if ($request->get('actas') == 'system') {
+        //     Auth::user()->user_type = UserType::where('user_type','system')->first()->id;
+        //     Auth::user()->save();
+        //     return redirect('/admin');
+        // }
 
-        return view('admin.dashboard');
+        // if ($request->get('actas') == 'admin') {
+        //     Auth::user()->user_type = UserType::where('user_type','admin')->first()->id;
+        //     Auth::user()->save();
+        //     return redirect('/admin');
+        // }
     }
 
     public function doNewAlert(Request $request)

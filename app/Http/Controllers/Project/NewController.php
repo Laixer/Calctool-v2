@@ -41,6 +41,11 @@ class NewController extends Controller
         return view('project.new', ['debtor_code' => mt_rand(1000000, 9999999)]);
     }
 
+    protected function random_name($size = 4)
+    {
+        return chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90));
+    }
+
     public function new(Request $request)
     {
         $validator = $this->validate($request, [
@@ -91,7 +96,7 @@ class NewController extends Controller
         }
 
         if (!$request->has('name')) {
-            $project->project_name = 'PROJ-' . date("Ymd-s");
+            $project->project_name = 'PROJ-' . date("Ymd") . '-' . $this->random_name();
         } else {
             $project->project_name = $request->input('name');
         }

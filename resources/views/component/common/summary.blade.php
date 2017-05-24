@@ -28,7 +28,7 @@
 
 use BynqIO\Dynq\Models\Chapter;
 use BynqIO\Dynq\Calculus\CalculationOverview;
-use BynqIO\Dynq\Models\Activity as ProjectActivity;
+use BynqIO\Dynq\Models\Activity;
 use BynqIO\Dynq\Models\Part;
 
 ?>
@@ -48,25 +48,24 @@ use BynqIO\Dynq\Models\Part;
             @endif
             <th class="col-md-1"><span class="pull-right">Totaal</th>
             @if ($project->use_estimate)
-            <th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+            <th class="col-md-1"><span class="pull-right">Stelpost</th>
             @endif
         </tr>
     </thead>
     <tbody>
-        @foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
+        @foreach ($project->chapters()->orderBy('priority')->get() as $chapter)
         <?php $i = 0; ?>
-        @foreach (ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->orderBy('priority')->get() as $activity)
-        <?php $i++; ?>
+        @foreach ($filter($section, $chapter->activities()->where('part_id', Part::where('part_name', 'contracting')->firstOrFail()->id))->get() as $activity)
         <tr>
-            <td class="col-md-3">{{ $i == 1 ? $chapter->chapter_name : ''  }}</td>
+            <td class="col-md-3">{{ ++$i == 1 ? $chapter->chapter_name : ''  }}</td>
             <td class="col-md-3">{{ $activity->activity_name }}</td>
-            <td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-            <td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-            <td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_contr_mat), 2, ",",".") }}</span></td>
+            <td class="col-md-1"><span class="pull-right">{{ number_format($calculus::laborTotal($activity), 2, ",",".") }}</td>
+            <td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format($calculus::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+            <td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format($calculus::materialActivityProfit($activity, $project->{'profit_' . $key . '_contr_mat'}), 2, ",",".") }}</span></td>
             @if ($project->use_equipment)
-            <td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_contr_equip), 2, ",",".") }}</span></td>
+            <td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format($calculus::equipmentActivityProfit($activity, $project->{'profit_' . $key . '_contr_equip'}), 2, ",",".") }}</span></td>
             @endif
-            <td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip), 2, ",",".") }} </td>
+            <td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format($calculus::activityTotalProfit($project->hour_rate, $activity, $project->{'profit_' . $key . '_contr_mat'}, $project->{'profit_' . $key . '_contr_equip'}), 2, ",",".") }} </td>
             @if ($project->use_estimate)
             <td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
             @endif
@@ -76,13 +75,13 @@ use BynqIO\Dynq\Models\Part;
         <tr>
             <th class="col-md-3"><strong>Totaal Aanneming</strong></th>
             <th class="col-md-3">&nbsp;</th>
-            <td class="col-md-1"><strong><span class="pull-right">{{ number_format(CalculationOverview::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ number_format($calculus::contrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::contrLaborTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::contrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
             @if ($project->use_equipment)
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::contrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
             @endif
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::contrTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::contrTotal($project), 2, ",",".") }}</span></strong></td>
             @if ($project->use_estimate)
             <th class="col-md-1">&nbsp;</th>
             @endif
@@ -107,25 +106,24 @@ use BynqIO\Dynq\Models\Part;
             @endif
             <th class="col-md-1"><span class="pull-right">Totaal</th>
             @if ($project->use_estimate)
-            <th class="col-md-1"><span class="text-center">&nbsp;&nbsp;&nbsp;Stelpost</th>
+            <th class="col-md-1"><span class="pull-right">Stelpost</th>
             @endif
         </tr>
     </thead>
     <tbody>
-        @foreach (Chapter::where('project_id','=', $project->id)->orderBy('priority')->get() as $chapter)
+        @foreach ($project->chapters()->orderBy('priority')->get() as $chapter)
         <?php $i = 0; ?>
-        @foreach (ProjectActivity::where('chapter_id','=', $chapter->id)->whereNull('detail_id')->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->orderBy('priority')->get() as $activity)
-        <?php $i++; ?>
+        @foreach ($filter($section, $chapter->activities()->where('part_id', Part::where('part_name', 'subcontracting')->firstOrFail()->id))->get() as $activity)
         <tr>
-            <td class="col-md-3">{{ $i == 1 ? $chapter->chapter_name : '' }}</td>
+            <td class="col-md-3">{{ ++$i == 1 ? $chapter->chapter_name : '' }}</td>
             <td class="col-md-3">{{ $activity->activity_name }}</td>
-            <td class="col-md-1"><span class="pull-right">{{ number_format(CalculationOverview::laborTotal($activity), 2, ",",".") }}</td>
-            <td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
-            <td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format(CalculationOverview::materialActivityProfit($activity, $project->profit_calc_subcontr_mat), 2, ",",".") }}</span></td>
+            <td class="col-md-1"><span class="pull-right">{{ number_format($calculus::laborTotal($activity), 2, ",",".") }}</td>
+            <td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format($calculus::laborActivity($project->hour_rate, $activity), 2, ",",".") }}</span></td>
+            <td class="col-md-1"><span class="pull-right total-ex-tax">{{ '&euro; '.number_format($calculus::materialActivityProfit($activity, $project->{'profit_' . $key . '_subcontr_mat'}), 2, ",",".") }}</span></td>
             @if ($project->use_equipment)
-            <td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentActivityProfit($activity, $project->profit_calc_subcontr_equip), 2, ",",".") }}</span></td>
+            <td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format($calculus::equipmentActivityProfit($activity, $project->{'profit_' . $key . '_subcontr_equip'}), 2, ",",".") }}</span></td>
             @endif
-            <td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip), 2, ",",".") }} </td>
+            <td class="col-md-1"><span class="pull-right">{{ '&euro; '.number_format($calculus::activityTotalProfit($project->hour_rate, $activity, $project->{'profit_' . $key . '_subcontr_mat'}, $project->{'profit_' . $key . '_subcontr_equip'}), 2, ",",".") }} </td>
             @if ($project->use_estimate)
             <td class="col-md-1 text-center {{ CalculationOverview::estimateCheck($activity) }}"></td>
             @endif
@@ -135,13 +133,13 @@ use BynqIO\Dynq\Models\Part;
         <tr>
             <th class="col-md-3"><strong>Totaal Onderaanneming</strong></th>
             <th class="col-md-3">&nbsp;</th>
-            <td class="col-md-1"><strong><span class="pull-right">{{ number_format(CalculationOverview::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ number_format($calculus::subcontrLaborTotalAmount($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::subcontrLaborTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::subcontrMaterialTotal($project), 2, ",",".") }}</span></strong></td>
             @if ($project->use_equipment)
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::subcontrEquipmentTotal($project), 2, ",",".") }}</span></strong></td>
             @endif
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::subcontrTotal($project), 2, ",",".") }}</span></strong></td>
             @if ($project->use_estimate)
             <th class="col-md-1">&nbsp;</th>
             @endif
@@ -174,13 +172,13 @@ use BynqIO\Dynq\Models\Part;
         <tr>
             <th class="col-md-3">&nbsp;</th>
             <th class="col-md-3">&nbsp;</th>
-            <td class="col-md-1"><strong><span class="pull-right">{{ CalculationOverview::laborSuperTotalAmount($project) }}</span></strong></td>
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ $calculus::laborSuperTotalAmount($project) }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::laborSuperTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::materialSuperTotal($project), 2, ",",".") }}</span></strong></td>
             @if ($project->use_equipment)
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::equipmentSuperTotal($project), 2, ",",".") }}</span></strong></td>
             @endif
-            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format(CalculationOverview::superTotal($project), 2, ",",".") }}</span></strong></td>
+            <td class="col-md-1"><strong><span class="pull-right">{{ '&euro; '.number_format($calculus::superTotal($project), 2, ",",".") }}</span></strong></td>
             @if ($project->use_estimate)
             <th class="col-md-1">&nbsp;</th>
             @endif

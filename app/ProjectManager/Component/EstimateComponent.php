@@ -30,6 +30,13 @@ class EstimateComponent extends BaseComponent implements Component
                        ->orderBy('priority');
     }
 
+    public function summaryFilter($builder)
+    {
+        return $builder->whereNull('detail_id')
+                       ->where('part_type_id', PartType::where('type_name','estimate')->firstOrFail()->id)
+                       ->orderBy('priority');
+    }
+
     public function render()
     {
         $data['filter'] = function($section, $object) {
@@ -60,8 +67,8 @@ class EstimateComponent extends BaseComponent implements Component
         $tabs[] = ['name' => 'calculate', 'title' => 'Stelposten stellen', 'icon' => 'fa-list'];
 
         $async = [
-            ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', 'async' => "/calculation/summary/project-{$this->project->id}"],
-            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  'async' => "/calculation/endresult/project-{$this->project->id}"],
+            ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', ], //'async' => "/calculation/summary/project-{$this->project->id}"
+            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  ],//'async' => "/calculation/endresult/project-{$this->project->id}"
         ];
 
         $tabs[] = $async[0];

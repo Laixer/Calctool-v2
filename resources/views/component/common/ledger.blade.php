@@ -532,7 +532,7 @@ $(document).ready(function() {
                                     <td class="col-md-1">Uur</td>
                                     <td class="col-md-1">
                                         @if ($activity->isSubcontracting())
-                                        <span class="rate"><input name="rate" type="text" value="{{ \BynqIO\Dynq\Services\FormatService::monetary(CalculationLabor::where('activity_id', $activity->id)->first()->rate) }}" class="form-control-sm-number labor-amount lsave"></span>
+                                        <span class="rate"><input name="rate" type="text" value="{{ \BynqIO\Dynq\Services\FormatService::monetary(0) }}" {{-- CalculationLabor::where('activity_id', $activity->id)->first()->rate --}} class="form-control-sm-number labor-amount lsave"></span>
                                         @else
                                         {{ \BynqIO\Dynq\Services\FormatService::monetary($project->hour_rate) }}
                                         @endif
@@ -540,7 +540,7 @@ $(document).ready(function() {
                                     <td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
                                     <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'])) }}</span></td>
                                     <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1 text-right"><button class="btn btn-danger ldeleterow btn-xs fa fa-times"></button></td>
+                                    <td class="col-md-1">&nbsp;</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -675,7 +675,6 @@ $(document).ready(function() {
                                     <td class="col-md-1"><span class="total-incl-tax">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($material->rate * $material->amount * ((100+$profit_mat)/100)) }}</span></td>
                                     <td class="col-md-1 text-right">
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-                                        <!--<button class="btn btn-xs btn-primary fa fa-star" data-toggle="modal" data-target="#myModal2"></button>-->
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
                                     </td>
                                 </tr>
@@ -689,7 +688,6 @@ $(document).ready(function() {
                                     <td class="col-md-1"><span class="total-incl-tax"></span></td>
                                     <td class="col-md-1 text-right">
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-                                        <!--<button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>-->
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
                                     </td>
                                 </tr>
@@ -755,8 +753,7 @@ $(document).ready(function() {
                                     <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
                                     <td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit_equip)/100), 2,",",".") }}</span></td>
                                     <td class="col-md-1 text-right">
-                                        <button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-                                        <button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+                                        <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
                                     </td>
                                 </tr>
@@ -769,8 +766,7 @@ $(document).ready(function() {
                                     <td class="col-md-1"><span class="total-ex-tax"></span></td>
                                     <td class="col-md-1"><span class="total-incl-tax"></span></td>
                                     <td class="col-md-1 text-right" data-profit="{{ $profit_equip }}">
-                                        <button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-                                        <button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+                                        <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
                                     </td>
                                 </tr>

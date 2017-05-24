@@ -88,24 +88,24 @@ class UpdateController extends Controller
         return back()->with('success', 'Projectgegevens aangepast');
     }
 
-    public function updateNote(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('required','integer'),
-        ]);
+    // public function updateNote(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'id' => array('required','integer'),
+    //     ]);
 
-        $project = Project::find($request->input('id'));
-        if (!$project || !$project->isOwner()) {
-            return back()->withInput($request->all());
-        }
-        $project->note = $request->input('note');
+    //     $project = Project::find($request->input('id'));
+    //     if (!$project || !$project->isOwner()) {
+    //         return back()->withInput($request->all());
+    //     }
+    //     $project->note = $request->input('note');
 
-        $project->save();
+    //     $project->save();
 
-        Audit::CreateEvent('project.update.note.success', 'Note by project ' . $project->project_name . ' updated');
+    //     Audit::CreateEvent('project.update.note.success', 'Note by project ' . $project->project_name . ' updated');
 
-        return back()->with('success', 'Projectomschrijving aangepast');
-    }
+    //     return back()->with('success', 'Projectomschrijving aangepast');
+    // }
 
     public function updateProfit(Request $request)
     {
@@ -174,36 +174,36 @@ class UpdateController extends Controller
             $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose',true)->first();
         }
                                 
-        $estim_total = 0;
+        // $estim_total = 0;
         $more_total = 0;
-        $less_total = 0;
-        $disable_estim = false;
+        // $less_total = 0;
+        // $disable_estim = false;
         $disable_more = false;
-        $disable_less = false;
+        // $disable_less = false;
         
         foreach (Chapter::where('project_id','=', $project->id)->get() as $chap) {
             foreach (Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
-                $estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
-                $estim_total += EstimateMaterial::where('activity_id','=', $activity->id)->count('id');
-                $estim_total += EstimateEquipment::where('activity_id','=', $activity->id)->count('id');
+                // $estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
+                // $estim_total += EstimateMaterial::where('activity_id','=', $activity->id)->count('id');
+                // $estim_total += EstimateEquipment::where('activity_id','=', $activity->id)->count('id');
 
                 $more_total += MoreLabor::where('activity_id','=', $activity->id)->count('id');
                 $more_total += MoreMaterial::where('activity_id','=', $activity->id)->count('id');
                 $more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');	
 
-                $less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
-                $less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
-                $less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
+                // $less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+                // $less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
+                // $less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
             }
         }
 
         //
-        if ($offer_last) {
-            $disable_estim = true;
-        }
-        if ($estim_total>0) {
-            $disable_estim = true;
-        }
+        // if ($offer_last) {
+        //     $disable_estim = true;
+        // }
+        // if ($estim_total>0) {
+        //     $disable_estim = true;
+        // }
 
         //
         if ($invoice_end && $invoice_end->invoice_close) {
@@ -214,49 +214,46 @@ class UpdateController extends Controller
         }
 
         //
-        if ($invoice_end && $invoice_end->invoice_close) {
-            $disable_less = true;
-        }
-        if ($less_total>0) {
-            $disable_less = true;
-        }
+        // if ($invoice_end && $invoice_end->invoice_close) {
+        //     $disable_less = true;
+        // }
+        // if ($less_total>0) {
+        //     $disable_less = true;
+        // }
 
-        if (!$disable_estim) {
-            if ($request->input('use_estimate'))
-                $project->use_estimate = true;
-            else
-                $project->use_estimate = false;
-        }
+        // if (!$disable_estim) {
+        //     if ($request->input('use_estimate'))
+        //         $project->use_estimate = true;
+        //     else
+        //         $project->use_estimate = false;
+        // }
 
         if (!$disable_more) {
-            if ($request->input('use_more'))
+            if ($request->input('use_more')) {
                 $project->use_more = true;
-            else
-                $project->use_more = false;
-        }
-
-        if (!$disable_less) {
-            if ($request->input('use_less'))
                 $project->use_less = true;
-            else
+            } else {
+                $project->use_more = false;
                 $project->use_less = false;
+            }
         }
 
-        if ($request->input('use_subcontract'))
-            $project->use_subcontract = true;
+        // if ($request->input('use_subcontract'))
+        //     $project->use_subcontract = true;
 
-        if ($request->input('use_equipment'))
+        if ($request->input('use_equipment')) {
             $project->use_equipment = true;
+        }
 
-        if ($request->input('hide_null'))
-            $project->hide_null = true;
-        else
-            $project->hide_null = false;
+        // if ($request->input('hide_null'))
+        //     $project->hide_null = true;
+        // else
+        //     $project->hide_null = false;
 
-        if ($request->input('mail_reminder'))
-            $project->pref_email_reminder = true;
-        else
-            $project->pref_email_reminder = false;
+        // if ($request->input('mail_reminder'))
+        //     $project->pref_email_reminder = true;
+        // else
+        //     $project->pref_email_reminder = false;
 
         $project->save();
 

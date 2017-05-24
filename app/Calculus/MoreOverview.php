@@ -17,7 +17,7 @@ class MoreOverview {
 
 /*--More Overview - total per activitys--*/
 /*labor activity total*/
-	public static function laborActivity($activity) {
+	public static function laborActivity($_rate, $activity) {
 		// $count = MoreLabor::where('activity_id','=', $activity->id)->whereNotNull('hour_id')->count('hour_id');
 		// if ($count) {
 		if ($activity->use_timesheet) {
@@ -73,10 +73,10 @@ class MoreOverview {
 	}
 
 /*Activity total*/
-	public static function activityTotalProfit($activity, $profit_mat, $profit_equip) {
+	public static function activityTotalProfit($rate, $activity, $profit_mat, $profit_equip) {
 		$total = 0;
 
-		$total += MoreOverview::laborActivity($activity);
+		$total += MoreOverview::laborActivity($rate, $activity);
 		$total += MoreOverview::materialActivityProfit($activity, $profit_mat);
 		$total += MoreOverview::equipmentActivityProfit($activity, $profit_equip);
 
@@ -177,7 +177,7 @@ class MoreOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','contracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
 			{
-				$total += MoreOverview::laborActivity($activity);
+				$total += MoreOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;
@@ -190,7 +190,7 @@ class MoreOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->where('part_id','=',Part::where('part_name','=','subcontracting')->first()->id)->where('detail_id','=',Detail::where('detail_name','=','more')->first()->id)->get() as $activity)
 			{
-				$total += MoreOverview::laborActivity($activity);
+				$total += MoreOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;
@@ -229,7 +229,7 @@ class MoreOverview {
 		{
 			foreach (Activity::where('chapter_id','=', $chapter->id)->get() as $activity)
 			{
-				$total += MoreOverview::laborActivity($activity);
+				$total += MoreOverview::laborActivity($project->hour_rate, $activity);
 			}
 		}
 		return $total;
