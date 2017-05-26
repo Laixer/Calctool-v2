@@ -72,6 +72,19 @@ class LessComponent extends BaseComponent implements Component
             $data['features']['rows.other'] = true;
         }
 
+        /* Disable all editable options for closed projects */
+        if ($this->project->project_close) {
+            $data['features']['level.new']           = false;
+            $data['features']['activity.options']    = false;
+            $data['features']['chapter.options']     = false;
+            $data['features']['tax.update']          = false;
+            $data['features']['rows.labor.edit']     = false;
+            $data['features']['rows.material.add']   = false;
+            $data['features']['rows.material.edit']  = false;
+            $data['features']['rows.other.add']      = false;
+            $data['features']['rows.other.edit']     = false;
+        }
+
         $tabs[] = ['name' => 'calculate', 'title' => 'Minderwerk', 'icon' => 'fa-list'];
 
         $async = [

@@ -72,6 +72,19 @@ class EstimateComponent extends BaseComponent implements Component
             $data['features']['rows.other'] = true;
         }
 
+        /* Disable all editable options for closed projects */
+        if ($this->project->project_close) {
+            $data['features']['level.new']           = false;
+            $data['features']['activity.options']    = false;
+            $data['features']['chapter.options']     = false;
+            $data['features']['tax.update']          = false;
+            $data['features']['rows.labor.edit']     = false;
+            $data['features']['rows.material.add']   = false;
+            $data['features']['rows.material.edit']  = false;
+            $data['features']['rows.other.add']      = false;
+            $data['features']['rows.other.edit']     = false;
+        }
+
         $data['layer']['labor']     = 'BynqIO\Dynq\Models\EstimateLabor';
         $data['layer']['material']  = 'BynqIO\Dynq\Models\EstimateMaterial';
         $data['layer']['other']     = 'BynqIO\Dynq\Models\EstimateEquipment';
