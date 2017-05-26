@@ -287,10 +287,12 @@ class LevelController extends Controller
             case 'convert_subcontracting':
                 $this->convertSubcontracting($activity);
                 $project->use_subcontract = true;
+                $project->save();
                 break;
             case 'convert_estimate':
                 $this->convertEstimate($activity);
                 $project->use_estimate = true;
+                $project->save();
                 break;
             case 'convert_calculation':
                 $this->convertCalculation($activity);

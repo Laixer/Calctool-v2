@@ -13,25 +13,18 @@
 
 <?php
 
-use BynqIO\Dynq\Calculus\CalculationOverview;
 use BynqIO\Dynq\Models\Part;
-use BynqIO\Dynq\Models\Tax;
-use BynqIO\Dynq\Models\Supplier;
-use BynqIO\Dynq\Models\Wholesale;
-
-use BynqIO\Dynq\Models\Product;
-use BynqIO\Dynq\Models\ProductSubGroup;
-use BynqIO\Dynq\Models\ProductGroup;
-use BynqIO\Dynq\Models\ProductSubCategory;
-
-use BynqIO\Dynq\Models\FavoriteActivity;
-
-use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\Supplier; //Modal
+use BynqIO\Dynq\Models\Wholesale; //Modal
+use BynqIO\Dynq\Models\Product; //Modal
+use BynqIO\Dynq\Models\ProductSubGroup; //Modal
+use BynqIO\Dynq\Models\ProductGroup; //Modal
+use BynqIO\Dynq\Models\ProductSubCategory; //Modal
+use BynqIO\Dynq\Models\FavoriteActivity; //Modal
 use BynqIO\Dynq\Calculus\CalculationRegister;
-use BynqIO\Dynq\Models\CalculationMaterial;
-use BynqIO\Dynq\Models\CalculationEquipment;
 
 ?>
+@inject('tax', 'BynqIO\Dynq\Models\Tax')
 
 @push('scripts')
 <script src="/plugins/jquery.number.min.js"></script>
@@ -217,7 +210,6 @@ $(document).ready(function() {
 @endpush
 
 {{-- TODO: move into module --}}
-
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -399,93 +391,88 @@ $(document).ready(function() {
             {{-- Activity body --}}
             <div class="toogle">
                 @foreach ($filter($section, $chapter->activities())->get() as $activity)
-
-                @if ($activity->isSubcontracting())
-                @php
-                    $profit_mat = $project->profit_calc_subcontr_mat;
-                    $profit_equip = $project->profit_calc_subcontr_equip;
-                    $activity_total = CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip);
-                @endphp
-                @else
-                @php
-                    $profit_mat = $project->profit_calc_contr_mat;
-                    $profit_equip = $project->profit_calc_contr_equip;
-                    $activity_total = CalculationOverview::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip);
-                @endphp
-                @endif
-
                 <div id="toggle-activity-{{ $section }}-{{ $activity->id }}" class="toggle toggle-{{ $section }} toggle-activity">
                     <label>
                         <span>{{ $activity->activity_name }}</span>
-                            <span class="label-align-right">
-                                @if ($activity->isSubcontracting())
-                                <div class="label-custom"><i class="fa fa-user">&nbsp;&nbsp;</i>Onderaanneming</div>
-                                @endif
-                                @if ($activity->isEstimate())
-                                <div class="label-custom"><i class="fa fa-wrench">&nbsp;&nbsp;</i>Stelpost</div>
-                                @endif
-                            </span>
-                        <span style="float:right;margin-right:30px;">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($activity_total) }}</span>
+                        <span class="label-align-right">
+                            @if ($activity->isSubcontracting())
+                            <div class="label-custom"><i class="fa fa-user">&nbsp;&nbsp;</i>Onderaanneming</div>
+                            @endif
+                            @if ($activity->isEstimate())
+                            <div class="label-custom"><i class="fa fa-wrench">&nbsp;&nbsp;</i>Stelpost</div>
+                            @endif
+                        </span>
+                        <span style="float:right;margin-right:30px;">
+                            @if ($activity->isSubcontracting())
+                            {{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($calculus::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip)) }}
+                            @else
+                            {{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($calculus::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip)) }}
+                            @endif
+                        </span>
                     </label>
                     <div class="toggle-content" style="padding:10px 0px">
 
                         {{-- Activity options --}}
-                        @if (!isset($features['activity.options']))
+                        @ifallowed ($features['activity.options'])
                         <div class="row" style="margin-bottom:15px">
                             <div class="col-md-12 text-right">
 
                                 <div class="btn-group" role="group">
                                     <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-pencil">&nbsp;&nbsp;</i>Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
                                     <ul class="dropdown-menu">
-                                        @if (!isset($features['activity.changename']))
+                                        @ifallowed ($features['activity.changename'])
                                         <li><a href="/inline/changename?id={{ $activity->id }}&level=2&name={{ urlencode($activity->activity_name) }}" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
-                                        @endif
+                                        @endifallowed
 
                                         <li><a href="/inline/description?id={{ $activity->id }}" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-file-text-o" style="padding-right:5px">&nbsp;</i>Omschrijving</a></li>
                                         <li><a href="/project/level/favorite?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau opslaan als favoriet?')"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
 
+                                        @ifallowed ($features['activity.timesheet'])
                                         <li class="divider" style="margin:5px 0;"></li>
+                                        @endifallowed
 
-                                        @if (!isset($features['activity.timesheet']))
+                                        @ifallowed ($features['activity.timesheet'])
                                         @if ($activity->use_timesheet)
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=disable_timesheet&csrf={{ csrf_token() }}"><i class="fa fa-hourglass-end">&nbsp;&nbsp;</i>Gebruik arbeid</a></li>
+                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=disable_timesheet&csrf={{ csrf_token() }}"><i class="fa fa-hourglass-end">&nbsp;&nbsp;</i>Gebruik Arbeid</a></li>
                                         @else
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=enable_timesheet&csrf={{ csrf_token() }}"><i class="fa fa-clock-o">&nbsp;&nbsp;</i>Gebruik urenregistratie</a></li>
+                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=enable_timesheet&csrf={{ csrf_token() }}"><i class="fa fa-clock-o">&nbsp;&nbsp;</i>Gebruik Urenregistratie</a></li>
                                         @endif
-                                        @endif
+                                        @endifallowed
 
-                                        @if (!isset($features['activity.convertsubcon']))
+                                        @ifallowed ($features['activity.convertsubcon'])
                                         @if ($activity->isSubcontracting())
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_contracting&csrf={{ csrf_token() }}"><i class="fa fa-outdent">&nbsp;&nbsp;</i>Maak aanneming</a></li>
+                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_contracting&csrf={{ csrf_token() }}"><i class="fa fa-outdent">&nbsp;&nbsp;</i>Maak Aanneming</a></li>
                                         @else
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_subcontracting&csrf={{ csrf_token() }}"><i class="fa fa-indent">&nbsp;&nbsp;</i>Maak onderaanneming</a></li>
+                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_subcontracting&csrf={{ csrf_token() }}"><i class="fa fa-indent">&nbsp;&nbsp;</i>Maak Onderaanneming</a></li>
                                         @endif
-                                        @endif
+                                        @endifallowed
 
-                                        @if (!isset($features['activity.converestimate']))
+                                        @ifallowed ($features['activity.converestimate'])
                                         @if ($activity->isEstimate())
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_calculation&csrf={{ csrf_token() }}"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak calculatie</a></li>
+                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_calculation&csrf={{ csrf_token() }}"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak Calculatie</a></li>
                                         @else
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_estimate&csrf={{ csrf_token() }}"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak stelpost</a></li>
+                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_estimate&csrf={{ csrf_token() }}"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak Stelpost</a></li>
                                         @endif
-                                        @endif
+                                        @endifallowed
 
+                                        @ifallowed ($features['activity.move'])
                                         <li class="divider" style="margin:5px 0;"></li>
+                                        @endifallowed
 
-                                        @if (!isset($features['activity.move']))
+                                        @ifallowed ($features['activity.move'])
                                         <li><a href="/project/level/move?id={{ $activity->id }}&level=2&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up" style="padding-right:5px">&nbsp;</i>Verplaats omhoog</a></li>
                                         <li><a href="/project/level/move?id={{ $activity->id }}&level=2&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down" style="padding-right:5px">&nbsp;</i>Verplaats omlaag</a></li>
-                                        @endif
+                                        @endifallowed
 
-                                        @if (!isset($features['activity.remove']))
+                                        @ifallowed ($features['activity.remove'])
                                         <li><a href="/project/level/delete?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau verwijderen?')"><i class="fa fa-times" style="padding-right:5px">&nbsp;</i>Verwijderen</a></li>
-                                        @endif
+                                        @endifallowed
                                     </ul>
                                 </div>
 
                             </div>
                         </div>
-                        @endif
+                        @endifallowed
                         {{-- /Activity options --}}
 
                         {{-- Labor --}}
@@ -500,16 +487,22 @@ $(document).ready(function() {
                             @else
                             <div class="col-md-2 text-right"></div>	
                             <div class="col-md-2">
-                                @if (!isset($features['tax.update']))
+                                @ifallowed ($features['tax.update'])
                                 <select name="tax" data-id="{{ $activity->id }}" data-layer="labor" class="form-control-sm-text pointer">
-                                    @foreach (Tax::all() as $tax)
+                                    @foreach ($tax::all() as $tax)
                                     @php
                                     if ($tax->id == 1) continue;
                                     @endphp
                                     <option value="{{ $tax->id }}" {{ ($activity->tax_labor_id==$tax->id ? 'selected="selected"' : '') }}>BTW {{ $tax->tax_rate }}%</option>
                                     @endforeach
                                 </select>
-                                @endif
+                                @else
+                                <select name="tax" disabled class="form-control-sm-text pointer" style="opacity: .65;cursor: not-allowed;">
+                                    @foreach ($tax::all() as $tax)
+                                    <option {{ ($activity->tax_labor_id==$tax->id ? 'selected="selected"' : '') }}>BTW {{ $tax->tax_rate }}%</option>
+                                    @endforeach
+                                </select>
+                                @endifallowed
                             </div>
                             @endif
                         </div>
@@ -525,22 +518,31 @@ $(document).ready(function() {
                                     <th class="col-md-1">&nbsp;</th>
                                 </tr>
                             </thead>
-
                             <tbody>
-                                <tr style="height:33px" data-id="{{ CalculationLabor::where('activity_id', $activity->id)->first() ? CalculationLabor::where('activity_id', $activity->id)->first()->id : '' }}">
+                                <tr style="height:33px" data-id="{{ $layer['labor']::where('activity_id', $activity->id)->first() ? $layer['labor']::where('activity_id', $activity->id)->first()->id : '' }}">
                                     <td class="col-md-5">Arbeidsuren</td>
                                     <td class="col-md-1">Uur</td>
                                     <td class="col-md-1">
                                         @if ($activity->isSubcontracting())
-                                        <span class="rate"><input name="rate" type="text" value="{{ \BynqIO\Dynq\Services\FormatService::monetary(0) }}" {{-- CalculationLabor::where('activity_id', $activity->id)->first()->rate --}} class="form-control-sm-number labor-amount lsave"></span>
+                                        <span class="rate"><input name="rate" type="text" value="{{ \BynqIO\Dynq\Services\FormatService::monetary(0) }}" {{-- $layer['labor']::where('activity_id', $activity->id)->first()->rate --}} class="form-control-sm-number labor-amount lsave"></span>
                                         @else
                                         {{ \BynqIO\Dynq\Services\FormatService::monetary($project->hour_rate) }}
                                         @endif
                                     </td>
-                                    <td class="col-md-1"><input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" /></td>
-                                    <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, CalculationLabor::where('activity_id','=', $activity->id)->first()['amount'])) }}</span></td>
+                                    <td class="col-md-1">
+                                        @ifallowed ($features['rows.labor.edit'])
+                                        <input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($layer['labor']::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" />
+                                        @else
+                                        {{ \BynqIO\Dynq\Services\FormatService::monetary($layer['labor']::where('activity_id','=', $activity->id)->first()['amount']) }}
+                                        @endif
+                                    </td>
+                                    <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? $layer['labor']::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, $layer['labor']::where('activity_id','=', $activity->id)->first()['amount'])) }}</span></td>
                                     <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1">&nbsp;</td>
+                                    <td class="col-md-1 text-right">
+                                        @ifallowed ($features['rows.labor.reset'])
+                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
+                                        @endifallowed
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
@@ -560,16 +562,22 @@ $(document).ready(function() {
                             @else
                             <div class="col-md-2 text-right"></div>	
                             <div class="col-md-2">
-                                @if (!isset($features['tax.update']))
+                                @ifallowed ($features['tax.update'])
                                 <select name="tax" data-id="{{ $activity->id }}" data-layer="labor" class="form-control-sm-text pointer">
-                                    @foreach (Tax::all() as $tax)
+                                    @foreach ($tax::all() as $tax)
                                     @php
                                     if ($tax->id == 1) continue;
                                     @endphp
                                     <option value="{{ $tax->id }}" {{ ($activity->tax_labor_id==$tax->id ? 'selected="selected"' : '') }}>BTW {{ $tax->tax_rate }}%</option>
                                     @endforeach
                                 </select>
-                                @endif
+                                @else
+                                <select name="tax" disabled class="form-control-sm-text pointer" style="opacity: .65;cursor: not-allowed;">
+                                    @foreach ($tax::all() as $tax)
+                                    <option {{ ($activity->tax_labor_id==$tax->id ? 'selected="selected"' : '') }}>BTW {{ $tax->tax_rate }}%</option>
+                                    @endforeach
+                                </select>
+                                @endifallowed
                             </div>
                             @endif
                         </div>
@@ -588,7 +596,6 @@ $(document).ready(function() {
                                     <th class="col-md-1">&nbsp;</th>
                                 </tr>
                             </thead>
-
                             <tbody>
                                 <tr style="height:33px">
                                     <td class="col-md-5">
@@ -617,8 +624,8 @@ $(document).ready(function() {
                                     <td class="col-md-1">&nbsp;</td>
                                     <td class="col-md-1">&nbsp;</td>
                                     <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1"><strong class="mat_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat), 2, ",",".") }}</span></td>
-                                    <td class="col-md-1"><strong class="mat_subtotal_profit">{{ '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") }}</span></td>
+                                    <td class="col-md-1"><strong class="mat_subtotal">{{-- '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat), 2, ",",".") --}}</span></td>
+                                    <td class="col-md-1"><strong class="mat_subtotal_profit">{{-- '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") --}}</span></td>
                                     <td class="col-md-1">&nbsp;</td>
                                 </tr>
                             </tbody>
@@ -638,16 +645,22 @@ $(document).ready(function() {
                             @else
                             <div class="col-md-2 text-right"></div>	
                             <div class="col-md-2">
-                                @if (!isset($features['tax.update']))
+                                @ifallowed ($features['tax.update'])
                                 <select name="tax" data-id="{{ $activity->id }}" data-layer="material" class="form-control-sm-text pointer">
-                                    @foreach (Tax::all() as $tax)
+                                    @foreach ($tax::all() as $tax)
                                     @php
                                     if ($tax->id == 1) continue;
                                     @endphp
                                     <option value="{{ $tax->id }}" {{ ($activity->tax_material_id==$tax->id ? 'selected="selected"' : '') }}>BTW {{ $tax->tax_rate }}%</option>
                                     @endforeach
                                 </select>
-                                @endif
+                                @else
+                                <select name="tax" disabled class="form-control-sm-text pointer" style="opacity: .65;cursor: not-allowed;">
+                                    @foreach ($tax::all() as $tax)
+                                    <option {{ ($activity->tax_material_id==$tax->id ? 'selected="selected"' : '') }}>BTW {{ $tax->tax_rate }}%</option>
+                                    @endforeach
+                                </select>
+                                @endifallowed
                             </div>
                             @endif
                         </div>
@@ -663,22 +676,27 @@ $(document).ready(function() {
                                     <th class="col-md-1">&nbsp;</th>
                                 </tr>
                             </thead>
-
                             <tbody>
-                                @foreach (CalculationMaterial::where('activity_id', $activity->id)->orderBy('id')->get() as $material)
+                                @foreach ($layer['material']::where('activity_id', $activity->id)->orderBy('id')->get() as $material)
                                 <tr style="height:33px" data-id="{{ $material->id }}">
-                                    <td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text newrow" /></td>
-                                    <td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text" /></td>
-                                    <td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number" /></td>
-                                    <td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number" /></td>
-                                    <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($material->rate * $material->amount) }}</span></td>
-                                    <td class="col-md-1"><span class="total-incl-tax">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($material->rate * $material->amount * ((100+$profit_mat)/100)) }}</span></td>
+                                    <td class="col-md-5">@ifallowed ($features['rows.material.edit'])<input name="name" maxlength="100" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text newrow" />@else{{ $material->material_name }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit'])<input name="unit" maxlength="10" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text" />@else{{ $material->unit }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit'])<input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number" />@else{{ number_format($material->rate, 2,",",".") }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit'])<input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number" />@else{{ number_format($material->amount, 2,",",".") }}@endifallowed</td>
+                                    <td class="col-md-1"><span class="total-ex-tax">{{-- '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($material->rate * $material->amount) --}}</span></td>
+                                    <td class="col-md-1"><span class="total-incl-tax">{{-- '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($material->rate * $material->amount * ((100+$profit_mat)/100)) --}}</span></td>
                                     <td class="col-md-1 text-right">
+                                        @ifallowed ($features['rows.material.edit'])
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
+                                        @ifallowed ($features['rows.material.reset'])
+                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
+                                        @endifallowed
+                                        @endifallowed
                                     </td>
                                 </tr>
                                 @endforeach
+                                @ifallowed ($features['rows.material.add'])
                                 <tr style="height:33px">
                                     <td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text newrow" /></td>
                                     <td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text" /></td>
@@ -689,8 +707,12 @@ $(document).ready(function() {
                                     <td class="col-md-1 text-right">
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
+                                        @ifallowed ($features['rows.other.reset'])
+                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
+                                        @endifallowed
                                     </td>
                                 </tr>
+                                @endifallowed
                             </tbody>
                             <tbody>
                                 <tr>
@@ -698,8 +720,8 @@ $(document).ready(function() {
                                     <td class="col-md-1">&nbsp;</td>
                                     <td class="col-md-1">&nbsp;</td>
                                     <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1"><strong class="mat_subtotal">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat)) }}</span></td>
-                                    <td class="col-md-1"><strong class="mat_subtotal_profit">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat)) }}</span></td>
+                                    <td class="col-md-1"><strong class="mat_subtotal">{{-- '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat)) --}}</span></td>
+                                    <td class="col-md-1"><strong class="mat_subtotal_profit">{{-- '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat)) --}}</span></td>
                                     <td class="col-md-1">&nbsp;</td>
                                 </tr>
                             </tbody>
@@ -718,16 +740,22 @@ $(document).ready(function() {
                             @else
                             <div class="col-md-2 text-right"></div>	
                             <div class="col-md-2">
-                                @if (!isset($features['tax.update']))
+                                @ifallowed ($features['tax.update'])
                                 <select name="tax" data-id="{{ $activity->id }}" data-layer="other" class="form-control-sm-text pointer">
-                                    @foreach (Tax::all() as $tax)
+                                    @foreach ($tax::all() as $tax)
                                     @php
                                     if ($tax->id == 1) continue;
                                     @endphp
                                     <option value="{{ $tax->id }}" {{ ($activity->tax_equipment_id==$tax->id ? 'selected="selected"' : '') }}>BTW {{ $tax->tax_rate }}%</option>
                                     @endforeach
                                 </select>
-                                @endif
+                                @else
+                                <select name="tax" disabled class="form-control-sm-text pointer" style="opacity: .65;cursor: not-allowed;">
+                                    @foreach ($tax::all() as $tax)
+                                    <option {{ ($activity->tax_equipment_id==$tax->id ? 'selected="selected"' : '') }}>BTW {{ $tax->tax_rate }}%</option>
+                                    @endforeach
+                                </select>
+                                @endifallowed
                             </div>
                             @endif
                         </div>
@@ -744,20 +772,26 @@ $(document).ready(function() {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach (CalculationEquipment::where('activity_id', $activity->id)->orderBy('id')->get() as $equipment)
+                                @foreach ($layer['other']::where('activity_id', $activity->id)->orderBy('id')->get() as $equipment)
                                 <tr style="height:33px" data-id="{{ $equipment->id }}">
-                                    <td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" /></td>
-                                    <td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" /></td>
-                                    <td class="col-md-1"><input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" /></td>
-                                    <td class="col-md-1"><input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" /></td>
-                                    <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") }}</span></td>
-                                    <td class="col-md-1"><span class="total-incl-tax">{{ '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit_equip)/100), 2,",",".") }}</span></td>
+                                    <td class="col-md-5">@ifallowed ($features['rows.other.edit'])<input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" />@else{{ $equipment->equipment_name }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit'])<input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" />@else{{ $equipment->unit }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit'])<input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" />@else{{ number_format($equipment->rate, 2,",",".") }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit'])<input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" />@else{{ number_format($equipment->amount, 2,",",".") }}@endifallowed</td>
+                                    <td class="col-md-1"><span class="total-ex-tax">{{-- '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") --}}</span></td>
+                                    <td class="col-md-1"><span class="total-incl-tax">{{-- '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit_equip)/100), 2,",",".") --}}</span></td>
                                     <td class="col-md-1 text-right">
+                                        @ifallowed ($features['rows.other.edit'])
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
+                                        @ifallowed ($features['rows.other.reset'])
+                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
+                                        @endifallowed
+                                        @endifallowed
                                     </td>
                                 </tr>
                                 @endforeach
+                                @ifallowed ($features['rows.other.add'])
                                 <tr style="height:33px">
                                     <td class="col-md-5"><input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text esave newrow" /></td>
                                     <td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text esave" /></td>
@@ -765,11 +799,15 @@ $(document).ready(function() {
                                     <td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
                                     <td class="col-md-1"><span class="total-ex-tax"></span></td>
                                     <td class="col-md-1"><span class="total-incl-tax"></span></td>
-                                    <td class="col-md-1 text-right" data-profit="{{ $profit_equip }}">
+                                    <td class="col-md-1 text-right">
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
+                                        @ifallowed ($features['rows.other.reset'])
+                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
+                                        @endifallowed
                                     </td>
                                 </tr>
+                                @endifallowed
                             </tbody>
                             <tbody>
                                 <tr>
@@ -777,8 +815,8 @@ $(document).ready(function() {
                                     <td class="col-md-1">&nbsp;</td>
                                     <td class="col-md-1">&nbsp;</td>
                                     <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1"><strong class="equip_subtotal">{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, $profit_equip), 2, ",",".") }}</span></td>
-                                    <td class="col-md-1"><strong class="equip_subtotal_profit">{{ '&euro; '.number_format(CalculationRegister::calcEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") }}</span></td>
+                                    <td class="col-md-1"><strong class="equip_subtotal">{{-- '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, $profit_equip), 2, ",",".") --}}</span></td>
+                                    <td class="col-md-1"><strong class="equip_subtotal_profit">{{-- '&euro; '.number_format(CalculationRegister::calcEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") --}}</span></td>
                                     <td class="col-md-1">&nbsp;</td>
                                 </tr>
                             </tbody>
@@ -800,7 +838,7 @@ $(document).ready(function() {
 
                 <div class="row">
                     <div class="col-md-6">
-                        @if(!isset($features['level.new']))
+                        @ifallowed ($features['level.new'])
                         <div class="input-group">
                             <input type="hidden" name="project" value="{{ $project->id }}">
                             <input type="hidden" name="chapter" value="{{ $chapter->id }}">
@@ -817,12 +855,11 @@ $(document).ready(function() {
                                     <li><a href="#" class="lfavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct"><i class="fa fa-star-o">&nbsp;</i>Favoriet selecteren</a></li>
                                 </ul>
                             </div>
-
                         </div>
-                        @endif
+                        @endifallowed
                     </div>
 
-                    @if (!isset($features['chapter.options']))
+                    @ifallowed ($features['chapter.options'])
                     <div class="col-md-6 text-right">
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
@@ -834,7 +871,7 @@ $(document).ready(function() {
                             </ul>
                         </div>
                     </div>
-                    @endif
+                    @endifallowed
                 </div>
 
             </form>
@@ -849,7 +886,7 @@ $(document).ready(function() {
 <form method="POST" action="/project/level/new" accept-charset="UTF-8">
     {!! csrf_field() !!}
 
-    @if (!isset($features['level.new']))
+    @ifallowed ($features['level.new'])
     <div class="row">
         <div class="col-md-6">
             <div class="input-group">
@@ -862,7 +899,7 @@ $(document).ready(function() {
             </div>
         </div>
     </div>
-    @endif
+    @endifallowed
 
     @if (Auth::user()->isNewPeriod())
         @if (!$project->chapters()->count())

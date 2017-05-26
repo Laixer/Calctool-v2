@@ -20,16 +20,16 @@ use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Chapter;
 use BynqIO\Dynq\Models\Part;
 use BynqIO\Dynq\Models\Activity;
-use BynqIO\Dynq\Models\CalculationMaterial;
-use BynqIO\Dynq\Models\CalculationEquipment;
-use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\EstimateMaterial;
+use BynqIO\Dynq\Models\EstimateEquipment;
+use BynqIO\Dynq\Models\EstimateLabor;
 use BynqIO\Dynq\Http\Controllers\Controller;
 
-class CalculationController extends Controller
+class EstimateController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Default Home Controlluse BynqIO\Dynq\Models\Invoice;er
+    | Default Home Controlluse BynqIO\Dynq\Models\Invoice
     |--------------------------------------------------------------------------
     |
     | You may wish to use controllers instead of, or in addition to, Closure
@@ -79,35 +79,35 @@ class CalculationController extends Controller
         ]);
     }
 
-    public function new(Request $request)
-    {
-        $this->validate($request, [
-            'name'      => ['required_unless:layer,labor', 'max:100'],
-            'unit'      => ['required_unless:layer,labor', 'max:10'],
-            'rate'      => ['required_unless:layer,labor', 'numeric'],
-            'amount'    => ['required', 'numeric'],
-            'activity'  => ['required', 'integer', 'min:0'],
-            'layer'     => ['required'],
-        ]);
+    // public function new(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'name'      => ['required_unless:layer,labor', 'max:100'],
+    //         'unit'      => ['required_unless:layer,labor', 'max:10'],
+    //         'rate'      => ['required_unless:layer,labor', 'numeric'],
+    //         'amount'    => ['required', 'numeric'],
+    //         'activity'  => ['required', 'integer', 'min:0'],
+    //         'layer'     => ['required'],
+    //     ]);
 
-        $id = null;
+    //     $id = null;
 
-        $activity = Activity::findOrFail($request->get('activity'));
+    //     $activity = Activity::findOrFail($request->get('activity'));
 
-        switch ($request->get('layer')) {
-            case 'labor':
-                $id = $this->newLaborRow($activity, $request->all())->id;
-                break;
-            case 'material':
-                $id = $this->newMaterialRow($activity, $request->all())->id;
-                break;
-            case 'other':
-                $id = $this->newOtherRow($activity, $request->all())->id;
-                break;
-        }
+    //     switch ($request->get('layer')) {
+    //         case 'labor':
+    //             $id = $this->newLaborRow($activity, $request->all())->id;
+    //             break;
+    //         case 'material':
+    //             $id = $this->newMaterialRow($activity, $request->all())->id;
+    //             break;
+    //         case 'other':
+    //             $id = $this->newOtherRow($activity, $request->all())->id;
+    //             break;
+    //     }
 
-        return response()->json(['success' => 1, 'id' => $id]);
-    }
+    //     return response()->json(['success' => 1, 'id' => $id]);
+    // }
 
     protected function updateLaborRow($activity, Array $parameters)
     {
@@ -145,34 +145,34 @@ class CalculationController extends Controller
         $row->save();
     }
 
-    public function update(Request $request)
-    {
-        $this->validate($request, [
-            'id'        => ['required', 'integer', 'min:0'],
-            'name'      => ['required_unless:layer,labor', 'max:100'],
-            'unit'      => ['required_unless:layer,labor', 'max:10'],
-            'rate'      => ['required_unless:layer,labor', 'numeric'],
-            'amount'    => ['required', 'numeric'],
-            'activity'  => ['required', 'integer', 'min:0'],
-            'layer'     => ['required'],
-        ]);
+    // public function update(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'id'        => ['required', 'integer', 'min:0'],
+    //         'name'      => ['required_unless:layer,labor', 'max:100'],
+    //         'unit'      => ['required_unless:layer,labor', 'max:10'],
+    //         'rate'      => ['required_unless:layer,labor', 'numeric'],
+    //         'amount'    => ['required', 'numeric'],
+    //         'activity'  => ['required', 'integer', 'min:0'],
+    //         'layer'     => ['required'],
+    //     ]);
 
-        $activity = Activity::findOrFail($request->get('activity'));
+    //     $activity = Activity::findOrFail($request->get('activity'));
 
-        switch ($request->get('layer')) {
-            case 'labor':
-                $this->updateLaborRow($activity, $request->all());
-                break;
-            case 'material':
-                $this->updateMaterialRow($activity, $request->all());
-                break;
-            case 'other':
-                $this->updateOtherRow($activity, $request->all());
-                break;
-        }
+    //     switch ($request->get('layer')) {
+    //         case 'labor':
+    //             $this->updateLaborRow($activity, $request->all());
+    //             break;
+    //         case 'material':
+    //             $this->updateMaterialRow($activity, $request->all());
+    //             break;
+    //         case 'other':
+    //             $this->updateOtherRow($activity, $request->all());
+    //             break;
+    //     }
 
-        return response()->json(['success' => 1]);
-    }
+    //     return response()->json(['success' => 1]);
+    // }
 
     // protected function deleteLaborRow(Array $parameters)
     // {
@@ -189,26 +189,26 @@ class CalculationController extends Controller
         $row = CalculationEquipment::findOrFail($parameters['id'])->delete();
     }
 
-    public function delete(Request $request)
-    {
-        $this->validate($request, [
-            'id'        => ['required', 'integer', 'min:0'],
-            'activity'  => ['required', 'integer', 'min:0'],
-            'layer'     => ['required'],
-        ]);
+    // public function delete(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'id'        => ['required', 'integer', 'min:0'],
+    //         'activity'  => ['required', 'integer', 'min:0'],
+    //         'layer'     => ['required'],
+    //     ]);
 
-        switch ($request->get('layer')) {
-            // case 'labor':
-            //     $id = $this->deleteLaborRow($request->all());
-            //     break;
-            case 'material':
-                $id = $this->deleteMaterialRow($request->all());
-                break;
-            case 'other':
-                $id = $this->deleteOtherRow($request->all());
-                break;
-        }
+    //     switch ($request->get('layer')) {
+    //         // case 'labor':
+    //         //     $id = $this->deleteLaborRow($request->all());
+    //         //     break;
+    //         case 'material':
+    //             $id = $this->deleteMaterialRow($request->all());
+    //             break;
+    //         case 'other':
+    //             $id = $this->deleteOtherRow($request->all());
+    //             break;
+    //     }
 
-        return response()->json(['success' => 1]);
-    }
+    //     return response()->json(['success' => 1]);
+    // }
 }

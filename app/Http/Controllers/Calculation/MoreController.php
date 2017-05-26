@@ -15,32 +15,21 @@
 
 namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
-use Illuminate\Http\Request;
-
+use \Illuminate\Http\Request;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Chapter;
-use BynqIO\Dynq\Models\Activity;
-use BynqIO\Dynq\Models\FavoriteActivity;
-use BynqIO\Dynq\Models\Detail;
-use BynqIO\Dynq\Models\PartType;
 use BynqIO\Dynq\Models\Part;
-use BynqIO\Dynq\Models\ProjectType;
-use BynqIO\Dynq\Models\Tax;
-use BynqIO\Dynq\Models\MoreEquipment;
+use BynqIO\Dynq\Models\Activity;
 use BynqIO\Dynq\Models\MoreLabor;
 use BynqIO\Dynq\Models\MoreMaterial;
-use BynqIO\Dynq\Models\FavoriteLabor;
-use BynqIO\Dynq\Models\FavoriteMaterial;
-use BynqIO\Dynq\Models\FavoriteEquipment;
+use BynqIO\Dynq\Models\MoreEquipment;
 use BynqIO\Dynq\Http\Controllers\Controller;
 
-use \Auth;
-
-class MoreController extends Controller {
-
+class MoreController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
-    | Default Home Controller
+    | Default Home Controlluse BynqIO\Dynq\Models\Invoice
     |--------------------------------------------------------------------------
     |
     | You may wish to use controllers instead of, or in addition to, Closure
@@ -51,497 +40,176 @@ class MoreController extends Controller {
     |
     */
 
-    public function getMoreWithFavorite(Request $request, $projectid, $chapterid, $favid)
+    protected function newLaborRow($activity, Array $parameters)
     {
-        $chapter = Chapter::find($chapterid);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return back();
+        $chapter = Chapter::findOrFail($activity->chapter_id);
+        $project = Project::findOrFail($chapter->project_id);
+
+        $rate = $project->hour_rate_more;
+        if ($activity->isSubcontracting() && isset($parameters['rate'])) {
+            $rate = $parameters['rate'];
         }
 
-        $favact = FavoriteActivity::find($favid);
-        if (!$favact || !$favact->isOwner()) {
-            return back();
-        }
-
-        $part = Part::where('part_name','=','contracting')->first();
-        $part_type = PartType::where('type_name','=','calculation')->first();
-        $detail = Detail::where('detail_name','=','more')->first();
-        $project = Project::find($chapter->project_id);
-
-        $last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->where('detail_id',$detail->id)->orderBy('priority','desc')->first();
-
-        $activity = new Activity;
-        $activity->activity_name = $favact->activity_name;
-        $activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
-        $activity->note = $favact->note;
-        $activity->chapter_id = $chapter->id;
-        $activity->part_id = $part->id;
-        $activity->part_type_id = $part_type->id;
-        $activity->detail_id = $detail->id;
-
-        if ($project->tax_reverse) {
-            $tax_id = Tax::where('tax_rate','0')->first()['id'];
-            $activity->tax_labor_id = $tax_id;
-            $activity->tax_material_id = $tax_id;
-            $activity->tax_equipment_id = $tax_id;
-        } else {
-            $activity->tax_labor_id = $favact->tax_labor_id;
-            $activity->tax_material_id = $favact->tax_material_id;
-            $activity->tax_equipment_id = $favact->tax_equipment_id;
-        }
-        $activity->save();
-
-        $this->updateMoreStatus($projectid);
-
-        foreach (FavoriteLabor::where('activity_id', $favact->id)->get() as $fav_calc_labor) {
-            MoreLabor::create(array(
-                "rate" => 0,
-                "amount" => $fav_calc_labor->amount,
-                "activity_id" => $activity->id,
-            ));
-        }
-
-        foreach (FavoriteMaterial::where('activity_id', $favact->id)->get() as $fav_calc_material) {
-            MoreMaterial::create(array(
-                "material_name" => $fav_calc_material->material_name,
-                "unit" => $fav_calc_material->unit,
-                "rate" => $fav_calc_material->rate,
-                "amount" => $fav_calc_material->amount,
-                "activity_id" => $activity->id,
-            ));
-        }
-
-        if ($project->use_equipment) {
-            foreach (FavoriteEquipment::where('activity_id', $favact->id)->get() as $fav_calc_equipment) {
-                MoreEquipment::create(array(
-                    "equipment_name" => $fav_calc_equipment->equipment_name,
-                    "unit" => $fav_calc_equipment->unit,
-                    "rate" => $fav_calc_equipment->rate,
-                    "amount" => $fav_calc_equipment->amount,
-                    "activity_id" => $activity->id,
-                ));
-            }
-        }
-
-        return back();
-    }
-
-    public function updateMoreStatus($id)
-    {
-        $proj = Project::find($id);
-        if (!$proj->start_more)
-            $proj->start_more = date('Y-m-d');
-        $proj->update_more = date('Y-m-d');
-        $proj->save();
-    }
-
-    public function doNewChapter(Request $request, $project_id)
-    {
-        $this->validate($request, [
-            'chapter' => array('required','max:50'),
+        return MoreLabor::create([
+            "rate"            => $rate,
+            "amount"          => $parameters['amount'],
+            "activity_id"     => $activity->id,
         ]);
-
-        $project = Project::find($project_id);
-        if (!$project || !$project->isOwner()) {
-            return back()->withInput($request->all());
-        }
-
-        $last_chaper = Chapter::where('project_id', $project->id)->orderBy('priority','desc')->first();
-
-        $chapter = new Chapter;
-        $chapter->chapter_name = $request->get('chapter');
-        $chapter->priority = $last_chaper ? $last_chaper->priority + 1 : 0;
-        $chapter->project_id = $project->id;
-        $chapter->more = true;
-
-        $chapter->save();
-
-        return back()->with('success', 'Nieuw onderdeel aangemaakt');
     }
 
-    public function doNewActivity(Request $request, $chapter_id)
+    protected function newMaterialRow($activity, Array $parameters)
     {
-        $this->validate($request, [
-            'activity' => array('required','max:50'),
-            'project' => array('required','integer'),
+        return MoreMaterial::create([
+            "material_name"   => $parameters['name'],
+            "unit"            => $parameters['unit'],
+            "rate"            => $parameters['rate'],
+            "amount"          => $parameters['amount'],
+            "activity_id"     => $activity->id,
         ]);
-
-        $chapter = Chapter::find($chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return back()->withInput($request->all());
-        }
-
-        $part = Part::where('part_name','=','contracting')->first();
-        $part_type = PartType::where('type_name','=','calculation')->first();
-        $detail = Detail::where('detail_name','=','more')->first();
-        $project = Project::find($chapter->project_id);
-        if ($project->tax_reverse)
-            $tax = Tax::where('tax_rate','=',0)->first();
-        else
-            $tax = Tax::where('tax_rate','=',21)->first();
-
-        $last_activity = Activity::where('chapter_id', $chapter->id)->where('part_type_id',$part_type->id)->where('detail_id',$detail->id)->orderBy('priority','desc')->first();
-
-        $activity = new Activity;
-        $activity->activity_name = $request->get('activity');
-        $activity->priority = $last_activity ? $last_activity->priority + 1 : 0;
-        $activity->chapter_id = $chapter->id;
-        $activity->part_id = $part->id;
-        $activity->part_type_id = $part_type->id;
-        $activity->detail_id = $detail->id;
-        $activity->tax_labor_id = $tax->id;
-        $activity->tax_material_id = $tax->id;
-        $activity->tax_equipment_id = $tax->id;
-
-        $activity->save();
 
         $this->updateMoreStatus($request->get('project'));
-
-        return back()->with('success', 'Nieuwe werkzaamheid aangemaakt');
     }
 
-    public function doMoveActivity(Request $request)
+    protected function newOtherRow($activity, Array $parameters)
+    {
+        return MoreEquipment::create([
+            "equipment_name" => $parameters['name'],
+            "unit"           => $parameters['unit'],
+            "rate"           => $parameters['rate'],
+            "amount"         => $parameters['amount'],
+            "activity_id"    => $activity->id,
+        ]);
+    }
+
+    public function new(Request $request)
     {
         $this->validate($request, [
-            'activity' => array('required','integer','min:0'),
-            'direction' => array('required')
+            'name'      => ['required_unless:layer,labor', 'max:100'],
+            'unit'      => ['required_unless:layer,labor', 'max:10'],
+            'rate'      => ['required_unless:layer,labor', 'numeric'],
+            'amount'    => ['required', 'numeric'],
+            'activity'  => ['required', 'integer', 'min:0'],
+            'layer'     => ['required'],
         ]);
 
-        $activity = Activity::find($request->input('activity'));
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
+        $id = null;
+
+        $activity = Activity::findOrFail($request->get('activity'));
+
+        switch ($request->get('layer')) {
+            case 'labor':
+                $id = $this->newLaborRow($activity, $request->all())->id;
+                break;
+            case 'material':
+                $id = $this->newMaterialRow($activity, $request->all())->id;
+                break;
+            case 'other':
+                $id = $this->newOtherRow($activity, $request->all())->id;
+                break;
         }
 
-        if ($request->input('direction') == 'up') {
-            $switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority','<',$activity->priority)->where('detail_id', $activity->detail_id)->orderBy('priority','desc')->first();
-            if ($switch_activity) {
-                $old_priority = $activity->priority;
-                $activity->priority = $switch_activity->priority;
-                $switch_activity->priority = $old_priority;
+        return response()->json(['success' => 1, 'id' => $id]);
+    }
 
-                $switch_activity->save();
-            }
-        } else if ($request->input('direction') == 'down') {
-            $switch_activity = Activity::where('chapter_id', $chapter->id)->where('priority','>',$activity->priority)->where('detail_id', $activity->detail_id)->orderBy('priority')->first();
-            if ($switch_activity) {
-                $old_priority = $activity->priority;
-                $activity->priority = $switch_activity->priority;
-                $switch_activity->priority = $old_priority;
+    protected function updateLaborRow($activity, Array $parameters)
+    {
+        $chapter = Chapter::findOrFail($activity->chapter_id);
+        $project = Project::findOrFail($chapter->project_id);
 
-                $switch_activity->save();
-            }
+        $rate = $project->hour_rate_more;
+        if ($activity->isSubcontracting() && isset($parameters['rate'])) {
+            $rate = $parameters['rate'];
         }
 
-        $activity->save();
+        $row = MoreLabor::findOrFail($parameters['id']);
+        $row->rate           = $rate;
+        $row->amount         = $parameters['amount'];
+        $row->save();
+    }
+
+    protected function updateMaterialRow($activity, Array $parameters)
+    {
+        $row = MoreMaterial::findOrFail($parameters['id']);
+        $row->material_name  = $parameters['name'];
+        $row->unit           = $parameters['unit'];
+        $row->rate           = $parameters['rate'];
+        $row->amount         = $parameters['amount'];
+        $row->save();
+    }
+
+    protected function updateOtherRow($activity, Array $parameters)
+    {
+        $row = MoreEquipment::findOrFail($parameters['id']);
+        $row->equipment_name  = $parameters['name'];
+        $row->unit            = $parameters['unit'];
+        $row->rate            = $parameters['rate'];
+        $row->amount          = $parameters['amount'];
+        $row->save();
+    }
+
+    public function update(Request $request)
+    {
+        $this->validate($request, [
+            'id'        => ['required', 'integer', 'min:0'],
+            'name'      => ['required_unless:layer,labor', 'max:100'],
+            'unit'      => ['required_unless:layer,labor', 'max:10'],
+            'rate'      => ['required_unless:layer,labor', 'numeric'],
+            'amount'    => ['required', 'numeric'],
+            'activity'  => ['required', 'integer', 'min:0'],
+            'layer'     => ['required'],
+        ]);
+
+        $activity = Activity::findOrFail($request->get('activity'));
+
+        switch ($request->get('layer')) {
+            case 'labor':
+                $this->updateLaborRow($activity, $request->all());
+                break;
+            case 'material':
+                $this->updateMaterialRow($activity, $request->all());
+                break;
+            case 'other':
+                $this->updateOtherRow($activity, $request->all());
+                break;
+        }
 
         return response()->json(['success' => 1]);
     }
 
-    public function doDeleteChapter(Request $request)
+    // protected function deleteLaborRow(Array $parameters)
+    // {
+    //     CalculationLabor::findOrFail($parameters['id'])->delete();
+    // }
+
+    protected function deleteMaterialRow(Array $parameters)
     {
-        $this->validate($request, [
-            'chapter' => array('required','integer','min:0')
-        ]);
-
-        $chapter = Chapter::find($request->input('chapter'));
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        if (!$chapter->more)
-            return response()->json(['success' => 0]);
-
-        $chapter->delete();
-
-        return response()->json(['success' => 1]);
+        $row = MoreMaterial::findOrFail($parameters['id'])->delete();
     }
 
-    public function doNewMaterial(Request $request)
+    protected function deleteOtherRow(Array $parameters)
     {
-        $this->validate($request, [
-            'name' => array('required','max:50'),
-            'unit' => array('required','max:10'),
-            'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'activity' => array('required','integer','min:0'),
-            'project' => array('required','integer'),
-        ]);
-
-        $activity = Activity::find($request->get('activity'));
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $material = MoreMaterial::create(array(
-            "material_name" => $request->get('name'),
-            "unit" => $request->get('unit'),
-            "rate" => str_replace(',', '.', str_replace('.', '' , $request->get('rate'))),
-            "amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
-            "activity_id" => $activity->id,
-        ));
-
-        $this->updateMoreStatus($request->get('project'));
-
-        return response()->json(['success' => 1, 'id' => $material->id]);
+        $row = MoreEquipment::findOrFail($parameters['id'])->delete();
     }
 
-    public function doNewEquipment(Request $request)
+    public function delete(Request $request)
     {
         $this->validate($request, [
-            'name' => array('required','max:50'),
-            'unit' => array('required','max:10'),
-            'rate' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'activity' => array('required','integer','min:0'),
-            'project' => array('required','integer'),
+            'id'        => ['required', 'integer', 'min:0'],
+            'activity'  => ['required', 'integer', 'min:0'],
+            'layer'     => ['required'],
         ]);
 
-        $activity = Activity::find($request->get('activity'));
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
+        switch ($request->get('layer')) {
+            // case 'labor':
+            //     $id = $this->deleteLaborRow($request->all());
+            //     break;
+            case 'material':
+                $id = $this->deleteMaterialRow($request->all());
+                break;
+            case 'other':
+                $id = $this->deleteOtherRow($request->all());
+                break;
         }
-
-        $equipment = MoreEquipment::create(array(
-            "equipment_name" => $request->get('name'),
-            "unit" => $request->get('unit'),
-            "rate" => str_replace(',', '.', str_replace('.', '' , $request->get('rate'))),
-            "amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
-            "activity_id" => $activity->id,
-        ));
-
-        $this->updateMoreStatus($request->get('project'));
-
-        return response()->json(['success' => 1, 'id' => $equipment->id]);
-    }
-
-    public function doNewLabor(Request $request)
-    {
-        $this->validate($request, [
-            'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'amount' => array('required','regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'activity' => array('required','integer','min:0'),
-            'project' => array('required','integer'),
-        ]);
-
-        $activity = Activity::find($request->get('activity'));
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $rate = $request->get('rate');
-        if (empty($rate)) {
-            $_activity = Activity::find($request->get('activity'));
-            $_chapter = Chapter::find($_activity->chapter_id);
-            $_project = Project::find($_chapter->project_id);
-            $rate = $_project->hour_rate_more;
-            if (!$rate)
-                $rate = 0;
-        } else {
-            $rate = str_replace(',', '.', str_replace('.', '' , $rate));
-        }
-        $labor = MoreLabor::create(array(
-            "rate" => $rate,
-            "amount" => str_replace(',', '.', str_replace('.', '' , $request->get('amount'))),
-            "activity_id" => $activity->id,
-        ));
-
-        $this->updateMoreStatus($request->get('project'));
-
-        return response()->json(['success' => 1, 'id' => $labor->id]);
-    }
-
-    public function doDeleteMaterial(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('required','integer','min:0'),
-            'project' => array('required','integer'),
-        ]);
-
-        $rec = MoreMaterial::find($request->get('id'));
-        if (!$rec)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($rec->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $rec->delete();
-
-        $this->updateMoreStatus($request->get('project'));
-
-        return response()->json(['success' => 1]);
-    }
-
-    public function doDeleteEquipment(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('required','integer','min:0'),
-            'project' => array('required','integer'),
-        ]);
-
-        $rec = MoreEquipment::find($request->get('id'));
-        if (!$rec)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($rec->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $rec->delete();
-
-        $this->updateMoreStatus($request->get('project'));
-
-        return response()->json(['success' => 1]);
-    }
-
-    public function doDeleteLabor(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('required','integer','min:0'),
-            'project' => array('required','integer'),
-        ]);
-
-        $rec = MoreLabor::find($request->get('id'));
-        if (!$rec)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($rec->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $rec->delete();
-
-        $this->updateMoreStatus($request->get('project'));
-
-        return response()->json(['success' => 1]);
-    }
-
-    public function doUpdateMaterial(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('integer','min:0'),
-            'name' => array('max:50'),
-            'unit' => array('max:10'),
-            'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'project' => array('required','integer'),
-        ]);
-
-        $material = MoreMaterial::find($request->get('id'));
-        if (!$material)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($material->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $material->material_name = $request->get('name');
-        $material->unit = $request->get('unit');
-        $material->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
-        $material->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
-
-        $material->save();
-
-        $this->updateMoreStatus($request->get('project'));
-
-        return response()->json(['success' => 1]);
-    }
-
-    public function doUpdateEquipment(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('integer','min:0'),
-            'name' => array('max:50'),
-            'unit' => array('max:10'),
-            'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'project' => array('required','integer'),
-        ]);
-
-        $equipment = MoreEquipment::find($request->get('id'));
-        if (!$equipment)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($equipment->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $equipment->equipment_name = $request->get('name');
-        $equipment->unit = $request->get('unit');
-        $equipment->rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
-        $equipment->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
-
-        $equipment->save();
-
-        $this->updateMoreStatus($request->get('project'));
-
-        return response()->json(['success' => 1]);
-    }
-
-    public function doUpdateLabor(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('integer','min:0'),
-            'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'project' => array('required','integer'),
-        ]);
-
-        $labor = MoreLabor::find($request->get('id'));
-        if (!$labor)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($labor->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $rate = $request->get('rate');
-        if (empty($rate)) {
-            $_labor = MoreLabor::find($request->get('id'));
-            $_activity = Activity::find($_labor->activity_id);
-            $_chapter = Chapter::find($_activity->chapter_id);
-            $_project = Project::find($_chapter->project_id);
-            $rate = $_project->hour_rate_more;
-        } else {
-            $rate = str_replace(',', '.', str_replace('.', '' , $rate));
-        }
-
-        $labor->rate = $rate;
-        $labor->amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
-
-        $labor->save();
-
-        $this->updateMoreStatus($request->get('project'));
 
         return response()->json(['success' => 1]);
     }

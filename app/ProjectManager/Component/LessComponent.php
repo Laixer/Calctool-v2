@@ -48,19 +48,29 @@ class LessComponent extends BaseComponent implements Component
 
             'activity.move' => false,
             'activity.changename' => false,
-            'activity.remove' => false,
+            'activity.remove' => true,
             'activity.convertsubcon' => false,
             'activity.timesheet'     => false,
 
             'chapter.options'        => false,
-            'chapter.move' => false,
-            'chapter.changename' => false,
-            'chapter.remove' => false,
+            'chapter.move'           => false,
+            'chapter.changename'     => false,
+            'chapter.remove'         => false,
 
-            'rows.editable' => true,
+            'rows.labor.reset'     => true,
+            'rows.labor'           => true,
+            'rows.timesheet'       => true,
+            'rows.material.reset'  => true,
+            'rows.material'        => true,
+            'rows.other.reset'     => true,
+            'rows.other'           => false,
 
             'tax.update' => false,
         ];
+
+        if ($this->project->use_equipment) {
+            $data['features']['rows.other'] = true;
+        }
 
         $tabs[] = ['name' => 'calculate', 'title' => 'Minderwerk', 'icon' => 'fa-list'];
 

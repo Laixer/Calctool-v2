@@ -18,6 +18,10 @@ namespace BynqIO\Dynq\ProjectManager\Component;
 use BynqIO\Dynq\ProjectManager\Contracts\Component;
 use BynqIO\Dynq\Models\PartType;
 
+use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\CalculationMaterial;
+use BynqIO\Dynq\Models\CalculationEquipment;
+
 /**
  * Class CalculationComponent.
  */
@@ -42,10 +46,17 @@ class CalculationComponent extends BaseComponent implements Component
         };
 
         $data['features'] = [
+            'activity.options' => true,
+            'chapter.options' => true,
             'rows.labor'     => true,
+            'rows.labor.edit'=> false,
             'rows.timesheet' => true,
             'rows.material'  => true,
+            'rows.material.add'=> true,
+            'rows.material.edit'=> true,
             'rows.other'     => false,
+            'rows.other.add'=> true,
+            'rows.other.edit'=> true,
         ];
 
         if ($this->project->use_equipment) {
@@ -54,11 +65,20 @@ class CalculationComponent extends BaseComponent implements Component
 
         /* Disable all editable options for closed projects */
         if ($this->project->project_close) {
-            $data['features']['level.new'] = false;
-            $data['features']['activity.options'] = false;
-            $data['features']['chapter.options'] = false;
-            $data['features']['tax.update'] = false;
+            $data['features']['level.new']           = false;
+            $data['features']['activity.options']    = false;
+            $data['features']['chapter.options']     = false;
+            $data['features']['tax.update']          = false;
+            $data['features']['rows.labor.edit']     = false;
+            $data['features']['rows.material.add']   = false;
+            $data['features']['rows.material.edit']  = false;
+            $data['features']['rows.other.add']      = false;
+            $data['features']['rows.other.edit']     = false;
         }
+
+        $data['layer']['labor']     = 'BynqIO\Dynq\Models\CalculationLabor';
+        $data['layer']['material']  = 'BynqIO\Dynq\Models\CalculationMaterial';
+        $data['layer']['other']     = 'BynqIO\Dynq\Models\CalculationEquipment';
 
         $tabs[] = ['name' => 'calculate', 'title' => 'Calculatie', 'icon' => 'fa-list'];
 

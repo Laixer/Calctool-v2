@@ -20,6 +20,15 @@
             "email": "d.zandbergen@calculatietool.com"
         }
     ],
+    "repositories": [
+        {
+            "type": "path",
+            "url": "/var/www/encryptor",
+            "options": {
+                "symlink": false
+            }
+        }
+    ],
     "require": {
         "php": ">=5.6.4",
         "laravel/framework": "5.4.*",
@@ -36,7 +45,8 @@
         "ramsey/uuid": "~3.0",
         "nesbot/carbon": "~1.20",
         "fideloper/proxy": "^3.3",
-        "rap2hpoutre/laravel-log-viewer": "v0.9.*"
+        "rap2hpoutre/laravel-log-viewer": "v0.9.*",
+        "bynqio/encryptor": "dev-master"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

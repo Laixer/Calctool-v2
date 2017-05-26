@@ -45,11 +45,40 @@ class MoreComponent extends BaseComponent implements Component
         };
 
         $data['features'] = [
+            'level.new'              => true,
 
-            // 'rows.editable' => true,
+            'chapter.options'        => true,
 
-            // 'tax.update' => false,
+            /* Activity options */
+            'activity.options'        => true,
+            'activity.move'           => true,
+            'activity.changename'     => true,
+            'activity.remove'         => true,
+            'activity.convertsubcon'  => true,
+            'activity.converestimate' => false,
+
+            /* Row options */
+            'rows.labor'             => true,
+            'rows.labor.edit'        => true,
+            'rows.timesheet'         => true,
+            'rows.material'          => true,
+            'rows.material.add'      => true,
+            'rows.material.edit'     => true,
+            'rows.other'             => false,
+            'rows.other.add'         => true,
+            'rows.other.edit'        => true,
+
+            /* Tax */
+            'tax.update'             => true,
         ];
+
+        if ($this->project->use_equipment) {
+            $data['features']['rows.other'] = true;
+        }
+
+        $data['layer']['labor']     = 'BynqIO\Dynq\Models\MoreLabor';
+        $data['layer']['material']  = 'BynqIO\Dynq\Models\MoreMaterial';
+        $data['layer']['other']     = 'BynqIO\Dynq\Models\MoreEquipment';
 
         $tabs[] = ['name' => 'calculate', 'title' => 'Minderwerk', 'icon' => 'fa-list'];
 

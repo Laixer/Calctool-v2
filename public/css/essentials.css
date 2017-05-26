@@ -1365,9 +1365,9 @@ div.toggle > label {
     position: relative;
     display: block;
 
-    -webkit-border-radius: 6px;
-       -moz-border-radius: 6px;
-            border-radius: 6px;
+    -webkit-border-radius: 2px;
+       -moz-border-radius: 2px;
+            border-radius: 2px;
 
     -webkit-transition: all .10s ease-out;
        -moz-transition: all .10s ease-out;

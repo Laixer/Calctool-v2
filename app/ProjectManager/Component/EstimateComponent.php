@@ -44,25 +44,46 @@ class EstimateComponent extends BaseComponent implements Component
         };
 
         $data['features'] = [
-            'level.new'              => false,
+            'level.new'               => false,
 
-            // 'activity.options'       => true,
-            'activity.move'          => false,
-            'activity.changename'    => false,
+            'activity.options'       => true,
+            'activity.move'           => false,
+            'activity.changename'     => false,
             // 'activity.changenote'    => true,
             // 'activity.favorite'      => true,
-            'activity.remove'        => false,
-            'activity.convertsubcon' => false,
+            'activity.timesheet'     => true,
+            'activity.remove'         => false,
+            'activity.convertsubcon'  => false,
+            'activity.converestimate' => false,
 
             'chapter.options'        => false,
             'chapter.move'           => false,
             'chapter.changename'     => false,
             'chapter.remove'         => false,
 
-            // 'rows.editable'          => true,
+            'rows.labor'             => true,
+            'rows.labor.edit'        => true,
+            'rows.labor.reset'       => true,
+            'rows.timesheet'         => true,
+            'rows.material'          => true,
+            'rows.material.add'      => true,
+            'rows.material.edit'     => true,
+            'rows.material.reset'    => true,
+            'rows.other'             => false,
+            'rows.other.add'         => true,
+            'rows.other.edit'        => true,
+            'rows.other.reset'       => true,
 
             'tax.update'             => false,
         ];
+
+        if ($this->project->use_equipment) {
+            $data['features']['rows.other'] = true;
+        }
+
+        $data['layer']['labor']     = 'BynqIO\Dynq\Models\EstimateLabor';
+        $data['layer']['material']  = 'BynqIO\Dynq\Models\EstimateMaterial';
+        $data['layer']['other']     = 'BynqIO\Dynq\Models\EstimateEquipment';
 
         $tabs[] = ['name' => 'calculate', 'title' => 'Stelposten stellen', 'icon' => 'fa-list'];
 
