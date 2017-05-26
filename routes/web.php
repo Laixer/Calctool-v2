@@ -346,8 +346,8 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('project/{project_id}-{name}/packingslip',              'ReportController@packingSlip');//TODO: move into component
         Route::get('project/{project_id}-{name}/printoverview',            'ReportController@printOverview');//TODO: move into component
 
+        /* Project component entrypoint */
         Route::get('project/{project_id}-{name}/{module}/{submodule?}',    'ComponentController@index');
-        // Route::get('project/{project_id}-{name}/result',                   'ResultController');
 
         /* Layer operations */
         Route::post('project/layer/tax',                                   'LayerController@updateTax');

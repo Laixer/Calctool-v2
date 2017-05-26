@@ -688,7 +688,9 @@ $(document).ready(function() {
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.material.edit'])
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+                                        @ifallowed ($features['rows.material.remove'])
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
+                                        @endifallowed
                                         @ifallowed ($features['rows.material.reset'])
                                         <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
                                         @endifallowed
@@ -706,9 +708,8 @@ $(document).ready(function() {
                                     <td class="col-md-1"><span class="total-incl-tax"></span></td>
                                     <td class="col-md-1 text-right">
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+                                        @ifallowed ($features['rows.material.remove'])
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
-                                        @ifallowed ($features['rows.other.reset'])
-                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
                                         @endifallowed
                                     </td>
                                 </tr>
@@ -783,7 +784,9 @@ $(document).ready(function() {
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.other.edit'])
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+                                        @ifallowed ($features['rows.other.remove'])
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
+                                        @endifallowed
                                         @ifallowed ($features['rows.other.reset'])
                                         <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
                                         @endifallowed
@@ -801,9 +804,8 @@ $(document).ready(function() {
                                     <td class="col-md-1"><span class="total-incl-tax"></span></td>
                                     <td class="col-md-1 text-right">
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+                                        @ifallowed ($features['rows.other.remove'])
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
-                                        @ifallowed ($features['rows.other.reset'])
-                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
                                         @endifallowed
                                     </td>
                                 </tr>

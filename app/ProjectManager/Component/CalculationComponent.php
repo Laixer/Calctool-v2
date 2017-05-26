@@ -54,9 +54,11 @@ class CalculationComponent extends BaseComponent implements Component
             'rows.material'  => true,
             'rows.material.add'=> true,
             'rows.material.edit'=> true,
+            'rows.material.remove'=> true,
             'rows.other'     => false,
             'rows.other.add'=> true,
             'rows.other.edit'=> true,
+            'rows.other.remove'=> true,
         ];
 
         if ($this->project->use_equipment) {

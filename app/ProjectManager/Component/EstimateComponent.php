@@ -44,17 +44,8 @@ class EstimateComponent extends BaseComponent implements Component
         };
 
         $data['features'] = [
-            'level.new'               => false,
-
             'activity.options'       => true,
-            'activity.move'           => false,
-            'activity.changename'     => false,
-            // 'activity.changenote'    => true,
-            // 'activity.favorite'      => true,
             'activity.timesheet'     => true,
-            'activity.remove'         => false,
-            'activity.convertsubcon'  => false,
-            'activity.converestimate' => false,
 
             'chapter.options'        => false,
             'chapter.move'           => false,
