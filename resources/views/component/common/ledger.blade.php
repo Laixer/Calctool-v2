@@ -519,24 +519,24 @@ $(document).ready(function() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr style="height:33px" data-id="{{ $layer['labor']::where('activity_id', $activity->id)->first() ? $layer['labor']::where('activity_id', $activity->id)->first()->id : '' }}">
+                                <tr style="height:33px" data-id="{{ $layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->id : '' }}">
                                     <td class="col-md-5">Arbeidsuren</td>
                                     <td class="col-md-1">Uur</td>
                                     <td class="col-md-1">
                                         @if ($activity->isSubcontracting())
-                                        <span class="rate"><input name="rate" type="text" value="{{ \BynqIO\Dynq\Services\FormatService::monetary(0) }}" {{-- $layer['labor']::where('activity_id', $activity->id)->first()->rate --}} class="form-control-sm-number labor-amount lsave"></span>
+                                        <span class="rate"><input name="rate" type="text" value="{{ \BynqIO\Dynq\Services\FormatService::monetary($layer('labor', $activity)::where('activity_id', $activity->id)->first()['rate']) }}" class="form-control-sm-number labor-amount lsave"></span>
                                         @else
                                         {{ \BynqIO\Dynq\Services\FormatService::monetary($project->hour_rate) }}
                                         @endif
                                     </td>
                                     <td class="col-md-1">
                                         @ifallowed ($features['rows.labor.edit'])
-                                        <input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($layer['labor']::where('activity_id','=', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" />
+                                        <input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" />
                                         @else
-                                        {{ \BynqIO\Dynq\Services\FormatService::monetary($layer['labor']::where('activity_id','=', $activity->id)->first()['amount']) }}
+                                        {{ \BynqIO\Dynq\Services\FormatService::monetary($layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount']) }}
                                         @endif
                                     </td>
-                                    <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? $layer['labor']::where('activity_id','=', $activity->id)->first()['rate'] : $project->hour_rate, $layer['labor']::where('activity_id','=', $activity->id)->first()['amount'])) }}</span></td>
+                                    <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()['rate'] : $project->hour_rate, $layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount'])) }}</span></td>
                                     <td class="col-md-1">&nbsp;</td>
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.labor.reset'])
@@ -677,7 +677,7 @@ $(document).ready(function() {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($layer['material']::where('activity_id', $activity->id)->orderBy('id')->get() as $material)
+                                @foreach ($layer('material', $activity)::where('activity_id', $activity->id)->orderBy('id')->get() as $material)
                                 <tr style="height:33px" data-id="{{ $material->id }}">
                                     <td class="col-md-5">@ifallowed ($features['rows.material.edit'])<input name="name" maxlength="100" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text newrow" />@else{{ $material->material_name }}@endifallowed</td>
                                     <td class="col-md-1">@ifallowed ($features['rows.material.edit'])<input name="unit" maxlength="10" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text" />@else{{ $material->unit }}@endifallowed</td>
@@ -773,7 +773,7 @@ $(document).ready(function() {
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach ($layer['other']::where('activity_id', $activity->id)->orderBy('id')->get() as $equipment)
+                                @foreach ($layer('other', $activity)::where('activity_id', $activity->id)->orderBy('id')->get() as $equipment)
                                 <tr style="height:33px" data-id="{{ $equipment->id }}">
                                     <td class="col-md-5">@ifallowed ($features['rows.other.edit'])<input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" />@else{{ $equipment->equipment_name }}@endifallowed</td>
                                     <td class="col-md-1">@ifallowed ($features['rows.other.edit'])<input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" />@else{{ $equipment->unit }}@endifallowed</td>

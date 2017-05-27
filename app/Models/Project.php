@@ -52,6 +52,19 @@ class Project extends Model
         return strtolower(str_slug($this->project_name));
     }
 
+    public function status()
+    {
+        if ($this->project_close) {
+            if ($this->is_dilapidated) {
+                return 'vervallen';
+            }
+            
+            return 'gesloten';
+        }
+
+        return 'open';
+    }
+
     public function type() {
         return $this->hasOne(ProjectType::class, 'id', 'type_id');
     }

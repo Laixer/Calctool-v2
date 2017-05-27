@@ -243,6 +243,9 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::post('calculation/update',                         'CalculationController@update');
         Route::post('calculation/delete',                         'CalculationController@delete');
 
+        Route::get('calculation/summary/project-{project_id}',    'CalculationController@asyncSummary');
+        Route::get('calculation/endresult/project-{project_id}',  'CalculationController@asyncEndresult');
+
         /* Estimate actions by estimate */
         // Route::post('estimate/new',                               'CalculationController@new');
         // Route::post('estimate/update',                            'CalculationController@update');
@@ -302,9 +305,6 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         /* Calculation pages */
         Route::get('calculation/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getCalculationWithFavorite');
 
-        Route::get('calculation/summary/project-{project_id}',    'CalcController@getCalculationSummary');
-        Route::get('calculation/endresult/project-{project_id}',  'CalcController@getCalculationEndresult');
-
         Route::get('blancrow/project-{project_id}',               'BlancController@getBlanc');
         Route::get('estimate/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getEstimateWithFavorite');
         Route::get('estimate/summary/project-{project_id}',       'CalcController@getEstimateSummary');
@@ -339,7 +339,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
 
     /* Module Group Project */
     Route::group(['namespace' => 'Project'], function() {
-        Route::get('project/all',                                          'ListController');
+        Route::get('project/all',                                          'FilterController');
         Route::get('project/new',                                          'NewController@index');
         Route::post('project/new',                                         'NewController@new');
 

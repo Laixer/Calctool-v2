@@ -59,6 +59,7 @@ return [
     'watchwelcvid'    => 'Watch the welcomevideo',
     'noprodavail'     => 'No projects available',
     'crefirstprod'    => 'Create first project',
+    'recent_projects' => 'Recent projects',
 
     // Daypart welcome
     'welcome' => [

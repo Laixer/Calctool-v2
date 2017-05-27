@@ -35,9 +35,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->secret;
     }
 
-    // public function projects() {
-    //     return $this->hasMany('Project');
-    // }
+    public function projects() {
+        return $this->hasMany(Project::class);
+    }
 
     public function type() {
         return $this->hasOne(UserType::class, 'id', 'user_type');

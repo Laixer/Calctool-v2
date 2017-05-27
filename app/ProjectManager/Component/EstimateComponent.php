@@ -43,6 +43,17 @@ class EstimateComponent extends BaseComponent implements Component
             return $this->{$section . 'Filter'}($object);
         };
 
+        $data['layer'] = function($layer, $activity = null) {
+            switch ($layer) {
+                case 'labor':
+                    return 'BynqIO\Dynq\Models\EstimateLabor';
+                case 'material':
+                    return 'BynqIO\Dynq\Models\EstimateMaterial';
+                case 'other':
+                    return 'BynqIO\Dynq\Models\EstimateEquipment';
+            }
+        };
+
         $data['features'] = [
             'activity.options'       => true,
             'activity.timesheet'     => true,
@@ -84,10 +95,6 @@ class EstimateComponent extends BaseComponent implements Component
             $data['features']['rows.other.add']      = false;
             $data['features']['rows.other.edit']     = false;
         }
-
-        $data['layer']['labor']     = 'BynqIO\Dynq\Models\EstimateLabor';
-        $data['layer']['material']  = 'BynqIO\Dynq\Models\EstimateMaterial';
-        $data['layer']['other']     = 'BynqIO\Dynq\Models\EstimateEquipment';
 
         $tabs[] = ['name' => 'calculate', 'title' => 'Stelposten stellen', 'icon' => 'fa-list'];
 

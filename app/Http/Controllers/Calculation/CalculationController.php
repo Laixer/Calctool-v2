@@ -15,15 +15,18 @@
 
 namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
-use \Illuminate\Http\Request;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Chapter;
 use BynqIO\Dynq\Models\Part;
 use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\CalculationLabor;
 use BynqIO\Dynq\Models\CalculationMaterial;
 use BynqIO\Dynq\Models\CalculationEquipment;
-use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\EstimateLabor;
+use BynqIO\Dynq\Models\EstimateMaterial;
+use BynqIO\Dynq\Models\EstimateEquipment;
 use BynqIO\Dynq\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class CalculationController extends Controller
 {
@@ -50,33 +53,67 @@ class CalculationController extends Controller
             $rate = $parameters['rate'];
         }
 
-        return CalculationLabor::create([
-            "rate"            => $rate,
-            "amount"          => $parameters['amount'],
-            "activity_id"     => $activity->id,
-        ]);
+        if ($activity->isEstimate()) {
+            return EstimateLabor::create([
+                "rate"            => $rate,
+                "amount"          => $parameters['amount'],
+                "activity_id"     => $activity->id,
+                "original"        => true,
+                "isset"           => false,
+            ]);
+        } else {
+            return CalculationLabor::create([
+                "rate"            => $rate,
+                "amount"          => $parameters['amount'],
+                "activity_id"     => $activity->id,
+            ]);
+        }
     }
 
     protected function newMaterialRow($activity, Array $parameters)
     {
-        return CalculationMaterial::create([
-            "material_name"   => $parameters['name'],
-            "unit"            => $parameters['unit'],
-            "rate"            => $parameters['rate'],
-            "amount"          => $parameters['amount'],
-            "activity_id"     => $activity->id,
-        ]);
+        if ($activity->isEstimate()) {
+            return EstimateMaterial::create([
+                "material_name"   => $parameters['name'],
+                "unit"            => $parameters['unit'],
+                "rate"            => $parameters['rate'],
+                "amount"          => $parameters['amount'],
+                "activity_id"     => $activity->id,
+                "original"        => true,
+                "isset"           => false,
+            ]);
+        } else {
+            return CalculationMaterial::create([
+                "material_name"   => $parameters['name'],
+                "unit"            => $parameters['unit'],
+                "rate"            => $parameters['rate'],
+                "amount"          => $parameters['amount'],
+                "activity_id"     => $activity->id,
+            ]);
+        }
     }
 
     protected function newOtherRow($activity, Array $parameters)
     {
-        return CalculationEquipment::create([
-            "equipment_name" => $parameters['name'],
-            "unit"           => $parameters['unit'],
-            "rate"           => $parameters['rate'],
-            "amount"         => $parameters['amount'],
-            "activity_id"    => $activity->id,
-        ]);
+        if ($activity->isEstimate()) {
+            return EstimateEquipment::create([
+                "equipment_name" => $parameters['name'],
+                "unit"           => $parameters['unit'],
+                "rate"           => $parameters['rate'],
+                "amount"         => $parameters['amount'],
+                "activity_id"    => $activity->id,
+                "original"       => true,
+                "isset"          => false,
+            ]);
+        } else {
+            return CalculationEquipment::create([
+                "equipment_name" => $parameters['name'],
+                "unit"           => $parameters['unit'],
+                "rate"           => $parameters['rate'],
+                "amount"         => $parameters['amount'],
+                "activity_id"    => $activity->id,
+            ]);
+        }
     }
 
     public function new(Request $request)
@@ -119,7 +156,13 @@ class CalculationController extends Controller
             $rate = $parameters['rate'];
         }
 
-        $row = CalculationLabor::findOrFail($parameters['id']);
+        $row = null;
+        if ($activity->isEstimate()) {
+            $row = EstimateLabor::findOrFail($parameters['id']);
+        } else {
+            $row = CalculationLabor::findOrFail($parameters['id']);
+        }
+
         $row->rate           = $rate;
         $row->amount         = $parameters['amount'];
         $row->save();
@@ -127,7 +170,13 @@ class CalculationController extends Controller
 
     protected function updateMaterialRow($activity, Array $parameters)
     {
-        $row = CalculationMaterial::findOrFail($parameters['id']);
+        $row = null;
+        if ($activity->isEstimate()) {
+            $row = EstimateMaterial::findOrFail($parameters['id']);
+        } else {
+            $row = CalculationMaterial::findOrFail($parameters['id']);
+        }
+
         $row->material_name  = $parameters['name'];
         $row->unit           = $parameters['unit'];
         $row->rate           = $parameters['rate'];
@@ -137,7 +186,13 @@ class CalculationController extends Controller
 
     protected function updateOtherRow($activity, Array $parameters)
     {
-        $row = CalculationEquipment::findOrFail($parameters['id']);
+        $row = null;
+        if ($activity->isEstimate()) {
+            $row = EstimateEquipment::findOrFail($parameters['id']);
+        } else {
+            $row = CalculationEquipment::findOrFail($parameters['id']);
+        }
+
         $row->equipment_name  = $parameters['name'];
         $row->unit            = $parameters['unit'];
         $row->rate            = $parameters['rate'];
@@ -174,19 +229,22 @@ class CalculationController extends Controller
         return response()->json(['success' => 1]);
     }
 
-    // protected function deleteLaborRow(Array $parameters)
-    // {
-    //     CalculationLabor::findOrFail($parameters['id'])->delete();
-    // }
-
-    protected function deleteMaterialRow(Array $parameters)
+    protected function deleteMaterialRow($activity, Array $parameters)
     {
-        $row = CalculationMaterial::findOrFail($parameters['id'])->delete();
+        if ($activity->isEstimate()) {
+            EstimateMaterial::findOrFail($parameters['id'])->delete();
+        } else {
+            CalculationMaterial::findOrFail($parameters['id'])->delete();
+        }
     }
 
-    protected function deleteOtherRow(Array $parameters)
+    protected function deleteOtherRow($activity, Array $parameters)
     {
-        $row = CalculationEquipment::findOrFail($parameters['id'])->delete();
+        if ($activity->isEstimate()) {
+            EstimateEquipment::findOrFail($parameters['id'])->delete();
+        } else {
+            CalculationEquipment::findOrFail($parameters['id'])->delete();
+        }
     }
 
     public function delete(Request $request)
@@ -197,18 +255,35 @@ class CalculationController extends Controller
             'layer'     => ['required'],
         ]);
 
+        $activity = Activity::findOrFail($request->get('activity'));
+
         switch ($request->get('layer')) {
-            // case 'labor':
-            //     $id = $this->deleteLaborRow($request->all());
-            //     break;
             case 'material':
-                $id = $this->deleteMaterialRow($request->all());
+                $id = $this->deleteMaterialRow($activity, $request->all());
                 break;
             case 'other':
-                $id = $this->deleteOtherRow($request->all());
+                $id = $this->deleteOtherRow($activity, $request->all());
                 break;
         }
 
         return response()->json(['success' => 1]);
+    }
+
+    //TODO; placed here fow now
+    public function asyncSummary($projectid)
+    {
+        $project = Project::find($projectid);
+
+        return view('component.calculation.summary', ['project' => $project, 'section' => 'summary', 'filter' => function($section, $builder) {
+            return $builder->whereNull('detail_id')
+                        ->orderBy('priority');
+        }]);
+    }
+
+    //TODO; placed here fow now
+    public function asyncEndresult($projectid)
+    {
+        $project = Project::find($projectid);
+        return view('component.calculation.endresult', ['project' => $project, 'section' => 'summary']);
     }
 }

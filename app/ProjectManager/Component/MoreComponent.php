@@ -44,6 +44,17 @@ class MoreComponent extends BaseComponent implements Component
             return $this->{$section . 'Filter'}($object);
         };
 
+        $data['layer'] = function($layer, $activity = null) {
+            switch ($layer) {
+                case 'labor':
+                    return 'BynqIO\Dynq\Models\MoreLabor';
+                case 'material':
+                    return 'BynqIO\Dynq\Models\MoreMaterial';
+                case 'other':
+                    return 'BynqIO\Dynq\Models\MoreEquipment';
+            }
+        };
+
         $data['features'] = [
             'level.new'              => true,
 
@@ -90,10 +101,6 @@ class MoreComponent extends BaseComponent implements Component
             $data['features']['rows.other.add']      = false;
             $data['features']['rows.other.edit']     = false;
         }
-
-        $data['layer']['labor']     = 'BynqIO\Dynq\Models\MoreLabor';
-        $data['layer']['material']  = 'BynqIO\Dynq\Models\MoreMaterial';
-        $data['layer']['other']     = 'BynqIO\Dynq\Models\MoreEquipment';
 
         $tabs[] = ['name' => 'calculate', 'title' => 'Minderwerk', 'icon' => 'fa-list'];
 

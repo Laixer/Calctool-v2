@@ -18,10 +18,6 @@ namespace BynqIO\Dynq\ProjectManager\Component;
 use BynqIO\Dynq\ProjectManager\Contracts\Component;
 use BynqIO\Dynq\Models\PartType;
 
-use BynqIO\Dynq\Models\CalculationLabor;
-use BynqIO\Dynq\Models\CalculationMaterial;
-use BynqIO\Dynq\Models\CalculationEquipment;
-
 /**
  * Class CalculationComponent.
  */
@@ -45,20 +41,57 @@ class CalculationComponent extends BaseComponent implements Component
             return $this->{$section . 'Filter'}($object);
         };
 
+        $data['layer'] = function($layer, $activity = null) {
+            if ($activity && $activity->isEstimate()) {
+                switch ($layer) {
+                    case 'labor':
+                        return 'BynqIO\Dynq\Models\EstimateLabor';
+                    case 'material':
+                        return 'BynqIO\Dynq\Models\EstimateMaterial';
+                    case 'other':
+                        return 'BynqIO\Dynq\Models\EstimateEquipment';
+                }
+            } else {
+                switch ($layer) {
+                    case 'labor':
+                        return 'BynqIO\Dynq\Models\CalculationLabor';
+                    case 'material':
+                        return 'BynqIO\Dynq\Models\CalculationMaterial';
+                    case 'other':
+                        return 'BynqIO\Dynq\Models\CalculationEquipment';
+                }
+            }
+        };
+
         $data['features'] = [
-            'activity.options' => true,
-            'chapter.options' => true,
-            'rows.labor'     => true,
-            'rows.labor.edit'=> false,
-            'rows.timesheet' => true,
-            'rows.material'  => true,
-            'rows.material.add'=> true,
-            'rows.material.edit'=> true,
-            'rows.material.remove'=> true,
-            'rows.other'     => false,
-            'rows.other.add'=> true,
-            'rows.other.edit'=> true,
-            'rows.other.remove'=> true,
+            'level.new'              => true,
+
+            'chapter.options'        => true,
+
+            /* Activity options */
+            'activity.options'        => true,
+            'activity.move'           => true,
+            'activity.changename'     => true,
+            'activity.remove'         => true,
+            'activity.timesheet'      => true,
+            'activity.convertsubcon'  => true,
+            'activity.converestimate' => true,
+
+            /* Row options */
+            'rows.labor'             => true,
+            'rows.labor.edit'        => true,
+            'rows.timesheet'         => true,
+            'rows.material'          => true,
+            'rows.material.add'      => true,
+            'rows.material.edit'     => true,
+            'rows.material.remove'   => true,
+            'rows.other'             => false,
+            'rows.other.add'         => true,
+            'rows.other.edit'        => true,
+            'rows.other.remove'      => true,
+
+            /* Tax */
+            'tax.update'             => true,
         ];
 
         if ($this->project->use_equipment) {
@@ -78,15 +111,11 @@ class CalculationComponent extends BaseComponent implements Component
             $data['features']['rows.other.edit']     = false;
         }
 
-        $data['layer']['labor']     = 'BynqIO\Dynq\Models\CalculationLabor';
-        $data['layer']['material']  = 'BynqIO\Dynq\Models\CalculationMaterial';
-        $data['layer']['other']     = 'BynqIO\Dynq\Models\CalculationEquipment';
-
         $tabs[] = ['name' => 'calculate', 'title' => 'Calculatie', 'icon' => 'fa-list'];
 
         $async = [
-            ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', ], //'async' => "/calculation/summary/project-{$this->project->id}"
-            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o', ], // 'async' => "/calculation/endresult/project-{$this->project->id}"
+            ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', 'async' => "/calculation/summary/project-{$this->project->id}"],
+            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  'async' => "/calculation/endresult/project-{$this->project->id}"], 
         ];
 
         $tabs[] = $async[0];

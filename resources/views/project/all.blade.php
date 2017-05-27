@@ -1,15 +1,6 @@
-<?php
-use \BynqIO\Dynq\Models\Project;
-use \BynqIO\Dynq\Models\Relation;
-use \BynqIO\Dynq\Models\RelationKind;
-use \BynqIO\Dynq\Models\Contact;
-?>
+@inject('carbon', 'Carbon\Carbon')
 
 @extends('layout.master')
-
-@push('scripts')
-<script src="/components/angular/angular.min.js"></script>
-@endpush
 
 @section('content')
 <div id="wrapper" ng-app="projectApp">
@@ -22,13 +13,32 @@ use \BynqIO\Dynq\Models\Contact;
                 <li><a href="/">Dashboard</a></li>
                 <li class="active">Projecten</li>
             </ol>
+
             <div>
+
+                <div class="pull-right">
+                    <!--<button type="button" class="btn btn-primary">Geavanceerde Filters</button>-->
+                    <div class="btn-group">
+                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Snelle Filters
+                        <span class="caret"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="{{ url()->current() }}">Alle Projecten</a></li>
+                            <li><a href="?status=open">Open Projecten</a></li>
+                            <li><a href="?status=closed">Gesloten Projecten</a></li>
+                            <li><a href="?updated=after:{{ $carbon::now()->subDays(2)->toDateString() }}">Recente Bewerkt</a></li>
+                            <li class="divider" style="margin:5px 0;"></li>
+                            <li><a href="?type=calculatie">Projecttype Calculatie</a></li>
+                            <li><a href="?type=regie">Projecttype Regiewerk</a></li>
+                            <li><a href="?type=snelle offerte en factuur">Projecttype Snelle offerte</a></li>
+                            <li class="divider" style="margin:5px 0;"></li>
+                            <li><a href="?sort=name:asc">Sorteer op Projectnaam</a></li>
+                            <li><a href="?sort=client:asc">Sorteer op Opdrachtgever</a></li>
+                        </ul>
+                    </div>
+                </div>
+
                 <h2><strong>Projecten</strong></h2>
                 <div class="white-row" ng-controller="projectController">
-
-                    <div class="form-group">
-                        <input type="text" ng-model="query" class="form-control" placeholder="Zoek in projecten" />
-                    </div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -41,24 +51,23 @@ use \BynqIO\Dynq\Models\Contact;
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="project in projects | filter: query | orderBy: 'project_name' as results">
-                                <td class="col-md-3"><a href="/project-@{{ project.id }}/edit">@{{ project.project_name }}</a></td>
-                                <td class="col-md-2">{{-- RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) --}}</td>
-                                <td class="col-md-1">{{-- $project->type->type_name --}}</td>
-                                <td class="col-md-3">@{{ project.address_street }} @{{ project.address_number }}</td>
-                                <td class="col-md-2">@{{ project.address_city }}</td>
-                                <td class="col-md-1">@{{ project.project_close ? 'Gesloten' : 'Open' }}</td>
+                            @foreach($projects as $project)
+                            <tr>
+                                <td class="col-md-3"><a href="/project/{{ $project->id }}-{{ $project->slug() }}/details">{{ $project->project_name }}</a></td>
+                                <td class="col-md-2">{{ $project->client->name() }}</td>
+                                <td class="col-md-1">{{ ucfirst($project->type->type_name) }}</td>
+                                <td class="col-md-3">{{ $project->address_street }} {{ $project->address_number }}</td>
+                                <td class="col-md-2">{{ $project->address_city }}</td>
+                                <td class="col-md-1">{{ ucfirst($project->status()) }}</td>
                             </tr>
-                            <tr ng-show="results == 0">
+                            @endforeach
+                            @empty($projects)
+                            <tr>
                                 <td colspan="6" style="text-align: center;">Geen projecten beschikbaar</td>
                             </tr>
+                            @endempty
                         </tbody>
                     </table>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <a href="project/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuw project</a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -66,14 +75,4 @@ use \BynqIO\Dynq\Models\Contact;
     </section>
 
 </div>
-<script type="text/javascript">
-$(document).ready(function() {
-    angular.module('projectApp', []).controller('projectController', function($scope, $http) {
-        $http.get('/api/v1/projects').then(function(response){
-            $scope.projects = response.data;
-        });
-
-    });
-});
-</script>
 @stop

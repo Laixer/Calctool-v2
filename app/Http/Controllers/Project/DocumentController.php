@@ -25,12 +25,10 @@ use Storage;
 
 class DocumentController extends Controller
 {
-    const MIMETYPES = 'mimes:jpeg,jpg,bmp,png,gif,pdf,doc,docx,xls,xlsx,csv,txt,ppt,pptx,xml,zip,7z,tar,gz,rar,wav,mp3,flac,mkv,mp4,avi,css,html';
-    
     public function __invoke(Request $request)
     {
         $this->validate($request, [
-            'projectfile' => array('required', self::MIMETYPES, 'file'),
+            'projectfile' => array('required', 'file'),
             'project' => array('required'),
         ]);
 

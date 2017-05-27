@@ -46,7 +46,6 @@
             <div id="wrapper" class="nopadding-top">
 
                 @if ($projectCount)
-
                 <div class="white-row" >
 
                     <div class="pull-right">
@@ -55,16 +54,16 @@
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-ellipsis-h" aria-hidden="true"></span></button>
                             <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="/project/all" >Alle projecten</a></i>
-                                <li><a href="/project/all?filter=closed" >Gesloten projecten</a></i>
-                                <li><a href="/project/all?filter=closed" >Projecten laatste Kwartaal</a></i>
-                                <li><a href="/project/all?filter=closed" >Projecten laatste Jaar</a></i>
+                                <li><a href="/project/all">Alle Projecten</a></i>
+                                <li><a href="/project/all?status=open">Open Projecten</a></i>
+                                <li><a href="/project/all?status=closed">Gesloten Projecten</a></i>
+                                <li><a href="/project/all">Geavanceerde Selecties</a></i>
                             </ul>
                         </div>
 
                     </div>
 
-                    <h3>{{ trans_choice('core.project', 2) }} </h3>
+                    <h3>@lang('core.recent_projects')</h3>
 
                     @if (count($projects))
                     <div id="cartContent">
@@ -86,25 +85,24 @@
                         @endforeach
                         <div class="clearfix"></div>
                     </div>
+
+                    @if (count($projects) == 5 &&$projectCount > 5)
+                    <h5><strong><i class="fa fa-info-circle" aria-hidden="true"></i> Niet alle projecten worden weergegeven</strong></h5>
+                    @endif
+
                     @else
                     <div class="text-center fsize18">Geen open projecten</div>
                     @endif
-
-                    @else
-
-                    <h2><strong>@lang('core.firststep')</strong></h2>
-                    <div class="bs-callout text-center whiteBg" style="margin:0">
-                        <h3>
-                            <!--<a href="/" class="btn btn-primary btn-lg" class="fa fa-youtube-play yt-vid">@lang('core.watchwelcvid')</a>-->
-                                <!--of-->
-                            <a href="/project/new" class="btn btn-primary btn-lg">@lang('core.crefirstprod') <i class="fa fa-arrow-right"></i></a>
-                        </h3>
-                    </div>
-
-                    @endif
-
                 </div>
 
+                @else
+
+                <h2><strong>@lang('core.firststep')</strong></h2>
+                <div class="bs-callout text-center whiteBg" style="margin:0">
+                    <h3><a href="/project/new" class="btn btn-primary btn-lg">@lang('core.crefirstprod') <i class="fa fa-arrow-right"></i></a></h3>
+                </div>
+
+                @endif
             </div>
         </section>
     </div> 

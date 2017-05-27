@@ -61,6 +61,7 @@ return [
     'watchwelcvid'    => 'Bekijk de Welkomstvideo',
     'noprodavail'     => 'Geen projecten beschikbaar',
     'crefirstprod'    => 'Maak eerste project aan',
+    'recent_projects' => 'Recente projecten',
 
     // Daypart welcome
     'welcome' => [

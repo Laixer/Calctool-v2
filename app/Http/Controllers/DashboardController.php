@@ -95,6 +95,7 @@ class DashboardController extends Controller
             ->where('is_dilapidated', false)
             ->whereNull('project_close')
             ->orderBy('updated_at', 'desc')
+            ->limit(5)
             ->get();
 
         $data = [
