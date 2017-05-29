@@ -27,7 +27,7 @@ class DetailComponent extends BaseComponent implements Component
     {
         $tabs = [
             ['name' => 'overview', 'title' => 'Overzicht',       'icon' => 'fa-info'],
-            ['name' => 'settings', 'title' => 'Projectgegevens', 'icon' => 'fa-map-marker'],
+            ['name' => 'settings', 'title' => 'Projectgegevens',   'icon' => 'fa-map-marker'],
             ['name' => 'options',  'title' => 'Opties',          'icon' => 'fa-sliders'],
         ];
 

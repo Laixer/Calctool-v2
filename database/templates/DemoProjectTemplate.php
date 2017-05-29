@@ -22,7 +22,12 @@ use BynqIO\Dynq\Models\CalculationEquipment;
  * Static Models Only
  * Template for demoproject
  */
-class DemoProjectTemplate {
+class DemoProjectTemplate
+{
+    protected static function random_name($size = 4)
+    {
+        return chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90));
+    }
 
     public static function setup($userid)
     {
@@ -33,29 +38,43 @@ class DemoProjectTemplate {
         $relationkind = RelationKind::where('kind_name','zakelijk')->firstOrFail();
         $contact_function = ContactFunction::where('function_name','voorzitter')->firstOrFail();
 
-        $relation = new Relation;
-        $relation->company_name		= 'Demorelatie';
-        $relation->address_street	= 'Demostraat';
-        $relation->address_number	= '1';
-        $relation->address_postal	= '1234AB';
-        $relation->address_city		= 'Demostad';
-        $relation->debtor_code 		= 'DEMO123';
-        $relation->kvk		 		= '12345678';
-        $relation->btw 				= 'NL123456789B01';
-        $relation->note 			= 'Dit is een demorelatie';
-        $relation->email 			= 'demo@calculatietool.com';
-        $relation->phone 			= '0101234567';
-        $relation->website 			= 'http://www.calculatietool.com';
-        $relation->user_id 			= $userid;
-        $relation->type_id 			= $relationtype->id;
-        $relation->kind_id 			= $relationkind->id;
-        $relation->province_id 		= $province->id;
-        $relation->country_id 		= $country->id;
-        $relation->save();
+        $relation = Relation::where('company_name', 'Demorelatie')->first();
+        if (!$relation) {
+            $relation = new Relation;
+            $relation->company_name		= 'Demorelatie';
+            $relation->address_street	= 'Demostraat';
+            $relation->address_number	= '1';
+            $relation->address_postal	= '1234AB';
+            $relation->address_city		= 'Demostad';
+            $relation->debtor_code 		= 'DEMO123';
+            $relation->kvk		 		= '12345678';
+            $relation->btw 				= 'NL123456789B01';
+            $relation->note 			= 'Dit is een demorelatie';
+            $relation->email 			= 'demo@calculatietool.com';
+            $relation->phone 			= '0101234567';
+            $relation->website 			= 'http://www.calculatietool.com';
+            $relation->user_id 			= $userid;
+            $relation->type_id 			= $relationtype->id;
+            $relation->kind_id 			= $relationkind->id;
+            $relation->province_id 		= $province->id;
+            $relation->country_id 		= $country->id;
+            $relation->save();
 
-        
+            $contact = new Contact;
+            $contact->firstname 		= 'Jan';
+            $contact->lastname 			= 'Janssen';
+            $contact->email 			= 'demo@calculatietool.com';
+            $contact->mobile 			= '0622222222';
+            $contact->phone 			= '0103333333';
+            $contact->note 				= 'Demo contactpersoon van relatie';
+            $contact->relation_id 		= $relation->id;
+            $contact->function_id 		= $contact_function->id;
+            $contact->gender	 		= 'M';
+            $contact->save();
+        }
+
         $project = new Project;
-        $project->project_name 		= 'PROJ-' . date("Ymd-s");
+        $project->project_name 		= 'PROJ-' . date("Ymd") . '-' . static::random_name();
         $project->address_street 	= 'Demolaan';
         $project->address_number 	= '2';
         $project->address_postal 	= '5678MO';
@@ -77,18 +96,6 @@ class DemoProjectTemplate {
         $project->profit_more_subcontr_mat 		= 16;
         $project->profit_more_subcontr_equip	= 17;
         $project->save();
-
-        $contact = new Contact;
-        $contact->firstname 		= 'Jan';
-        $contact->lastname 			= 'Janssen';
-        $contact->email 			= 'demo@calculatietool.com';
-        $contact->mobile 			= '0622222222';
-        $contact->phone 			= '0103333333';
-        $contact->note 				= 'Demo contactpersoon van relatie';
-        $contact->relation_id 		= $relation->id;
-        $contact->function_id 		= $contact_function->id;
-        $contact->gender	 		= 'M';
-        $contact->save();
 
         $part_contract = Part::where('part_name','contracting')->firstOrFail();
         $part_type_calc = PartType::where('type_name','calculation')->firstOrFail();

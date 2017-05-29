@@ -114,19 +114,19 @@ $(document).ready(function() {
             @endif
 
             <aside class="col-md-3 nav-align">
-
-                <ul class="nav nav-list">
-                    @if (Auth::user()->hasOwnCompany())
-                    <li class="{{ $page == 'details' ? 'nav-active' : '' }}"><a href="/company/details"><i class="fa fa-id-card"></i> Bedrijfsgegevens</a></li>
-                    <li class="{{ $page == 'contacts' ? 'nav-active' : '' }}"><a href="/company/contacts"><i class="fa fa-users"></i> Contacten</a></li>
-                    <li class="{{ $page == 'financial' ? 'nav-active' : '' }}"><a href="/company/financial"><i class="fa fa-university"></i> Financieel</a></li>
-                    <li class="{{ $page == 'logo' ? 'nav-active' : '' }}"><a href="/company/logo"><i class="fa fa-file-image-o"></i> Logo & Voorwaarden</a></li>
-                    <li class="{{ $page == 'preferences' ? 'nav-active' : '' }}"><a href="/company/preferences"><i class="fa fa-sliders"></i> Voorkeuren</a></li>
-                    @else
-                    <li class="nav-active"><a href="/company/setupcompany"><i class="fa fa-id-card"></i> Nieuw Bedrijf</a></li>
-                    @endif
-                </ul>
-
+                <div class="white-row" style="padding:10px;">
+                    <ul class="nav nav-list">
+                        @if (Auth::user()->hasOwnCompany())
+                        <li class="{{ $page == 'details' ? 'nav-active' : '' }}"><a href="/company/details"><i class="fa fa-id-card"></i> Bedrijfsgegevens</a></li>
+                        <li class="{{ $page == 'contacts' ? 'nav-active' : '' }}"><a href="/company/contacts"><i class="fa fa-users"></i> Contacten</a></li>
+                        <li class="{{ $page == 'financial' ? 'nav-active' : '' }}"><a href="/company/financial"><i class="fa fa-university"></i> Financieel</a></li>
+                        <li class="{{ $page == 'logo' ? 'nav-active' : '' }}"><a href="/company/logo"><i class="fa fa-file-image-o"></i> Logo & Voorwaarden</a></li>
+                        <li class="{{ $page == 'preferences' ? 'nav-active' : '' }}"><a href="/company/preferences"><i class="fa fa-sliders"></i> Voorkeuren</a></li>
+                        @else
+                        <li class="nav-active"><a href="/company/setupcompany"><i class="fa fa-id-card"></i> Nieuw Bedrijf</a></li>
+                        @endif
+                    </ul>
+                </div>
             </aside>
 
             <div class="col-md-9">

@@ -10,13 +10,21 @@ else
     $cntinv = 0;
 ?>
 
+@push('scripts')
+<script src="/plugins/jquery.number.min.js"></script>
+@endpush
+
 @push('jsinline')
 <script type="text/javascript">
 $(document).ready(function() {
     $("[name='hour_rate']").change(function() {
-        if ($("[name='more_hour_rate']").val() == undefined || $("[name='more_hour_rate']").val() == '0,00')
+        if ($("[name='more_hour_rate']").val() == undefined || $("[name='more_hour_rate']").val() == '0,000') {
             $("[name='more_hour_rate']").val($(this).val());
+        }
     });
+
+    $("[name=hour_rate]").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
+    $("[name=more_hour_rate]").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
 
     $('#btn-load-file').change(function() {
         $('#upload-file').submit();
@@ -41,11 +49,11 @@ $(document).ready(function() {
         <div class="col-md-1"><div class="pull-right">&euro;</div></div>
         @if ($type != 'directwork')
         <div class="col-md-2">
-            <input name="hour_rate" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} type="text" value="{{ old('hour_rate') ? old('hour_rate') : number_format($project->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
+            <input name="hour_rate" {{ $project->project_close ? 'disabled' : ($offer_last && $offer_last->offer_finish ? 'disabled' : '') }} type="text" value="{{ old('hour_rate') ? old('hour_rate') : \BynqIO\Dynq\Services\FormatService::monetary($project->hour_rate) }}" class="form-control form-control-sm-number"/>
         </div>
         @endif
         <div class="col-md-2">
-            <input name="more_hour_rate" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_hour_rate" type="text" value="{{ old('more_hour_rate') ? old('more_hour_rate') : number_format($project->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
+            <input name="more_hour_rate" {{ $project->project_close ? 'disabled' : ($cntinv ? 'disabled' : '') }} id="more_hour_rate" type="text" value="{{ old('more_hour_rate') ? old('more_hour_rate') : \BynqIO\Dynq\Services\FormatService::monetary($project->hour_rate_more) }}" class="form-control form-control-sm-number"/>
         </div>
     </div>
 

@@ -19,6 +19,8 @@ use \Illuminate\Http\Request;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Chapter;
 use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\Detail;
+use BynqIO\Dynq\Models\PartType;
 use BynqIO\Dynq\Models\Activity;
 use BynqIO\Dynq\Models\MoreLabor;
 use BynqIO\Dynq\Models\MoreMaterial;
@@ -212,5 +214,24 @@ class MoreController extends Controller
         }
 
         return response()->json(['success' => 1]);
+    }
+
+    //TODO; placed here fow now
+    public function asyncSummary($projectid)
+    {
+        $project = Project::find($projectid);
+
+        return view('component.more.summary', ['project' => $project, 'section' => 'summary', 'filter' => function($section, $builder) {
+            return $builder->where('detail_id', Detail::where('detail_name','more')->firstOrFail()->id)
+                           ->where('part_type_id', PartType::where('type_name','calculation')->firstOrFail()->id)
+                           ->orderBy('priority');
+        }]);
+    }
+
+    //TODO; placed here fow now
+    public function asyncEndresult($projectid)
+    {
+        $project = Project::find($projectid);
+        return view('component.more.endresult', ['project' => $project, 'section' => 'summary']);
     }
 }

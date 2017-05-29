@@ -60,12 +60,12 @@ $(document).ready(function() {
             <label>Dagen geopend</label>
         </div>
         <div class="col-md-4">
-            <strong data-to="67">67</strong>
-            <label>Uren</label>
+            <strong data-to="67">4/5</strong>
+            <label>Afgerond</label>
         </div>
         <div class="col-md-4">
-            <strong data-to="32">32</strong>
-            <label>Documenten</label>
+            <strong data-to="32">1</strong>
+            <label>Gebruiker</label>
         </div>
     </div>
 </section>

@@ -37,6 +37,10 @@ class Project extends Model
     //     return $this->hasOne('Province');
     // }
 
+    public function quotations() {
+        return $this->hasMany(Offer::class);
+    }
+
     public function chapters() {
         return $this->hasMany(Chapter::class);
     }

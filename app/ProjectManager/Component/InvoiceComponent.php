@@ -15,17 +15,17 @@
 
 namespace BynqIO\Dynq\ProjectManager\Component;
 
-use BynqIO\Dynq\Models\Offer;
+// use BynqIO\Dynq\Models\Offer;
 use BynqIO\Dynq\ProjectManager\Contracts\Component;
 
 /**
- * Class QuotationComponent.
+ * Class InvoiceComponent.
  */
-class QuotationComponent extends BaseComponent implements Component
+class InvoiceComponent extends BaseComponent implements Component
 {
     public function render()
     {
-        $offer = $this->project->quotations()->orderBy('created_at', 'desc')->first();
-        return $this->blockLayout(['name' => 'overview', 'offer_last' => $offer]);
+        // $offer = $this->project->quotations()->orderBy('created_at', 'desc')->first();
+        return $this->blockLayout(['name' => 'overview']);
     }
 }

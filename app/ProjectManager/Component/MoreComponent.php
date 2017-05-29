@@ -69,21 +69,33 @@ class MoreComponent extends BaseComponent implements Component
             'activity.converestimate' => false,
 
             /* Row options */
-            'rows.labor'             => true,
-            'rows.labor.edit'        => true,
-            'rows.timesheet'         => true,
-            'rows.material'          => true,
-            'rows.material.add'      => true,
-            'rows.material.edit'     => true,
-            'rows.material.remove'   => true,
-            'rows.other'             => false,
-            'rows.other.add'         => true,
-            'rows.other.edit'        => true,
-            'rows.other.remove'      => true,
+            'rows.labor'                 => true,
+            'rows.labor.edit'            => true,
+            'rows.labor.edit.rate'       => true,
+            'rows.labor.edit.amount'     => true,
+            'rows.timesheet'             => true,
+            'rows.material'              => true,
+            'rows.material.add'          => true,
+            'rows.material.edit'         => true,
+            'rows.material.edit.name'    => true,
+            'rows.material.edit.unit'    => true,
+            'rows.material.edit.rate'    => true,
+            'rows.material.edit.amount'  => true,
+            'rows.material.remove'       => true,
+            'rows.other'                 => false,
+            'rows.other.add'             => true,
+            'rows.other.edit'            => true,
+            'rows.other.edit.name'       => true,
+            'rows.other.edit.unit'       => true,
+            'rows.other.edit.rate'       => true,
+            'rows.other.edit.amount'     => true,
+            'rows.other.remove'          => true,
 
             /* Tax */
             'tax.update'             => true,
         ];
+
+        $data['original'] = true;
 
         if ($this->project->use_equipment) {
             $data['features']['rows.other'] = true;
@@ -105,8 +117,8 @@ class MoreComponent extends BaseComponent implements Component
         $tabs[] = ['name' => 'calculate', 'title' => 'Minderwerk', 'icon' => 'fa-list'];
 
         $async = [
-            ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', ],//'async' => "/calculation/summary/project-{$this->project->id}"
-            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  ],//'async' => "/calculation/endresult/project-{$this->project->id}"
+            ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', 'async' => "summary/project-{$this->project->id}"],
+            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  'async' => "endresult/project-{$this->project->id}"],
         ];
 
         $tabs[] = $async[0];

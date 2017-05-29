@@ -7,7 +7,7 @@ $(document).ready(function() {
     $('#tab-{{ $tab['name'] }}').click(function(e){
         sessionStorage.toggleTab{{ $component }}{{ Auth::id() }} = '{{ $tab['name'] }}';
         @isset($tab['async'])
-            $('#{{ $tab['name'] }}').load('{{ $tab['async'] }}');
+            $('#{{ $tab['name'] }}').load('/{{ $component }}/{{ $tab['async'] }}');
         @endisset
     });
     @endforeach

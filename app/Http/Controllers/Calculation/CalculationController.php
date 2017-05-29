@@ -276,7 +276,7 @@ class CalculationController extends Controller
 
         return view('component.calculation.summary', ['project' => $project, 'section' => 'summary', 'filter' => function($section, $builder) {
             return $builder->whereNull('detail_id')
-                        ->orderBy('priority');
+                           ->orderBy('priority');
         }]);
     }
 

@@ -1750,6 +1750,7 @@ h4.modal-title {
  **************************************************************** **/
 .nav-align {
     padding-top:41px;
+    padding-left:0;
 }
 aside ul.nav-list {
     padding:0;
@@ -1766,7 +1767,6 @@ aside h4 {
 }
 aside ul.nav-list li {
     padding:0;
-    /*border-bottom:#ccc 1px dotted;*/
 }
 aside ul.nav-list li a {
     padding-left:10px;
@@ -1778,9 +1778,8 @@ aside ul.nav-list li a {
 }
 aside ul.nav-list li.active>a,
 aside ul.nav-list li a:hover {
-    /*padding-left:20px;*/
-    background-color: white;
-    border-radius:5px;
+    background-color: #f5f5f5;
+    border-radius:2px;
 }
 aside ul.nav-list li a i {
     padding-right:6px;
@@ -1788,8 +1787,8 @@ aside ul.nav-list li a i {
     width: 25px;
 }
 aside li.nav-active {
-    background-color: white;
-    border-radius:5px;
+    background-color: #f5f5f5;
+    border-radius:2px;
 }
 
 

@@ -115,6 +115,7 @@ $(document).ready(function() {
     $("body").on("change", "[name=rate]",    save_row);
     $("body").on("change", "[name=amount]",  save_row);
     $("body").on("click",  "[name=delete]",  delete_row);
+    $("body").on("click",  "[name=reset]",   reset_row);
     $("body").on("change", "[name=tax]",     save_tax);
 
     function save_tax() {
@@ -123,7 +124,7 @@ $(document).ready(function() {
             layer:     $(this).attr("data-layer"),
             activity:  $(this).attr("data-id"),
             project:   {{ $project->id }},
-        }, function(data) { if (data.success) { save_callback($tr); } });
+        });
     }
 
     function delete_row() {
@@ -136,6 +137,25 @@ $(document).ready(function() {
             activity:  $row.closest("table").attr("data-id"),
             project:   {{ $project->id }},
         }, function(data) { if (data.success) { $row.remove() } });
+    }
+
+    function reset_row() {
+        $row         = $(this).closest("tr");
+        $uri_reset   = '{{ "/$component/reset" }}';
+
+        $.post($uri_reset, {
+            id:        $row.attr("data-id"),
+            layer:     $row.closest("table").attr("data-layer"),
+            activity:  $row.closest("table").attr("data-id"),
+            project:   {{ $project->id }},
+        }, function(data) { 
+            if (data.success) { 
+                if (data.name) { $row.find("input[name='name']").val(data.name); }
+                if (data.unit) { $row.find("input[name='unit']").val(data.unit); }
+                if (data.rate) { $row.find("input[name='rate']").val(data.rate); }
+                if (data.amount) { $row.find("input[name='amount']").val(data.amount); }
+             }
+        });
     }
 
     function save_row() {
@@ -160,6 +180,10 @@ $(document).ready(function() {
     }
 
     function submit_to_backend($tr, $uri) {
+        if ($tr.closest("table").attr("data-layer") == undefined) {
+            return;
+        }
+
         $.post($uri, {
             id:        $tr.attr("data-id"),
             name:      $tr.find("input[name='name']").val(),
@@ -427,9 +451,11 @@ $(document).ready(function() {
                                         <li><a href="/inline/description?id={{ $activity->id }}" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-file-text-o" style="padding-right:5px">&nbsp;</i>Omschrijving</a></li>
                                         <li><a href="/project/level/favorite?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau opslaan als favoriet?')"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
 
-                                        @ifallowed ($features['activity.timesheet'])
+                                        @if ((isset($features['activity.timesheet']) && $features['activity.timesheet'] === true)
+                                            || (isset($features['activity.convertsubcon']) && $features['activity.convertsubcon'] === true)
+                                            || (isset($features['activity.converestimate']) && $features['activity.converestimate'] === true))
                                         <li class="divider" style="margin:5px 0;"></li>
-                                        @endifallowed
+                                        @endif
 
                                         @ifallowed ($features['activity.timesheet'])
                                         @if ($activity->use_timesheet)
@@ -455,7 +481,8 @@ $(document).ready(function() {
                                         @endif
                                         @endifallowed
 
-                                        @ifallowed ($features['activity.move'])
+                                        @if ((isset($features['activity.move']) && $features['activity.move'] === true)
+                                            || (isset($features['activity.remove']) && $features['activity.remove'] === true))
                                         <li class="divider" style="margin:5px 0;"></li>
                                         @endifallowed
 
@@ -524,23 +551,29 @@ $(document).ready(function() {
                                     <td class="col-md-1">Uur</td>
                                     <td class="col-md-1">
                                         @if ($activity->isSubcontracting())
-                                        <span class="rate"><input name="rate" type="text" value="{{ \BynqIO\Dynq\Services\FormatService::monetary($layer('labor', $activity)::where('activity_id', $activity->id)->first()['rate']) }}" class="form-control-sm-number labor-amount lsave"></span>
+                                        @ifallowed ($features['rows.labor.edit.rate'])
+                                        <span class="rate"><input name="rate" type="text" value="{{ \BynqIO\Dynq\Services\FormatService::monetary($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->rate : 0) }}" class="form-control-sm-number labor-amount lsave"></span>
+                                        @else
+                                        {{ \BynqIO\Dynq\Services\FormatService::monetary($project->hour_rate) }}
+                                        @endifallowed
                                         @else
                                         {{ \BynqIO\Dynq\Services\FormatService::monetary($project->hour_rate) }}
                                         @endif
                                     </td>
                                     <td class="col-md-1">
-                                        @ifallowed ($features['rows.labor.edit'])
-                                        <input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount'], 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" />
+                                        @ifallowed ($features['rows.labor.edit.amount'])
+                                        <input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" />
                                         @else
-                                        {{ \BynqIO\Dynq\Services\FormatService::monetary($layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount']) }}
+                                        {{ \BynqIO\Dynq\Services\FormatService::monetary($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0) }}
                                         @endif
                                     </td>
                                     <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()['rate'] : $project->hour_rate, $layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount'])) }}</span></td>
                                     <td class="col-md-1">&nbsp;</td>
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.labor.reset'])
-                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
+                                        @if ($layer('labor', $activity)::where('activity_id', $activity->id)->first() && $layer('labor', $activity)::where('activity_id', $activity->id)->first()->isOriginal())
+                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo"></button>
+                                        @endif
                                         @endifallowed
                                     </td>
                                 </tr>
@@ -679,21 +712,28 @@ $(document).ready(function() {
                             <tbody>
                                 @foreach ($layer('material', $activity)::where('activity_id', $activity->id)->orderBy('id')->get() as $material)
                                 <tr style="height:33px" data-id="{{ $material->id }}">
-                                    <td class="col-md-5">@ifallowed ($features['rows.material.edit'])<input name="name" maxlength="100" id="name" type="text" value="{{ $material->material_name }}" class="form-control-sm-text newrow" />@else{{ $material->material_name }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit'])<input name="unit" maxlength="10" id="name" type="text" value="{{ $material->unit }}" class="form-control-sm-text" />@else{{ $material->unit }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit'])<input name="rate" id="name" type="text" value="{{ number_format($material->rate, 2,",",".") }}" class="form-control-sm-number" />@else{{ number_format($material->rate, 2,",",".") }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit'])<input name="amount" id="name" type="text" value="{{ number_format($material->amount, 2,",",".") }}" class="form-control-sm-number" />@else{{ number_format($material->amount, 2,",",".") }}@endifallowed</td>
+                                    <td class="col-md-5">@ifallowed ($features['rows.material.edit.name'])  <input name="name" maxlength="100" type="text" value="{{ $material->getName($original) }}"                             class="form-control-sm-text newrow" />@else{{ $material->getName($original) }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit.unit'])  <input name="unit" maxlength="10"  type="text" value="{{ $material->getUnit($original) }}"                             class="form-control-sm-text" />       @else{{ $material->getUnit($original) }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit.rate'])  <input name="rate"                 type="text" value="{{ number_format($material->getRate($original), 2,",",".") }}"   class="form-control-sm-number" />     @else{{ number_format($material->getRate($original), 2,",",".") }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit.amount'])<input name="amount"               type="text" value="{{ number_format($material->getAmount($original), 2,",",".") }}" class="form-control-sm-number" />     @else{{ number_format($material->getAmount($original), 2,",",".") }}@endifallowed</td>
                                     <td class="col-md-1"><span class="total-ex-tax">{{-- '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($material->rate * $material->amount) --}}</span></td>
                                     <td class="col-md-1"><span class="total-incl-tax">{{-- '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($material->rate * $material->amount * ((100+$profit_mat)/100)) --}}</span></td>
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.material.edit'])
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+
                                         @ifallowed ($features['rows.material.remove'])
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
                                         @endifallowed
+
                                         @ifallowed ($features['rows.material.reset'])
+                                        @if ($material->isOriginal())
                                         <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
+                                        @else
+                                        <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
                                         @endifallowed
+                                        @endif
+
                                         @endifallowed
                                     </td>
                                 </tr>
@@ -775,21 +815,28 @@ $(document).ready(function() {
                             <tbody>
                                 @foreach ($layer('other', $activity)::where('activity_id', $activity->id)->orderBy('id')->get() as $equipment)
                                 <tr style="height:33px" data-id="{{ $equipment->id }}">
-                                    <td class="col-md-5">@ifallowed ($features['rows.other.edit'])<input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->equipment_name }}" class="form-control-sm-text esave newrow" />@else{{ $equipment->equipment_name }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit'])<input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->unit }}" class="form-control-sm-text esave" />@else{{ $equipment->unit }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit'])<input name="rate" id="name" type="text" value="{{ number_format($equipment->rate, 2,",",".") }}" class="form-control-sm-number esave" />@else{{ number_format($equipment->rate, 2,",",".") }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit'])<input name="amount" id="name" type="text" value="{{ number_format($equipment->amount, 2,",",".") }}" class="form-control-sm-number esave" />@else{{ number_format($equipment->amount, 2,",",".") }}@endifallowed</td>
+                                    <td class="col-md-5">@ifallowed ($features['rows.other.edit.name'])<input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->getName($original) }}" class="form-control-sm-text esave newrow" />@else{{ $equipment->getName($original) }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit.unit'])<input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->getUnit($original) }}" class="form-control-sm-text esave" />@else{{ $equipment->getUnit($original) }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit.rate'])<input name="rate" id="name" type="text" value="{{ number_format($equipment->getRate($original), 2,",",".") }}" class="form-control-sm-number esave" />@else{{ number_format($equipment->getRate($original), 2,",",".") }}@endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit.amount'])<input name="amount" id="name" type="text" value="{{ number_format($equipment->getAmount($original), 2,",",".") }}" class="form-control-sm-number esave" />@else{{ number_format($equipment->getAmount($original), 2,",",".") }}@endifallowed</td>
                                     <td class="col-md-1"><span class="total-ex-tax">{{-- '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") --}}</span></td>
                                     <td class="col-md-1"><span class="total-incl-tax">{{-- '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit_equip)/100), 2,",",".") --}}</span></td>
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.other.edit'])
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+
                                         @ifallowed ($features['rows.other.remove'])
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
                                         @endifallowed
+
                                         @ifallowed ($features['rows.other.reset'])
-                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo btn-x"></button>
+                                        @if ($equipment->isOriginal())
+                                        <button name="reset" class="btn btn-xs btn-warning fa fa-undo"></button>
+                                        @else
+                                        <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
+                                        @endif
                                         @endifallowed
+
                                         @endifallowed
                                     </td>
                                 </tr>

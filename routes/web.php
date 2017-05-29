@@ -206,7 +206,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
     });
 
     /* Module Group Quotations */
-    Route::group([], function() {
+    Route::group(['namespace' => 'Quotation'], function() {
         // Route::get('offer/project-{project_id}',                  'Calculation\CalcController@getOffer');;
         // Route::post('offer/project-{project_id}',                 'OfferController@doNewOffer');
         // Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
@@ -216,27 +216,27 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         // Route::post('offer/close',                                'OfferController@doOfferClose');
         // Route::post('offer/sendmail',                             'OfferController@doSendOffer');
         // Route::post('offer/sendpost',                             'OfferController@doSendPostOffer');
-        
-        Route::post('quotation/new',                              'Quotation\NewController');
-        Route::post('quotation/confirm',                          'Quotation\ConfirmController');
+
+        Route::post('quotation/new',                              'NewController');
+        Route::post('quotation/confirm',                          'ConfirmController');
     });
 
-    /* Module Group Calculation */ //TODO: layer operations
+    /* Module Group Calculation */
     Route::group(['namespace' => 'Calculation'], function() {
 
         /* Routes by FavoriteController */
-        Route::post('favorite/newmaterial',                       'FavoriteController@doNewMaterial');
-        Route::post('favorite/newequipment',                      'FavoriteController@doNewEquipment');
-        Route::post('favorite/newlabor',                          'FavoriteController@doNewLabor');
-        Route::post('favorite/deletematerial',                    'FavoriteController@doDeleteMaterial');
-        Route::post('favorite/deleteequipment',                   'FavoriteController@doDeleteEquipment');
-        Route::post('favorite/deletelabor',                       'FavoriteController@doDeleteLabor');
-        Route::post('favorite/updatematerial',                    'FavoriteController@doUpdateMaterial');
-        Route::post('favorite/updateequipment',                   'FavoriteController@doUpdateEquipment');
-        Route::post('favorite/updatelabor',                       'FavoriteController@doUpdateLabor');
-        Route::post('favorite/deleteactivity',                    'FavoriteController@doDeleteActivity');
-        Route::post('favorite/noteactivity',                      'FavoriteController@doUpdateNote');
-        Route::post('favorite/rename_activity',                   'FavoriteController@doRenameActivity');
+        // Route::post('favorite/newmaterial',                       'FavoriteController@doNewMaterial');
+        // Route::post('favorite/newequipment',                      'FavoriteController@doNewEquipment');
+        // Route::post('favorite/newlabor',                          'FavoriteController@doNewLabor');
+        // Route::post('favorite/deletematerial',                    'FavoriteController@doDeleteMaterial');
+        // Route::post('favorite/deleteequipment',                   'FavoriteController@doDeleteEquipment');
+        // Route::post('favorite/deletelabor',                       'FavoriteController@doDeleteLabor');
+        // Route::post('favorite/updatematerial',                    'FavoriteController@doUpdateMaterial');
+        // Route::post('favorite/updateequipment',                   'FavoriteController@doUpdateEquipment');
+        // Route::post('favorite/updatelabor',                       'FavoriteController@doUpdateLabor');
+        // Route::post('favorite/deleteactivity',                    'FavoriteController@doDeleteActivity');
+        // Route::post('favorite/noteactivity',                      'FavoriteController@doUpdateNote');
+        // Route::post('favorite/rename_activity',                   'FavoriteController@doRenameActivity');
 
         /* Calculation actions */
         Route::post('calculation/new',                            'CalculationController@new');
@@ -246,20 +246,32 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('calculation/summary/project-{project_id}',    'CalculationController@asyncSummary');
         Route::get('calculation/endresult/project-{project_id}',  'CalculationController@asyncEndresult');
 
+
         /* Estimate actions by estimate */
-        // Route::post('estimate/new',                               'CalculationController@new');
-        // Route::post('estimate/update',                            'CalculationController@update');
-        // Route::post('estimate/delete',                            'CalculationController@delete');
+        Route::post('estimate/new',                               'EstimateController@new');
+        Route::post('estimate/update',                            'EstimateController@update');
+        Route::post('estimate/delete',                            'EstimateController@delete');
+        Route::post('estimate/reset',                             'EstimateController@reset');
+
+        Route::get('estimate/summary/project-{project_id}',       'EstimateController@asyncSummary');
+        Route::get('estimate/endresult/project-{project_id}',     'EstimateController@asyncEndresult');
 
         /* Less actions */
-        // Route::post('less/new',                                   'LessController@new');
-        // Route::post('less/update',                                'LessController@update');
-        // Route::post('less/delete',                                'LessController@delete');
+        Route::post('less/update',                                'LessController@update');
+        Route::post('less/reset',                                 'LessController@reset');
+
+        Route::get('less/summary/project-{project_id}',           'LessController@asyncSummary');
+        Route::get('less/endresult/project-{project_id}',         'LessController@asyncEndresult');
+
 
         /* More actions */
         Route::post('more/new',                                   'MoreController@new');
         Route::post('more/update',                                'MoreController@update');
         Route::post('more/delete',                                'MoreController@delete');
+
+        Route::get('more/summary/project-{project_id}',           'MoreController@asyncSummary');
+        Route::get('more/endresult/project-{project_id}',         'MoreController@asyncEndresult');
+
         // Route::post('more/newmaterial',                          'MoreController@doNewMaterial');
         // Route::post('more/newequipment',                         'MoreController@doNewEquipment');
         // Route::post('more/newlabor',                             'MoreController@doNewLabor');
@@ -284,13 +296,14 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         // Route::post('estimate/resetlabor',                        'EstimController@doResetEstimateLabor');
         // Route::post('estimate/deletelabor',                       'EstimController@doDeleteEstimateLabor');
 
-        Route::post('calculation/summary',                        'CalculationController@summary');
-        Route::post('calculation/endresult',                      'CalculationController@endresult');
+        // Route::post('calculation/summary',                        'CalculationController@summary');
+        // Route::post('calculation/endresult',                      'CalculationController@endresult');
+
         // Route::post('calculation/calc/newequipment',              'CalcController@doNewCalculationEquipment');
         // Route::post('calculation/calc/newlabor',                  'CalcController@doNewCalculationLabor');
         // Route::post('calculation/calc/deletematerial',            'CalcController@doDeleteCalculationMaterial');
         // Route::post('calculation/calc/deleteequipment',           'CalcController@doDeleteCalculationEquipment');
-        Route::post('calculation/calc/deletelabor',               'CalcController@doDeleteCalculationLabor');
+        // Route::post('calculation/calc/deletelabor',               'CalcController@doDeleteCalculationLabor');
         // Route::post('calculation/calc/updateequipment',           'CalcController@doUpdateCalculationEquipment');
         // Route::post('calculation/calc/updatelabor',               'CalcController@doUpdateCalculationLabor');
         Route::post('calculation/calc/savefav',                   'CalcController@doNewCalculationFavorite');
@@ -307,8 +320,8 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
 
         Route::get('blancrow/project-{project_id}',               'BlancController@getBlanc');
         Route::get('estimate/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'CalcController@getEstimateWithFavorite');
-        Route::get('estimate/summary/project-{project_id}',       'CalcController@getEstimateSummary');
-        Route::get('estimate/endresult/project-{project_id}',     'CalcController@getEstimateEndresult');
+        // Route::get('estimate/summary/project-{project_id}',       'CalcController@getEstimateSummary');
+        // Route::get('estimate/endresult/project-{project_id}',     'CalcController@getEstimateEndresult');
 
         /* Less pages */
         // Route::get('less/summary/project-{project_id}',           'CalcController@getLessSummary');
@@ -322,8 +335,8 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
 
         /* More pages */
         Route::get('more/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'MoreController@getMoreWithFavorite');
-        Route::get('more/summary/project-{project_id}', 'CalcController@getMoreSummary');
-        Route::get('more/endresult/project-{project_id}', 'CalcController@getMoreEndresult');
+        // Route::get('more/summary/project-{project_id}', 'CalcController@getMoreSummary');
+        // Route::get('more/endresult/project-{project_id}', 'CalcController@getMoreEndresult');
 
         /* More pages */
         // Route::post('more/newmaterial',                          'MoreController@doNewMaterial');

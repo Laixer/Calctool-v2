@@ -15,283 +15,205 @@
 
 namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
-use Illuminate\Http\Request;
-
-use BynqIO\Dynq\Models\Part;
+use Exception;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Chapter;
+use BynqIO\Dynq\Models\Part;
+use BynqIO\Dynq\Models\PartType;
 use BynqIO\Dynq\Models\Activity;
-use BynqIO\Dynq\Models\CalculationEquipment;
 use BynqIO\Dynq\Models\CalculationLabor;
 use BynqIO\Dynq\Models\CalculationMaterial;
-use BynqIO\Dynq\Calculus\LessRegister;
+use BynqIO\Dynq\Models\CalculationEquipment;
 use BynqIO\Dynq\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
-class LessController extends Controller {
-
+//TODO: update $proj->update_less = date('Y-m-d');
+class LessController extends Controller
+{
     /*
     |--------------------------------------------------------------------------
-    | Default Home Controller
+    | Default Home Controlluse BynqIO\Dynq\Models\Invoice
     |--------------------------------------------------------------------------
     |
     | You may wish to use controllers instead of, or in addition to, Closure
     | based routes. That's great! Here is an example controller method to
     | get you started. To route to this controller, just add the route:
     |
+    |	Route::get('/', 'HomeController@showWelcome');
+    |
     */
 
-    public function updateLessStatus($id)
+    protected function updateLaborRow($activity, Array $parameters)
     {
-        $proj = Project::find($id);
-        if (!$proj || !$proj->isOwner())
-            return;
-        if (!$proj->start_less)
-            $proj->start_less = date('Y-m-d');
-        $proj->update_less = date('Y-m-d');
-        $proj->save();
+        $chapter = Chapter::findOrFail($activity->chapter_id);
+        $project = Project::findOrFail($chapter->project_id);
+
+        $row = CalculationLabor::findOrFail($parameters['id']);
+        if ($parameters['amount'] > $row->amount) {
+            throw new Exception('not allowed');
+        }
+
+        $row->less_amount  = $parameters['amount'];
+        $row->isless       = true;
+        $row->save();
     }
 
-    public function doUpdateMaterial(Request $request)
+    protected function updateMaterialRow($activity, Array $parameters)
     {
-        $this->validate($request, [
-            'id' => array('integer','min:0'),
-            'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'project' => array('required','integer'),
-        ]);
-
-        $material = CalculationMaterial::find($request->get('id'));
-        if (!$material)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($material->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
+        $row = CalculationMaterial::findOrFail($parameters['id']);
+        if ($parameters['rate'] > $row->rate) {
+            throw new Exception('not allowed');
         }
 
-        $rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
-        $amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
-
-        if ($rate > $material->rate)
-            return response()->json(['success' => 0, 'message' => 'rate too large', 'rate' => $material->rate, 'amount' => $material->amount]);
-
-        $material->less_rate = $rate;
-        if ($amount > $material->amount)
-            return response()->json(['success' => 0, 'message' => 'amount too large', 'rate' => $material->rate, 'amount' => $material->amount]);
-
-        $material->less_amount = $amount;
-        $material->isless = True;
-
-        $material->save();
-
-        $this->updateLessStatus($request->get('project'));
-
-        $project = Project::find($chapter->project_id);
-        if (Part::find($activity->part_id)->part_name=='contracting') {
-            $profit = $project->profit_calc_contr_mat;
-        } else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-            $profit = $project->profit_calc_subcontr_mat;
+        if ($parameters['amount'] > $row->amount) {
+            throw new Exception('not allowed');
         }
 
-        if ($material->isless) {
-            $total = ($material->rate * $material->amount) * ((100+$profit)/100);
-            $less_total = ($material->less_rate * $material->less_amount) * ((100+$profit)/100);
-            if($less_total-$total <0)
-                $total_less = "<font color=red>&euro; ".number_format($less_total-$total, 2, ",",".")."</font>";
-            else
-                $total_less = '&euro; '.number_format($less_total-$total, 2, ",",".");
-        } else {
-            $total_less = '&euro; 0,00';
-        }
-
-        return response()->json(['success' => 1, 'less_rate' => number_format($material->less_rate, 2,",","."), 'less_amount' => number_format($material->less_amount, 2,",","."), 'less_total' => $total_less]);
+        $row->less_rate          = $parameters['rate'];
+        $row->less_amount        = $parameters['amount'];
+        $row->isless             = true;
+        $row->save();
     }
 
-    public function doUpdateEquipment(Request $request)
+    protected function updateOtherRow($activity, Array $parameters)
+    {
+        $row = CalculationEquipment::findOrFail($parameters['id']);
+        if ($parameters['rate'] > $row->rate) {
+            throw new Exception('not allowed');
+        }
+
+        if ($parameters['amount'] > $row->amount) {
+            throw new Exception('not allowed');
+        }
+
+        $row->less_rate           = $parameters['rate'];
+        $row->less_amount         = $parameters['amount'];
+        $row->isless              = true;
+        $row->save();
+    }
+
+    public function update(Request $request)
     {
         $this->validate($request, [
-            'id' => array('integer','min:0'),
-            'rate' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'project' => array('required','integer'),
+            'id'        => ['required', 'integer', 'min:0'],
+            'rate'      => ['required_unless:layer,labor', 'numeric'],
+            'amount'    => ['required', 'numeric'],
+            'activity'  => ['required', 'integer', 'min:0'],
+            'layer'     => ['required'],
         ]);
 
-        $equipment = CalculationEquipment::find($request->get('id'));
-        if (!$equipment)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($equipment->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
+        $activity = Activity::findOrFail($request->get('activity'));
+
+        switch ($request->get('layer')) {
+            case 'labor':
+                $this->updateLaborRow($activity, $request->all());
+                break;
+            case 'material':
+                $this->updateMaterialRow($activity, $request->all());
+                break;
+            case 'other':
+                $this->updateOtherRow($activity, $request->all());
+                break;
         }
 
-        $rate = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
-        $amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
-
-        if ($rate > $equipment->rate)
-            return response()->json(['success' => 0, 'message' => 'rate too large', 'rate' => $equipment->rate, 'amount' => $equipment->amount]);
-
-        $equipment->less_rate = $rate;
-        if ($amount > $equipment->amount)
-            return response()->json(['success' => 0, 'message' => 'amount too large', 'rate' => $equipment->rate, 'amount' => $equipment->amount]);
-
-        $equipment->less_amount = $amount;
-        $equipment->isless = True;
-
-        $equipment->save();
-
-        $this->updateLessStatus($request->get('project'));
-
-        $project = Project::find($chapter->project_id);
-        if (Part::find($activity->part_id)->part_name=='contracting') {
-            $profit = $project->profit_calc_contr_equip;
-        } else if (Part::find($activity->part_id)->part_name=='subcontracting') {
-            $profit = $project->profit_calc_subcontr_equip;
-        }
-
-        if ($equipment->isless) {
-            $total = ($equipment->rate * $equipment->amount) * ((100+$profit)/100);
-            $less_total = ($equipment->less_rate * $equipment->less_amount) * ((100+$profit)/100);
-            if($less_total-$total <0)
-                $total_less = "<font color=red>&euro; ".number_format($less_total-$total, 2, ",",".")."</font>";
-            else
-                $total_less = '&euro; '.number_format($less_total-$total, 2, ",",".");
-        } else {
-            $total_less = '&euro; 0,00';
-        }
-
-        return response()->json(['success' => 1, 'less_rate' => number_format($equipment->less_rate, 2,",","."), 'less_amount' => number_format($equipment->less_amount, 2,",","."), 'less_total' => $total_less]);
+        return response()->json(['success' => 1]);
     }
 
-    public function doUpdateLabor(Request $request)
+    protected function resetLaborRow(Array $parameters)
+    {
+        $row = CalculationLabor::findOrFail($parameters['id']);
+        if (!$row->isless) {
+            throw new Exception('not allowed');
+        }
+
+        $row->less_amount  = null;
+        $row->isless       = false;
+        $row->save();
+
+        return $row;
+    }
+
+    protected function resetMaterialRow(Array $parameters)
+    {
+        $row = CalculationMaterial::findOrFail($parameters['id']);
+        if (!$row->isless) {
+            throw new Exception('not allowed');
+        }
+
+        $row->less_rate    = null;
+        $row->less_amount  = null;
+        $row->isless       = false;
+        $row->save();
+
+        return $row;
+    }
+
+    protected function resetOtherRow(Array $parameters)
+    {
+        $row = CalculationEquipment::findOrFail($parameters['id']);
+        if (!$row->isless) {
+            throw new Exception('not allowed');
+        }
+
+        $row->less_rate    = null;
+        $row->less_amount  = null;
+        $row->isless       = false;
+        $row->save();
+
+        return $row;
+    }
+
+    public function reset(Request $request)
     {
         $this->validate($request, [
-            'id' => array('integer','min:0'),
-            'amount' => array('regex:/^([0-9]+.?)?[0-9]+[.,]?[0-9]*$/'),
-            'project' => array('required','integer'),
+            'id'        => ['required', 'integer', 'min:0'],
+            'activity'  => ['required', 'integer', 'min:0'],
+            'layer'     => ['required'],
         ]);
 
-        $labor = CalculationLabor::find($request->get('id'));
-        if (!$labor)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($labor->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
+        $original = [];
+
+        try {
+            switch ($request->get('layer')) {
+                case 'labor':
+                    $object = $this->resetLaborRow($request->all());
+                    $original['rate'] = $object->rate;
+                    $original['amount'] = $object->amount;
+                    break;
+                case 'material':
+                    $object = $this->resetMaterialRow($request->all());
+                    $original['rate'] = $object->rate;
+                    $original['amount'] = $object->amount;
+                    break;
+                case 'other':
+                    $object = $this->resetOtherRow($request->all());
+                    $original['rate'] = $object->rate;
+                    $original['amount'] = $object->amount;
+                    break;
+            }
+        } catch (Exception $e) {
             return response()->json(['success' => 0]);
         }
 
-        $amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
-        if ($amount > $labor->amount)
-            return response()->json(['success' => 0, 'message' => 'amount too large', 'amount' => $labor->amount]);
-
-        $labor->less_amount = $amount;
-        $labor->isless = True;
-
-        $labor->save();
-
-        $this->updateLessStatus($request->get('project'));
-
-        $total_less = LessRegister::lessLaborDeltaTotal($labor, $activity, Project::find($request->get('project')));
-        if($total_less <0) {
-            $total_less = "<font color=red>&euro; ".number_format($total_less, 2, ",",".")."</font>";
-        } else {
-            $total_less = '&euro; '.number_format($total_less, 2, ",",".");
-        }
-
-        return response()->json(['success' => 1, 'less_amount' => number_format($labor->less_amount, 2,",","."), 'less_total' => $total_less]);
+        return response()->json(array_merge(['success' => 1], $original));
     }
 
-    public function doResetMaterial(Request $request)
+    //TODO; placed here fow now
+    public function asyncSummary($projectid)
     {
-        $this->validate($request, [
-            'id' => array('integer','min:0'),
-            'project' => array('required','integer'),
-        ]);
+        $project = Project::find($projectid);
 
-        $material = CalculationMaterial::find($request->get('id'));
-        if (!$material)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($material->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $material->less_rate = NULL;
-        $material->less_amount = NULL;
-        $material->isless = False;
-
-        $material->save();
-
-        $this->updateLessStatus($request->get('project'));
-
-        return response()->json(['success' => 1, 'rate' => number_format($material->rate, 2,",","."), 'amount' => number_format($material->amount, 2,",",".")]);
+        return view('component.less.summary', ['project' => $project, 'section' => 'summary', 'filter' => function($section, $builder) {
+            return $builder->whereNull('detail_id')
+                           ->where('part_type_id', PartType::where('type_name','calculation')->firstOrFail()->id)
+                           ->orderBy('priority');
+        }]);
     }
 
-    public function doResetEquipment(Request $request)
+    //TODO; placed here fow now
+    public function asyncEndresult($projectid)
     {
-        $this->validate($request, [
-            'id' => array('integer','min:0'),
-            'project' => array('required','integer'),
-        ]);
-
-        $equipment = CalculationEquipment::find($request->get('id'));
-        if (!$equipment)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($equipment->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $equipment->less_rate = NULL;
-        $equipment->less_amount = NULL;
-        $equipment->isless = False;
-
-        $equipment->save();
-
-        $this->updateLessStatus($request->get('project'));
-
-        return response()->json(['success' => 1, 'rate' => number_format($equipment->rate, 2,",","."), 'amount' => number_format($equipment->amount, 2,",",".")]);
+        $project = Project::find($projectid);
+        return view('component.less.endresult', ['project' => $project, 'section' => 'summary']);
     }
-
-    public function doResetLabor(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('integer','min:0'),
-            'project' => array('required','integer'),
-        ]);
-
-        $labor = CalculationLabor::find($request->get('id'));
-        if (!$labor)
-            return response()->json(['success' => 0]);
-        $activity = Activity::find($labor->activity_id);
-        if (!$activity)
-            return response()->json(['success' => 0]);
-        $chapter = Chapter::find($activity->chapter_id);
-        if (!$chapter || !Project::find($chapter->project_id)->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-
-        $labor->less_amount = NULL;
-        $labor->isless = False;
-
-        $labor->save();
-
-        $this->updateLessStatus($request->get('project'));
-
-        return response()->json(['success' => 1, 'amount' => number_format($labor->amount, 2,",",".")]);
-
-    }
-
 }

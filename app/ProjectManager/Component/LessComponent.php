@@ -43,6 +43,17 @@ class LessComponent extends BaseComponent implements Component
             return $this->{$section . 'Filter'}($object);
         };
 
+        $data['layer'] = function($layer, $activity = null) {
+            switch ($layer) {
+                case 'labor':
+                    return 'BynqIO\Dynq\Models\CalculationLabor';
+                case 'material':
+                    return 'BynqIO\Dynq\Models\CalculationMaterial';
+                case 'other':
+                    return 'BynqIO\Dynq\Models\CalculationEquipment';
+            }
+        };
+
         $data['features'] = [
             'level.new' => false,
 
@@ -57,16 +68,25 @@ class LessComponent extends BaseComponent implements Component
             'chapter.changename'     => false,
             'chapter.remove'         => false,
 
+            'rows.labor.edit.amount'      => true,
             'rows.labor.reset'     => true,
             'rows.labor'           => true,
             'rows.timesheet'       => true,
+            'rows.material.edit'   => true,
+            'rows.material.edit.rate'   => true,
+            'rows.material.edit.amount'   => true,
             'rows.material.reset'  => true,
             'rows.material'        => true,
+            'rows.other.edit'      => true,
+            'rows.other.edit.rate'      => true,
+            'rows.other.edit.amount'      => true,
             'rows.other.reset'     => true,
             'rows.other'           => false,
 
             'tax.update' => false,
         ];
+
+        $data['original'] = false;
 
         if ($this->project->use_equipment) {
             $data['features']['rows.other'] = true;
@@ -88,8 +108,8 @@ class LessComponent extends BaseComponent implements Component
         $tabs[] = ['name' => 'calculate', 'title' => 'Minderwerk', 'icon' => 'fa-list'];
 
         $async = [
-            ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', ],//'async' => "/calculation/summary/project-{$this->project->id}"
-            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  ],//'async' => "/calculation/endresult/project-{$this->project->id}"
+            ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', 'async' => "summary/project-{$this->project->id}"],
+            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  'async' => "endresult/project-{$this->project->id}"],
         ];
 
         $tabs[] = $async[0];
