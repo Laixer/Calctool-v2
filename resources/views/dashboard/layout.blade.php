@@ -4,7 +4,24 @@
 
 @section('title', __('core.dashboard'))
 
+@push('jsinline')
+<script type="text/javascript">
+$(document).ready(function() {
+    /* Remove contents from modal on close */
+    $(document).on('hidden.bs.modal', function (e) {
+        $(e.target).removeData('bs.modal');
+    });
+});
+</script>
+@endpush
+
 @section('content')
+<div class="modal fade" id="asyncModal" tabindex="-1" role="dialog" aria-labelledby="asyncModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
 <div id="wrapper">
 
     <div id="shop">
@@ -49,7 +66,8 @@
                 <div class="white-row" >
 
                     <div class="pull-right">
-                        <a href="/project/new" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> @lang('core.new') {{ trans_choice('core.project', 1) }}</a>
+                        <!--<a href="/project/new" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> @lang('core.new') {{ trans_choice('core.project', 1) }}</a>-->
+                        <a href="/inline/projecttypes?package=dashboard" data-toggle="modal" data-target="#asyncModal" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> @lang('core.new') {{ trans_choice('core.project', 1) }}</a>
 
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-ellipsis-h" aria-hidden="true"></span></button>

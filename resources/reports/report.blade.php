@@ -31,9 +31,11 @@
     @endisset
 
     <header class="clearfix">
+        @isset($logo)
         <div id="logo">
             <img src="{{ $logo }}" />
         </div>
+        @endisset
         <div id="company">
             <h2 class="name">{{ $company }}</h2>
             <div>{{ $address }}</div>

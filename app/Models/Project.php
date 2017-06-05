@@ -53,7 +53,7 @@ class Project extends Model
      */
     public function slug()
     {
-        return strtolower(str_slug($this->project_name));
+        return strtolower(str_slug(substr($this->project_name, 0, 25)));
     }
 
     public function status()

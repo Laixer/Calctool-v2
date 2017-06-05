@@ -16,13 +16,6 @@ if (Input::get('allevents') == 1) {
     $allevents = true;
 }
 ?>
-<script type="text/javascript">
-$(document).ready(function() {
-    setInterval(function() {
-        location.reload();
-    }, 30000);
-})
-</script>
 <div id="wrapper">
 
     <section class="container">

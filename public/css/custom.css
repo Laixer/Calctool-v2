@@ -393,7 +393,17 @@ input[readonly] {
   cursor: text !important;
 }
 
-.yt-vid, .yt-vid:hover, .yt-vid:focus, .yt-vid:active, .yt-vid:visited {
-    color: #e52d27;
-    text-decoration: none;
+.bootstrap-switch {
+    border-radius: 2px;
+    border: #e6e6e6 2px solid;
+}
+
+.bootstrap-switch .bootstrap-switch-handle-on {
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+}
+
+.bootstrap-switch .bootstrap-switch-handle-off {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
 }

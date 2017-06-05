@@ -36,6 +36,9 @@ if (!$user){ ?>
 <?php }else{ ?>
 <script type="text/javascript">
 $(document).ready(function() {
+    $('#tab-overview').click(function(e){
+        sessionStorage.toggleAdminEditUser{{Auth::id()}} = 'overview';
+    });
     $('#tab-userdata').click(function(e){
         sessionStorage.toggleAdminEditUser{{Auth::id()}} = 'userdata';
     });
@@ -50,9 +53,9 @@ $(document).ready(function() {
         $('#tab-'+$toggleOpenTab).addClass('active');
         $('#'+$toggleOpenTab).addClass('active');
     } else {
-        sessionStorage.toggleAdminEditUser{{Auth::id()}} = 'userdata';
-        $('#tab-userdata').addClass('active');
-        $('#userdata').addClass('active');
+        sessionStorage.toggleAdminEditUser{{Auth::id()}} = 'overview';
+        $('#tab-overview').addClass('active');
+        $('#overview').addClass('active');
     }
     function prefixURL(field) {
         var cur_val = $(field).val();
@@ -163,6 +166,9 @@ $(document).ready(function() {
                     <div class="tabs nomargin-top">
 
                         <ul class="nav nav-tabs">
+                            <li id="tab-overview">
+                                <a href="#overview" data-toggle="tab">Overzicht</a>
+                            </li>
                             <li id="tab-userdata">
                                 <a href="#userdata" data-toggle="tab">Gebruikersgegevens</a>
                             </li>
@@ -174,7 +180,99 @@ $(document).ready(function() {
                             </li>
                         </ul>
 
+
                         <div class="tab-content">
+                            <div id="overview" class="tab-pane">
+                                <section class="paddings">
+                                    <div class="row text-center countTo">
+                                        <div class="col-md-3">
+                                            <strong data-to="1244">{{ $user->projects()->whereNull('project_close')->count() . '/' . $user->projects()->count() }}</strong>
+                                            <label>Projecten</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <strong data-to="67">{{ $user->relations()->count() }}</strong>
+                                            <label>Relaties</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <strong data-to="67">{{ $user->relations()->count() }}</strong>
+                                            <label>Contacten</label>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <strong data-to="32">{{ $user->login_count }}</strong>
+                                            <label>Logins</label>
+                                        </div>
+                                    </div>
+                                </section>
+
+                                <div style="overflow:overlay;">
+                                    <div class="col-md-6">
+
+                                        <div class="row">
+                                            <div class="col-md-12"><h3>Details</h3></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">Activiteit</div>
+                                            <div class="col-md-6">{{ $user->currentStatus() }}</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">Waardering</div>
+                                            <div class="col-md-6">
+                                                @for ($i = 0; $i < ($user->login_count/10); $i++)
+                                                <i class="fa fa-star" aria-hidden="true"></i>
+                                                @endfor
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-12"><h3>Projectstadium</h3></div>
+                                        </div>
+
+                                        @if (0)
+                                        <div class="row">
+                                            <div class="col-md-4">Start uitvoering <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je met uitvoering bent begonnen" href="#"><i class="fa fa-info-circle"></i></a></div>
+                                            <div class="col-md-4"><?php if ($project->project_close) { echo $project->work_execution ? date('d-m-Y', strtotime($project->work_execution)) : ''; }else{ if ($project->work_execution){ echo date('d-m-Y', strtotime($project->work_execution)); }else{ ?><a href="#" id="wordexec">Bewerk</a><?php } } ?></div>
+                                            <div class="col-md-4"></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">Opleverdatum <a data-toggle="tooltip" data-placement="bottom" data-original-title="Vul hier de datum in dat je het moet/wilt/verwacht opleveren" href="#"><i class="fa fa-info-circle"></i></a></div>
+                                            <div class="col-md-4"><?php if ($project->project_close) { echo $project->work_completion ? date('d-m-Y', strtotime($project->work_completion)) : ''; }else{ if ($project->work_completion){ echo date('d-m-Y', strtotime($project->work_completion)); }else{ ?><a href="#" id="wordcompl">Bewerk</a><?php } } ?></div>
+                                            <div class="col-md-4"><i class="fa fa-check" aria-hidden="true"></i></div>
+                                        </div>
+                                        @endif
+
+                                        @if (0)
+                                        <div class="row">
+                                            <div class="col-md-6"><i class="fa fa-chevron-right" aria-hidden="true"></i> Stelposten Stellen</div>
+                                            <div class="col-md-6"><i class="fa fa-check" aria-hidden="true"></i> Afgerond op {{ $carbon::now()->toFormattedDateString() }}<i>{{ $project->start_estimate ? date('d-m-Y', strtotime($project->start_estimate)) : '' }}</i></div>
+                                        </div>
+                                        @endif
+
+                                        <div class="row">
+                                            <div class="col-md-6"><i class="fa fa-chevron-right" aria-hidden="true"></i> Offerte</div>
+                                            <div class="col-md-6"><?php //if ($offer_last) { echo $offer_last->created_at->toFormattedDateString(); } else { echo '-'; } ?></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6"><i class="fa fa-chevron-right" aria-hidden="true"></i> Opdracht</div>
+                                            <div class="col-md-6">{{-- $offer_last && $offer_last->offer_finish ? date('d-m-Y', strtotime($offer_last->offer_finish)) : '-' --}}</div>
+                                        </div>
+
+                                        @if (0)
+                                        <div class="row">
+                                            <div class="col-md-6"><i class="fa fa-chevron-right" aria-hidden="true"></i> Meerwerk</div>
+                                            <div class="col-md-6">{{ $project->start_more ? date('d-m-Y', strtotime($project->start_more)) : '-' }}</div>
+                                        </div>
+                                        @endif
+                                        @if (0)
+                                        <div class="row">
+                                            <div class="col-md-6"><i class="fa fa-chevron-right" aria-hidden="true"></i> Minderwerk</div>
+                                            <div class="col-md-6">{{ $project->start_less ? date('d-m-Y', strtotime($project->start_less)) : '-' }}</div>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                             <div id="userdata" class="tab-pane">
 
                                 <form method="POST" action="" accept-charset="UTF-8">

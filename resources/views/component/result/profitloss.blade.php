@@ -13,18 +13,18 @@
     <tbody>
         <tr>
             <td class="col-md-2"><strong>Aanneming</strong></td>
-            <td class="col-md-2">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($result::totalContracting($project)) }}</td>
-            <td class="col-md-3">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($result::totalTimesheet($project)) }}</td>
-            <td class="col-md-3">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($result::totalContractingPurchase($project)) }}</td>
-            <td class="col-md-2">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($result::totalContractingBudget($project)) }}</td>
+            <td class="col-md-2">@money($result::totalContracting($project))</td>
+            <td class="col-md-3">@money($result::totalTimesheet($project))</td>
+            <td class="col-md-3">@money($result::totalContractingPurchase($project))</td>
+            <td class="col-md-2">@money($result::totalContractingBudget($project))</td>
         </tr>
         @if ($project->use_subcontract)
         <tr>
             <td class="col-md-2"><strong>Onderaanneming</strong></td>
-            <td class="col-md-2">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($result::totalSubcontracting($project)) }}</td>
+            <td class="col-md-2">@money($result::totalSubcontracting($project))</td>
             <td class="col-md-3">-</td>
-            <td class="col-md-3">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($result::totalSubcontractingPurchase($project)) }}</td>
-            <td class="col-md-2">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($result::totalSubcontractingBudget($project)) }}</td>
+            <td class="col-md-3">@money($result::totalSubcontractingPurchase($project))</td>
+            <td class="col-md-2">@money($result::totalSubcontractingBudget($project))</td>
         </tr>
         @endif
     </tbody>

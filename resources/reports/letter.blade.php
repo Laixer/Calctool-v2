@@ -27,7 +27,7 @@
 @endsection
 
 @section('topright')
-<h1>OFFERTE {{ $document_number }}</h1>
+<h1>{{ strtoupper($document) }} {{ $document_number }}</h1>
 <div class="date">Project: {{ $project->project_name }}</div>
 <div class="date">Date of Invoice: 01/06/2014</div>
 <div class="date">Due Date: 30/06/2014</div>
@@ -38,9 +38,9 @@
 
 @section('topleft')
 @isset($contact_to)
-<div class="to">FACTUUR AAN:</div>
+<div class="to">{{ $document }} aan:</div>
 <h2 class="name">{{ $contact_to->getFormalName() }}</h2>
-<div class="address">{{ $relation->address_street . ' ' . $relation->address_number . ', ' . $relation->address_postal . ', ' . $relation->address_city }}</div>
+<div class="address">{{ $relation->fullAddress() }}</div>
 <div class="email"><a href="mailto:{{ $contact_to->email }}">{{ $contact_to->email }}</a></div>
 <div class="address">Klant Nummer: {{ $relation->debtor_code }}</div>
 <div class="address">BTW Nummer: {{ $relation->btw }}</div>

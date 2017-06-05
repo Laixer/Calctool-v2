@@ -32,8 +32,7 @@ use \BynqIO\Dynq\Models\Contact;
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="col-md-1">ID</th>
-                        <th class="col-md-3">Projectnaam</th>
+                        <th class="col-md-4">Projectnaam</th>
                         <th class="col-md-2">Opdrachtgever</th>
                         <th class="col-md-2">Gebruiker</th>
                         <th class="col-md-1">Status</th>
@@ -45,8 +44,7 @@ use \BynqIO\Dynq\Models\Contact;
                 @foreach (Project::orderBy('created_at', 'desc')->limit(50)->get() as $project)
                 <?php $relation = Relation::find($project->client_id); ?>
                     <tr>
-                        <td class="col-md-1">{{ $project->id }}</td>
-                        <td class="col-md-3">{{ $project->project_name }}</td>
+                        <td class="col-md-4">{{ $project->project_name }}</td>
                         <td class="col-md-2">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</td>
                         <td class="col-md-2"><a href="/admin/user-{{ $project->user_id }}/edit">{{ ucfirst(User::find($project->user_id)->username) }}</a></td>
                         <td class="col-md-1">{{ $project->project_close ? 'Gesloten' : 'Open' }}</td>

@@ -37,6 +37,8 @@ class CalculationFlow extends BaseFlow implements Flow
         $this->bind('less',                 'LessComponent');
         $this->bind('more',                 'MoreComponent');
         $this->bind('invoices',             'InvoiceComponent');
+        $this->bind('invoices/detail',      'InvoiceDetailComponent');
+        $this->bind('invoices/report',      'InvoiceReportComponent');
         $this->bind('result',               'ResultComponent');
     }
 

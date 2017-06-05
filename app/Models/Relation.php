@@ -51,8 +51,12 @@ class Relation extends Model
     public function name() {
         if ($this->isBusiness()) {
             return $this->company_name;
+        } else {
+            return Contact::where('relation_id','=',$this->id)->first()['firstname'] . ' ' . Contact::where('relation_id','=',$this->id)->first()['lastname'];
         }
+    }
 
-        return Contact::where('relation_id','=',$this->id)->first()['firstname'] . ' ' . Contact::where('relation_id','=',$this->id)->first()['lastname'];
+    public function fullAddress() {
+        return "$this->address_street $this->address_number, $this->address_postal, $this->address_city";
     }
 }

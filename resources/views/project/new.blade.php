@@ -378,7 +378,7 @@ $(document).ready(function() {
         </div>
         @endif
 
-        <h2><strong>Nieuw</strong> project</h2>
+        <h2><strong>Nieuw</strong> {{ Input::get('type') }} project</h2>
 
         @if(!Relation::where('user_id', Auth::user()->id)->count())
         <div class="alert alert-info">
@@ -413,7 +413,7 @@ $(document).ready(function() {
                                 <a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
                             </div>
                         </div>
-                        <div class="col-md-2">
+                        <!--<div class="col-md-2">
                             <div class="form-group">
                                 <label for="type">Soort project</label>
                                 <select name="type" id="type" class="form-control pointer">
@@ -422,7 +422,7 @@ $(document).ready(function() {
                                     @endforeach
                                 </select>
                             </div>
-                        </div>
+                        </div>-->
                         <div class="col-md-2">
                             <label for="tax_reverse">BTW verlegd</label>
                             <div class="form-group">

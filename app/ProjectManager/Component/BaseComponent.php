@@ -42,10 +42,11 @@ abstract class BaseComponent
         return view('component.tabs', $data);
     }
 
-    public function builderLayout($url, $options)
+    public function builderLayout($url, $options, array $other = [])
     {
         $data['url'] = $url;
         $data['options'] = $options;
+        $data = array_merge($data, $other);
         return view('component.pdfbuilder', $data);
     }
 

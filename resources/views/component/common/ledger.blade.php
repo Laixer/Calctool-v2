@@ -428,9 +428,9 @@ $(document).ready(function() {
                         </span>
                         <span style="float:right;margin-right:30px;">
                             @if ($activity->isSubcontracting())
-                            {{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($calculus::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip)) }}
+                            @money($calculus::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
                             @else
-                            {{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($calculus::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip)) }}
+                            @money($calculus::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
                             @endif
                         </span>
                     </label>
@@ -445,10 +445,10 @@ $(document).ready(function() {
                                     <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-pencil">&nbsp;&nbsp;</i>Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
                                     <ul class="dropdown-menu">
                                         @ifallowed ($features['activity.changename'])
-                                        <li><a href="/inline/changename?id={{ $activity->id }}&level=2&name={{ urlencode($activity->activity_name) }}" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
+                                        <li><a href="/inline/changename?id={{ $activity->id }}&level=2&name={{ urlencode($activity->activity_name) }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
                                         @endifallowed
 
-                                        <li><a href="/inline/description?id={{ $activity->id }}" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-file-text-o" style="padding-right:5px">&nbsp;</i>Omschrijving</a></li>
+                                        <li><a href="/inline/description?id={{ $activity->id }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-file-text-o" style="padding-right:5px">&nbsp;</i>Omschrijving</a></li>
                                         <li><a href="/project/level/favorite?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau opslaan als favoriet?')"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
 
                                         @if ((isset($features['activity.timesheet']) && $features['activity.timesheet'] === true)
@@ -913,7 +913,7 @@ $(document).ready(function() {
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="/inline/changename?id={{ $chapter->id }}&level=1&name={{ urlencode($chapter->chapter_name) }}" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
+                                <li><a href="/inline/changename?id={{ $chapter->id }}&level=1&name={{ urlencode($chapter->chapter_name) }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
                                 <li><a href="/project/level/move?id={{ $chapter->id }}&level=1&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
                                 <li><a href="/project/level/move?id={{ $chapter->id }}&level=1&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
                                 <li><a href="/project/level/delete?chapter={{ $chapter->id }}&level=1&csrf={{ csrf_token() }}" onclick="return confirm('Niveau verwijderen?')"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>

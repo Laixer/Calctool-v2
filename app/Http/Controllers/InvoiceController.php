@@ -231,45 +231,45 @@ class InvoiceController extends Controller {
         return redirect('invoice/project-'.$project->id.'/invoice-version-'.$invoice_version->id);
     }
 
-    public function doInvoiceNewTerm(Request $request)
-    {
-        $this->validate($request, [
-            'projectid' => array('required','integer')
-        ]);
+    // public function doInvoiceNewTerm(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'projectid' => array('required','integer')
+    //     ]);
 
-        $project = Project::find($request->get('projectid'));
-        if (!$project || !$project->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
+    //     $project = Project::find($request->get('projectid'));
+    //     if (!$project || !$project->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
 
-        $offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
-        $cnt = Invoice::where('offer_id', $offer_last->id)->where('isclose',false)->count();
-        if ($cnt>0) {
-            $invoice = Invoice::where('offer_id',$offer_last->id)->where('isclose',false)->orderBy('priority', 'desc')->first();
+    //     $offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
+    //     $cnt = Invoice::where('offer_id', $offer_last->id)->where('isclose',false)->count();
+    //     if ($cnt>0) {
+    //         $invoice = Invoice::where('offer_id',$offer_last->id)->where('isclose',false)->orderBy('priority', 'desc')->first();
 
-            $ninvoice = new Invoice;
-            $ninvoice->payment_condition = $invoice->payment_condition;
-            $ninvoice->invoice_code = $invoice->invoice_code;
-            $ninvoice->priority = $invoice->priority+1;
-            $ninvoice->offer_id = $invoice->offer_id;
-            $ninvoice->to_contact_id = $invoice->to_contact_id;
-            $ninvoice->from_contact_id = $invoice->from_contact_id;
-            $ninvoice->save();
-        } else {
-            $invoice = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->first();
+    //         $ninvoice = new Invoice;
+    //         $ninvoice->payment_condition = $invoice->payment_condition;
+    //         $ninvoice->invoice_code = $invoice->invoice_code;
+    //         $ninvoice->priority = $invoice->priority+1;
+    //         $ninvoice->offer_id = $invoice->offer_id;
+    //         $ninvoice->to_contact_id = $invoice->to_contact_id;
+    //         $ninvoice->from_contact_id = $invoice->from_contact_id;
+    //         $ninvoice->save();
+    //     } else {
+    //         $invoice = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->first();
 
-            $ninvoice = new Invoice;
-            $ninvoice->payment_condition = $invoice->payment_condition;
-            $ninvoice->invoice_code = $invoice->invoice_code;
-            $ninvoice->priority = 0;
-            $ninvoice->offer_id = $invoice->offer_id;
-            $ninvoice->to_contact_id = $invoice->to_contact_id;
-            $ninvoice->from_contact_id = $invoice->from_contact_id;
-            $ninvoice->save();
-        }
+    //         $ninvoice = new Invoice;
+    //         $ninvoice->payment_condition = $invoice->payment_condition;
+    //         $ninvoice->invoice_code = $invoice->invoice_code;
+    //         $ninvoice->priority = 0;
+    //         $ninvoice->offer_id = $invoice->offer_id;
+    //         $ninvoice->to_contact_id = $invoice->to_contact_id;
+    //         $ninvoice->from_contact_id = $invoice->from_contact_id;
+    //         $ninvoice->save();
+    //     }
 
-        return back();
-    }
+    //     return back();
+    // }
 
     public function doCreditInvoiceNew(Request $request)
     {
@@ -344,27 +344,27 @@ class InvoiceController extends Controller {
         return response()->json(['success' => 1]);
     }
 
-    public function doInvoiceDeleteTerm(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('required','integer')
-        ]);
+    // public function doInvoiceDeleteTerm(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'id' => array('required','integer')
+    //     ]);
 
-        $invoice = Invoice::find($request->get('id'));
-        if (!$invoice)
-            return response()->json(['success' => 0]);
-        $offer = Offer::find($invoice->offer_id);
-        if (!$offer)
-            return response()->json(['success' => 0]);
-        $project = Project::find($offer->project_id);
-        if (!$project || !$project->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
+    //     $invoice = Invoice::find($request->get('id'));
+    //     if (!$invoice)
+    //         return response()->json(['success' => 0]);
+    //     $offer = Offer::find($invoice->offer_id);
+    //     if (!$offer)
+    //         return response()->json(['success' => 0]);
+    //     $project = Project::find($offer->project_id);
+    //     if (!$project || !$project->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
 
-        $invoice->delete();
+    //     $invoice->delete();
 
-        return back()->with('success', 'Termijnfactuur verwijderd');
-    }
+    //     return back()->with('success', 'Termijnfactuur verwijderd');
+    // }
 
     public function doUpdateAmount(Request $request)
     {
@@ -487,64 +487,64 @@ class InvoiceController extends Controller {
         return response()->json(['success' => 1]);
     }
 
-    public function doInvoicePay(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('required','integer'),
-            'projectid' => array('required','integer'),
-        ]);
+    // public function doInvoicePay(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'id' => array('required','integer'),
+    //         'projectid' => array('required','integer'),
+    //     ]);
 
-        $invoice = Invoice::find($request->get('id'));
-        if (!$invoice)
-            return response()->json(['success' => 0]);
-        $offer = Offer::find($invoice->offer_id);
-        if (!$offer)
-            return response()->json(['success' => 0]);
-        $project = Project::find($offer->project_id);
-        if (!$project || !$project->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
+    //     $invoice = Invoice::find($request->get('id'));
+    //     if (!$invoice)
+    //         return response()->json(['success' => 0]);
+    //     $offer = Offer::find($invoice->offer_id);
+    //     if (!$offer)
+    //         return response()->json(['success' => 0]);
+    //     $project = Project::find($offer->project_id);
+    //     if (!$project || !$project->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
 
-        $invoice->payment_date = date('Y-m-d');
+    //     $invoice->payment_date = date('Y-m-d');
 
-        $invoice->save();
+    //     $invoice->save();
 
-        return response()->json(['success' => 1, 'payment' => date('d-m-Y')]);
-    }
+    //     return response()->json(['success' => 1, 'payment' => date('d-m-Y')]);
+    // }
 
-    public function doInvoiceCloseAjax(Request $request)
-    {
-        $this->validate($request, [
-            'id' => array('required','integer'),
-            'projectid' => array('required','integer'),
-        ]);
+    // public function doInvoiceCloseAjax(Request $request)
+    // {
+    //     $this->validate($request, [
+    //         'id' => array('required','integer'),
+    //         'projectid' => array('required','integer'),
+    //     ]);
 
-        $invoice = Invoice::find($request->get('id'));
-        if (!$invoice)
-            return response()->json(['success' => 0]);
-        $offer = Offer::find($invoice->offer_id);
-        if (!$offer)
-            return response()->json(['success' => 0]);
-        $project = Project::find($offer->project_id);
-        if (!$project || !$project->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
+    //     $invoice = Invoice::find($request->get('id'));
+    //     if (!$invoice)
+    //         return response()->json(['success' => 0]);
+    //     $offer = Offer::find($invoice->offer_id);
+    //     if (!$offer)
+    //         return response()->json(['success' => 0]);
+    //     $project = Project::find($offer->project_id);
+    //     if (!$project || !$project->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
 
-        $project = Project::find($request->get('projectid'));
-        if (!$project || !$project->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
+    //     $project = Project::find($request->get('projectid'));
+    //     if (!$project || !$project->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
 
-        $invoice->invoice_close = true;
-        $invoice->invoice_code = InvoiceController::getInvoiceCode($project->id);
-        $invoice->bill_date = date('Y-m-d H:i:s');
+    //     $invoice->invoice_close = true;
+    //     $invoice->invoice_code = InvoiceController::getInvoiceCode($project->id);
+    //     $invoice->bill_date = date('Y-m-d H:i:s');
 
-        $invoice->save();
-        Auth::user()->invoice_counter++;
-        Auth::user()->save();
+    //     $invoice->save();
+    //     Auth::user()->invoice_counter++;
+    //     Auth::user()->save();
 
-        return response()->json(['success' => 1, 'billing' => date('d-m-Y')]);
-    }
+    //     return response()->json(['success' => 1, 'billing' => date('d-m-Y')]);
+    // }
 
     public function doSendOffer(Request $request)
     {
@@ -645,51 +645,51 @@ class InvoiceController extends Controller {
         return view('mail.invoice_send', $data);
     }
 
-    public function doSendPostOffer(Request $request)
-    {
-        $invoice = Invoice::find($request->get('invoice'));
-        if (!$invoice)
-            return response()->json(['success' => 0]);
-        $offer = Offer::find($invoice->offer_id);
-        if (!$offer)
-            return response()->json(['success' => 0]);
-        $project = Project::find($offer->project_id);
-        if (!$project || !$project->isOwner()) {
-            return response()->json(['success' => 0]);
-        }
-        $user = User::find($project->user_id);
+    // public function doSendPostOffer(Request $request)
+    // {
+    //     $invoice = Invoice::find($request->get('invoice'));
+    //     if (!$invoice)
+    //         return response()->json(['success' => 0]);
+    //     $offer = Offer::find($invoice->offer_id);
+    //     if (!$offer)
+    //         return response()->json(['success' => 0]);
+    //     $project = Project::find($offer->project_id);
+    //     if (!$project || !$project->isOwner()) {
+    //         return response()->json(['success' => 0]);
+    //     }
+    //     $user = User::find($project->user_id);
 
-        if (InvoicePost::where('invoice_id', $invoice->id)->count()>0) {
-            return response()->json(['success' => 0,'message' => 'Factuur al aangeboden']);
-        }
-        $post = new InvoicePost;
-        $post->invoice_id = $invoice->id;
+    //     if (InvoicePost::where('invoice_id', $invoice->id)->count()>0) {
+    //         return response()->json(['success' => 0,'message' => 'Factuur al aangeboden']);
+    //     }
+    //     $post = new InvoicePost;
+    //     $post->invoice_id = $invoice->id;
 
-        $post->save();
+    //     $post->save();
 
-        foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {
+    //     foreach (User::where('user_type','=',UserType::where('user_type','=','admin')->first()->id)->get() as $admin) {
 
-            $message = new MessageBox;
-            $message->subject = 'Te printen factuur';
-            $message->message = 'Factuur ' . $invoice->invoice_code . ' van gebruiker ' . $user->username . ' staat klaar om geprint te worden';
-            $message->from_user = User::where('username', 'admin')->first()['id'];
-            $message->user_id =	$admin->id;
+    //         $message = new MessageBox;
+    //         $message->subject = 'Te printen factuur';
+    //         $message->message = 'Factuur ' . $invoice->invoice_code . ' van gebruiker ' . $user->username . ' staat klaar om geprint te worden';
+    //         $message->from_user = User::where('username', 'admin')->first()['id'];
+    //         $message->user_id =	$admin->id;
 
-            $message->save();
-        }
+    //         $message->save();
+    //     }
 
-        $data = array(
-            'code' => $invoice->invoice_code,
-            'user' => $user->username
-        );
-        Mail::send('mail.print', $data, function($message) use ($data) {
-            $message->to(ADMIN_EMAIL);
-            $message->subject(config('app.name') . ' - Printopdracht');
-            $message->from(APP_EMAIL);
-        });
+    //     $data = array(
+    //         'code' => $invoice->invoice_code,
+    //         'user' => $user->username
+    //     );
+    //     Mail::send('mail.print', $data, function($message) use ($data) {
+    //         $message->to(ADMIN_EMAIL);
+    //         $message->subject(config('app.name') . ' - Printopdracht');
+    //         $message->from(APP_EMAIL);
+    //     });
 
-        return response()->json(['success' => 1]);
-    }
+    //     return response()->json(['success' => 1]);
+    // }
 
     /* id = $project->id */
     public static function getInvoiceCode($id)

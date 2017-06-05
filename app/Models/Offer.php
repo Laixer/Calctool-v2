@@ -4,25 +4,29 @@ namespace BynqIO\Dynq\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Offer extends Model {
-
+class Offer extends Model
+{
     protected $table = 'offer';
     protected $guarded = array('id');
 
-    public function deliverTime() {
-        return $this->hasOne('DeliverTime');
+    public function invoices() {
+        return $this->hasMany(Invoice::class);
     }
 
-    public function specification() {
-        return $this->hasOne('Specification');
-    }
+    // public function deliverTime() {
+    //     return $this->hasOne('DeliverTime');
+    // }
 
-    public function valid() {
-        return $this->hasOne('Valid');
-    }
+    // public function specification() {
+    //     return $this->hasOne('Specification');
+    // }
 
-    public function project() {
-        return $this->hasOne('Project');
-    }
+    // public function valid() {
+    //     return $this->hasOne('Valid');
+    // }
+
+    // public function project() {
+    //     return $this->hasOne('Project');
+    // }
 
 }

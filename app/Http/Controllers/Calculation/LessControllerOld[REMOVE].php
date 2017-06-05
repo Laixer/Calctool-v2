@@ -27,7 +27,7 @@ use BynqIO\Dynq\Models\CalculationMaterial;
 use BynqIO\Dynq\Calculus\LessRegister;
 use BynqIO\Dynq\Http\Controllers\Controller;
 
-class LessController extends Controller {
+class xLessController extends Controller {
 
     /*
     |--------------------------------------------------------------------------

@@ -26,24 +26,17 @@ if (Input::has('group')) {
 }
 ?>
 
-<script type="text/javascript">
-$(document).ready(function() {
-    setInterval(function() {
-        location.reload();
-    }, 30000);
-})
-</script>
 <div id="wrapper">
 
     <section class="container">
         <div class="col-md-12">
 
             <div>
-            <ol class="breadcrumb">
-              <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
-              <li class="active">Gebruikers</li>
-            </ol>
+                <ol class="breadcrumb">
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/admin">Admin CP</a></li>
+                    <li class="active">Gebruikers</li>
+                </ol>
             <div>
             <br />
 
@@ -85,10 +78,9 @@ $(document).ready(function() {
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="col-md-1 hidden-xs">ID</th>
                         <th class="col-md-4">Gebruikersnaam</th>
                         <th class="col-md-2">Actief</th>
-                        <th class="col-md-1 hidden-sm hidden-xs">Status</th>
+                        <th class="col-md-2 hidden-sm hidden-xs">Status</th>
                         <th class="col-md-1 hidden-sm hidden-xs">Type</th>
                         <th class="col-md-2 hidden-sm hidden-xs">Groep</th>
                         <th class="col-md-1 hidden-xs">Tag</th>
@@ -98,7 +90,6 @@ $(document).ready(function() {
                 <tbody>
                 @foreach ($selection_today as $users)
                     <tr>
-                        <td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
                         <td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
                             echo $users->username;
                             if ($users->firstname != $users->username) {
@@ -106,7 +97,7 @@ $(document).ready(function() {
                             }
                         ?></a></td>
                         <td class="col-md-2">{{ $users->currentStatus() }}</td>
-                        <td class="col-md-1 hidden-sm hidden-xs">
+                        <td class="col-md-2 hidden-sm hidden-xs">
                         {{ userStatus($users) }}
                         @if ($users->isAdmin())
                         <i class="fa fa-bolt" aria-hidden="true"></i> 
@@ -132,10 +123,9 @@ $(document).ready(function() {
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="col-md-1 hidden-xs">ID</th>
                         <th class="col-md-4">Gebruikersnaam</th>
                         <th class="col-md-2">Actief</th>
-                        <th class="col-md-1 hidden-sm hidden-xs">Status</th>
+                        <th class="col-md-2 hidden-sm hidden-xs">Status</th>
                         <th class="col-md-1 hidden-sm hidden-xs">Type</th>
                         <th class="col-md-2 hidden-sm hidden-xs">Groep</th>
                         <th class="col-md-1 hidden-xs">Tag</th>
@@ -145,7 +135,6 @@ $(document).ready(function() {
                 <tbody>
                 @foreach ($selection_week as $users)
                     <tr>
-                        <td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
                         <td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
                             echo $users->username;
                             if ($users->firstname != $users->username) {
@@ -153,7 +142,7 @@ $(document).ready(function() {
                             }
                         ?></a></td>
                         <td class="col-md-2">{{ $users->currentStatus() }}</td>
-                        <td class="col-md-1 hidden-sm hidden-xs">
+                        <td class="col-md-2 hidden-sm hidden-xs">
                         {{ userStatus($users) }}
                         @if ($users->isAdmin())
                         <i class="fa fa-bolt" aria-hidden="true"></i> 
@@ -179,10 +168,9 @@ $(document).ready(function() {
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th class="col-md-1 hidden-xs">ID</th>
                         <th class="col-md-4">Gebruikersnaam</th>
                         <th class="col-md-2">Actief</th>
-                        <th class="col-md-1 hidden-sm hidden-xs">Status</th>
+                        <th class="col-md-2 hidden-sm hidden-xs">Status</th>
                         <th class="col-md-1 hidden-sm hidden-xs">Type</th>
                         <th class="col-md-2 hidden-sm hidden-xs">Groep</th>
                         <th class="col-md-1 hidden-xs">Tag</th>
@@ -192,7 +180,6 @@ $(document).ready(function() {
                 <tbody>
                 @foreach ($selection_other as $users)
                     <tr>
-                        <td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
                         <td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
                             echo $users->username;
                             if ($users->firstname != $users->username) {
@@ -200,7 +187,7 @@ $(document).ready(function() {
                             }
                         ?></a></td>
                         <td class="col-md-2">{{ $users->currentStatus() }}</td>
-                        <td class="col-md-1 hidden-sm hidden-xs">
+                        <td class="col-md-2 hidden-sm hidden-xs">
                         {{ userStatus($users) }}
                         @if ($users->isAdmin())
                         <i class="fa fa-bolt" aria-hidden="true"></i> 

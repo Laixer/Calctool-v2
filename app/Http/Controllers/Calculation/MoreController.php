@@ -15,7 +15,7 @@
 
 namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
-use \Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Chapter;
 use BynqIO\Dynq\Models\Part;

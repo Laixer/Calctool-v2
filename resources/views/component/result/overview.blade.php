@@ -33,24 +33,24 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::conLaborBalanceTax1($project))
         <tr>
             <td class="col-md-4"><?php echo "Arbeidskosten"; $header = true; ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax1($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::conCalcLaborActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::conCalcLaborActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::conCalcLaborActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::conLaborBalanceTax1($project))</td>
             <td class="col-md-1">21%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax1AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::conLaborBalanceTax1AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
         @if (ResultEndresult::conLaborBalanceTax2($project))
         <tr>
             <td class="col-md-4"><?php echo !$header ? "Arbeidskosten" : "" ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::conCalcLaborActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::conCalcLaborActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::conCalcLaborActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::conLaborBalanceTax2($project))</td>
             <td class="col-md-1">6%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::conLaborBalanceTax2AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -58,10 +58,10 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::conLaborBalanceTax3($project))
         <tr>
             <td class="col-md-4">Arbeidskosten</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conLaborBalanceTax3($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::conCalcLaborActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::conCalcLaborActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::conCalcLaborActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::conLaborBalanceTax3($project))</td>
             <td class="col-md-1">0%</td>
             <td class="col-md-1">&nbsp;</td>
             <td class="col-md-2">&nbsp;</td>
@@ -74,24 +74,24 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::conMaterialBalanceTax1($project))
         <tr>
             <td class="col-md-4"><?php echo "Materiaalkosten"; $header = true; ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax1($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::conCalcMaterialActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::conCalcMaterialActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::conCalcMaterialActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::conMaterialBalanceTax1($project))</td>
             <td class="col-md-1">21%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax1AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::conMaterialBalanceTax1AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
         @if (ResultEndresult::conMaterialBalanceTax2($project))
         <tr>
             <td class="col-md-4"><?php echo !$header ? "Materiaalkosten" : "" ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::conCalcMaterialActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::conCalcMaterialActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::conCalcMaterialActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::conMaterialBalanceTax2($project))</td>
             <td class="col-md-1">6%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::conMaterialBalanceTax2AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -99,10 +99,10 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::conMaterialBalanceTax3($project))
         <tr>
             <td class="col-md-4">Materiaalkosten</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conMaterialBalanceTax3($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::conCalcMaterialActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::conCalcMaterialActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::conCalcMaterialActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::conMaterialBalanceTax3($project))</td>
             <td class="col-md-1">0%</td>
             <td class="col-md-1">&nbsp;</td>
             <td class="col-md-2">&nbsp;</td>
@@ -115,24 +115,24 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::conEquipmentBalanceTax1($project))
         <tr>
             <td class="col-md-4"><?php echo "Overige kosten"; $header = true; ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax1($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::conCalcEquipmentActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::conCalcEquipmentActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::conEquipmentBalanceTax1($project))</td>
             <td class="col-md-1">21%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax1AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::conEquipmentBalanceTax1AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
         @if (ResultEndresult::conEquipmentBalanceTax2($project))
         <tr>
             <td class="col-md-4"><?php echo !$header ? "Overige kosten" : "" ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::conCalcEquipmentActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::conCalcEquipmentActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::conEquipmentBalanceTax2($project))</td>
             <td class="col-md-1">6%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::conEquipmentBalanceTax2AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -140,10 +140,10 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::conEquipmentBalanceTax3($project))
         <tr>
             <td class="col-md-4">Overige kosten</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::conCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::conEquipmentBalanceTax3($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::conCalcEquipmentActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::conCalcEquipmentActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::conCalcEquipmentActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::conEquipmentBalanceTax3($project))</td>
             <td class="col-md-1">0%</td>
             <td class="col-md-1">&nbsp;</td>
             <td class="col-md-2">&nbsp;</td>
@@ -153,12 +153,12 @@ use BynqIO\Dynq\Models\Timesheet;
 
         <tr>
             <td class="col-md-4"><strong>Totaal Aanneming </strong></td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(SetEstimateCalculationEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(LessEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(ResultEndresult::totalContracting($project), 2, ",",".") }}</strong></td>
+            <td class="col-md-1"><strong>@money(SetEstimateCalculationEndresult::totalContracting($project))</strong></td>
+            <td class="col-md-1"><strong>@money(LessEndresult::totalContracting($project))</strong></td>
+            <td class="col-md-1"><strong>@money(MoreEndresult::totalContracting($project))</strong></td>
+            <td class="col-md-1"><strong>@money(ResultEndresult::totalContracting($project))</strong></td>
             <td class="col-md-1">&nbsp;</td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(ResultEndresult::totalContractingTax($project), 2, ",",".") }}</strong></td>
+            <td class="col-md-1"><strong>@money(ResultEndresult::totalContractingTax($project))</strong></td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
     </tbody>
@@ -186,24 +186,24 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::subconLaborBalanceTax1($project))
         <tr>
             <td class="col-md-4"><?php echo "Arbeidskosten"; $header = true; ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax1($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::subconCalcLaborActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::subconCalcLaborActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::subconCalcLaborActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::subconLaborBalanceTax1($project))</td>
             <td class="col-md-1">21%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax1AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::subconLaborBalanceTax1AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
         @if (ResultEndresult::subconLaborBalanceTax2($project))
         <tr>
             <td class="col-md-4"><?php echo !$header ? "Arbeidskosten" : "" ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax2($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::subconCalcLaborActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::subconCalcLaborActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::subconCalcLaborActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::subconLaborBalanceTax2($project))</td>
             <td class="col-md-1">6%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax2AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::subconLaborBalanceTax2AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -211,10 +211,10 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::subconLaborBalanceTax3($project))
         <tr>
             <td class="col-md-4">Arbeidskosten</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcLaborActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconLaborBalanceTax3($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::subconCalcLaborActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::subconCalcLaborActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::subconCalcLaborActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::subconLaborBalanceTax3($project))</td>
             <td class="col-md-1">0%</td>
             <td class="col-md-1">&nbsp;</td>
             <td class="col-md-2">&nbsp;</td>
@@ -227,24 +227,24 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::subconMaterialBalanceTax1($project))
         <tr>
             <td class="col-md-4"><?php echo "Materiaalkosten"; $header = true; ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax1($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::subconCalcMaterialActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::subconCalcMaterialActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::subconCalcMaterialActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::subconMaterialBalanceTax1($project))</td>
             <td class="col-md-1">21%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax1AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::subconMaterialBalanceTax1AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
         @if (ResultEndresult::subconMaterialBalanceTax2($project))
         <tr>
             <td class="col-md-4"><?php echo !$header ? "Materiaalkosten" : "" ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax2($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::subconCalcMaterialActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::subconCalcMaterialActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::subconCalcMaterialActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::subconMaterialBalanceTax2($project))</td>
             <td class="col-md-1">6%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax2AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::subconMaterialBalanceTax2AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -252,10 +252,10 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::subconMaterialBalanceTax3($project))
         <tr>
             <td class="col-md-4">Materiaalkosten</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcMaterialActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconMaterialBalanceTax3($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::subconCalcMaterialActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::subconCalcMaterialActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::subconCalcMaterialActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::subconMaterialBalanceTax3($project))</td>
             <td class="col-md-1">0%</td>
             <td class="col-md-1">&nbsp;</td>
             <td class="col-md-2">&nbsp;</td>
@@ -268,24 +268,24 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::subconEquipmentBalanceTax1($project))
         <tr>
             <td class="col-md-4"><?php echo "Overige kosten"; $header = true; ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax1Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax1($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::subconCalcEquipmentActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::subconCalcEquipmentActivityTax1Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::subconEquipmentBalanceTax1($project))</td>
             <td class="col-md-1">21%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax1AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::subconEquipmentBalanceTax1AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
         @if (ResultEndresult::subconEquipmentBalanceTax2($project))
         <tr>
             <td class="col-md-4"><?php echo !$header ? "Overige kosten" : "" ?></td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax2Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax2($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::subconCalcEquipmentActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::subconCalcEquipmentActivityTax2Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::subconEquipmentBalanceTax2($project))</td>
             <td class="col-md-1">6%</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax2AmountTax($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::subconEquipmentBalanceTax2AmountTax($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -293,10 +293,10 @@ use BynqIO\Dynq\Models\Timesheet;
         @if (ResultEndresult::subconEquipmentBalanceTax3($project))
         <tr>
             <td class="col-md-4">Overige kosten</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(LessEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project), 2, ",",".") }}</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::subconEquipmentBalanceTax3($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(SetEstimateCalculationEndresult::subconCalcEquipmentActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(LessEndresult::subconCalcEquipmentActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(MoreEndresult::subconCalcEquipmentActivityTax3Amount($project))</td>
+            <td class="col-md-1">@money(ResultEndresult::subconEquipmentBalanceTax3($project))</td>
             <td class="col-md-1">0%</td>
             <td class="col-md-1">&nbsp;</td>
             <td class="col-md-2">&nbsp;</td>
@@ -306,12 +306,12 @@ use BynqIO\Dynq\Models\Timesheet;
 
         <tr>
             <td class="col-md-4"><strong>Totaal Onderaanneming</strong></td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(SetEstimateCalculationEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(LessEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(MoreEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(ResultEndresult::totalSubcontracting($project), 2, ",",".") }}</strong></td>
+            <td class="col-md-1"><strong>@money(SetEstimateCalculationEndresult::totalSubcontracting($project))</strong></td>
+            <td class="col-md-1"><strong>@money(LessEndresult::totalSubcontracting($project))</strong></td>
+            <td class="col-md-1"><strong>@money(MoreEndresult::totalSubcontracting($project))</strong></td>
+            <td class="col-md-1"><strong>@money(ResultEndresult::totalSubcontracting($project))</strong></td>
             <td class="col-md-1">&nbsp;</td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax($project), 2, ",",".") }}</strong></td>
+            <td class="col-md-1"><strong>@money(ResultEndresult::totalSubcontractingTax($project))</strong></td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
     </tbody>
@@ -334,7 +334,7 @@ use BynqIO\Dynq\Models\Timesheet;
         <tr>
             <td class="col-md-4"><strong>Cumulatief project (excl. BTW)</strong></td>
             <td class="col-md-3">&nbsp;</td>
-            <td class="col-md-2"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProject($project), 2, ",",".") }}</strong></td>
+            <td class="col-md-2"><strong>@money(ResultEndresult::totalProject($project))</strong></td>
             <td class="col-md-1">&nbsp;</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
@@ -344,7 +344,7 @@ use BynqIO\Dynq\Models\Timesheet;
             <td class="col-md-4">BTW bedrag aanneming belast met 21%</td>
             <th class="col-md-3">&nbsp;</th>
             <td class="col-md-2">&nbsp;</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax1($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::totalContractingTax1($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -353,7 +353,7 @@ use BynqIO\Dynq\Models\Timesheet;
             <td class="col-md-4">BTW bedrag aanneming belast met 6%</td>
             <th class="col-md-3">&nbsp;</th>
             <td class="col-md-2">&nbsp;</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalContractingTax2($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::totalContractingTax2($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -362,7 +362,7 @@ use BynqIO\Dynq\Models\Timesheet;
             <td class="col-md-4">BTW bedrag onderaanneming belast met 21%</td>
             <th class="col-md-3">&nbsp;</th>
             <td class="col-md-2">&nbsp;</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax1($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::totalSubcontractingTax1($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -371,7 +371,7 @@ use BynqIO\Dynq\Models\Timesheet;
             <td class="col-md-4">BTW bedrag onderaanneming belast met 6%</td>
             <th class="col-md-3">&nbsp;</th>
             <td class="col-md-2">&nbsp;</td>
-            <td class="col-md-1">{{ '&euro; '.number_format(ResultEndresult::totalSubcontractingTax2($project), 2, ",",".") }}</td>
+            <td class="col-md-1">@money(ResultEndresult::totalSubcontractingTax2($project))</td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -381,7 +381,7 @@ use BynqIO\Dynq\Models\Timesheet;
             <td class="col-md-4">Cumulatief BTW bedrag</td>
             <th class="col-md-3">&nbsp;</th>
             <td class="col-md-2">&nbsp;</td>
-            <td class="col-md-1"><strong>{{ '&euro; '.number_format(ResultEndresult::totalProjectTax($project), 2, ",",".") }}</strong></td>
+            <td class="col-md-1"><strong>@money(ResultEndresult::totalProjectTax($project))</strong></td>
             <td class="col-md-2">&nbsp;</td>
         </tr>
         @endif
@@ -390,7 +390,7 @@ use BynqIO\Dynq\Models\Timesheet;
             <th class="col-md-3">&nbsp;</th>
             <td class="col-md-2">&nbsp;</td>
             <td class="col-md-1">&nbsp;</td>
-            <td class="col-md-2"><strong><span class="pull-right">{{ '&euro; '.number_format(ResultEndresult::superTotalProject($project), 2, ",",".") }}</strong></span></td>
+            <td class="col-md-2"><strong><span class="pull-right">@money(ResultEndresult::superTotalProject($project))</strong></span></td>
         </tr>
     </tbody>
 </table>

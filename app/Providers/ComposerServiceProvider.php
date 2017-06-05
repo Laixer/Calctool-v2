@@ -26,20 +26,8 @@ class ComposerServiceProvider extends ServiceProvider
             }
         });
 
-        Blade::directive('format', function ($expression) {
-
-            // $format = $expression);
-            return "<?php if(isset($expression) && $expression === true): ?>";
-            return "{FormatService::monetary($expression)}";
-// dd($expression);
-  
-//  {{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary() }}
-
-            // return FormatService::monetary($expression);
-
-            // "'&euro; '"
-
-            // return "<img src='{$logo}' width='{$logo_width}px' alt='{$appname}' title='{$appname}' />";
+        Blade::directive('money', function ($expression) {
+            return "<?php echo '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($expression); ?>";
         });
     }
 

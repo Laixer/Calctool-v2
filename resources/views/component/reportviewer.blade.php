@@ -1,5 +1,11 @@
 @extends('component.layout', ['title' => $page])
 
+@section('component_buttons')
+<div class="pull-right">
+    <button class="btn btn-primary"><i class="fa fa-download"></i>Download</button>
+</div>
+@endsection
+
 @section('component_content')
 <script src="/plugins/pdf/build/pdf.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -10,11 +16,7 @@ PDFJS.getDocument('{!! $url !!}').then(function(pdf) {
     var pageNumber = 0;
 
     function buildPage(page) {
-@isset($options)
-        var scale = 1.25;
-@else
         var scale = 1.92;
-@endisset
         var viewport = page.getViewport(scale);
 
         // Prepare canvas using PDF page dimensions
@@ -43,19 +45,7 @@ PDFJS.getDocument('{!! $url !!}').then(function(pdf) {
 }, function (reason) { console.error(reason); });
 </script>
 
-@isset($options)
-<div class="col-md-8 nopadding">
-    <div id="pages"></div>
-</div>
-@else
 <div class="col-md-12 nopadding">
     <div id="pages"></div>
 </div>
-@endisset
-
-@isset($options)
-<div class="col-md-4 nopadding">
-    @include("component.{$component}.$options")
-</div>
-@endisset
 @stop

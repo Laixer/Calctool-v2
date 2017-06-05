@@ -32,7 +32,7 @@ class ConfirmController extends Controller
     public function __invoke(Request $request)
     {
         $this->validate($request, [
-            'date' => ['required'],
+            'date'    => ['required'],
             'project' => ['required','integer'],
         ]);
 

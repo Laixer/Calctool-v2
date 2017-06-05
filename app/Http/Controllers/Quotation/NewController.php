@@ -26,11 +26,11 @@ class NewController extends Controller
     public function __invoke(Request $request)
     {
         $this->validate($request, [
-            'project' => ['integer'],
-            'terms' => ['integer'],
-            'amount' => ['regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'],
+            'project' => ['required', 'integer'],
+            'terms'   => ['integer'],
+            'amount'  => ['regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'],
             'deliver' => ['integer'],
-            'valid' => ['integer'],
+            'valid'   => ['integer'],
         ]);
 
         $project = Project::findOrFail($request->get('project'));
