@@ -19,7 +19,7 @@ use Illuminate\Http\Request;
 use BynqIO\Dynq\Models\Resource;
 
 use Auth;
-use Storage;
+use Encryptor;
 
 class ResourceController extends Controller
 {
@@ -42,11 +42,11 @@ class ResourceController extends Controller
      */
     protected function fileTransfer($resource)
     {
-        $date = date('D, d M Y H:i:s T', Storage::lastModified($resource->file_location));
-        $size = Storage::size($resource->file_location);
-        $type = Storage::mimeType($resource->file_location);
+        $date = date('D, d M Y H:i:s T', Encryptor::lastModified($resource->file_location));
+        $size = Encryptor::size($resource->file_location);
+        $type = Encryptor::mimeType($resource->file_location);
 
-        return response(Storage::get($resource->file_location))
+        return response(Encryptor::get($resource->file_location))
             ->header('Content-Type', $type)
             ->header('Accept-Ranges', 'bytes')
             ->header('Cache-Control', 'no-cache, private')
@@ -56,9 +56,9 @@ class ResourceController extends Controller
 
     public function download(Request $request, $resourceid)
     {
-        $res = Resource::find($resourceid);
-        if (!$res || !$res->isOwner()) {
-            return response(null, 404);
+        $res = Resource::findOrFail($resourceid);
+        if (!$res->isOwner()) {
+            return response(null, 404);//abort 404? -> http not allowed
         }
 
         return $this->fileTransfer($res)->header('Content-Disposition', 'attachment; filename="' . $res->resource_name . '"');
@@ -66,9 +66,9 @@ class ResourceController extends Controller
 
     public function view(Request $request, $resourceid)
     {
-        $res = Resource::find($resourceid);
-        if (!$res || !$res->isOwner()) {
-            return response(null, 404);
+        $res = Resource::findOrFail($resourceid);
+        if (!$res->isOwner()) {
+            return response(null, 404);//abort 404?
         }
 
         return $this->fileTransfer($res);
@@ -76,8 +76,8 @@ class ResourceController extends Controller
 
     public function doDeleteResource(Request $request, $resourceid)
     {
-        $res = Resource::find($resourceid);
-        if (!$res || !$res->isOwner()) {
+        $res = Resource::findOrFail($resourceid);
+        if (!$res->isOwner()) {
             return back();
         }
 

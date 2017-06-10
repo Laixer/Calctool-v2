@@ -21,7 +21,7 @@ use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 use Image;
-use Storage;
+use Encryptor;
 
 class UploadController extends Controller
 {
@@ -35,14 +35,14 @@ class UploadController extends Controller
     public function uploadLogo(Request $request)
     {
         $this->validate($request, [
-            'id' => ['required','integer'],
+            'id'    => ['required','integer'],
             'image' => ['required', 'mimes:jpeg,bmp,png,gif'],
         ]);
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
 
-            $path = Storage::putFile($request->user()->encodedName(), $file);
+            $path = Encryptor::putFile($request->user()->ownCompany->encodedName(), $file);
             if (!$path) {
                 return back()->withErrors(['msg' => 'Upload mislukt']);
             }
@@ -81,7 +81,7 @@ class UploadController extends Controller
     public function uploadAgreement(Request $request)
     {
         $this->validate($request, [
-            'id' => ['required','integer'],
+            'id'  => ['required','integer'],
             'doc' => ['required', 'mimes:pdf'],
         ]);
 
@@ -91,7 +91,7 @@ class UploadController extends Controller
                 return back()->withErrors(['msg' => 'Bestandsnaam te lang']);
             }
 
-            $path = Storage::putFile($request->user()->encodedName(), $file);
+            $path = Encryptor::putFile($request->user()->ownCompany->encodedName(), $file);
             if (!$path) {
                 return back()->withErrors(['msg' => 'Upload mislukt']);
             }

@@ -33,13 +33,16 @@ $(document).ready(function() {
         @foreach(Input::all() as $input => $value)
         <input type="hidden" name="{{ $input }}" value="{{ $value }}" />
         @endforeach
-        <button class="btn btn-primary"><i class="fa fa-check-square-o"></i>Factureren</button>
+        <button class="btn btn-primary" {{ Input::has('ts') ?: 'disabled' }}><i class="fa fa-check-square-o"></i>Factureren</button>
     </form>
 </div>
 @endsection
 
 <form action="" method="get" class="white-row">
     <input type="hidden" name="id" value="{{ $invoice->id }}" />
+    <input type="hidden" name="ts" value="{{ time() }}">
+    <input type="hidden" name="pretext" value="Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken."/>
+    <input type="hidden" name="posttext" value="Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet."/>
 
     <h3 class="page-header nomargin-top">Instellingen</h3>
 
@@ -106,6 +109,21 @@ $(document).ready(function() {
         </div>
     </div>
     {{-- /Invoice options --}}
+
+    {{-- Proposal texts --}}
+    <h3 class="page-header nomargin-top">Teksten</h3>
+    <div class="row">
+        <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
+            <button style="width: 100px;" class="btn btn-sm btn-default">Aanheftekst</button><span style="margin-left:10px;">Tekst na de aanhef</span>
+        </div>
+        <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
+            <button style="width: 100px;" class="btn btn-sm btn-default">Bepalingen</button><span style="margin-left:10px;">Voeg extra bepalingen toe</span>
+        </div>
+        <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
+            <button style="width: 100px;" class="btn btn-sm btn-default">Sluittekst</button><span style="margin-left:10px;">Geef sluittekst op</span>
+        </div>
+    </div>
+    {{-- /Proposal texts --}}
 
     <h3 class="page-header nomargin-top">Bijlages</h3>
 

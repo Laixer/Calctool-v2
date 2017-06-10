@@ -184,6 +184,7 @@ return [
         Jenssegers\Agent\AgentServiceProvider::class,
         Fideloper\Proxy\TrustedProxyServiceProvider::class,
         Rap2hpoutre\LaravelLogViewer\LaravelLogViewerServiceProvider::class,
+        BynqIO\Encryptor\EncryptorServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -250,6 +251,7 @@ return [
         'Agent'     => Jenssegers\Agent\Facades\Agent::class,
         'Image'     => Intervention\Image\Facades\Image::class,
         'Flow'      => BynqIO\Dynq\ProjectManager\Facades\Flow::class,
+        'Encryptor' => BynqIO\Encryptor\Facades\Encryptor::class,
 
     ],
 

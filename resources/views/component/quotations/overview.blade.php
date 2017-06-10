@@ -4,6 +4,7 @@ use BynqIO\Dynq\Calculus\CalculationEndresult;
 
 ?>
 
+@if ($offer_last)
 <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -20,8 +21,8 @@ use BynqIO\Dynq\Calculus\CalculationEndresult;
 
                     <div class="form-horizontal">
                         <div class="form-group">
-                            <div class="col-md-4">
-                                <label>Bevestiging</label>
+                            <div class="col-md-12">
+                                <label>Bevestig {{ $offer_last->offer_code }} op</label>
                             </div>
                             <div class="col-md-12">
                                 <div class="input-group input-append date" id="dateRangePicker">
@@ -44,6 +45,7 @@ use BynqIO\Dynq\Calculus\CalculationEndresult;
         </div>
     </div>
 </div>
+@endif
 
 @if ($offer_last)
 @if (number_format(CalculationEndresult::totalProject($project), 3, ",",".") != number_format($offer_last->offer_total, 3, ",","."))
@@ -105,10 +107,10 @@ use BynqIO\Dynq\Calculus\CalculationEndresult;
         @foreach($project->quotations()->orderBy('created_at')->get() as $offer)
         <?php $i++; ?>
         <tr>
-            <td class="col-md-4">{{ $offer->offer_code }}</td>
+            <td class="col-md-4">{{ $offer->offer_code }} @if ($offer->offer_finish)<span class="label label-default">Definitief</span>@endif</td>
             <td class="col-md-3"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
             <td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
-            <td class="col-md-3 text-right"><a href="/res-{{ ($offer_last->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-download fa-fw"></i> Downloaden</a></td>
+            <td class="col-md-3 text-right"><a href="/res-{{ ($offer->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-download fa-fw"></i> Downloaden</a></td>
         </tr>
         @endforeach
         @if (!$i)

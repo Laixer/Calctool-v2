@@ -12,9 +12,9 @@ class Audit extends Model {
     protected $table = 'audit';
     protected $guarded = array('id', 'ip');
 
-    public function user() {
-        return $this->hasOne('User');
-    }
+    // public function user() {
+    //     return $this->hasOne('User');
+    // }
 
     public static function UserAgent()
     {

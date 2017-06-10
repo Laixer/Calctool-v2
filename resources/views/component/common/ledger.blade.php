@@ -234,6 +234,7 @@ $(document).ready(function() {
 @endpush
 
 {{-- TODO: move into module --}}
+<?php /*
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -360,7 +361,7 @@ $(document).ready(function() {
 
         </div>
     </div>
-</div>  
+</div>
 <div class="modal fade" id="myFavAct" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -397,7 +398,7 @@ $(document).ready(function() {
 
         </div>
     </div>
-</div>
+</div> */ ?>
 {{-- /TODO: move into module --}}
 
 <div class="modal fade" id="asyncModal" tabindex="-1" role="dialog" aria-labelledby="asyncModal" aria-hidden="true">

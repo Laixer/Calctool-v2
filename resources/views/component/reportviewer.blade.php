@@ -7,6 +7,7 @@
 @endsection
 
 @section('component_content')
+@if (1)
 <script src="/plugins/pdf/build/pdf.js" type="text/javascript"></script>
 <script type="text/javascript">
 
@@ -48,4 +49,9 @@ PDFJS.getDocument('{!! $url !!}').then(function(pdf) {
 <div class="col-md-12 nopadding">
     <div id="pages"></div>
 </div>
+@else
+<object data="{{ $url }}#view=fit&toolbar=0&navpanes=0&statusbar=0&messages=0" type="application/pdf" width="300" height="300">
+    <embed src="{{ $url }}#view=fit&toolbar=0&navpanes=0&statusbar=0&messages=0" type="application/pdf">
+</object>
+@endif
 @stop

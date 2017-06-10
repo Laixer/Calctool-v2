@@ -21,7 +21,7 @@ use BynqIO\Dynq\Models\Audit;
 use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-use Storage;
+use Encryptor;
 
 class DocumentController extends Controller
 {
@@ -40,7 +40,7 @@ class DocumentController extends Controller
         if ($request->hasFile('projectfile')) {
             $file = $request->file('projectfile');
 
-            $path = Storage::putFile($request->user()->encodedName(), $file);
+            $path = Encryptor::putFile($request->user()->ownCompany->encodedName(), $file);
             if (!$path) {
                 return back()->withErrors(['msg' => 'Upload mislukt']);
             }

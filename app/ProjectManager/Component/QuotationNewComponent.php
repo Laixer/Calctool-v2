@@ -16,7 +16,6 @@
 namespace BynqIO\Dynq\ProjectManager\Component;
 
 use BynqIO\Dynq\ProjectManager\Contracts\Component;
-use Illuminate\Http\Request;
 
 /**
  * Class QuotationComponent.

@@ -29,10 +29,10 @@
 @section('topright')
 <h1>{{ strtoupper($document) }} {{ $document_number }}</h1>
 <div class="date">Project: {{ $project->project_name }}</div>
-<div class="date">Date of Invoice: 01/06/2014</div>
-<div class="date">Due Date: 30/06/2014</div>
+<div class="date">Datum {{ $document }}: {{ $document_date->toDateString() }}</div>
+<div class="date">Verloopdatum: 30/06/2014</div>
 @isset($reference)
-<div class="date">Reference: {{ $reference }}</div>
+<div class="date">Referentie: {{ $reference }}</div>
 @endisset
 @endsection
 

@@ -21,6 +21,13 @@ $relation_self = Relation::find(Auth::user()->self_id);
 <script type="text/javascript">
 $(document).ready(function() {
     $("[type='checkbox'").bootstrapSwitch({onText: 'Ja', offText: 'Nee'});
+    $("[name=terms]").change(function() {
+        if ($(this).val() < 2) {
+            $("[name=amount]").prop('disabled', true);
+        } else {
+            $("[name=amount]").prop('disabled', false);
+        }
+    });
 });
 </script>
 @endpush
@@ -33,12 +40,15 @@ $(document).ready(function() {
         @foreach(Input::all() as $input => $value)
         <input type="hidden" name="{{ $input }}" value="{{ $value }}" />
         @endforeach
-        <button class="btn btn-primary"><i class="fa fa-check-square-o"></i>Offereren</button>
+        <button class="btn btn-primary" {{ Input::has('ts') ?: 'disabled' }}><i class="fa fa-check-square-o"></i>Offereren</button>
     </form>
 </div>
 @endsection
 
 <form action="" method="get" class="white-row">
+    <input type="hidden" name="ts" value="{{ time() }}">
+    <input type="hidden" name="pretext" value="Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken."/>
+    <input type="hidden" name="posttext" value="Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet."/>
 
     <h3 class="page-header nomargin-top">Instellingen</h3>
 
@@ -53,7 +63,7 @@ $(document).ready(function() {
 
             <div class="col-md-7">
                 <label>Aanbetalingsbedrag</label>
-                <input type="text" class="form-control" name="amount" value="{{ Input::has('amount') ? Input::get('amount') : '0' }}">
+                <input type="text" class="form-control" name="amount" {{ Input::has('terms') && Input::get('terms') > 1 ?: 'disabled' }} value="{{ Input::has('amount') ? Input::get('amount') : '0' }}">
             </div>
 
             <div class="col-md-12 col-sm-6">
@@ -92,6 +102,7 @@ $(document).ready(function() {
                     @endforeach
                 </select>
             </div>
+
             <div class="col-sm-offset-0 col-sm-12">
                 <div class="checkbox">
                     <input name="separate_subcon" type="checkbox" {{ Input::has('separate_subcon') ? 'checked' : '' }}><span style="margin-left:10px;">Onderaanneming specificeren</span>
@@ -101,7 +112,22 @@ $(document).ready(function() {
     </div>
     {{-- /Proposal options --}}
 
-    <h3 class="page-header nomargin-top">Bijlages</h3>
+    {{-- Proposal texts --}}
+    <h3 class="page-header nomargin-top">Teksten</h3>
+    <div class="row">
+        <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
+            <button style="width: 100px;" class="btn btn-sm btn-default">Aanheftekst</button><span style="margin-left:10px;">Tekst na de aanhef</span>
+        </div>
+        <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
+            <button style="width: 100px;" class="btn btn-sm btn-default">Bepalingen</button><span style="margin-left:10px;">Voeg extra bepalingen toe</span>
+        </div>
+        <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
+            <button style="width: 100px;" class="btn btn-sm btn-default">Sluittekst</button><span style="margin-left:10px;">Geef sluittekst op</span>
+        </div>
+    </div>
+    {{-- /Proposal texts --}}
+
+    <h3 class="page-header nomargin-top">Bijlagen</h3>
 
     {{-- Proposal pages --}}
     <div class="row">

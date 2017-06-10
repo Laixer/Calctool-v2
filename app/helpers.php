@@ -149,16 +149,3 @@ if (!function_exists('cachet_redirect')) {
         return app('redirect')->to($url, $status, $headers);
     }
 }
-
-if (!function_exists('storage_prefix_path')) {
-    /**
-     * Get storage prefix.
-     *
-     * @return string
-     */
-    function storage_prefix_path()
-    {
-        return Storage::getDriver()->getAdapter()->getPathPrefix();
-    }
-}
-

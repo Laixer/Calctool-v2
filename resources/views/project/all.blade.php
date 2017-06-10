@@ -43,22 +43,20 @@
                         <thead>
                             <tr>
                                 <th class="col-md-3">Projectnaam</th>
-                                <th class="col-md-2">Opdrachtgever</th>
-                                <th class="col-md-1">Type</th>
-                                <th class="col-md-3">Adres</th>
+                                <th class="col-md-3">Opdrachtgever</th>
+                                <th class="col-md-2">Type</th>
                                 <th class="col-md-2">Plaats</th>
-                                <th class="col-md-1">Status</th>
+                                <th class="col-md-2">Status</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($projects as $project)
                             <tr>
                                 <td class="col-md-3"><a href="/project/{{ $project->id }}-{{ $project->slug() }}/details">{{ $project->project_name }}</a></td>
-                                <td class="col-md-2">{{ $project->client->name() }}</td>
-                                <td class="col-md-1">{{ ucfirst($project->type->type_name) }}</td>
-                                <td class="col-md-3">{{ $project->address_street }} {{ $project->address_number }}</td>
+                                <td class="col-md-3">{{ $project->client->name() }}</td>
+                                <td class="col-md-2">{{ ucfirst($project->type->type_name) }}</td>
                                 <td class="col-md-2">{{ $project->address_city }}</td>
-                                <td class="col-md-1">{{ ucfirst($project->status()) }}</td>
+                                <td class="col-md-2">{{ ucfirst($project->status()) }}</td>
                             </tr>
                             @endforeach
                             @empty($projects)
@@ -69,13 +67,17 @@
                         </tbody>
                     </table>
 
-                    <!--<ul class="pagination">
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                    </ul>-->
+                    <div class="text-center">
+                        <ul class="pagination">
+                            <li><a href="#">&laquo;</a></li>
+                            <li><a href="#">1</a></li>
+                            <li><a href="#">2</a></li>
+                            <li><a href="#">3</a></li>
+                            <li><a href="#">4</a></li>
+                            <li><a href="#">5</a></li>
+                            <li><a href="#">&raquo;</a></li>
+                        </ul>
+                    </div
 
                 </div>
             </div>

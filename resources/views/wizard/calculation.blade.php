@@ -13,21 +13,21 @@ if ($offer_last && $offer_last->offer_finish)
 
 <div class="wizard">
     <a href="/">Dashboard</a>
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/details"     {!! $page=='details' ? 'class="current"' : '' !!} >Project</a>
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/calculation" {!! $page=='calculation' ? 'class="current"' : '' !!} >Calculeren</a>
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/quotations"  {!! $page=='quotations' ? 'class="current"' : '' !!} >Offerte</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/details"     {!! starts_with($page, 'details') ? 'class="current"' : '' !!} >Project</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/calculation" {!! starts_with($page, 'calculation') ? 'class="current"' : '' !!} >Calculeren</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/quotations"  {!! starts_with($page, 'quotations') ? 'class="current"' : '' !!} >Offerte</a>
     @if ($show_all)
     @if ($project->use_estimate)
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/estimate"    {!! $page=='estimate' ? 'class="current"' : '' !!}>Stelposten stellen</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/estimate"    {!! starts_with($page, 'estimate') ? 'class="current"' : '' !!}>Stelposten stellen</a>
     @endif
     @if ($project->use_less)
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/less"        {!! $page=='less' ? 'class="current"' : '' !!} >Minderwerk</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/less"        {!! starts_with($page, 'less') ? 'class="current"' : '' !!} >Minderwerk</a>
     @endif
     @if ($project->use_more)
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/more"        {!! $page=='more' ? 'class="current"' : ''!!} >Meerwerk</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/more"        {!! starts_with($page, 'more') ? 'class="current"' : ''!!} >Meerwerk</a>
     @endif
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/invoices"    {!! $page=='invoice' ? 'class="current"' : ''!!} >Factuur</a>
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/result"      {!! $page=='result' ? 'class="current"' : '' !!} >Resultaat</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/invoices"    {!! starts_with($page, 'invoice') ? 'class="current"' : ''!!} >Factuur</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/result"      {!! starts_with($page, 'result') ? 'class="current"' : '' !!} >Resultaat</a>
     @else
     @if ($project->use_estimate)
     <span>Stelposten stellen</span>

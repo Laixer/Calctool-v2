@@ -119,9 +119,8 @@ Route::get('application/{client_id}/edit', function() {
 Route::get('product', function() {
     return view('admin.product');
 });
-Route::get('auditlog', function() {
-    return view('admin.audit');
-});
+Route::get('auditlog', 'AuditController');
+
 Route::post('product/upload', 'AdminController@doUploadCSV');
 Route::post('product/emptylist', 'AdminController@getEmptyList');
 Route::get('application/{client_id}/delete', 'AdminController@doDeleteApplication');

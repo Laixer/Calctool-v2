@@ -15,18 +15,30 @@
 
 namespace BynqIO\Dynq\Http\Controllers\Quotation;
 
+use Carbon\Carbon;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Invoice;
 use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Resource;
 use BynqIO\Dynq\Calculus\InvoiceTerm;
 use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Encryptor;
+use PDF;
+
 class ConfirmController extends Controller
 {
+    protected function invoiceNumber($id, $user)
+    {
+        return sprintf("%s%05d-%03d-%s", $user->offernumber_prefix, $id, $user->offer_counter, date('y'));
+    }
+
     protected function invoiceConceptNumber($id, $user)
     {
-        return sprintf("%s%05d-CONCEPT-%s", $user->invoicenumber_prefix, $id, date('y'));
+        return sprintf("%s%05d-CONCEPT-%03d-%s", $user->invoicenumber_prefix, $id, $user->invoice_counter, date('y'));
     }
 
     public function __invoke(Request $request)
@@ -42,7 +54,7 @@ class ConfirmController extends Controller
         }
 
         $offer = Offer::where('project_id', $project->id)->orderBy('created_at', 'desc')->firstOrFail();
-        $offer->offer_finish = date('Y-m-d', strtotime($request->get('date')));
+        $offer->offer_finish     = date('Y-m-d', strtotime($request->get('date')));
         $offer->save();
 
         for ($i = 0; $i < $offer->invoice_quantity; ++$i) {

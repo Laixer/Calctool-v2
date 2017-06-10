@@ -37,7 +37,7 @@ class Relation extends Model
     // }
 
     public function kind() {
-        return $this->hasOne('BynqIO\Dynq\Models\RelationKind', 'id', 'kind_id')->first();
+        return $this->hasOne(RelationKind::class, 'id', 'kind_id')->first(); //change
     }
 
     public function isActive() {
@@ -48,12 +48,20 @@ class Relation extends Model
         return $this->kind()->kind_name == 'zakelijk';
     }
 
+    public function logo() {
+        return $this->hasOne(Resource::class, 'id', 'logo_id');
+    }
+
     public function name() {
         if ($this->isBusiness()) {
             return $this->company_name;
         } else {
             return Contact::where('relation_id','=',$this->id)->first()['firstname'] . ' ' . Contact::where('relation_id','=',$this->id)->first()['lastname'];
         }
+    }
+
+    public function encodedName() {
+        return str_replace(' ', '_', strtolower($this->name()));
     }
 
     public function fullAddress() {

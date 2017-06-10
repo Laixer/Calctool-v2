@@ -55,17 +55,13 @@ $(document).ready(function() {
 
 <section class="paddings">
     <div class="row text-center countTo">
-        <div class="col-md-4">
-            <strong data-to="1244">{{ $project->created_at->diffInDays($project->updated_at) }}</strong>
+        <div class="col-md-6">
+            <strong>{{ $project->created_at->diffInDays($project->updated_at) }}</strong>
             <label>Dagen geopend</label>
         </div>
-        <div class="col-md-4">
-            <strong data-to="67">4/5</strong>
-            <label>Afgerond</label>
-        </div>
-        <div class="col-md-4">
-            <strong data-to="32">1</strong>
-            <label>Gebruiker</label>
+        <div class="col-md-6">
+            <strong>@money($project->hour_rate)</strong>
+            <label>Uurtarief</label>
         </div>
     </div>
 </section>

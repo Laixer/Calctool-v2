@@ -357,8 +357,6 @@ $(document).ready(function() {
 
     <section class="container">
 
-        @include('wizard.index', array('page' => 'calculation'))
-
         @if (Session::has('success'))
         <div class="alert alert-success">
             <i class="fa fa-check-circle"></i>
@@ -392,6 +390,8 @@ $(document).ready(function() {
             <div id="project">
                 <form method="POST" action="{{ url()->current() }}" accept-charset="UTF-8">
                     {!! csrf_field() !!}
+                    <input name="type" type="hidden" value="{{ Input::get('type') }}" />
+
                     <h4>Projectgegevens</h4>
                     <h5><strong>Gegevens</strong></h5>
                     <div class="row">

@@ -15,22 +15,118 @@
 
 namespace BynqIO\Dynq\Http\Controllers\Quotation;
 
+use Carbon\Carbon;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Calculus\CalculationEndresult;
 use BynqIO\Dynq\Models\Offer;
+use BynqIO\Dynq\Models\Relation;
+use BynqIO\Dynq\Models\Contact;
+use BynqIO\Dynq\Models\Resource;
+use BynqIO\Dynq\Models\Valid;
 use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
+use Encryptor;
+use PDF;
+
 class NewController extends Controller
 {
+    private function saveReport($user, $quotation, $project)
+    {
+        $relation = Relation::findOrFail($project->client_id);
+        $relation_self = Relation::findOrFail($user->self_id);
+
+        $data = [
+            'company'  => $relation_self->name(),
+            'address'  => $relation_self->fullAddress(),
+            'phone'    => $relation_self->phone_number,
+            'email'    => $relation_self->email,
+            'pages'    => ['main'],
+        ];
+
+        $letter = [
+            'document'         => 'Offerte',
+            'document_number'  => $quotation->offer_code,
+            'document_date'    => Carbon::now(),
+            'project'          => $project,
+            'relation'         => $relation,
+            'relation_self'    => $relation_self,
+            'contact_to'       => Contact::find($quotation->to_contact_id),
+            'contact_from'     => Contact::find($quotation->from_contact_id),
+            'pretext'          => $quotation->description,
+            'posttext'         => $quotation->closure,
+        ];
+
+        $terms   = $quotation->invoice_quantity;
+        $amount  = $quotation->downpayment_amount;
+        $deliver = $quotation->deliver_id;
+        $valid   = $quotation->valid_id;
+
+        /* Terms and amount */
+        if ($terms > 1 && $amount > 1) {
+            $letter['messages'][] = "Indien opdracht gegund wordt, ontvangt u $terms termijnen waarvan de eerste termijn een aanbetaling betreft á € $amount";
+        } else if ($terms > 1) {
+            $letter['messages'][] = "Indien opdracht gegund wordt, ontvangt u $terms termijnen waarvan de laatste een eindfactuur.";
+        } else {
+            $letter['messages'][] = "Indien opdracht gegund wordt, ontvangt u één eindfactuur.";
+        }
+
+        /* Delivery options */
+        if ($deliver == 1 || $deliver == 2) {
+            $letter['messages'][] = "De werkzaamheden starten na uw opdrachtbevestiging.";
+        } else if (isset($deliver)) {
+            $name = DeliverTime::findOrFail($deliver)->delivertime_name;
+            $letter['messages'][] = "De werkzaamheden starten binnen $name.";
+        }
+
+        /* Valid options */
+        if (isset($valid)) {
+            $name = Valid::findOrFail($valid)->valid_name;
+            $letter['messages'][] = "Deze offerte is geldig tot $name na dagtekening.";
+        }
+
+        /* Additional pages */
+        if ($quotation->display_specification) {
+            $data['pages'][] = 'specification';
+        }
+        if ($quotation->display_worktotals) {
+            $data['pages'][] = 'levelcost';
+        }
+        if ($quotation->display_description) {
+            $data['pages'][] = 'description';
+        }
+
+        $pdf = PDF::loadView('letter', array_merge($data, $letter));
+        $pdf->setOption('footer-font-size', 8);
+        $pdf->setOption('footer-left', $relation_self->name());
+        $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+        $pdf->setOption('lowquality', false);
+
+        $file = Encryptor::putAuto($user->ownCompany->encodedName(), 'pdf', $pdf->output());
+
+        $resource = new Resource;
+        $resource->resource_name  = 'quotation.pdf';
+        $resource->file_location  = $file;
+        $resource->file_size      = strlen($pdf->output());
+        $resource->user_id        = $user->id;
+        $resource->description    = 'Offerteversie';
+
+        $resource->save();
+
+        $quotation->resource_id = $resource->id;
+    }
+
     public function __invoke(Request $request)
     {
         $this->validate($request, [
-            'project' => ['required', 'integer'],
-            'terms'   => ['integer'],
-            'amount'  => ['regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'],
-            'deliver' => ['integer'],
-            'valid'   => ['integer'],
+            'project'       => ['required', 'integer'],
+            'terms'         => ['integer'],
+            'amount'        => ['regex:/^\$?([0-9]{1,3},([0-9]{3},)*[0-9]{3}|[0-9]+)(.[0-9][0-9])?$/'],
+            'contact_to'    => ['required'],
+            'contact_from'  => ['required'],
+        ], [
+            'contact_to.required'    => 'Geef een contactpersoon op en klik op Bijwerken',
+            'contact_from.required'  => 'Geef een afzender op en klik op Bijwerken',
         ]);
 
         $project = Project::findOrFail($request->get('project'));
@@ -41,11 +137,11 @@ class NewController extends Controller
         $offer = new Offer;
         $offer->to_contact_id = $request->get('contact_to');
         $offer->from_contact_id = $request->get('contact_from');
-        // $offer->description = $request->get('description');
+        $offer->description = $request->get('pretext');
 
         $offer->offer_code = sprintf("%s%05d-%03d-%s", $request->user()->offernumber_prefix, $project->id, $request->user()->offer_counter, date('y'));
         // $offer->extracondition = $request->get('extracondition');
-        // $offer->closure = $request->get('closure');
+        $offer->closure = $request->get('posttext');
 
         if ($request->get('offdateval')) {
             $offer->offer_make = date('Y-m-d', strtotime($request->get('offdateval')));
@@ -109,36 +205,7 @@ class NewController extends Controller
         $offer->offer_total = CalculationEndresult::totalProject($project);
         $offer->save();
 
-        // $page = 0;
-        // $newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
-        // $pdf = PDF::loadView('calc.offer_pdf', ['offer' => $offer]);
-
-        // $relation_self = Relation::find(Auth::User()->self_id);
-        // $footer_text = $relation_self->company_name;
-        // if ($relation_self->iban)
-        //     $footer_text .= ' | IBAN: ' . $relation_self->iban;
-        // if ($relation_self->kvk)
-        //     $footer_text .= ' | KVK: ' . $relation_self->kvk;
-        // if ($relation_self->btw)
-        //     $footer_text .= ' | BTW: ' . $relation_self->btw;
-
-        // $pdf->setOption('zoom', 1.1);
-        // $pdf->setOption('footer-font-size', 8);
-        // $pdf->setOption('footer-left', $footer_text);
-        // $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
-        // $pdf->setOption('lowquality', false);
-        // $pdf->save('user-content/'.$newname);
-
-        // $resource = new Resource;
-        // $resource->resource_name = $newname;
-        // $resource->file_location = 'user-content/' . $newname;
-        // $resource->file_size = filesize('user-content/' . $newname);
-        // $resource->user_id = Auth::id();
-        // $resource->description = 'Offerteversie';
-
-        // $resource->save();
-
-        // $offer->resource_id = $resource->id;
+        $this->saveReport($request->user(), $offer, $project);
 
         $offer->save();
 

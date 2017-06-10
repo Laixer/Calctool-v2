@@ -49,19 +49,16 @@ class NewController extends Controller
     public function new(Request $request)
     {
         $validator = $this->validate($request, [
-            'street' => array('required','max:60'),
-            'address_number' => array('required','alpha_num','max:5'),
-            'zipcode' => array('required'),
-            'city' => array('required','max:35'),
-            'province' => array('required','numeric'),
-            'country' => array('required','numeric'),
-            'contractor' => array('required','numeric'),
-            'name' => array('max:50'),
+            'street'          => ['required', 'max:60'],
+            'address_number'  => ['required', 'alpha_num', 'max:5'],
+            'zipcode'         => ['required'],
+            'city'            => ['required', 'max:35'],
+            'province'        => ['required', 'numeric'],
+            'country'         => ['required', 'numeric'],
+            'contractor'      => ['required', 'numeric'],
+            'name'            => ['max:50'],
+            'type'            => ['required'],
         ]);
-
-        if (!Relation::find($request->user()->self_id)) {
-            return back()->withErrors(['error' => 'Mijn bedrijf bestaat niet'])->withInput($request->all());
-        }
 
         $project = new Project;
         $project->address_street             = $request->input('street');
@@ -71,7 +68,7 @@ class NewController extends Controller
         $project->user_id                    = $request->user()->id;
         $project->province_id                = $request->input('province');
         $project->country_id                 = $request->input('country');
-        $project->type_id                    = $request->input('type');
+        // $project->type_id                    = $request->input('type');
         $project->client_id                  = $request->input('contractor');
         $project->hour_rate                  = $request->user()->pref_hourrate_calc;
         $project->hour_rate_more             = $request->user()->pref_hourrate_more;
@@ -84,8 +81,8 @@ class NewController extends Controller
         $project->profit_more_subcontr_mat   = $request->user()->pref_profit_more_subcontr_mat;
         $project->profit_more_subcontr_equip = $request->user()->pref_profit_more_subcontr_equip;
 
-        $relation = Relation::find($project->client_id);
-        if ($request->input('tax_reverse')) {
+        $relation = Relation::findOrFail($project->client_id);
+        if ($request->has('tax_reverse')) {
             if (RelationKind::find($relation->kind_id)->kind_name == 'particulier') {
                 return back()->withErrors(['error' => 'BTW kan niet worden verlegd naar een particulier opdrachtgever'])->withInput($request->all());
             }
@@ -101,17 +98,16 @@ class NewController extends Controller
             $project->project_name = $request->input('name');
         }
 
-        if (!$project->hour_rate) {
-            $project->hour_rate = 0;
-        }
-
-        if ($request->input('tax_reverse'))
-            $project->tax_reverse = true;
-        else
-            $project->tax_reverse = false;
-
-        if (!$request->input('type')) {
-            $project->type_id = 2;
+        switch ($request->get('type')) {
+            case 'calculate':
+                $project->type_id = 2;
+                break;
+            case 'directwork':
+                $project->type_id = 1;
+                break;
+            case 'quickinvoice':
+                $project->type_id = 3;
+                break;
         }
 
         if ($relation->hour_rate)

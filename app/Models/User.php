@@ -47,13 +47,13 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasOne(UserType::class, 'id', 'user_type');
     }
 
-    public function productFavorite() {
-        return $this->belongsToMany('\BynqIO\Dynq\Models\Product', 'product_favorite', 'user_id', 'product_id');
-    }
+    // public function productFavorite() {
+    //     return $this->belongsToMany('\BynqIO\Dynq\Models\Product', 'product_favorite', 'user_id', 'product_id');
+    // }
 
-    public function tag() {
-        return $this->hasOne('\BynqIO\Dynq\Models\UserTag', 'id', 'user_tag_id');
-    }
+    // public function tag() {
+    //     return $this->hasOne('\BynqIO\Dynq\Models\UserTag', 'id', 'user_tag_id');
+    // }
 
     public function isSuperUser() {
         return in_array($this->type->user_type, array('superuser', 'admin', 'system'));
@@ -88,26 +88,30 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     public function isAlmostDue() {
-        if ($this->isAdmin())
+        if ($this->isAdmin()) {
             return false;
+        }
 
         return strtotime($this->expiration_date . "-5 days") == strtotime(date('Y-m-d'));
     }
 
     public function canArchive() {
+        if ($this->isAdmin()) {
+            return false;
+        }
+
         return (strtotime($this->registration_date . "+2 days") < time());
     }
 
     public function hasOwnCompany()
     {
-        return $this->self_id;
+        return $this->self_id ? true : false;
     }
 
-    public function myCompany() {
-        if ($this->self_id)
-            return Relation::find($this->self_id);
-        else
-            return null;
+    public function ownCompany() {
+        if ($this->self_id) {
+            return $this->hasOne(Relation::class, 'id', 'self_id');
+        }
     }
 
     public function encodedName() {
