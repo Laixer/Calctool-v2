@@ -73,7 +73,6 @@ class CalculationComponent extends BaseComponent implements Component
             'activity.move'           => true,
             'activity.changename'     => true,
             'activity.remove'         => true,
-            'activity.timesheet'      => true,
             'activity.convertsubcon'  => true,
             'activity.converestimate' => true,
 

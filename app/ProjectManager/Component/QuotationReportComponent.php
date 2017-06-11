@@ -110,7 +110,5 @@ class QuotationReportComponent extends BaseComponent implements Component
         $pdf->setOption('lowquality', false);
 
         return $pdf->inline();
-
-        return view('letter', array_merge($data, $letter));
     }
 }

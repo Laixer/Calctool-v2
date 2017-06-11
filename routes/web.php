@@ -288,14 +288,15 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('more/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'MoreController@getMoreWithFavorite');
     });
 
+    // Route::get('xxx', function() {
+    //     return view('mail.deactivate2',['name'=>'kaas','firstname'=>'arie','lastname'=>'koos','body'=>'y','amount'=>12,'expdate'=>'21-23-2017']);
+    // });
+
     /* Module Group Project */
     Route::group(['namespace' => 'Project'], function() {
         Route::get('project/all',                                          'FilterController');
         Route::get('project/new',                                          'NewController@index');
         Route::post('project/new',                                         'NewController@new');
-
-        Route::get('project/{project_id}-{name}/packingslip',              'ReportController@packingSlip');//TODO: move into component
-        Route::get('project/{project_id}-{name}/printoverview',            'ReportController@printOverview');//TODO: move into component
 
         /* Project component entrypoint */
         Route::get('project/{project_id}-{name}/{module}/{submodule?}',    'ComponentController@index');

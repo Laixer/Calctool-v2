@@ -258,6 +258,11 @@ $(document).ready(function() {
                 <i class="fa fa-warning"></i>
                 Account is verlopen, activeer onder <a href="javascript:void(0);" id="warn-link" style="color:#8a6d3b;"><b>Betalingen</b></a>.
             </div>
+            <div class="alert alert-info">
+                <i class="fa fa-info"></i>
+                Langer testen? Dat kan, neem contact op met de support afdeling.
+            </div>
+            
             @endif
 
             @if (Session::has('success'))

@@ -66,7 +66,6 @@ $(document).ready(function() {
                 <div class="white-row" >
 
                     <div class="pull-right">
-                        <!--<a href="/project/new" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> @lang('core.new') {{ trans_choice('core.project', 1) }}</a>-->
                         <a href="/inline/projecttypes?package=dashboard" data-toggle="modal" data-target="#asyncModal" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> @lang('core.new') {{ trans_choice('core.project', 1) }}</a>
 
                         <div class="btn-group" role="group">

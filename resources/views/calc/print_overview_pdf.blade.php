@@ -21,14 +21,6 @@ use \BynqIO\Dynq\Calculus\LessOverview;
 
 $project = Project::find($project_id);
 $type = ProjectType::find($project->type_id);
-
-$image_height = 300;
-if ($relation_self && $relation_self->logo_id) {
-    $image_src = storage_prefix_path() . '/' . Resource::find($relation_self->logo_id)->file_location;
-    $image = getimagesize($image_src);
-    $image_height = round(($image[1] / $image[0]) * 300);
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,10 +37,7 @@ if ($relation_self && $relation_self->logo_id) {
             <tr>
               <td style="width: 345px">
                 <div id="logo">
-                <?php
-                  if ($image_height > 0)
-                    echo "<img style=\"width:300px;height:" . $image_height . "px;\" src=\"" . $image_src . "\"/>";
-                ?>
+                
                 </div>
               </td>
 

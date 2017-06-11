@@ -27,7 +27,6 @@ if ($offer_last && $offer_last->offer_finish)
     <a href="/project/{{ $project->id }}-{{ $project->slug() }}/more"        {!! starts_with($page, 'more') ? 'class="current"' : ''!!} >Meerwerk</a>
     @endif
     <a href="/project/{{ $project->id }}-{{ $project->slug() }}/invoices"    {!! starts_with($page, 'invoice') ? 'class="current"' : ''!!} >Factuur</a>
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/result"      {!! starts_with($page, 'result') ? 'class="current"' : '' !!} >Resultaat</a>
     @else
     @if ($project->use_estimate)
     <span>Stelposten stellen</span>
@@ -39,6 +38,6 @@ if ($offer_last && $offer_last->offer_finish)
     <span>Meerwerk</span>
     @endif
     <span>Factuur</span>
-    <span>Resultaat</span>
     @endif
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/result"      {!! starts_with($page, 'result') ? 'class="current"' : '' !!} >Resultaat</a>
 </div>

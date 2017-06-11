@@ -50,23 +50,14 @@ use BynqIO\Dynq\Calculus\CalculationEndresult;
 @if ($offer_last)
 @if (number_format(CalculationEndresult::totalProject($project), 3, ",",".") != number_format($offer_last->offer_total, 3, ",","."))
 <div class="alert alert-warning">
-    <i class="fa fa-fa fa-info-circle"></i>
-    Gegevens zijn gewijzigd ten op zichte van de laaste offerte
+    <i class="fa fa-fa fa-info-circle"></i> Gegevens zijn gewijzigd ten op zichte van de laaste offerte
 </div>
 @endif
-@endif
-
-@if (!CalculationEndresult::totalProject($project))
-<div class="alert alert-warning">
-    <i class="fa fa-fa fa-info-circle"></i>
-    Offertes kunnen pas worden gemaakt wanneer het project waarde bevat
-</div>
 @endif
 
 @if ($offer_last && !$offer_last->offer_finish)
 <div class="alert alert-warning">
-    <i class="fa fa-fa fa-info-circle"></i>
-    Zend na aanpassing van de calculatie een nieuwe offerte naar uw opdrachtgever.
+    <i class="fa fa-fa fa-info-circle"></i> Zend na aanpassing van de calculatie een nieuwe offerte naar uw opdrachtgever.
 </div>
 @endif
 

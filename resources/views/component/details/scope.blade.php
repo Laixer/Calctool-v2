@@ -9,7 +9,7 @@
             <li><a data-toggle="modal" data-target="#notepad">Kladblok</a></li>
             @endif
             <li><a href="/project/{{ $project->id }}-{{ $project->slug() }}/printoverview" target="new">Projectoverzicht</a></li>
-            <li><a href="/project/{{ $project->id }}-{{ $project->slug() }}/packlist" target="new">Raaplijst</a></li>
+            <li><a href="/project/{{ $project->id }}-{{ $project->slug() }}/packingslip" target="new">Pakbon maken</a></li>
             <li class="divider" style="margin:5px 0;"></li>
             <li><a href="/project/copy?id={{ $project->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Project kopieren?')">Project kopieren</a></li>
             @if ($project->project_close)
