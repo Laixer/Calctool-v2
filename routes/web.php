@@ -270,7 +270,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('more/summary/project-{project_id}',           'MoreController@asyncSummary');
         Route::get('more/endresult/project-{project_id}',         'MoreController@asyncEndresult');
 
-        ///////////////////////////
+        // TODO /////////////////// {
         Route::post('calculation/calc/savefav',                   'CalcController@doNewCalculationFavorite');
 
         //TODO: rename
@@ -286,10 +286,13 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
 
         /* More pages */
         Route::get('more/project-{project_id}/chapter-{chapter_id}/fav-{fav_id}', 'MoreController@getMoreWithFavorite');
+        /////////////////////////// }
     });
 
     // Route::get('xxx', function() {
-    //     return view('mail.deactivate2',['name'=>'kaas','firstname'=>'arie','lastname'=>'koos','body'=>'y','amount'=>12,'expdate'=>'21-23-2017']);
+    //     return view('mail.inform_deactivate_user2',['name'=>'kaas','firstname'=>'arie',
+    //     'lastname'=>'koos','body'=>'y','amount'=>12,'email'=>'info@jaas.com','reason'=>'oo',
+    //     'expdate'=>'21-23-2017','project_name'=>'q','note'=>'x','username'=>'trol']);
     // });
 
     /* Module Group Project */

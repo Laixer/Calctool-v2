@@ -176,6 +176,7 @@ $(document).ready(function() {
     }
 });
 </script>
+
 <div class="modal fade" id="tutModal" tabindex="-1" role="dialog" aria-labelledby="tutModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -376,7 +377,7 @@ $(document).ready(function() {
         </div>
         @endif
 
-        <h2><strong>Nieuw</strong> {{ Input::get('type') }} project</h2>
+        <h2><strong>Nieuw</strong> @lang('components.' . Input::get('type')) project</h2>
 
         @if(!Relation::where('user_id', Auth::user()->id)->count())
         <div class="alert alert-info">

@@ -1,8 +1,5 @@
-<?php
-
-use BynqIO\Dynq\Calculus\CalculationEndresult;
-
-?>
+@inject('calculus', 'BynqIO\Dynq\Calculus\CalculationEndresult')
+@inject('carbon', 'Carbon\Carbon')
 
 @if ($offer_last)
 <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog">
@@ -26,7 +23,7 @@ use BynqIO\Dynq\Calculus\CalculationEndresult;
                             </div>
                             <div class="col-md-12">
                                 <div class="input-group input-append date" id="dateRangePicker">
-                                    <input type="text" class="form-control" name="date" value="{{ date('d-m-Y') }}" />
+                                    <input type="text" class="form-control" name="date" value="{{ $carbon::now()->toDateString() }}" />
                                     <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
                                 </div>
                                 <input value="{{ $project->id }}" type="hidden" name="project" />
@@ -48,7 +45,7 @@ use BynqIO\Dynq\Calculus\CalculationEndresult;
 @endif
 
 @if ($offer_last)
-@if (number_format(CalculationEndresult::totalProject($project), 3, ",",".") != number_format($offer_last->offer_total, 3, ",","."))
+@if (number_format($calculus::totalProject($project), 3, ",",".") != number_format($offer_last->offer_total, 3, ",","."))
 <div class="alert alert-warning">
     <i class="fa fa-fa fa-info-circle"></i> Gegevens zijn gewijzigd ten op zichte van de laaste offerte
 </div>
@@ -98,9 +95,9 @@ use BynqIO\Dynq\Calculus\CalculationEndresult;
         @foreach($project->quotations()->orderBy('created_at')->get() as $offer)
         <?php $i++; ?>
         <tr>
-            <td class="col-md-4">{{ $offer->offer_code }} @if ($offer->offer_finish)<span class="label label-default">Definitief</span>@endif</td>
-            <td class="col-md-3"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
-            <td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
+            <td class="col-md-4"><a href="/project/{{ $project->id }}-{{ $project->slug() }}/quotations/detail?id={{ $offer->id }}">{{ $offer->offer_code }}</a> @if ($offer->offer_finish)<span class="label label-default">Definitief</span>@endif</td>
+            <td class="col-md-3">{{ $carbon::parse($offer->offer_make)->toDateString() }}</td>
+            <td class="col-md-3">@money($offer->offer_total)</td>
             <td class="col-md-3 text-right"><a href="/res-{{ ($offer->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-download fa-fw"></i> Downloaden</a></td>
         </tr>
         @endforeach

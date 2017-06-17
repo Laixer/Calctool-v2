@@ -16,6 +16,7 @@
 namespace BynqIO\Dynq\ProjectManager\Component;
 
 use BynqIO\Dynq\ProjectManager\Contracts\Component;
+use BynqIO\Dynq\ProjectManager\Support\Ledger;
 use BynqIO\Dynq\Models\PartType;
 
 /**
@@ -39,22 +40,7 @@ class LessComponent extends BaseComponent implements Component
 
     public function render()
     {
-        $data['filter'] = function($section, $object) {
-            return $this->{$section . 'Filter'}($object);
-        };
-
-        $data['layer'] = function($layer, $activity = null) {
-            switch ($layer) {
-                case 'labor':
-                    return 'BynqIO\Dynq\Models\CalculationLabor';
-                case 'material':
-                    return 'BynqIO\Dynq\Models\CalculationMaterial';
-                case 'other':
-                    return 'BynqIO\Dynq\Models\CalculationEquipment';
-            }
-        };
-
-        $data['features'] = [
+        $ledger = new Ledger($this, [
             'level.new' => false,
 
             'activity.move' => false,
@@ -84,37 +70,60 @@ class LessComponent extends BaseComponent implements Component
             'rows.other'           => false,
 
             'tax.update' => false,
-        ];
+        ]);
 
-        $data['original'] = false;
+        $ledger->layer(function ($layer, $activity = null) {
+            switch ($layer) {
+                case 'labor':
+                    return 'BynqIO\Dynq\Models\CalculationLabor';
+                case 'material':
+                    return 'BynqIO\Dynq\Models\CalculationMaterial';
+                case 'other':
+                    return 'BynqIO\Dynq\Models\CalculationEquipment';
+            }
+        });
+
+        $ledger->profit(function ($layer, $activity) {
+            if ($activity->isSubcontracting()) {
+                switch ($layer) {
+                    case 'labor':
+                        return 0;
+                    case 'material':
+                        return $this->project->profit_calc_subcontr_mat;
+                    case 'other':
+                        return $this->project->profit_calc_subcontr_equip;
+                }
+            } else {
+                switch ($layer) {
+                    case 'labor':
+                        return 0;
+                    case 'material':
+                        return $this->project->profit_calc_contr_mat;
+                    case 'other':
+                        return $this->project->profit_calc_contr_equip;
+                }
+            }
+        });
+
+        $ledger->calculateRow(function ($row, $profit = 0) use ($ledger) {
+            return $row->getRate($ledger->isOriginal()) * $row->getAmount($ledger->isOriginal()) * (($profit/100)+1);
+        });
 
         if ($this->project->use_equipment) {
-            $data['features']['rows.other'] = true;
+            $ledger->features(['rows.other' => true]);
         }
 
         /* Disable all editable options for closed projects */
         if ($this->project->project_close) {
-            $data['features']['level.new']           = false;
-            $data['features']['activity.options']    = false;
-            $data['features']['chapter.options']     = false;
-            $data['features']['tax.update']          = false;
-            $data['features']['rows.labor.edit']     = false;
-            $data['features']['rows.material.add']   = false;
-            $data['features']['rows.material.edit']  = false;
-            $data['features']['rows.other.add']      = false;
-            $data['features']['rows.other.edit']     = false;
+            $this->readOnly();
         }
 
-        $tabs[] = ['name' => 'calculate', 'title' => 'Minderwerk', 'icon' => 'fa-list'];
-
-        $async = [
+        $tabs = [
+            ['name' => 'calculate', 'title' => 'Minderwerk',    'icon' => 'fa-list'],
             ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', 'async' => "summary/project-{$this->project->id}"],
             ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  'async' => "endresult/project-{$this->project->id}"],
         ];
 
-        $tabs[] = $async[0];
-        $tabs[] = $async[1];
-
-        return $this->tabLayout($tabs, $data);
+        return $this->tabLayout($tabs, $ledger->original(false)->make());
     }
 }

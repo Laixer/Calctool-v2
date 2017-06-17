@@ -9,9 +9,9 @@ class Chapter extends Model {
     protected $table = 'chapter';
     protected $guarded = array('id');
 
-    // public function project() {
-    //     return $this->hasOne('Project');
-    // }
+    public function project() {
+        return $this->belongsTo(Project::class);
+    }
 
     public function activities() {
         return $this->hasMany(Activity::class);

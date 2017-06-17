@@ -20,9 +20,9 @@ $(document).ready(function() {
             $('#tab-' + $toggleOpenTab).trigger("click");
         @endisset
     } else {
-        sessionStorage.toggleTab{{ $component }}{{ Auth::id() }} = '{{ $tab['name'] }}';
-        $('#tab-{{ $tab['name'] }}').addClass('active');
-        $('#{{ $tab['name'] }}').addClass('active');
+        sessionStorage.toggleTab{{ $component }}{{ Auth::id() }} = '{{ array_first($tabs)['name'] }}';
+        $('#tab-{{ array_first($tabs)['name'] }}').addClass('active');
+        $('#{{ array_first($tabs)['name'] }}').addClass('active');
     }
 });
 </script>

@@ -36,6 +36,7 @@ class ReportController extends Controller
         $pdf->setOption('footer-font-size', 8);
         $pdf->setOption('footer-left', Project::find($project_id)->project_name);
         $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+        $pdf->setOption('encoding', 'utf-8');
         $pdf->setOption('lowquality', false);
 
         return $pdf->inline();
@@ -70,6 +71,7 @@ class ReportController extends Controller
         $pdf->setOption('footer-font-size', 8);
         $pdf->setOption('footer-left', Project::find($project_id)->project_name);
         $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+        $pdf->setOption('encoding', 'utf-8');
         $pdf->setOption('lowquality', false);
 
         return $pdf->inline();

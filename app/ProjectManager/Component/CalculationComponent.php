@@ -16,6 +16,7 @@
 namespace BynqIO\Dynq\ProjectManager\Component;
 
 use BynqIO\Dynq\ProjectManager\Contracts\Component;
+use BynqIO\Dynq\ProjectManager\Support\Ledger;
 use BynqIO\Dynq\Models\PartType;
 
 /**
@@ -37,51 +38,24 @@ class CalculationComponent extends BaseComponent implements Component
 
     public function render()
     {
-        $data['filter'] = function($section, $object) {
-            return $this->{$section . 'Filter'}($object);
-        };
+        $ledger = new Ledger($this, [
+            'level.new'                  => true,
 
-        $data['layer'] = function($layer, $activity) {
-            if ($activity && $activity->isEstimate()) {
-                switch ($layer) {
-                    case 'labor':
-                        return 'BynqIO\Dynq\Models\EstimateLabor';
-                    case 'material':
-                        return 'BynqIO\Dynq\Models\EstimateMaterial';
-                    case 'other':
-                        return 'BynqIO\Dynq\Models\EstimateEquipment';
-                }
-            } else {
-                switch ($layer) {
-                    case 'labor':
-                        return 'BynqIO\Dynq\Models\CalculationLabor';
-                    case 'material':
-                        return 'BynqIO\Dynq\Models\CalculationMaterial';
-                    case 'other':
-                        return 'BynqIO\Dynq\Models\CalculationEquipment';
-                }
-            }
-        };
-
-        $data['features'] = [
-            'level.new'              => true,
-
-            'chapter.options'        => true,
+            'chapter.options'            => true,
 
             /* Activity options */
-            'activity.options'        => true,
-            'activity.move'           => true,
-            'activity.changename'     => true,
-            'activity.remove'         => true,
-            'activity.convertsubcon'  => true,
-            'activity.converestimate' => true,
+            'activity.options'           => true,
+            'activity.move'              => true,
+            'activity.changename'        => true,
+            'activity.remove'            => true,
+            'activity.convertsubcon'     => true,
+            'activity.converestimate'    => true,
 
             /* Row options */
             'rows.labor'                 => true,
             'rows.labor.edit'            => true,
             'rows.labor.edit.rate'       => true,
             'rows.labor.edit.amount'     => true,
-            'rows.timesheet'             => true,
             'rows.material'              => true,
             'rows.material.add'          => true,
             'rows.material.edit'         => true,
@@ -101,59 +75,95 @@ class CalculationComponent extends BaseComponent implements Component
 
             /* Tax */
             'tax.update'             => true,
-        ];
+        ]);
 
-        $data['original'] = true;
+        $ledger->layer(function ($layer, $activity) {
+            if ($activity->isEstimate()) {
+                switch ($layer) {
+                    case 'labor':
+                        return 'BynqIO\Dynq\Models\EstimateLabor';
+                    case 'material':
+                        return 'BynqIO\Dynq\Models\EstimateMaterial';
+                    case 'other':
+                        return 'BynqIO\Dynq\Models\EstimateEquipment';
+                }
+            } else {
+                switch ($layer) {
+                    case 'labor':
+                        return 'BynqIO\Dynq\Models\CalculationLabor';
+                    case 'material':
+                        return 'BynqIO\Dynq\Models\CalculationMaterial';
+                    case 'other':
+                        return 'BynqIO\Dynq\Models\CalculationEquipment';
+                }
+            }
+        });
+
+        $ledger->profit(function ($layer, $activity) {
+            if ($activity->isSubcontracting()) {
+                switch ($layer) {
+                    case 'labor':
+                        return 0;
+                    case 'material':
+                        return $this->project->profit_calc_subcontr_mat;
+                    case 'other':
+                        return $this->project->profit_calc_subcontr_equip;
+                }
+            } else {
+                switch ($layer) {
+                    case 'labor':
+                        return 0;
+                    case 'material':
+                        return $this->project->profit_calc_contr_mat;
+                    case 'other':
+                        return $this->project->profit_calc_contr_equip;
+                }
+            }
+        });
+
+        $ledger->calculateRow(function ($row, $profit = 0) use ($ledger) {
+            return $row->getRate($ledger->isOriginal()) * $row->getAmount($ledger->isOriginal()) * (($profit/100)+1);
+        });
 
         if ($this->project->use_equipment) {
-            $data['features']['rows.other'] = true;
+            $ledger->features(['rows.other' => true]);
         }
 
         if ($this->project->quotations()->orderBy('created_at', 'desc')->limit(1)->count()) {
-            $data['features']['level.new']                  = false;
-            $data['features']['activity.options']           = false;
-            $data['features']['chapter.options']            = false;
-            $data['features']['tax.update']                 = false;
-            $data['features']['rows.labor.edit']            = false;
-            $data['features']['rows.labor.edit.rate']       = false;
-            $data['features']['rows.labor.edit.amount']     = false;
-            $data['features']['rows.material.add']          = false;
-            $data['features']['rows.material.edit']         = false;
-            $data['features']['rows.material.edit.name']    = false;
-            $data['features']['rows.material.edit.unit']    = false;
-            $data['features']['rows.material.edit.rate']    = false;
-            $data['features']['rows.material.edit.amount']  = false;
-            $data['features']['rows.other.add']             = false;
-            $data['features']['rows.other.edit']            = false;
-            $data['features']['rows.other.edit.name']       = false;
-            $data['features']['rows.other.edit.unit']       = false;
-            $data['features']['rows.other.edit.rate']       = false;
-            $data['features']['rows.other.edit.amount']     = false;
+            $ledger->features([
+                'level.new'                   => false,
+                'activity.options'            => false,
+                'chapter.options'             => false,
+                'tax.update'                  => false,
+                'rows.labor.edit'             => false,
+                'rows.labor.edit.rate'        => false,
+                'rows.labor.edit.amount'      => false,
+                'rows.material.add'           => false,
+                'rows.material.edit'          => false,
+                'rows.material.edit.name'     => false,
+                'rows.material.edit.unit'     => false,
+                'rows.material.edit.rate'     => false,
+                'rows.material.edit.amount'   => false,
+                'rows.other.add'              => false,
+                'rows.other.edit'             => false,
+                'rows.other.edit.name'        => false,
+                'rows.other.edit.unit'        => false,
+                'rows.other.edit.rate'        => false,
+                'rows.other.edit.amount'      => false,
+            ]);
         }
 
         /* Disable all editable options for closed projects */
         if ($this->project->project_close) {
-            $data['features']['level.new']           = false;
-            $data['features']['activity.options']    = false;
-            $data['features']['chapter.options']     = false;
-            $data['features']['tax.update']          = false;
-            $data['features']['rows.labor.edit']     = false;
-            $data['features']['rows.material.add']   = false;
-            $data['features']['rows.material.edit']  = false;
-            $data['features']['rows.other.add']      = false;
-            $data['features']['rows.other.edit']     = false;
+            $ledger->readOnly();
         }
 
-        $tabs[] = ['name' => 'calculate', 'title' => 'Calculatie', 'icon' => 'fa-list'];
-
-        $async = [
+        $tabs = [
+            ['name' => 'calculate', 'title' => 'Calculatie',    'icon' => 'fa-list'],
             ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', 'async' => "summary/project-{$this->project->id}"],
-            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  'async' => "endresult/project-{$this->project->id}"], 
+            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  'async' => "endresult/project-{$this->project->id}"],
         ];
 
-        $tabs[] = $async[0];
-        $tabs[] = $async[1];
-
-        return $this->tabLayout($tabs, $data);
+        return $this->tabLayout($tabs, $ledger->make());
     }
 }

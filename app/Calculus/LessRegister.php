@@ -1,105 +1,118 @@
 <?php
 
+/**
+ * Copyright (C) 2017 Bynq.io B.V.
+ * All Rights Reserved
+ *
+ * This file is part of the Dynq project.
+ *
+ * Content can not be copied and/or distributed without the express
+ * permission of the author.
+ *
+ * @package  Dynq
+ * @author   Yorick de Wid <y.dewid@calculatietool.com>
+ */
+
 namespace BynqIO\Dynq\Calculus;
 
 use BynqIO\Dynq\Models\CalculationMaterial;
 use BynqIO\Dynq\Models\CalculationEquipment;
 use BynqIO\Dynq\Models\Part;
 
-class LessRegister {
+class LessRegister
+{
+    /*Calculation labor*/
+    public static function laborTotal($rate, $amount) {
+        return $rate * $amount;
+    }
 
-	public static function lessLaborDeltaTotal($labor, $activity, $project) {
-		$rate = $labor->rate;
-		if (Part::find($activity->part_id)->part_name == 'contracting') {
-			$rate = $project->hour_rate;
-		}
+    /*Calculation Material*/
+    public static function materialTotal($activity) {
+        $total = 0;
 
-		if ($labor->isless)
-			return ($labor->less_amount - $labor->amount) * $rate;
-		return 0;
-	}
+        $rows = CalculationMaterial::where('activity_id', '=', $activity)->get();
+        foreach ($rows as $row)
+        {
+            if ($row->isless)
+                $total += self::laborTotal($row->less_rate, $row->less_amount);
+            else
+                $total += self::laborTotal($row->rate, $row->amount);
+        }
 
-/*Calculation labor*/
-	public static function lessLaborTotal($rate, $amount) {
-		return $rate * $amount;
-	}
+        return $total;
+    }
 
-/*Calculation Material*/
-	public static function lessMaterialTotal($activity) {
-		$total = 0;
+    /*Calculation Material Profit*/
+    public static function materialTotalProfit($activity, $profit) {
+        $total = self::materialTotal($activity);
 
-		$rows = CalculationMaterial::where('activity_id', '=', $activity)->get();
-		foreach ($rows as $row)
-		{
-			if ($row->isless)
-				$total += LessRegister::lessLaborTotal($row->less_rate, $row->less_amount);
-			else
-				$total += LessRegister::lessLaborTotal($row->rate, $row->amount);
-		}
+        return (1+($profit/100))*$total;
+    }
 
-		return $total;
-	}
+    /*Calculation Equipment*/
+    public static function equipmentTotal($activity) {
+        $total = 0;
 
-/*Calculation Material Profit*/
-	public static function lessMaterialTotalProfit($activity, $profit) {
-		$total = LessRegister::lessMaterialTotal($activity);
+        $rows = CalculationEquipment::where('activity_id', '=', $activity)->get();
+        foreach ($rows as $row)
+        {
+            if ($row->isless)
+                $total += self::laborTotal($row->less_rate, $row->less_amount);
+            else
+                $total += self::laborTotal($row->rate, $row->amount);
+        }
 
-		return (1+($profit/100))*$total;
-	}
+        return $total;
+    }
 
-/*Calculation Equipment*/
-	public static function lessEquipmentTotal($activity) {
-		$total = 0;
+    /*Calculation Equipment Profit*/
+    public static function equipmentTotalProfit($activity, $profit) {
+        $total = self::equipmentTotal($activity);
 
-		$rows = CalculationEquipment::where('activity_id', '=', $activity)->get();
-		foreach ($rows as $row)
-		{
-			if ($row->isless)
-				$total += LessRegister::lessLaborTotal($row->less_rate, $row->less_amount);
-			else
-				$total += LessRegister::lessLaborTotal($row->rate, $row->amount);
-		}
+        return (1+($profit/100))*$total;
+    }
 
-		return $total;
-	}
 
-/*Calculation Equipment Profit*/
-	public static function lessEquipmentTotalProfit($activity, $profit) {
-		$total = LessRegister::lessEquipmentTotal($activity);
+    public static function lessLaborDeltaTotal($labor, $activity, $project) {
+        $rate = $labor->rate;
+        if (Part::find($activity->part_id)->part_name == 'contracting') {
+            $rate = $project->hour_rate;
+        }
 
-		return (1+($profit/100))*$total;
-	}
+        if ($labor->isless)
+            return ($labor->less_amount - $labor->amount) * $rate;
+        return 0;
+    }
 
-	public static function lessMaterialDeltaTotal($activity, $profit) {
-		$supertotal = 0;
+    public static function lessMaterialDeltaTotal($activity, $profit) {
+        $supertotal = 0;
 
-		$rows = CalculationMaterial::where('activity_id', '=', $activity)->get();
-		foreach ($rows as $row)
-		{
-			if ($row->isless) {
-				$total = (LessRegister::lessLaborTotal($row->less_rate, $row->less_amount) * (1+($profit/100)));
-				$less_total = (LessRegister::lessLaborTotal($row->rate, $row->amount) * (1+($profit/100)));
-				$supertotal += $total - $less_total;
-			}
-		}
+        $rows = CalculationMaterial::where('activity_id', '=', $activity)->get();
+        foreach ($rows as $row)
+        {
+            if ($row->isless) {
+                $total = (self::laborTotal($row->less_rate, $row->less_amount) * (1+($profit/100)));
+                $less_total = (self::laborTotal($row->rate, $row->amount) * (1+($profit/100)));
+                $supertotal += $total - $less_total;
+            }
+        }
 
-		return $supertotal;
-	}
+        return $supertotal;
+    }
 
-	public static function lessEquipmentDeltaTotal($activity, $profit) {
-		$supertotal = 0;
+    public static function lessEquipmentDeltaTotal($activity, $profit) {
+        $supertotal = 0;
 
-		$rows = CalculationEquipment::where('activity_id', '=', $activity)->get();
-		foreach ($rows as $row)
-		{
-			if ($row->isless) {
-				$total = (LessRegister::lessLaborTotal($row->less_rate, $row->less_amount) * (1+($profit/100)));
-				$less_total = (LessRegister::lessLaborTotal($row->rate, $row->amount) * (1+($profit/100)));
-				$supertotal += $total - $less_total;
-			}
-		}
+        $rows = CalculationEquipment::where('activity_id', '=', $activity)->get();
+        foreach ($rows as $row)
+        {
+            if ($row->isless) {
+                $total = (self::laborTotal($row->less_rate, $row->less_amount) * (1+($profit/100)));
+                $less_total = (self::laborTotal($row->rate, $row->amount) * (1+($profit/100)));
+                $supertotal += $total - $less_total;
+            }
+        }
 
-		return $supertotal;
-	}
-
+        return $supertotal;
+    }
 }

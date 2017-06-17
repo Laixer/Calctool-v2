@@ -25,6 +25,7 @@ use BynqIO\Dynq\Models\CalculationEquipment;
 use BynqIO\Dynq\Models\EstimateLabor;
 use BynqIO\Dynq\Models\EstimateMaterial;
 use BynqIO\Dynq\Models\EstimateEquipment;
+use BynqIO\Dynq\Calculus\CalculationRegister;
 use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -43,10 +44,32 @@ class CalculationController extends Controller
     |
     */
 
+    private function profit($layer, $activity, $project) {
+        if ($activity->isSubcontracting()) {
+            switch ($layer) {
+                case 'labor':
+                    return 0;
+                case 'material':
+                    return $project->profit_calc_subcontr_mat;
+                case 'other':
+                    return $project->profit_calc_subcontr_equip;
+            }
+        } else {
+            switch ($layer) {
+                case 'labor':
+                    return 0;
+                case 'material':
+                    return $project->profit_calc_contr_mat;
+                case 'other':
+                    return $project->profit_calc_contr_equip;
+            }
+        }
+    }
+
     protected function newLaborRow($activity, Array $parameters)
     {
-        $chapter = Chapter::findOrFail($activity->chapter_id);
-        $project = Project::findOrFail($chapter->project_id);
+        $object = null;
+        $project = $activity->chapter->project;
 
         $rate = $project->hour_rate;
         if ($activity->isSubcontracting() && isset($parameters['rate'])) {
@@ -54,7 +77,7 @@ class CalculationController extends Controller
         }
 
         if ($activity->isEstimate()) {
-            return EstimateLabor::create([
+            $object = EstimateLabor::create([
                 "rate"            => $rate,
                 "amount"          => $parameters['amount'],
                 "activity_id"     => $activity->id,
@@ -62,18 +85,26 @@ class CalculationController extends Controller
                 "isset"           => false,
             ]);
         } else {
-            return CalculationLabor::create([
+            $object = CalculationLabor::create([
                 "rate"            => $rate,
                 "amount"          => $parameters['amount'],
                 "activity_id"     => $activity->id,
             ]);
         }
+
+        return [
+            'id'            => $object->id,
+            'amount'        => $object->amount * $object->rate,
+        ];
     }
 
     protected function newMaterialRow($activity, Array $parameters)
     {
+        $object = null;
+        $project = $activity->chapter->project;
+
         if ($activity->isEstimate()) {
-            return EstimateMaterial::create([
+            $object = EstimateMaterial::create([
                 "material_name"   => $parameters['name'],
                 "unit"            => $parameters['unit'],
                 "rate"            => $parameters['rate'],
@@ -83,7 +114,7 @@ class CalculationController extends Controller
                 "isset"           => false,
             ]);
         } else {
-            return CalculationMaterial::create([
+            $object = CalculationMaterial::create([
                 "material_name"   => $parameters['name'],
                 "unit"            => $parameters['unit'],
                 "rate"            => $parameters['rate'],
@@ -91,12 +122,23 @@ class CalculationController extends Controller
                 "activity_id"     => $activity->id,
             ]);
         }
+
+        return [
+            'id'               => $object->id,
+            'amount'           => $object->amount * $object->rate,
+            'amount_incl'      => $object->amount * $object->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+            'total'            => CalculationRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+            'total_profit'     => CalculationRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
+        ];
     }
 
     protected function newOtherRow($activity, Array $parameters)
     {
+        $object = null;
+        $project = $activity->chapter->project;
+
         if ($activity->isEstimate()) {
-            return EstimateEquipment::create([
+            $object = EstimateEquipment::create([
                 "equipment_name" => $parameters['name'],
                 "unit"           => $parameters['unit'],
                 "rate"           => $parameters['rate'],
@@ -106,7 +148,7 @@ class CalculationController extends Controller
                 "isset"          => false,
             ]);
         } else {
-            return CalculationEquipment::create([
+            $object = CalculationEquipment::create([
                 "equipment_name" => $parameters['name'],
                 "unit"           => $parameters['unit'],
                 "rate"           => $parameters['rate'],
@@ -114,6 +156,14 @@ class CalculationController extends Controller
                 "activity_id"    => $activity->id,
             ]);
         }
+
+        return [
+            'id'               => $object->id,
+            'amount'           => $object->amount * $object->rate,
+            'amount_incl'      => $object->amount * $object->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+            'total'            => CalculationRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+            'total_profit'     => CalculationRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
+        ];
     }
 
     public function new(Request $request)
@@ -127,29 +177,28 @@ class CalculationController extends Controller
             'layer'     => ['required'],
         ]);
 
-        $id = null;
+        $object = null;
 
         $activity = Activity::findOrFail($request->get('activity'));
 
         switch ($request->get('layer')) {
             case 'labor':
-                $id = $this->newLaborRow($activity, $request->all())->id;
+                $object = $this->newLaborRow($activity, $request->all());
                 break;
             case 'material':
-                $id = $this->newMaterialRow($activity, $request->all())->id;
+                $object = $this->newMaterialRow($activity, $request->all());
                 break;
             case 'other':
-                $id = $this->newOtherRow($activity, $request->all())->id;
+                $object = $this->newOtherRow($activity, $request->all());
                 break;
         }
 
-        return response()->json(['success' => 1, 'id' => $id]);
+        return response()->json(array_merge(['success' => true], $object));
     }
 
     protected function updateLaborRow($activity, Array $parameters)
     {
-        $chapter = Chapter::findOrFail($activity->chapter_id);
-        $project = Project::findOrFail($chapter->project_id);
+        $project = $activity->chapter->project;
 
         $rate = $project->hour_rate;
         if ($activity->isSubcontracting() && isset($parameters['rate'])) {
@@ -166,10 +215,17 @@ class CalculationController extends Controller
         $row->rate           = $rate;
         $row->amount         = $parameters['amount'];
         $row->save();
+
+        return [
+            'id'            => $row->id,
+            'amount'        => $row->amount * $row->rate,
+        ];
     }
 
     protected function updateMaterialRow($activity, Array $parameters)
     {
+        $project = $activity->chapter->project;
+
         $row = null;
         if ($activity->isEstimate()) {
             $row = EstimateMaterial::findOrFail($parameters['id']);
@@ -182,10 +238,20 @@ class CalculationController extends Controller
         $row->rate           = $parameters['rate'];
         $row->amount         = $parameters['amount'];
         $row->save();
+
+        return [
+            'id'               => $row->id,
+            'amount'           => $row->amount * $row->rate,
+            'amount_incl'      => $row->amount * $row->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+            'total'            => CalculationRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+            'total_profit'     => CalculationRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
+        ];
     }
 
     protected function updateOtherRow($activity, Array $parameters)
     {
+        $project = $activity->chapter->project;
+
         $row = null;
         if ($activity->isEstimate()) {
             $row = EstimateEquipment::findOrFail($parameters['id']);
@@ -198,6 +264,14 @@ class CalculationController extends Controller
         $row->rate            = $parameters['rate'];
         $row->amount          = $parameters['amount'];
         $row->save();
+
+        return [
+            'id'               => $row->id,
+            'amount'           => $row->amount * $row->rate,
+            'amount_incl'      => $row->amount * $row->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+            'total'            => CalculationRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+            'total_profit'     => CalculationRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
+        ];
     }
 
     public function update(Request $request)
@@ -212,21 +286,23 @@ class CalculationController extends Controller
             'layer'     => ['required'],
         ]);
 
+        $object = null;
+
         $activity = Activity::findOrFail($request->get('activity'));
 
         switch ($request->get('layer')) {
             case 'labor':
-                $this->updateLaborRow($activity, $request->all());
+                $object = $this->updateLaborRow($activity, $request->all());
                 break;
             case 'material':
-                $this->updateMaterialRow($activity, $request->all());
+                $object = $this->updateMaterialRow($activity, $request->all());
                 break;
             case 'other':
-                $this->updateOtherRow($activity, $request->all());
+                $object = $this->updateOtherRow($activity, $request->all());
                 break;
         }
 
-        return response()->json(['success' => 1]);
+        return response()->json(array_merge(['success' => true], $object));
     }
 
     protected function deleteMaterialRow($activity, Array $parameters)
@@ -284,6 +360,7 @@ class CalculationController extends Controller
     public function asyncEndresult($projectid)
     {
         $project = Project::find($projectid);
+
         return view('component.calculation.endresult', ['project' => $project, 'section' => 'summary']);
     }
 }

@@ -1,9 +1,12 @@
 # TODO
+* Move BTW verlegt
+* Invoice done -> show in embed
+* Timesheet
+* Make valuta sign configurable
 * White label favicon
 * Validation
 * Translations
 * Comments
-* Usability
 * Database rewrite
     * Migration squashing
 

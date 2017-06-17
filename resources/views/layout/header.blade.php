@@ -55,6 +55,7 @@
                     @endunless
 
                     @if (Auth::check())
+                    @if (0)
                     <li class="search">
                         <form method="get" action="/search" class="input-group pull-right">
                             <input type="text" class="form-control" name="q" id="q" value="" placeholder="Zoeken">
@@ -63,6 +64,7 @@
                             </span>
                         </form>
                     </li>
+                    @endif
 
                     <li class="quick-cart">
                         @if ($notifications->count() > 0)

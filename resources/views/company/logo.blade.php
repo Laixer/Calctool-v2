@@ -16,7 +16,7 @@ use \BynqIO\Dynq\Models\Resource;
 
         @if ($relation->logo_id)
         <div>
-        <h5>Huidige logo</h5><img src="/res-{{ $relation->logo_id }}/view"/></div>
+        <h5>Huidige logo</h5><img src="/res-{{ $relation->logo_id }}/view"/ width="300"></div>
         @endif
 
         <br />

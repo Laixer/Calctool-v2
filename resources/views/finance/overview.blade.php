@@ -117,7 +117,7 @@ $(document).ready(function() {
                                         <td class="col-md-4"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
                                         <td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
                                         <td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
-                                        <td class="col-md-3">{{ '&euro; '.number_format($offer->offer_total, 2, ",",".") }}</td>
+                                        <td class="col-md-3">@money($offer->offer_total) }}</td>
                                         <td class="col-md-3"><a href="/res-{{ ($offer->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
                                     </tr>
                                     @endforeach
@@ -127,7 +127,7 @@ $(document).ready(function() {
                                         <th class="col-md-4">Totaal</th>
                                         <th class="col-md-2"></th>
                                         <th class="col-md-2"></th>
-                                        <th class="col-md-3">{{ '&euro; '.number_format($offer_total, 2, ",",".") }}</th>
+                                        <th class="col-md-3">@money($offer_total)</th>
                                         <th class="col-md-3"></th>
                                     </tr>
                                 </tfooter>
@@ -161,7 +161,7 @@ $(document).ready(function() {
                                     <tr>
                                         <td class="col-md-3"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
                                         <td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/pdf-invoice-{{ $invoice->id }}">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : ($invoice->book_code ? $invoice->book_code : $invoice->invoice_code) }}</a></td>
-                                        <td class="col-md-2">{{ number_format($invoice->amount, 2,",",".") }}</td>
+                                        <td class="col-md-2">@money($invoice->amount, false) }}</td>
                                         <td class="col-md-2">{{ $invoice->invoice_make ? date("d-m-Y", strtotime($invoice->invoice_make)) : '-' }}</td>
                                         <td class="col-md-1">{{ $invoice->payment_condition }} dagen</td>
                                         <td class="col-md-1"><a href="/res-{{ ($invoice->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-cloud-download fa-fw"></i> Downloaden</a></td>
@@ -174,7 +174,7 @@ $(document).ready(function() {
                                     <tr>
                                         <th class="col-md-3">Totaal</th>
                                         <th class="col-md-2"></th>
-                                        <th class="col-md-2">{{ '&euro; '.number_format($invoice_total, 2, ",",".") }}</th>
+                                        <th class="col-md-2">@money($invoice_total)</th>
                                         <th class="col-md-2"></th>
                                         <th class="col-md-1"></th>
                                         <th class="col-md-1"></th>

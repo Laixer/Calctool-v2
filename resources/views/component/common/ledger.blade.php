@@ -97,7 +97,7 @@ $(document).ready(function() {
                 var $curTable = $(this).closest("table");
                 $curTable.find("tr:eq(1)").clone().removeAttr("data-id").find("input").each(function() {
                     $(this).val("").removeClass("error-input").attr("id", function(_, id) { return id + i });
-                }).end().find(".total-ex-tax, .total-incl-tax").text("").end().find(".form-control-sm-number").each(function() {
+                }).end().find(".total-row, .total-row-profit").text("").end().find(".form-control-sm-number").each(function() {
                     $(this).number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
                 }).end().find("[name=delete]").change(delete_row).end().appendTo($curTable);
                 $("button[data-target='#myModal']").on("click", function() {
@@ -196,32 +196,31 @@ $(document).ready(function() {
         }, function(data) { if (data.success) { save_callback($tr, data); } });
     }
 
-    //TODO
+    /* Update row and total amounts */
     function save_callback($tr, data) {
         if (data.success) {
             $tr.attr("data-id", data.id);
+
+            if (data.amount) {
+                $tr.find(".total-row").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.amount));
+            }
+
+            if (data.amount_incl) {
+                $tr.find(".total-row-profit").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.amount_incl));
+            }
+
+            if (data.total) {
+                $tr.closest("table").find(".subtotal").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.total));
+            }
+
+            if (data.total) {
+                $tr.closest("table").find(".subtotal").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.total));
+            }
+
+            if (data.total_profit) {
+                $tr.closest("table").find(".subtotal_profit").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.total_profit));
+            }
         }
-
-        var rate   = parseNumber($tr.find("input[name='rate']").val());
-        var amount = parseNumber($tr.find("input[name='amount']").val());
-
-        // var profit = 2;//= $tr.closest("tr").find('td[data-profit]').data('profit');
-        $tr.find(".total-ex-tax").text('€ ' + convertNumber(rate * amount) );
-        // $tr.find(".total-incl-tax").text('€ ' + convertNumber(rate * amount * ((100 + profit) / 100)));
-        // var sub_total = 0;
-        // $curThis.closest("tbody").find(".total-ex-tax").each(function(index){
-        //     var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
-        //     if (_cal)
-        //         sub_total += _cal;
-        // });
-        // $curThis.closest("table").find('.mat_subtotal').text('€ '+$.number(sub_total,2,',','.'));
-        // var sub_total_profit = 0;
-        // $curThis.closest("tbody").find(".total-incl-tax").each(function(index){
-        //     var _cal = parseFloat($(this).text().substring(2).split('.').join('').replace(',', '.'));
-        //     if (_cal)
-        //         sub_total_profit += _cal;
-        // });
-        // $curThis.closest("table").find('.mat_subtotal_profit').text('€ '+$.number(sub_total_profit,2,',','.'));
     }
 
     /* Remove contents from modal on close */
@@ -427,13 +426,7 @@ $(document).ready(function() {
                             <div class="label-custom"><i class="fa fa-wrench">&nbsp;&nbsp;</i>Stelpost</div>
                             @endif
                         </span>
-                        <span style="float:right;margin-right:30px;">
-                            @if ($activity->isSubcontracting())
-                            @money($calculus::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_subcontr_mat, $project->profit_calc_subcontr_equip))
-                            @else
-                            @money($calculus::activityTotalProfit($project->hour_rate, $activity, $project->profit_calc_contr_mat, $project->profit_calc_contr_equip))
-                            @endif
-                        </span>
+                        <span style="float:right;margin-right:30px;">@money($calculus_overview::activityTotalProfit($project->hour_rate, $activity, $profit('material', $activity), $profit('other', $activity)))</span>
                     </label>
                     <div class="toggle-content" style="padding:10px 0px">
 
@@ -553,23 +546,23 @@ $(document).ready(function() {
                                     <td class="col-md-1">
                                         @if ($activity->isSubcontracting())
                                         @ifallowed ($features['rows.labor.edit.rate'])
-                                        <span class="rate"><input name="rate" type="text" value="{{ \BynqIO\Dynq\Services\FormatService::monetary($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->rate : 0) }}" class="form-control-sm-number labor-amount lsave"></span>
+                                        <span class="rate"><input name="rate" type="text" value="money($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->rate : 0, false)" class="form-control-sm-number labor-amount lsave"></span>
                                         @else
-                                        {{ \BynqIO\Dynq\Services\FormatService::monetary($project->hour_rate) }}
+                                        @money($project->hour_rate, false)
                                         @endifallowed
                                         @else
-                                        {{ \BynqIO\Dynq\Services\FormatService::monetary($project->hour_rate) }}
+                                        @money($project->hour_rate, false)
                                         @endif
                                     </td>
                                     <td class="col-md-1">
                                         @ifallowed ($features['rows.labor.edit.amount'])
-                                        <input data-id="{{ $activity->id }}" name="amount" type="text" value="{{ number_format($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0, 2, ",",".") }}" class="form-control-sm-number labor-amount lsave" />
+                                        <input data-id="{{ $activity->id }}" name="amount" type="text" value="@money($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0, false) }}" class="form-control-sm-number labor-amount lsave" />
                                         @else
-                                        {{ \BynqIO\Dynq\Services\FormatService::monetary($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0) }}
+                                        @money($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0, false)
                                         @endif
                                     </td>
-                                    <td class="col-md-1"><span class="total-ex-tax">{{ '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcLaborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()['rate'] : $project->hour_rate, $layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount'])) }}</span></td>
-                                    <td class="col-md-1">&nbsp;</td>
+                                    <td class="col-md-1"><span class="total-row">@money($calculus_register::laborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()['rate'] : $project->hour_rate, $layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount']))</span></td>
+                                    <td class="col-md-1"><span class="total-row-profit"></span>
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.labor.reset'])
                                         @if ($layer('labor', $activity)::where('activity_id', $activity->id)->first() && $layer('labor', $activity)::where('activity_id', $activity->id)->first()->isOriginal())
@@ -627,7 +620,7 @@ $(document).ready(function() {
                                     <th class="col-md-1">Uren</th>
                                     <th class="col-md-1">Prijs</th>
                                     <th class="col-md-1">+ Winst %</th>
-                                    <th class="col-md-1">&nbsp;</th>
+                                    <th class="col-md-1"></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -643,11 +636,10 @@ $(document).ready(function() {
                                     <td class="col-md-1">Uur</td>
                                     <td class="col-md-1"><span class="rate">{!! Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate, 2,",",".") !!}</span></td>
                                     <td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
-                                    <td class="col-md-1"><span class="total-ex-tax"></span></td>
-                                    <td class="col-md-1"><span class="total-incl-tax"></span></td>
+                                    <td class="col-md-1"><span class="total-row"></span></td>
+                                    <td class="col-md-1"><span class="total-row-profit"></span></td>
                                     <td class="col-md-1 text-right">
-                                        <button class="fa fa-book" data-toggle="modal" data-target="#myModal"></button>
-                                        <button class="fa fa-star" data-toggle="modal" data-target="#myModal2"></button>
+                                        <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
                                     </td>
                                 </tr>
@@ -655,12 +647,12 @@ $(document).ready(function() {
                             <tbody>
                                 <tr>
                                     <td class="col-md-5"><strong>Totaal</strong></td>
-                                    <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1">&nbsp;</td>
+                                    <td class="col-md-1"></td>
+                                    <td class="col-md-1"></td>
+                                    <td class="col-md-1"></td>
                                     <td class="col-md-1"><strong class="mat_subtotal">{{-- '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat), 2, ",",".") --}}</span></td>
                                     <td class="col-md-1"><strong class="mat_subtotal_profit">{{-- '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") --}}</span></td>
-                                    <td class="col-md-1">&nbsp;</td>
+                                    <td class="col-md-1"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -707,18 +699,18 @@ $(document).ready(function() {
                                     <th class="col-md-1">Aantal</th>
                                     <th class="col-md-1">Prijs</th>
                                     <th class="col-md-1">+ Winst %</th>
-                                    <th class="col-md-1">&nbsp;</th>
+                                    <th class="col-md-1"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($layer('material', $activity)::where('activity_id', $activity->id)->orderBy('id')->get() as $material)
                                 <tr style="height:33px" data-id="{{ $material->id }}">
-                                    <td class="col-md-5">@ifallowed ($features['rows.material.edit.name'])  <input name="name" maxlength="100" type="text" value="{{ $material->getName($original) }}"                             class="form-control-sm-text newrow" />@else{{ $material->getName($original) }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit.unit'])  <input name="unit" maxlength="10"  type="text" value="{{ $material->getUnit($original) }}"                             class="form-control-sm-text" />       @else{{ $material->getUnit($original) }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit.rate'])  <input name="rate"                 type="text" value="{{ number_format($material->getRate($original), 2,",",".") }}"   class="form-control-sm-number" />     @else{{ number_format($material->getRate($original), 2,",",".") }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit.amount'])<input name="amount"               type="text" value="{{ number_format($material->getAmount($original), 2,",",".") }}" class="form-control-sm-number" />     @else{{ number_format($material->getAmount($original), 2,",",".") }}@endifallowed</td>
-                                    <td class="col-md-1"><span class="total-ex-tax">{{-- '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($material->rate * $material->amount) --}}</span></td>
-                                    <td class="col-md-1"><span class="total-incl-tax">{{-- '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary($material->rate * $material->amount * ((100+$profit_mat)/100)) --}}</span></td>
+                                    <td class="col-md-5">@ifallowed ($features['rows.material.edit.name'])<input name="name" maxlength="100" type="text" value="{{ $material->getName($original) }}" class="form-control-sm-text newrow" />@else {{ $material->getName($original) }} @endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit.unit'])<input name="unit" maxlength="10"  type="text" value="{{ $material->getUnit($original) }}" class="form-control-sm-text" />@else {{ $material->getUnit($original) }} @endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit.rate'])<input name="rate" type="text" value="@money($material->getRate($original), false)" class="form-control-sm-number" />@else @money($material->getRate($original), false) @endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.material.edit.amount'])<input name="amount" type="text" value="@money($material->getAmount($original), false)" class="form-control-sm-number" />@else @money($material->getAmount($original), false) @endifallowed</td>
+                                    <td class="col-md-1"><span class="total-row">@money($calculate_row($material))</span></td>
+                                    <td class="col-md-1"><span class="total-row-profit">@money($calculate_row($material, $profit('material', $activity)))</span></td>
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.material.edit'])
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
@@ -745,8 +737,8 @@ $(document).ready(function() {
                                     <td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text" /></td>
                                     <td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number" /></td>
                                     <td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number" /></td>
-                                    <td class="col-md-1"><span class="total-ex-tax"></span></td>
-                                    <td class="col-md-1"><span class="total-incl-tax"></span></td>
+                                    <td class="col-md-1"><span class="total-row"></span></td>
+                                    <td class="col-md-1"><span class="total-row-profit"></span></td>
                                     <td class="col-md-1 text-right">
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         @ifallowed ($features['rows.material.remove'])
@@ -759,12 +751,12 @@ $(document).ready(function() {
                             <tbody>
                                 <tr>
                                     <td class="col-md-5"><strong>Totaal</strong></td>
-                                    <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1"><strong class="mat_subtotal">{{-- '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat)) --}}</span></td>
-                                    <td class="col-md-1"><strong class="mat_subtotal_profit">{{-- '&euro; ' . \BynqIO\Dynq\Services\FormatService::monetary(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat)) --}}</span></td>
-                                    <td class="col-md-1">&nbsp;</td>
+                                    <td class="col-md-1"></td>
+                                    <td class="col-md-1"></td>
+                                    <td class="col-md-1"></td>
+                                    <td class="col-md-1"><strong class="subtotal">@money($calculus_register::materialTotal($activity->id, $profit('material', $activity)))</span></td>
+                                    <td class="col-md-1"><strong class="subtotal_profit">@money($calculus_register::materialTotalProfit($activity->id, $profit('material', $activity)))</span></td>
+                                    <td class="col-md-1"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -810,18 +802,18 @@ $(document).ready(function() {
                                     <th class="col-md-1">Aantal</th>
                                     <th class="col-md-1">Prijs</th>
                                     <th class="col-md-1">+ Winst %</th>
-                                    <th class="col-md-1">&nbsp;</th>
+                                    <th class="col-md-1"></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($layer('other', $activity)::where('activity_id', $activity->id)->orderBy('id')->get() as $equipment)
                                 <tr style="height:33px" data-id="{{ $equipment->id }}">
-                                    <td class="col-md-5">@ifallowed ($features['rows.other.edit.name'])<input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->getName($original) }}" class="form-control-sm-text esave newrow" />@else{{ $equipment->getName($original) }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit.unit'])<input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->getUnit($original) }}" class="form-control-sm-text esave" />@else{{ $equipment->getUnit($original) }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit.rate'])<input name="rate" id="name" type="text" value="{{ number_format($equipment->getRate($original), 2,",",".") }}" class="form-control-sm-number esave" />@else{{ number_format($equipment->getRate($original), 2,",",".") }}@endifallowed</td>
-                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit.amount'])<input name="amount" id="name" type="text" value="{{ number_format($equipment->getAmount($original), 2,",",".") }}" class="form-control-sm-number esave" />@else{{ number_format($equipment->getAmount($original), 2,",",".") }}@endifallowed</td>
-                                    <td class="col-md-1"><span class="total-ex-tax">{{-- '&euro; '.number_format($equipment->rate*$equipment->amount, 2,",",".") --}}</span></td>
-                                    <td class="col-md-1"><span class="total-incl-tax">{{-- '&euro; '.number_format($equipment->rate*$equipment->amount*((100+$profit_equip)/100), 2,",",".") --}}</span></td>
+                                    <td class="col-md-5">@ifallowed ($features['rows.other.edit.name'])<input name="name" maxlength="100" id="name" type="text" value="{{ $equipment->getName($original) }}" class="form-control-sm-text esave newrow" />@else {{ $equipment->getName($original) }} @endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit.unit'])<input name="unit" maxlength="10" id="name" type="text" value="{{ $equipment->getUnit($original) }}" class="form-control-sm-text esave" />@else {{ $equipment->getUnit($original) }} @endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit.rate'])<input name="rate" id="name" type="text" value="@money($equipment->getRate($original), false)" class="form-control-sm-number esave" />@else @money($equipment->getRate($original), false) @endifallowed</td>
+                                    <td class="col-md-1">@ifallowed ($features['rows.other.edit.amount'])<input name="amount" id="name" type="text" value="@money($equipment->getAmount($original), false)" class="form-control-sm-number esave" />@else @money($equipment->getAmount($original), false) @endifallowed</td>
+                                    <td class="col-md-1"><span class="total-row">@money($calculate_row($equipment))</span></td>
+                                    <td class="col-md-1"><span class="total-row-profit">@money($calculate_row($equipment, $profit('other', $activity)))</span></td>
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.other.edit'])
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
@@ -848,8 +840,8 @@ $(document).ready(function() {
                                     <td class="col-md-1"><input name="unit" maxlength="10" id="name" type="text" class="form-control-sm-text esave" /></td>
                                     <td class="col-md-1"><input name="rate" id="name" type="text" class="form-control-sm-number esave" /></td>
                                     <td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number esave" /></td>
-                                    <td class="col-md-1"><span class="total-ex-tax"></span></td>
-                                    <td class="col-md-1"><span class="total-incl-tax"></span></td>
+                                    <td class="col-md-1"><span class="total-row"></span></td>
+                                    <td class="col-md-1"><span class="total-row-profit"></span></td>
                                     <td class="col-md-1 text-right">
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         @ifallowed ($features['rows.other.remove'])
@@ -862,12 +854,12 @@ $(document).ready(function() {
                             <tbody>
                                 <tr>
                                     <td class="col-md-5"><strong>Totaal</strong></td>
-                                    <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1">&nbsp;</td>
-                                    <td class="col-md-1"><strong class="equip_subtotal">{{-- '&euro; '.number_format(CalculationRegister::calcEquipmentTotal($activity->id, $profit_equip), 2, ",",".") --}}</span></td>
-                                    <td class="col-md-1"><strong class="equip_subtotal_profit">{{-- '&euro; '.number_format(CalculationRegister::calcEquipmentTotalProfit($activity->id, $profit_equip), 2, ",",".") --}}</span></td>
-                                    <td class="col-md-1">&nbsp;</td>
+                                    <td class="col-md-1"></td>
+                                    <td class="col-md-1"></td>
+                                    <td class="col-md-1"></td>
+                                    <td class="col-md-1"><strong class="subtotal">@money($calculus_register::equipmentTotal($activity->id, $profit('other', $activity)))</span></td>
+                                    <td class="col-md-1"><strong class="subtotal_profit">@money($calculus_register::equipmentTotalProfit($activity->id, $profit('other', $activity)))</span></td>
+                                    <td class="col-md-1"></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -898,7 +890,7 @@ $(document).ready(function() {
                             <input type="text" maxlength="100" class="form-control" name="name" id="name" value="" placeholder="Nieuwe Werkzaamheid">
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-primary-activity"><i class="fa fa-plus">&nbsp;&nbsp;</i> Voeg toe</button>
-                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                <button type="button" class="btn btn-primary dropdown-toggle" style="padding-right: 8px;padding-left: 8px;" data-toggle="dropdown">
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">

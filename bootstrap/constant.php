@@ -31,6 +31,7 @@ define('APP_EMAIL',       ['info@calculatietool.com']);
 define('ADMIN_EMAIL',     ['y.dewid@calculatietool.com']);
 
 /* Localization */
+define('LOCALE_CURRENCY',    '&#3647;');
 define('LOCALE_SEPARATOR',   '.');
 define('LOCALE_DECIMAL',     ',');
 define('LOCALE_DECIMALS',    3);

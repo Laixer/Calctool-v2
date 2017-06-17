@@ -42,7 +42,7 @@ class AccountController extends Controller
 {
     public function getAccount(Request $request)
     {
-        return view('user.account');
+        return view('account.account');
     }
 
     /**

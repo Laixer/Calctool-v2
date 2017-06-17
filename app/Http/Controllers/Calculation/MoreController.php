@@ -15,7 +15,6 @@
 
 namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
-use Illuminate\Http\Request;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Chapter;
 use BynqIO\Dynq\Models\Part;
@@ -26,6 +25,7 @@ use BynqIO\Dynq\Models\MoreLabor;
 use BynqIO\Dynq\Models\MoreMaterial;
 use BynqIO\Dynq\Models\MoreEquipment;
 use BynqIO\Dynq\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class MoreController extends Controller
 {
@@ -42,26 +42,56 @@ class MoreController extends Controller
     |
     */
 
+    private function profit($layer, $activity, $project) {
+        if ($activity->isSubcontracting()) {
+            switch ($layer) {
+                case 'labor':
+                    return 0;
+                case 'material':
+                    return $project->profit_more_subcontr_mat;
+                case 'other':
+                    return $project->profit_more_subcontr_equip;
+            }
+        } else {
+            switch ($layer) {
+                case 'labor':
+                    return 0;
+                case 'material':
+                    return $project->profit_more_contr_mat;
+                case 'other':
+                    return $project->profit_more_contr_equip;
+            }
+        }
+    }
+
     protected function newLaborRow($activity, Array $parameters)
     {
-        $chapter = Chapter::findOrFail($activity->chapter_id);
-        $project = Project::findOrFail($chapter->project_id);
+        $object = null;
+        $project = $activity->chapter->project;
 
         $rate = $project->hour_rate_more;
         if ($activity->isSubcontracting() && isset($parameters['rate'])) {
             $rate = $parameters['rate'];
         }
 
-        return MoreLabor::create([
+        $object = MoreLabor::create([
             "rate"            => $rate,
             "amount"          => $parameters['amount'],
             "activity_id"     => $activity->id,
         ]);
+
+        return [
+            'id'            => $object->id,
+            'amount'        => $object->amount * $object->rate,
+        ];
     }
 
     protected function newMaterialRow($activity, Array $parameters)
     {
-        return MoreMaterial::create([
+        $object = null;
+        $project = $activity->chapter->project;
+
+        $object = MoreMaterial::create([
             "material_name"   => $parameters['name'],
             "unit"            => $parameters['unit'],
             "rate"            => $parameters['rate'],
@@ -69,18 +99,33 @@ class MoreController extends Controller
             "activity_id"     => $activity->id,
         ]);
 
-        $this->updateMoreStatus($request->get('project'));
+        // $this->updateMoreStatus($request->get('project'));
+
+        return [
+            'id'            => $object->id,
+            'amount'        => $object->amount * $object->rate,
+            'amount_incl'   => $object->amount * $object->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+        ];
     }
 
     protected function newOtherRow($activity, Array $parameters)
     {
-        return MoreEquipment::create([
+        $object = null;
+        $project = $activity->chapter->project;
+
+        $object = MoreEquipment::create([
             "equipment_name" => $parameters['name'],
             "unit"           => $parameters['unit'],
             "rate"           => $parameters['rate'],
             "amount"         => $parameters['amount'],
             "activity_id"    => $activity->id,
         ]);
+
+        return [
+            'id'            => $object->id,
+            'amount'        => $object->amount * $object->rate,
+            'amount_incl'   => $object->amount * $object->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+        ];
     }
 
     public function new(Request $request)
@@ -94,29 +139,28 @@ class MoreController extends Controller
             'layer'     => ['required'],
         ]);
 
-        $id = null;
+        $object = null;
 
         $activity = Activity::findOrFail($request->get('activity'));
 
         switch ($request->get('layer')) {
             case 'labor':
-                $id = $this->newLaborRow($activity, $request->all())->id;
+                $object = $this->newLaborRow($activity, $request->all());
                 break;
             case 'material':
-                $id = $this->newMaterialRow($activity, $request->all())->id;
+                $object = $this->newMaterialRow($activity, $request->all());
                 break;
             case 'other':
-                $id = $this->newOtherRow($activity, $request->all())->id;
+                $object = $this->newOtherRow($activity, $request->all());
                 break;
         }
 
-        return response()->json(['success' => 1, 'id' => $id]);
+        return response()->json(array_merge(['success' => true], $object));
     }
 
     protected function updateLaborRow($activity, Array $parameters)
     {
-        $chapter = Chapter::findOrFail($activity->chapter_id);
-        $project = Project::findOrFail($chapter->project_id);
+        $project = $activity->chapter->project;
 
         $rate = $project->hour_rate_more;
         if ($activity->isSubcontracting() && isset($parameters['rate'])) {
@@ -127,26 +171,47 @@ class MoreController extends Controller
         $row->rate           = $rate;
         $row->amount         = $parameters['amount'];
         $row->save();
+
+        return [
+            'id'            => $row->id,
+            'amount'        => $row->amount * $row->rate,
+        ];
     }
 
     protected function updateMaterialRow($activity, Array $parameters)
     {
+        $project = $activity->chapter->project;
+
         $row = MoreMaterial::findOrFail($parameters['id']);
         $row->material_name  = $parameters['name'];
         $row->unit           = $parameters['unit'];
         $row->rate           = $parameters['rate'];
         $row->amount         = $parameters['amount'];
         $row->save();
+
+        return [
+            'id'            => $row->id,
+            'amount'        => $row->amount * $row->rate,
+            'amount_incl'   => $row->amount * $row->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+        ];
     }
 
     protected function updateOtherRow($activity, Array $parameters)
     {
+        $project = $activity->chapter->project;
+
         $row = MoreEquipment::findOrFail($parameters['id']);
         $row->equipment_name  = $parameters['name'];
         $row->unit            = $parameters['unit'];
         $row->rate            = $parameters['rate'];
         $row->amount          = $parameters['amount'];
         $row->save();
+
+        return [
+            'id'            => $row->id,
+            'amount'        => $row->amount * $row->rate,
+            'amount_incl'   => $row->amount * $row->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+        ];
     }
 
     public function update(Request $request)
@@ -161,21 +226,23 @@ class MoreController extends Controller
             'layer'     => ['required'],
         ]);
 
+        $object = null;
+
         $activity = Activity::findOrFail($request->get('activity'));
 
         switch ($request->get('layer')) {
             case 'labor':
-                $this->updateLaborRow($activity, $request->all());
+                $object = $this->updateLaborRow($activity, $request->all());
                 break;
             case 'material':
-                $this->updateMaterialRow($activity, $request->all());
+                $object = $this->updateMaterialRow($activity, $request->all());
                 break;
             case 'other':
-                $this->updateOtherRow($activity, $request->all());
+                $object = $this->updateOtherRow($activity, $request->all());
                 break;
         }
 
-        return response()->json(['success' => 1]);
+        return response()->json(array_merge(['success' => true], $object));
     }
 
     // protected function deleteLaborRow(Array $parameters)
@@ -202,9 +269,6 @@ class MoreController extends Controller
         ]);
 
         switch ($request->get('layer')) {
-            // case 'labor':
-            //     $id = $this->deleteLaborRow($request->all());
-            //     break;
             case 'material':
                 $id = $this->deleteMaterialRow($request->all());
                 break;

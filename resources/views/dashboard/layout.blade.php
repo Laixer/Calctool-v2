@@ -116,7 +116,7 @@ $(document).ready(function() {
 
                 <h2><strong>@lang('core.firststep')</strong></h2>
                 <div class="bs-callout text-center whiteBg" style="margin:0">
-                    <h3><a href="/project/new" class="btn btn-primary btn-lg">@lang('core.crefirstprod') <i class="fa fa-arrow-right"></i></a></h3>
+                    <h3><a href="/inline/projecttypes?package=dashboard" data-toggle="modal" data-target="#asyncModal" class="btn btn-primary btn-lg">@lang('core.crefirstprod') <i class="fa fa-arrow-right"></i></a></h3>
                 </div>
 
                 @endif

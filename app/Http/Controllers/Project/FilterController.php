@@ -22,6 +22,8 @@ use Illuminate\Http\Request;
 
 class FilterController extends Controller
 {
+    protected $per_page = 20;
+
     private function statusFilter($input, $builder)
     {
         switch ($input) {
@@ -121,6 +123,7 @@ class FilterController extends Controller
         if (is_null($filterobject)) {
             return $projects->where('is_dilapidated', false)
                             ->orderBy('updated_at', 'desc')
+                            ->limit($this->per_page)
                             ->get();
         }
 
@@ -129,7 +132,7 @@ class FilterController extends Controller
             return [];
         }
 
-        return $filterobject->get();
+        return $filterobject->limit($this->per_page)->get();
     }
 
     public function __invoke(Request $request)

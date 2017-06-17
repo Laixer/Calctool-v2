@@ -43,28 +43,58 @@ class EstimateController extends Controller
     |
     */
 
+    private function profit($layer, $activity, $project) {
+        if ($activity->isSubcontracting()) {
+            switch ($layer) {
+                case 'labor':
+                    return 0;
+                case 'material':
+                    return $project->profit_calc_subcontr_mat;
+                case 'other':
+                    return $project->profit_calc_subcontr_equip;
+            }
+        } else {
+            switch ($layer) {
+                case 'labor':
+                    return 0;
+                case 'material':
+                    return $project->profit_calc_contr_mat;
+                case 'other':
+                    return $project->profit_calc_contr_equip;
+            }
+        }
+    }
+
     protected function newLaborRow($activity, Array $parameters)
     {
-        $chapter = Chapter::findOrFail($activity->chapter_id);
-        $project = Project::findOrFail($chapter->project_id);
+        $object = null;
+        $project = $activity->chapter->project;
 
         $rate = $project->hour_rate;
         if ($activity->isSubcontracting() && isset($parameters['rate'])) { //TODO: remove?
             $rate = $parameters['rate'];
         }
 
-        return EstimateLabor::create([
+        $object = EstimateLabor::create([
             "set_rate"        => $rate,
             "set_amount"      => $parameters['amount'],
             "activity_id"     => $activity->id,
             "original"        => false,
             "isset"           => true
         ]);
+
+        return [
+            'id'            => $object->id,
+            'amount'        => $object->set_amount * $object->set_rate,
+        ];
     }
 
     protected function newMaterialRow($activity, Array $parameters)
     {
-        return EstimateMaterial::create([
+        $object = null;
+        $project = $activity->chapter->project;
+
+        $object = EstimateMaterial::create([
             "set_material_name"  => $parameters['name'],
             "set_unit"           => $parameters['unit'],
             "set_rate"           => $parameters['rate'],
@@ -73,11 +103,20 @@ class EstimateController extends Controller
             "original"           => false,
             "isset"              => true
         ]);
+
+        return [
+            'id'            => $object->id,
+            'amount'        => $object->set_amount * $object->set_rate,
+            'amount_incl'   => $object->set_amount * $object->set_rate * (($this->profit('material', $activity, $project) / 100) + 1),
+        ];
     }
 
     protected function newOtherRow($activity, Array $parameters)
     {
-        return EstimateEquipment::create([
+        $object = null;
+        $project = $activity->chapter->project;
+
+        $object = EstimateEquipment::create([
             "set_equipment_name"  => $parameters['name'],
             "set_unit"            => $parameters['unit'],
             "set_rate"            => $parameters['rate'],
@@ -86,6 +125,12 @@ class EstimateController extends Controller
             "original"            => false,
             "isset"               => true
         ]);
+
+        return [
+            'id'            => $object->id,
+            'amount'        => $object->set_amount * $object->set_rate,
+            'amount_incl'   => $object->set_amount * $object->set_rate * (($this->profit('other', $activity, $project) / 100) + 1),
+        ];
     }
 
     public function new(Request $request)
@@ -99,29 +144,28 @@ class EstimateController extends Controller
             'layer'     => ['required'],
         ]);
 
-        $id = null;
+        $object = null;
 
         $activity = Activity::findOrFail($request->get('activity'));
 
         switch ($request->get('layer')) {
             case 'labor':
-                $id = $this->newLaborRow($activity, $request->all())->id;
+                $object = $this->newLaborRow($activity, $request->all());
                 break;
             case 'material':
-                $id = $this->newMaterialRow($activity, $request->all())->id;
+                $object = $this->newMaterialRow($activity, $request->all());
                 break;
             case 'other':
-                $id = $this->newOtherRow($activity, $request->all())->id;
+                $object = $this->newOtherRow($activity, $request->all());
                 break;
         }
 
-        return response()->json(['success' => 1, 'id' => $id]);
+        return response()->json(array_merge(['success' => true], $object));
     }
 
     protected function updateLaborRow($activity, Array $parameters)
     {
-        $chapter = Chapter::findOrFail($activity->chapter_id);
-        $project = Project::findOrFail($chapter->project_id);
+        $project = $activity->chapter->project;
 
         $rate = $project->hour_rate;
         if ($activity->isSubcontracting() && isset($parameters['rate'])) { //?
@@ -133,10 +177,17 @@ class EstimateController extends Controller
         $row->set_amount     = $parameters['amount'];
         $row->isset          = true;
         $row->save();
+
+        return [
+            'id'            => $row->id,
+            'amount'        => $row->set_amount * $row->set_rate,
+        ];
     }
 
     protected function updateMaterialRow($activity, Array $parameters)
     {
+        $project = $activity->chapter->project;
+
         $row = EstimateMaterial::findOrFail($parameters['id']);
         $row->set_material_name  = $parameters['name'];
         $row->set_unit           = $parameters['unit'];
@@ -144,10 +195,18 @@ class EstimateController extends Controller
         $row->set_amount         = $parameters['amount'];
         $row->isset              = true;
         $row->save();
+
+        return [
+            'id'            => $row->id,
+            'amount'        => $row->set_amount * $row->set_rate,
+            'amount_incl'   => $row->set_amount * $row->set_rate * (($this->profit('material', $activity, $project) / 100) + 1),
+        ];
     }
 
     protected function updateOtherRow($activity, Array $parameters)
     {
+        $project = $activity->chapter->project;
+
         $row = EstimateEquipment::findOrFail($parameters['id']);
         $row->set_equipment_name  = $parameters['name'];
         $row->set_unit            = $parameters['unit'];
@@ -155,6 +214,12 @@ class EstimateController extends Controller
         $row->set_amount          = $parameters['amount'];
         $row->isset               = true;
         $row->save();
+
+        return [
+            'id'            => $row->id,
+            'amount'        => $row->set_amount * $row->set_rate,
+            'amount_incl'   => $row->set_amount * $row->set_rate * (($this->profit('other', $activity, $project) / 100) + 1),
+        ];
     }
 
     public function update(Request $request)
@@ -169,21 +234,23 @@ class EstimateController extends Controller
             'layer'     => ['required'],
         ]);
 
+        $object = null;
+
         $activity = Activity::findOrFail($request->get('activity'));
 
         switch ($request->get('layer')) {
             case 'labor':
-                $this->updateLaborRow($activity, $request->all());
+                $object = $this->updateLaborRow($activity, $request->all());
                 break;
             case 'material':
-                $this->updateMaterialRow($activity, $request->all());
+                $object = $this->updateMaterialRow($activity, $request->all());
                 break;
             case 'other':
-                $this->updateOtherRow($activity, $request->all());
+                $object = $this->updateOtherRow($activity, $request->all());
                 break;
         }
 
-        return response()->json(['success' => 1]);
+        return response()->json(array_merge(['success' => true], $object));
     }
 
     protected function deleteMaterialRow(Array $parameters)

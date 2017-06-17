@@ -50,12 +50,12 @@ $(document).ready(function() {
     <div class="row">
         <div class="form-group">
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label>Factuurnummer</label>
                 <input type="text" class="form-control" disabled name="invoice_code" value="{{ $invoice->invoice_code }}" />
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-12">
                 <label>Bedrag</label>
                 <input type="text" class="form-control" name="amount" value="{{ $invoice->amount ? $invoice->amount : '0' }}" />
             </div>

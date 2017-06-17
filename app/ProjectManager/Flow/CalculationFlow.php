@@ -34,6 +34,7 @@ class CalculationFlow extends BaseFlow implements Flow
         $this->bind('calculation',          'CalculationComponent');
         $this->bind('quotations',           'QuotationComponent');
         $this->bind('quotations/new',       'QuotationNewComponent');
+        $this->bind('quotations/detail',    'QuotationDetailComponent');
         $this->bind('quotations/report',    'QuotationReportComponent');
         $this->bind('estimate',             'EstimateComponent');
         $this->bind('less',                 'LessComponent');

@@ -121,6 +121,7 @@ class CreatePaymentInvoice extends Job implements ShouldQueue
         $pdf->setOption('footer-font-size', 8);
         $pdf->setOption('footer-left', $footer_text);
         $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+        $pdf->setOption('encoding', 'utf-8');
         $pdf->setOption('lowquality', false);
         return $pdf;
     }

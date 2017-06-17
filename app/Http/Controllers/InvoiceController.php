@@ -212,6 +212,7 @@ class InvoiceController extends Controller {
         $pdf->setOption('footer-font-size', 8);
         $pdf->setOption('footer-left', $footer_text);
         $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+        $pdf->setOption('encoding', 'utf-8');
         $pdf->setOption('lowquality', false);
         $pdf->save('user-content/'.$newname);
 
@@ -322,6 +323,7 @@ class InvoiceController extends Controller {
         $pdf->setOption('footer-font-size', 8);
         $pdf->setOption('footer-left', $footer_text);
         $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+        $pdf->setOption('encoding', 'utf-8');
         $pdf->setOption('lowquality', false);
         $pdf->save('user-content/'.$newname);
 
@@ -465,6 +467,7 @@ class InvoiceController extends Controller {
         $pdf->setOption('footer-font-size', 8);
         $pdf->setOption('footer-left', $footer_text);
         $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
+        $pdf->setOption('encoding', 'utf-8');
         $pdf->setOption('lowquality', false);
         $pdf->save('user-content/'.$newname);
 
