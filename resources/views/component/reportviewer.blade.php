@@ -1,11 +1,5 @@
 @extends('component.layout', ['title' => $page])
 
-@section('component_buttons')
-<div class="pull-right">
-    <button class="btn btn-primary"><i class="fa fa-download"></i>Download</button>
-</div>
-@endsection
-
 @section('component_content')
 @if (1)
 <script src="/plugins/pdf/build/pdf.js" type="text/javascript"></script>

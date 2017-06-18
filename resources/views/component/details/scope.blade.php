@@ -10,6 +10,9 @@
             @endif
             <li><a href="/project/{{ $project->id }}-{{ $project->slug() }}/printoverview" target="new">Projectoverzicht</a></li>
             <li><a href="/project/{{ $project->id }}-{{ $project->slug() }}/packingslip" target="new">Pakbon maken</a></li>
+            @if (Input::has('options'))
+            <li><a href="/project/{{ $project->id }}-{{ $project->slug() }}/paper" target="new">Briefpapier</a></li>
+            @endif
             <li class="divider" style="margin:5px 0;"></li>
             <li><a href="/project/copy?id={{ $project->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Project kopieren?')">Project kopieren</a></li>
             @if ($project->project_close)

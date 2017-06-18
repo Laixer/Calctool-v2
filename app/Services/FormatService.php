@@ -62,4 +62,9 @@ class FormatService extends BaseService
     {
         return "{$input}, '" . LOCALE_DECIMALS . "', '" . LOCALE_DECIMAL . "', '" . LOCALE_SEPARATOR . "'";
     }
+
+    public static function dateFormatJS()
+    {
+        return LOCALE_DATE;
+    }
 }

@@ -15,12 +15,15 @@ $relation_self = Relation::find(Auth::user()->self_id);
 
 @push('scripts')
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="/plugins/jquery.number.min.js"></script>
 @endpush
 
 @push('jsinline')
 <script type="text/javascript">
 $(document).ready(function() {
     $("[type='checkbox'").bootstrapSwitch({onText: 'Ja', offText: 'Nee'});
+
+    $("[name=amount]").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
 });
 </script>
 @endpush
@@ -99,7 +102,7 @@ $(document).ready(function() {
             </div>
             <div class="col-md-6 col-sm-6">
                 <label>Factuurdatum</label>
-                <input type="text" class="form-control" name="amount" value="{{ '12-02-2017' }}" />
+                <input type="text" class="form-control" name="date" value="{{ '12-02-2017' }}" />
             </div>
             <div class="col-sm-offset-0 col-sm-12">
                 <div class="checkbox">

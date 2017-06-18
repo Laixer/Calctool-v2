@@ -15,6 +15,7 @@ $relation_self = Relation::find(Auth::user()->self_id);
 
 @push('scripts')
 <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+<script src="/plugins/jquery.number.min.js"></script>
 @endpush
 
 @push('jsinline')
@@ -28,6 +29,8 @@ $(document).ready(function() {
             $("[name=amount]").prop('disabled', false);
         }
     });
+
+    $("[name=amount]").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
 });
 </script>
 @endpush

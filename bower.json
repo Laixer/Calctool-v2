@@ -9,8 +9,7 @@
     "font-awesome": "fontawesome#^4.5.0",
     "bootstrap-editable": "*",
     "x-editable": "^1.5.1",
-    "bootstrap-multiselect": "*",
-    "bootstrap-datepicker": "*"
+    "bootstrap-multiselect": "*"
   },
   "private": true
 }

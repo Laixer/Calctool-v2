@@ -1,6 +1,22 @@
 @inject('calculus', 'BynqIO\Dynq\Calculus\CalculationEndresult')
 @inject('carbon', 'Carbon\Carbon')
 
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
+@endpush
+
+@push('scripts')
+<script src="/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
+@endpush
+
+@push('jsinline')
+<script type="text/javascript">
+$(document).ready(function() {
+    $('[name=date]').datepicker({format: '{{ \BynqIO\Dynq\Services\FormatService::dateFormatJS() }}'});
+});
+</script>
+@endpush
+
 @if ($offer_last)
 <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -53,7 +69,7 @@
 @endif
 
 @if ($offer_last && !$offer_last->offer_finish)
-<div class="alert alert-warning">
+<div class="alert alert-info">
     <i class="fa fa-fa fa-info-circle"></i> Zend na aanpassing van de calculatie een nieuwe offerte naar uw opdrachtgever.
 </div>
 @endif

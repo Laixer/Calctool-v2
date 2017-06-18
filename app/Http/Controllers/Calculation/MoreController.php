@@ -24,6 +24,7 @@ use BynqIO\Dynq\Models\Activity;
 use BynqIO\Dynq\Models\MoreLabor;
 use BynqIO\Dynq\Models\MoreMaterial;
 use BynqIO\Dynq\Models\MoreEquipment;
+use BynqIO\Dynq\Calculus\MoreRegister;
 use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -102,9 +103,11 @@ class MoreController extends Controller
         // $this->updateMoreStatus($request->get('project'));
 
         return [
-            'id'            => $object->id,
-            'amount'        => $object->amount * $object->rate,
-            'amount_incl'   => $object->amount * $object->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+            'id'               => $object->id,
+            'amount'           => $object->amount * $object->rate,
+            'amount_incl'      => $object->amount * $object->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+            'total'            => MoreRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+            'total_profit'     => MoreRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
         ];
     }
 
@@ -122,9 +125,11 @@ class MoreController extends Controller
         ]);
 
         return [
-            'id'            => $object->id,
-            'amount'        => $object->amount * $object->rate,
-            'amount_incl'   => $object->amount * $object->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+            'id'               => $object->id,
+            'amount'           => $object->amount * $object->rate,
+            'amount_incl'      => $object->amount * $object->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+            'total'            => MoreRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+            'total_profit'     => MoreRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
         ];
     }
 
@@ -190,9 +195,11 @@ class MoreController extends Controller
         $row->save();
 
         return [
-            'id'            => $row->id,
-            'amount'        => $row->amount * $row->rate,
-            'amount_incl'   => $row->amount * $row->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+            'id'               => $row->id,
+            'amount'           => $row->amount * $row->rate,
+            'amount_incl'      => $row->amount * $row->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+            'total'            => MoreRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+            'total_profit'     => MoreRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
         ];
     }
 
@@ -208,9 +215,11 @@ class MoreController extends Controller
         $row->save();
 
         return [
-            'id'            => $row->id,
-            'amount'        => $row->amount * $row->rate,
-            'amount_incl'   => $row->amount * $row->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+            'id'               => $row->id,
+            'amount'           => $row->amount * $row->rate,
+            'amount_incl'      => $row->amount * $row->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+            'total'            => MoreRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+            'total_profit'     => MoreRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
         ];
     }
 

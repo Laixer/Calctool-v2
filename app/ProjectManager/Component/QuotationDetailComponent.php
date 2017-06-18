@@ -25,16 +25,16 @@ class QuotationDetailComponent extends BaseComponent implements Component
 {
     protected $url;
 
-    protected function buildUrl()
+    protected function buildUrl($id)
     {
-        $this->url = "/project/{$this->project->id}-{$this->project->slug()}/quotations/report?" . $this->request->getQueryString();
+        $this->url = "/res-{$id}/view";
     }
 
     public function render()
     {
-        $this->buildUrl();
+        $offer = Offer::findOrFail($this->request->get('id'));
 
-        // $offer = Offer::findOrFail($this->request->get('id'));
+        $this->buildUrl($offer->resource_id);
 
         /* Show the report in the viewer */
         $data['url'] = $this->url;

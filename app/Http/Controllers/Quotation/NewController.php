@@ -36,7 +36,13 @@ class NewController extends Controller
         $relation = Relation::findOrFail($project->client_id);
         $relation_self = Relation::findOrFail($user->self_id);
 
+        $logo = null;
+        if ($relation_self->logo) {
+            $logo = Encryptor::base64($relation_self->logo->file_location);
+        }
+
         $data = [
+            'logo'     => $logo,
             'company'  => $relation_self->name(),
             'address'  => $relation_self->fullAddress(),
             'phone'    => $relation_self->phone_number,

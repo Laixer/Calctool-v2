@@ -31,6 +31,7 @@ class CalculationFlow extends BaseFlow implements Flow
         $this->bind('details',              'DetailComponent');
         $this->bind('printoverview',        'ProjectReportComponent');
         $this->bind('packingslip',          'PackListReportComponent');
+        $this->bind('paper',                'EmptyReportComponent');
         $this->bind('calculation',          'CalculationComponent');
         $this->bind('quotations',           'QuotationComponent');
         $this->bind('quotations/new',       'QuotationNewComponent');
