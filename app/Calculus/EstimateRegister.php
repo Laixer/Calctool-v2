@@ -15,6 +15,7 @@
 
 namespace BynqIO\Dynq\Calculus;
 
+use BynqIO\Dynq\Models\EstimateLabor;
 use BynqIO\Dynq\Models\EstimateMaterial;
 use BynqIO\Dynq\Models\EstimateEquipment;
 
@@ -77,5 +78,25 @@ class EstimateRegister {
         $total = self::equipmentTotal($activity);
 
         return (1+($profit/100))*$total;
+    }
+
+    /*Calculation Timesheet*/
+    public static function timesheetTotal($activity) {
+        $total = 0;
+
+        $rows = EstimateLabor::where('activity_id', $activity)->get();
+        foreach ($rows as $row)
+        {
+            if ($row->original) {
+                if ($row->isset)
+                    $total += self::laborTotal($row->rate, $row->set_amount);
+                else
+                    $total += self::laborTotal($row->rate, $row->amount);
+            } else {
+                $total += self::laborTotal($row->rate, $row->set_amount);
+            }
+        }
+
+        return $total;
     }
 }

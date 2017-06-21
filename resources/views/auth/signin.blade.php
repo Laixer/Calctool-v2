@@ -2,8 +2,6 @@
 
 @section('title', 'Login')
 
-@section('manifest','manifest="/main.appcache"')
-
 @push('style')
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css">
 @endpush

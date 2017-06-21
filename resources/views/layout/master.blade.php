@@ -54,7 +54,6 @@
         <link media="all" type="text/css" rel="stylesheet" href="/css/layout.css">
         <link media="all" type="text/css" rel="stylesheet" href="/css/layout-responsive.css">
         <link media="all" type="text/css" rel="stylesheet" href="{{ APP_STYLESHEET }}">
-        <!--<link media="all" type="text/css" rel="stylesheet" href="/css/darkblue.css">-->
         <!--<link media="all" type="text/css" rel="stylesheet" href="/css/layout-dark.css">-->
 
         {{-- Custom CSS --}}

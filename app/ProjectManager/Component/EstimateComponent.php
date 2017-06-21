@@ -55,6 +55,7 @@ class EstimateComponent extends BaseComponent implements Component
             'rows.labor.edit.amount'     => true,
             'rows.labor.reset'       => true,
             'rows.timesheet'         => true,
+            'rows.timesheet.add'     => true,
             'rows.material'          => true,
             'rows.material.add'      => true,
             'rows.material.edit'     => true,

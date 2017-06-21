@@ -15,9 +15,14 @@ class MoreLabor extends Model
     //     return $this->hasOne('Activity');
     // }
 
-    // public function timesheet() {
-    //     return $this->hasOne('Timesheet', 'hour_id');
-    // }
+    public function timesheet() {
+        return $this->hasOne(Timesheet::class, 'id', 'hour_id');
+    }
+
+    public function getRate($original = false)
+    {
+        return $this->rate;
+    }
 
     public function getAmount($original = false)
     {

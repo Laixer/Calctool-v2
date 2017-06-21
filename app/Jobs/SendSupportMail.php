@@ -68,8 +68,9 @@ class SendSupportMail extends Job implements ShouldQueue
             'agent' => isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : 'unknown',
         ];
 
-        if (Auth::check())
+        if (Auth::check()) {
             $this->data['user'] = Auth::user()->username;
+        }
     }
 
     /**

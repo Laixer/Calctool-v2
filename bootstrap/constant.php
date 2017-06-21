@@ -26,7 +26,8 @@ define('APP_LOG_LEVEL', 'error');
 // define('APP_LOGO_WIDTH',240);
 define('APP_LOGO',        '/images/dynq2.png');
 define('APP_LOGO_WIDTH',  160);
-define('APP_STYLESHEET',  '/css/darkgreen.css');
+define('APP_STYLESHEET',  '/css/theme/brown.css');
+// define('APP_STYLESHEET',  '/css/theme/deepgreen.css');
 define('APP_EMAIL',       ['info@calculatietool.com']);
 define('ADMIN_EMAIL',     ['y.dewid@calculatietool.com']);
 

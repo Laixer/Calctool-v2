@@ -2,6 +2,19 @@
 
 @section('company_section_name', 'Voorkeuren')
 
+@push('scripts')
+<script src="/plugins/jquery.number.min.js"></script>
+@endpush
+
+@push('jsinline')
+<script type="text/javascript">
+$(document).ready(function() {
+    $("[name=pref_hourrate_calc]").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
+    $("[name=pref_hourrate_more]").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
+});
+</script>
+@endpush
+
 @section('company_content')
 <form method="POST" action="/account/preferences/update" accept-charset="UTF-8">
 {!! csrf_field() !!}
@@ -11,8 +24,7 @@
         <div class="panel-heading">
             <h4 class="panel-title">
                 <a data-toggle="collapse" data-parent="#accordion" href="#acordion1">
-                    <i class="fa fa-check"></i>
-                    Uurtarief en Winstpercentages
+                    <i class="fa fa-check"></i> Uurtarief en Winstpercentages
                 </a>
             </h4>
         </div>
@@ -29,10 +41,10 @@
                     <div class="col-md-5"><label for="hour_rate">Uurtarief excl. BTW</label></div>
                     <div class="col-md-1"><div class="pull-right">&euro;</div></div>
                     <div class="col-md-2">
-                        <input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control form-control-sm-number" value="{{ number_format($user->pref_hourrate_calc, 2, ",",".") }}" />
+                        <input name="pref_hourrate_calc" id="pref_hourrate_calc" type="text" class="form-control form-control-sm-number" value="@money($user->pref_hourrate_calc, false)" />
                     </div>
                     <div class="col-md-2">
-                        <input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control form-control-sm-number" value="{{ number_format($user->pref_hourrate_more, 2, ",",".") }}" />
+                        <input name="pref_hourrate_more" id="pref_hourrate_more" type="text" class="form-control form-control-sm-number" value="@money($user->pref_hourrate_more, false)" />
                     </div>
                 </div>
 

@@ -15,6 +15,7 @@
 
 namespace BynqIO\Dynq\Calculus;
 
+use BynqIO\Dynq\Models\MoreLabor;
 use BynqIO\Dynq\Models\MoreMaterial;
 use BynqIO\Dynq\Models\MoreEquipment;
 
@@ -49,7 +50,7 @@ class MoreRegister
     public static function equipmentTotal($activity) {
         $total = 0;
 
-        $rows = MoreEquipment::where('activity_id', '=', $activity)->get();
+        $rows = MoreEquipment::where('activity_id', $activity)->get();
         foreach ($rows as $row)
         {
             $total += self::laborTotal($row->rate, $row->amount);
@@ -63,5 +64,18 @@ class MoreRegister
         $total = self::equipmentTotal($activity);
 
         return (1+($profit/100))*$total;
+    }
+
+    /*Calculation Timesheet*/
+    public static function timesheetTotal($activity) {
+        $total = 0;
+
+        $rows = MoreLabor::where('activity_id', $activity)->get();
+        foreach ($rows as $row)
+        {
+            $total += self::laborTotal($row->rate, $row->amount);
+        }
+
+        return $total;
     }
 }

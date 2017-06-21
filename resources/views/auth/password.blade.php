@@ -2,8 +2,6 @@
 
 @section('title', 'Nieuw wachtwoord')
 
-@section('manifest','manifest="/main.appcache"')
-
 @section('content')
 <div id="wrapper">
 

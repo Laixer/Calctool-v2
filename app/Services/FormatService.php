@@ -68,3 +68,19 @@ class FormatService extends BaseService
         return LOCALE_DATE;
     }
 }
+
+/*
+class MoneyDirective {
+    public function boot() {
+        Blade::directive('money', function ($expression) {
+            $class = self::class;
+            return "<?php echo $class::render(\$__env, $expression) ?>";
+        });
+    }
+
+    public function render($env, $amount, $symbol = true) {
+        return "Someone should implement MoneyDirective::render...";
+    }
+}*/
+
+// Call MoneyDirective::boot() in your service provider's boot()

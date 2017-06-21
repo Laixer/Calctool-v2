@@ -34,7 +34,8 @@ class UserSignup
         dispatch(new SendActivationMail($event->user));
 
         /* In production notify administration of new user */
-        if (!config('app.debug'))
+        if (!config('app.debug')) {
            dispatch(new SendNewUserMail($event->user, $event->relation, $event->contact));
+        }
     }
 }

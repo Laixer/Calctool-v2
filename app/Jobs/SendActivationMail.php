@@ -59,8 +59,7 @@ class SendActivationMail extends Job implements ShouldQueue
         $this->data = [
             'email' => $user->email,
             'token' => $user->reset_token,
-            'firstname' => $user->firstname,
-            'lastname' => $user->lastname
+            'name' => $user->name(),
         ];
     }
 
@@ -73,7 +72,7 @@ class SendActivationMail extends Job implements ShouldQueue
     {
         $data = $this->data;
         Mail::send('mail.activation', $data, function ($message) use ($data) {
-            $message->to($data['email'], ucfirst($data['firstname']) . ' ' . ucfirst($data['lastname']));
+            $message->to($data['email'], $data['name']);
             $message->subject(config('app.name') . ' - Account activatie');
             $message->from(APP_EMAIL);
         });

@@ -16,11 +16,13 @@
 namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
 use Exception;
+use Carbon\Carbon;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Chapter;
 use BynqIO\Dynq\Models\Part;
 use BynqIO\Dynq\Models\PartType;
 use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\Timesheet;
 use BynqIO\Dynq\Models\EstimateLabor;
 use BynqIO\Dynq\Models\EstimateMaterial;
 use BynqIO\Dynq\Models\EstimateEquipment;
@@ -133,12 +135,41 @@ class EstimateController extends Controller
         ];
     }
 
+    protected function newTimesheetRow($activity, Array $parameters)
+    {
+        $object = null;
+        $project = $activity->chapter->project;
+
+        $timesheet = Timesheet::create([
+            'register_date'      => Carbon::parse($parameters['date']),
+            'register_hour'      => $parameters['amount'],
+            'note'               => $parameters['name'],
+            'activity_id'        => $activity->id,
+            'timesheet_kind_id'  => 2
+        ]);
+
+        $object = EstimateLabor::create([
+            "set_rate"     => $project->hour_rate,
+            "set_amount"   => $parameters['amount'],
+            "hour_id"      => $timesheet->id,
+            "activity_id"  => $activity->id,
+            "original"     => false,
+            "isset"        => true
+        ]);
+
+        return [
+            'id'            => $object->id,
+            'amount'        => $object->set_amount * $object->set_rate,
+        ];
+    }
+
     public function new(Request $request)
     {
         $this->validate($request, [
             'name'      => ['required_unless:layer,labor', 'max:100'],
-            'unit'      => ['required_unless:layer,labor', 'max:10'],
-            'rate'      => ['required_unless:layer,labor', 'numeric'],
+            'unit'      => ['required_unless:layer,labor,timesheet', 'max:10'],
+            'rate'      => ['required_unless:layer,labor,timesheet', 'numeric'],
+            'date'      => ['required_if:layer,timesheet'],
             'amount'    => ['required', 'numeric'],
             'activity'  => ['required', 'integer', 'min:0'],
             'layer'     => ['required'],
@@ -157,6 +188,9 @@ class EstimateController extends Controller
                 break;
             case 'other':
                 $object = $this->newOtherRow($activity, $request->all());
+                break;
+            case 'timesheet':
+                $object = $this->newTimesheetRow($activity, $request->all());
                 break;
         }
 
@@ -222,13 +256,40 @@ class EstimateController extends Controller
         ];
     }
 
+    protected function updateTimesheetRow($activity, Array $parameters)
+    {
+        $project = $activity->chapter->project;
+
+        $rate = $project->hour_rate;
+        if ($activity->isSubcontracting() && isset($parameters['rate'])) { //?
+            $rate = $parameters['rate'];
+        }
+
+        $row = EstimateLabor::findOrFail($parameters['id']);
+        $row->set_rate       = $rate;
+        $row->set_amount     = $parameters['amount'];
+        $row->save();
+
+        $timesheet = Timesheet::findOrFail($row->hour_id);
+        $timesheet->register_date  = Carbon::parse($parameters['date']);
+        $timesheet->register_hour  = $parameters['amount'];
+        $timesheet->note           = $parameters['name'];
+        $timesheet->save();
+
+        return [
+            'id'            => $row->id,
+            'amount'        => $row->set_amount * $row->set_rate,
+        ];
+    }
+
     public function update(Request $request)
     {
         $this->validate($request, [
             'id'        => ['required', 'integer', 'min:0'],
             'name'      => ['required_unless:layer,labor', 'max:100'],
-            'unit'      => ['required_unless:layer,labor', 'max:10'],
-            'rate'      => ['required_unless:layer,labor', 'numeric'],
+            'unit'      => ['required_unless:layer,labor,timesheet', 'max:10'],
+            'rate'      => ['required_unless:layer,labor,timesheet', 'numeric'],
+            'date'      => ['required_if:layer,timesheet'],
             'amount'    => ['required', 'numeric'],
             'activity'  => ['required', 'integer', 'min:0'],
             'layer'     => ['required'],
@@ -247,6 +308,9 @@ class EstimateController extends Controller
                 break;
             case 'other':
                 $object = $this->updateOtherRow($activity, $request->all());
+                break;
+            case 'timesheet':
+                $object = $this->updateTimesheetRow($activity, $request->all());
                 break;
         }
 
@@ -273,6 +337,15 @@ class EstimateController extends Controller
         $row->delete();
     }
 
+    protected function deleteTimesheetRow(Array $parameters)
+    {
+        //TODO: check for isOriginal() ?
+        $row = EstimateLabor::findOrFail($parameters['id']);
+        $timesheet = Timesheet::findOrFail($row->hour_id);
+        $timesheet->delete();
+        $row->delete();
+    }
+
     public function delete(Request $request)
     {
         $this->validate($request, [
@@ -288,6 +361,9 @@ class EstimateController extends Controller
                     break;
                 case 'other':
                     $this->deleteOtherRow($request->all());
+                    break;
+                case 'timesheet':
+                    $this->deleteTimesheetRow($request->all());
                     break;
             }
         } catch (Exception $e) {

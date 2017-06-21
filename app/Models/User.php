@@ -28,8 +28,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     use Authenticatable, Authorizable, CanResetPassword;
 
     protected $table = 'user_account';
-    protected $hidden = array('secret', 'remember_token', 'api', 'promotion_code', 'note');
-    protected $guarded = array('id', 'ip', 'secret', 'remember_token', 'api', 'promotion_code', 'note');
+    protected $hidden = ['secret', 'remember_token', 'api', 'promotion_code', 'note'];
+    protected $guarded =['id', 'ip', 'secret', 'remember_token', 'api', 'promotion_code', 'note'];
 
     public function getAuthPassword(){
         return $this->secret;
@@ -116,6 +116,18 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
 
     public function encodedName() {
         return str_replace(' ', '_', strtolower($this->username));
+    }
+
+    public function name() {
+        if ($this->firstname && $this->lastname) {
+            return ucfirst($this->firstname) . ' ' . ucfirst($this->lastname);
+        } else if ($this->firstname) {
+            return ucfirst($this->firstname);
+        } else if ($this->lastname) {
+            return ucfirst($this->lastname);
+        }
+
+        return $this->username;
     }
 
     public function dueDateHuman() {

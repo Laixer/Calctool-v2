@@ -50,7 +50,7 @@
 
                     @unless (Auth::check())
                     <li class="visible-xs visible-sm">
-                        <a href="/register">Account aanmaken</a>
+                        <a href="/auth/signup">Account aanmaken</a>
                     </li>
                     @endunless
 

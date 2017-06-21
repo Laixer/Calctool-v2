@@ -61,6 +61,8 @@ class MoreComponent extends BaseComponent implements Component
             'rows.labor.edit.rate'       => true,
             'rows.labor.edit.amount'     => true,
             'rows.timesheet'             => true,
+            'rows.timesheet.add'         => true,
+            'rows.timesheet.remove'      => true,
             'rows.material'              => true,
             'rows.material.add'          => true,
             'rows.material.edit'         => true,

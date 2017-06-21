@@ -26,12 +26,13 @@ class ComposerServiceProvider extends ServiceProvider
             }
         });
 
-        Blade::directive('money', function ($expression, $symbol = true) {
-            if ($symbol) {
-                return "<?php echo '" . LOCALE_CURRENCY . " ' . \BynqIO\Dynq\Services\FormatService::monetary($expression); ?>";
-            } else {
-                return "<?php echo \BynqIO\Dynq\Services\FormatService::monetary($expression); ?>";
-            }
+        Blade::directive('money', function ($expression) {
+            return "<?php echo '" . LOCALE_CURRENCY . " ' . \BynqIO\Dynq\Services\FormatService::monetary($expression); ?>";
+            // if (count($result) == 2) {
+            //     return "<?php echo \BynqIO\Dynq\Services\FormatService::monetary($expression); ? >";
+            // } else {
+            //     return "<?php echo '" . LOCALE_CURRENCY . " ' . \BynqIO\Dynq\Services\FormatService::monetary($expression); ? >";
+            // }
         });
     }
 

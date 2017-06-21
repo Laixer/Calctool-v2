@@ -289,11 +289,12 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         /////////////////////////// }
     });
 
-    // Route::get('xxx', function() {
-    //     return view('mail.inform_deactivate_user2',['name'=>'kaas','firstname'=>'arie',
-    //     'lastname'=>'koos','body'=>'y','amount'=>12,'email'=>'info@jaas.com','reason'=>'oo',
-    //     'expdate'=>'21-23-2017','project_name'=>'q','note'=>'x','username'=>'trol']);
-    // });
+    Route::get('xxx', function() {
+        return view('mail.user_reacted',['name'=>'kaas','body'=>'y','amount'=>12,'email'=>'info@jaas.com','reason'=>'oo',
+        'expdate'=>'21-23-2017','project_name'=>'q','note'=>'Its just great','username'=>'trol',
+        'subscription'=>'x','category'=>'trol','subject'=>'ice', 'message'=>'troll','token'=>'x','user'=>'Arie Kaas'
+        ]);
+    });
 
     /* Module Group Project */
     Route::group(['namespace' => 'Project'], function() {

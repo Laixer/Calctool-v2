@@ -80,17 +80,12 @@ class CostController extends Controller
         $_chapter = Chapter::find($_activity->chapter_id);
         $_project = Project::find($_chapter->project_id);
 
-        $type_id = $request->get('type');
-        if (ProjectType::find($_project->type_id)->type_name == 'regie') {
-            $type_id = 3;
-        }
-
         $timesheet = Timesheet::create(array(
             'register_date' => date('Y-m-d', strtotime($request->get('date'))),
             'register_hour' => str_replace(',', '.', str_replace('.', '' , $request->get('hour'))),
             'activity_id' => $activity->id,
             'note' => $request->get('note'),
-            'timesheet_kind_id' => $type_id
+            'timesheet_kind_id' => 2,
         ));
 
 

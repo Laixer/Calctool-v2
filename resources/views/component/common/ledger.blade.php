@@ -26,8 +26,13 @@ use BynqIO\Dynq\Calculus\CalculationRegister;
 ?>
 @inject('tax', 'BynqIO\Dynq\Models\Tax')
 
+@push('style')
+<link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
+@endpush
+
 @push('scripts')
 <script src="/plugins/jquery.number.min.js"></script>
+<script src="/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
 @endpush
 
 @push('jsinline')
@@ -89,6 +94,8 @@ $(document).ready(function() {
     /* Auto format numbers */
     $(".form-control-sm-number").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
 
+    $('[name=date]').datepicker({format: '{{ \BynqIO\Dynq\Services\FormatService::dateFormatJS() }}'});
+
     /* Append new rows */
     $("body").on("blur", ".newrow", function() {
         var i = 1;
@@ -99,7 +106,8 @@ $(document).ready(function() {
                     $(this).val("").removeClass("error-input").attr("id", function(_, id) { return id + i });
                 }).end().find(".total-row, .total-row-profit").text("").end().find(".form-control-sm-number").each(function() {
                     $(this).number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
-                }).end().find("[name=delete]").change(delete_row).end().appendTo($curTable);
+                }).end().find("[name=date]").datepicker({format: '{{ \BynqIO\Dynq\Services\FormatService::dateFormatJS() }}'})
+                .end().find("[name=delete]").change(delete_row).end().appendTo($curTable);
                 $("button[data-target='#myModal']").on("click", function() {
                     $newinputtr = $(this).closest("tr");
                     $newinputtr2 = $(this).closest("tr");
@@ -113,6 +121,7 @@ $(document).ready(function() {
     $("body").on("change", "[name=name]",    save_row);
     $("body").on("change", "[name=unit]",    save_row);
     $("body").on("change", "[name=rate]",    save_row);
+    $("body").on("change", "[name=date]",    save_row);
     $("body").on("change", "[name=amount]",  save_row);
     $("body").on("click",  "[name=delete]",  delete_row);
     $("body").on("click",  "[name=reset]",   reset_row);
@@ -189,6 +198,7 @@ $(document).ready(function() {
             name:      $tr.find("input[name='name']").val(),
             unit:      $tr.find("input[name='unit']").val(),
             rate:      $tr.find("input[name='rate']").val(),
+            date:      $tr.find("input[name='date']").val(),
             amount:    $tr.find("input[name='amount']").val(),
             layer:     $tr.closest("table").attr("data-layer"),
             activity:  $tr.closest("table").attr("data-id"),
@@ -546,7 +556,7 @@ $(document).ready(function() {
                                     <td class="col-md-1">
                                         @if ($activity->isSubcontracting())
                                         @ifallowed ($features['rows.labor.edit.rate'])
-                                        <span class="rate"><input name="rate" type="text" value="money($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->rate : 0, false)" class="form-control-sm-number labor-amount lsave"></span>
+                                        <span class="rate"><input name="rate" type="text" value="@money($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->rate : 0, false)" class="form-control-sm-number labor-amount lsave"></span>
                                         @else
                                         @money($project->hour_rate, false)
                                         @endifallowed
@@ -556,7 +566,7 @@ $(document).ready(function() {
                                     </td>
                                     <td class="col-md-1">
                                         @ifallowed ($features['rows.labor.edit.amount'])
-                                        <input data-id="{{ $activity->id }}" name="amount" type="text" value="@money($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0, false) }}" class="form-control-sm-number labor-amount lsave" />
+                                        <input data-id="{{ $activity->id }}" name="amount" type="text" value="@money($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0, false)" class="form-control-sm-number labor-amount lsave" />
                                         @else
                                         @money($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0, false)
                                         @endif
@@ -624,25 +634,66 @@ $(document).ready(function() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr style="height:33px">
+                                @foreach ($layer('labor', $activity)::where('activity_id', $activity->id)->whereNotNull('hour_id')->orderBy('id')->get() as $labor)
+                                <tr style="height:33px" data-id="{{ $labor->id }}">
                                     <td class="col-md-5">
                                         <div class="col-md-8 nopadding">
-                                            <input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text dsave newrow" />
+                                            <input name="name" maxlength="100" type="text" class="form-control-sm-text newrow" value="{{ $labor->timesheet->getName($original) }}" />
                                         </div>
                                         <div class="col-md-4 nopadding">
-                                            <input name="name" maxlength="100" id="name" type="text" class="form-control-sm-text dsave newrow" />
+                                            <input name="date" maxlength="100" type="text" class="form-control-sm-text newrow" value="{{ $labor->timesheet->register_date }}" />
                                         </div>
                                     </td>
                                     <td class="col-md-1">Uur</td>
-                                    <td class="col-md-1"><span class="rate">{!! Part::find($activity->part_id)->part_name=='subcontracting' ? '<input name="rate" type="text" value="'.number_format(CalculationLabor::where('activity_id','=', $activity->id)->first()['rate'], 2,",",".").'" class="form-control-sm-number labor-amount lsave">' : number_format($project->hour_rate, 2,",",".") !!}</span></td>
-                                    <td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number dsave" /></td>
-                                    <td class="col-md-1"><span class="total-row"></span></td>
+                                    <td class="col-md-1">
+                                        <span class="rate">
+                                            @if ($activity->isSubcontracting())
+                                            <input name="rate" type="text" value="@money($labor->getRate($original), false)" class="form-control-sm-number">
+                                            @else
+                                            @money($project->hour_rate, false)
+                                            @endif
+                                        </span>
+                                    </td>
+                                    <td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number" value="@money($labor->getAmount($original), false)" /></td>
+                                    <td class="col-md-1"><span class="total-row">@money($calculate_row($labor))</span></td>
                                     <td class="col-md-1"><span class="total-row-profit"></span></td>
                                     <td class="col-md-1 text-right">
                                         <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
                                         <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
                                     </td>
                                 </tr>
+                                @endforeach
+                                @ifallowed ($features['rows.timesheet.add'])
+                                <tr style="height:33px">
+                                    <td class="col-md-5">
+                                        <div class="col-md-8 nopadding">
+                                            <input name="name" maxlength="100" type="text" class="form-control-sm-text newrow" />
+                                        </div>
+                                        <div class="col-md-4 nopadding">
+                                            <input name="date" maxlength="100" type="text" class="form-control-sm-text newrow" />
+                                        </div>
+                                    </td>
+                                    <td class="col-md-1">Uur</td>
+                                    <td class="col-md-1">
+                                        <span class="rate">
+                                            @if ($activity->isSubcontracting())
+                                            <input name="rate" type="text" class="form-control-sm-number">
+                                            @else
+                                            @money($project->hour_rate, false)
+                                            @endif
+                                        </span>
+                                    </td>
+                                    <td class="col-md-1"><input name="amount" id="name" type="text" class="form-control-sm-number" /></td>
+                                    <td class="col-md-1"><span class="total-row"></span></td>
+                                    <td class="col-md-1"><span class="total-row-profit"></span></td>
+                                    <td class="col-md-1 text-right">
+                                        <button class="btn btn-xs btn-primary fa fa-book" data-toggle="modal" data-target="#myModal"></button>
+                                        @ifallowed ($features['rows.timesheet.remove'])
+                                        <button name="delete" class="btn btn-danger btn-xs fa fa-times"></button>
+                                        @endifallowed
+                                    </td>
+                                </tr>
+                                @endifallowed
                             </tbody>
                             <tbody>
                                 <tr>
@@ -650,8 +701,8 @@ $(document).ready(function() {
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
-                                    <td class="col-md-1"><strong class="mat_subtotal">{{-- '&euro; '.number_format(CalculationRegister::calcMaterialTotal($activity->id, $profit_mat), 2, ",",".") --}}</span></td>
-                                    <td class="col-md-1"><strong class="mat_subtotal_profit">{{-- '&euro; '.number_format(CalculationRegister::calcMaterialTotalProfit($activity->id, $profit_mat), 2, ",",".") --}}</span></td>
+                                    <td class="col-md-1"><strong class="subtotal">@money($calculus_register::timesheetTotal($activity->id))</span></td>
+                                    <td class="col-md-1"><strong class="subtotal_profit"></span></td>
                                     <td class="col-md-1"></td>
                                 </tr>
                             </tbody>
@@ -754,7 +805,7 @@ $(document).ready(function() {
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
-                                    <td class="col-md-1"><strong class="subtotal">@money($calculus_register::materialTotal($activity->id, $profit('material', $activity)))</span></td>
+                                    <td class="col-md-1"><strong class="subtotal">@money($calculus_register::materialTotal($activity->id))</span></td>
                                     <td class="col-md-1"><strong class="subtotal_profit">@money($calculus_register::materialTotalProfit($activity->id, $profit('material', $activity)))</span></td>
                                     <td class="col-md-1"></td>
                                 </tr>
@@ -857,7 +908,7 @@ $(document).ready(function() {
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
-                                    <td class="col-md-1"><strong class="subtotal">@money($calculus_register::equipmentTotal($activity->id, $profit('other', $activity)))</span></td>
+                                    <td class="col-md-1"><strong class="subtotal">@money($calculus_register::equipmentTotal($activity->id))</span></td>
                                     <td class="col-md-1"><strong class="subtotal_profit">@money($calculus_register::equipmentTotalProfit($activity->id, $profit('other', $activity)))</span></td>
                                     <td class="col-md-1"></td>
                                 </tr>

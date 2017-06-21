@@ -15,12 +15,14 @@
 
 namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
+use Carbon\Carbon;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Chapter;
 use BynqIO\Dynq\Models\Part;
 use BynqIO\Dynq\Models\Detail;
 use BynqIO\Dynq\Models\PartType;
 use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\Timesheet;
 use BynqIO\Dynq\Models\MoreLabor;
 use BynqIO\Dynq\Models\MoreMaterial;
 use BynqIO\Dynq\Models\MoreEquipment;
@@ -133,12 +135,39 @@ class MoreController extends Controller
         ];
     }
 
+    protected function newTimesheetRow($activity, Array $parameters)
+    {
+        $object = null;
+        $project = $activity->chapter->project;
+
+        $timesheet = Timesheet::create([
+            'register_date'      => Carbon::parse($parameters['date']),
+            'register_hour'      => $parameters['amount'],
+            'note'               => $parameters['name'],
+            'activity_id'        => $activity->id,
+            'timesheet_kind_id'  => 3
+        ]);
+
+        $object = MoreLabor::create([
+            "rate"         => $project->hour_rate,
+            "amount"       => $parameters['amount'],
+            "hour_id"      => $timesheet->id,
+            "activity_id"  => $activity->id,
+        ]);
+
+        return [
+            'id'            => $object->id,
+            'amount'        => $object->amount * $object->rate,
+        ];
+    }
+
     public function new(Request $request)
     {
         $this->validate($request, [
             'name'      => ['required_unless:layer,labor', 'max:100'],
-            'unit'      => ['required_unless:layer,labor', 'max:10'],
-            'rate'      => ['required_unless:layer,labor', 'numeric'],
+            'unit'      => ['required_unless:layer,labor,timesheet', 'max:10'],
+            'rate'      => ['required_unless:layer,labor,timesheet', 'numeric'],
+            'date'      => ['required_if:layer,timesheet'],
             'amount'    => ['required', 'numeric'],
             'activity'  => ['required', 'integer', 'min:0'],
             'layer'     => ['required'],
@@ -157,6 +186,9 @@ class MoreController extends Controller
                 break;
             case 'other':
                 $object = $this->newOtherRow($activity, $request->all());
+                break;
+            case 'timesheet':
+                $object = $this->newTimesheetRow($activity, $request->all());
                 break;
         }
 
@@ -223,6 +255,32 @@ class MoreController extends Controller
         ];
     }
 
+    protected function updateTimesheetRow($activity, Array $parameters)
+    {
+        $project = $activity->chapter->project;
+
+        $rate = $project->hour_rate_more;
+        if ($activity->isSubcontracting() && isset($parameters['rate'])) {
+            $rate = $parameters['rate'];
+        }
+
+        $row = MoreLabor::findOrFail($parameters['id']);
+        $row->rate           = $rate;
+        $row->amount         = $parameters['amount'];
+        $row->save();
+
+        $timesheet = Timesheet::findOrFail($row->hour_id);
+        $timesheet->register_date  = Carbon::parse($parameters['date']);
+        $timesheet->register_hour  = $parameters['amount'];
+        $timesheet->note           = $parameters['name'];
+        $timesheet->save();
+
+        return [
+            'id'            => $row->id,
+            'amount'        => $row->amount * $row->rate,
+        ];
+    }
+
     public function update(Request $request)
     {
         $this->validate($request, [
@@ -249,15 +307,13 @@ class MoreController extends Controller
             case 'other':
                 $object = $this->updateOtherRow($activity, $request->all());
                 break;
+            case 'timesheet':
+                $object = $this->updateTimesheetRow($activity, $request->all());
+                break;
         }
 
         return response()->json(array_merge(['success' => true], $object));
     }
-
-    // protected function deleteLaborRow(Array $parameters)
-    // {
-    //     CalculationLabor::findOrFail($parameters['id'])->delete();
-    // }
 
     protected function deleteMaterialRow(Array $parameters)
     {
@@ -267,6 +323,14 @@ class MoreController extends Controller
     protected function deleteOtherRow(Array $parameters)
     {
         $row = MoreEquipment::findOrFail($parameters['id'])->delete();
+    }
+
+    protected function deleteTimesheetRow(Array $parameters)
+    {
+        $row = MoreLabor::findOrFail($parameters['id']);
+        $timesheet = Timesheet::findOrFail($row->hour_id);
+        $timesheet->delete();
+        $row->delete();
     }
 
     public function delete(Request $request)
@@ -283,6 +347,9 @@ class MoreController extends Controller
                 break;
             case 'other':
                 $id = $this->deleteOtherRow($request->all());
+                break;
+            case 'timesheet':
+                $id = $this->deleteTimesheetRow($request->all());
                 break;
         }
 
