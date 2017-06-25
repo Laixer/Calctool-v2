@@ -102,7 +102,7 @@ $relation = Relation::find(Route::Input('relation_id'));
 <h4>Adresgegevens</h4>
 <div class="row">
 
-    <div class="col-md-1">
+    <div class="col-md-2">
         <div class="form-group">
             <label for="address_number">Huis nr.*</label>
             <input name="address_number" maxlength="5" id="address_number" type="text" value="{{ old('address_number') ? old('address_number') : $relation->address_number }}" class="form-control autoappend"/>
@@ -123,14 +123,14 @@ $relation = Relation::find(Route::Input('relation_id'));
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             <label for="city">Plaats*</label>
             <input name="city" maxlength="35" id="city" type="text" value="{{ old('city') ? old('city') : $relation->address_city }}" class="form-control"/>
         </div>
     </div>
 
-    <div class="col-md-2">
+    <div class="col-md-4">
         <div class="form-group">
             <label for="province">Provincie*</label>
             <select name="province" id="province" class="form-control pointer">

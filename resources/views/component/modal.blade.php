@@ -28,9 +28,9 @@
     {{-- /Modal body --}}
 
     <div class="modal-footer">
-        <button class="btn btn-primary"><i class="fa fa-check"></i> Opslaan</button>
+        <button class="btn btn-primary" {{ isset($button_id) ? 'id=' . $button_id : '' }}><i class="fa fa-check"></i> Opslaan</button>
     </div>
 
-@isset($form)
+    @isset($form)
 </form>
 @endisset

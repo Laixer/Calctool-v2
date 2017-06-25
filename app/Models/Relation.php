@@ -10,7 +10,7 @@ class Relation extends Model
     use Ownable;
 
     protected $table = 'relation';
-    protected $guarded = array('id', 'debtor_code');
+    protected $guarded = ['id', 'debtor_code'];
 
     // public function user() {
     //     return $this->hasOne('User');
@@ -35,6 +35,17 @@ class Relation extends Model
     // public function type() {
     //     return $this->hasOne('RelationType');
     // }
+
+    /**
+     * Get the project slug name.
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function slug()
+    {
+        return strtolower(str_slug(substr($this->name(), 0, 25)));
+    }
 
     public function kind() {
         return $this->hasOne(RelationKind::class, 'id', 'kind_id')->first(); //change

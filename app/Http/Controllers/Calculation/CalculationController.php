@@ -25,6 +25,7 @@ use BynqIO\Dynq\Models\CalculationEquipment;
 use BynqIO\Dynq\Models\EstimateLabor;
 use BynqIO\Dynq\Models\EstimateMaterial;
 use BynqIO\Dynq\Models\EstimateEquipment;
+use BynqIO\Dynq\Calculus\EstimateRegister;
 use BynqIO\Dynq\Calculus\CalculationRegister;
 use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -113,6 +114,14 @@ class CalculationController extends Controller
                 "original"        => true,
                 "isset"           => false,
             ]);
+
+            return [
+                'id'               => $object->id,
+                'amount'           => $object->amount * $object->rate,
+                'amount_incl'      => $object->amount * $object->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+                'total'            => EstimateRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+                'total_profit'     => EstimateRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
+            ];
         } else {
             $object = CalculationMaterial::create([
                 "material_name"   => $parameters['name'],
@@ -121,15 +130,15 @@ class CalculationController extends Controller
                 "amount"          => $parameters['amount'],
                 "activity_id"     => $activity->id,
             ]);
-        }
 
-        return [
-            'id'               => $object->id,
-            'amount'           => $object->amount * $object->rate,
-            'amount_incl'      => $object->amount * $object->rate * (($this->profit('material', $activity, $project) / 100) + 1),
-            'total'            => CalculationRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
-            'total_profit'     => CalculationRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
-        ];
+            return [
+                'id'               => $object->id,
+                'amount'           => $object->amount * $object->rate,
+                'amount_incl'      => $object->amount * $object->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+                'total'            => CalculationRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+                'total_profit'     => CalculationRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
+            ];
+        }
     }
 
     protected function newOtherRow($activity, Array $parameters)
@@ -147,6 +156,14 @@ class CalculationController extends Controller
                 "original"       => true,
                 "isset"          => false,
             ]);
+
+            return [
+                'id'               => $object->id,
+                'amount'           => $object->amount * $object->rate,
+                'amount_incl'      => $object->amount * $object->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+                'total'            => EstimateRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+                'total_profit'     => EstimateRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
+            ];
         } else {
             $object = CalculationEquipment::create([
                 "equipment_name" => $parameters['name'],
@@ -155,15 +172,15 @@ class CalculationController extends Controller
                 "amount"         => $parameters['amount'],
                 "activity_id"    => $activity->id,
             ]);
-        }
 
-        return [
-            'id'               => $object->id,
-            'amount'           => $object->amount * $object->rate,
-            'amount_incl'      => $object->amount * $object->rate * (($this->profit('other', $activity, $project) / 100) + 1),
-            'total'            => CalculationRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
-            'total_profit'     => CalculationRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
-        ];
+            return [
+                'id'               => $object->id,
+                'amount'           => $object->amount * $object->rate,
+                'amount_incl'      => $object->amount * $object->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+                'total'            => CalculationRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+                'total_profit'     => CalculationRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
+            ];
+        }
     }
 
     public function new(Request $request)
@@ -239,13 +256,23 @@ class CalculationController extends Controller
         $row->amount         = $parameters['amount'];
         $row->save();
 
-        return [
-            'id'               => $row->id,
-            'amount'           => $row->amount * $row->rate,
-            'amount_incl'      => $row->amount * $row->rate * (($this->profit('material', $activity, $project) / 100) + 1),
-            'total'            => CalculationRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
-            'total_profit'     => CalculationRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
-        ];
+        if ($activity->isEstimate()) {
+            return [
+                'id'               => $row->id,
+                'amount'           => $row->amount * $row->rate,
+                'amount_incl'      => $row->amount * $row->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+                'total'            => EstimateRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+                'total_profit'     => EstimateRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
+            ];
+        } else {
+            return [
+                'id'               => $row->id,
+                'amount'           => $row->amount * $row->rate,
+                'amount_incl'      => $row->amount * $row->rate * (($this->profit('material', $activity, $project) / 100) + 1),
+                'total'            => CalculationRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+                'total_profit'     => CalculationRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
+            ];
+        }
     }
 
     protected function updateOtherRow($activity, Array $parameters)
@@ -265,13 +292,23 @@ class CalculationController extends Controller
         $row->amount          = $parameters['amount'];
         $row->save();
 
-        return [
-            'id'               => $row->id,
-            'amount'           => $row->amount * $row->rate,
-            'amount_incl'      => $row->amount * $row->rate * (($this->profit('other', $activity, $project) / 100) + 1),
-            'total'            => CalculationRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
-            'total_profit'     => CalculationRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
-        ];
+        if ($activity->isEstimate()) {
+            return [
+                'id'               => $row->id,
+                'amount'           => $row->amount * $row->rate,
+                'amount_incl'      => $row->amount * $row->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+                'total'            => EstimateRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+                'total_profit'     => EstimateRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
+            ];
+        } else {
+            return [
+                'id'               => $row->id,
+                'amount'           => $row->amount * $row->rate,
+                'amount_incl'      => $row->amount * $row->rate * (($this->profit('other', $activity, $project) / 100) + 1),
+                'total'            => CalculationRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+                'total_profit'     => CalculationRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
+            ];
+        }
     }
 
     public function update(Request $request)

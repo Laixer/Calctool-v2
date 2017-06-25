@@ -42,14 +42,14 @@ use BynqIO\Dynq\Models\RelationKind;
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="name">Projectnaam <strong style="color:red;">*</strong></label>
+                <label for="name">Projectnaam <a style="text-decoration:none;cursor:default;">*</a></label>
                 <input name="name" maxlength="50" id="name" type="text" {{ $project->project_close ? 'disabled' : '' }} value="{{ old('name') ? old('name') : $project->project_name }}" class="form-control" />
                 <input type="hidden" name="id" id="id" value="{{ $project->id }}"/>
             </div>
         </div>
         <div class="col-md-3">
             <div class="form-group">
-                <label for="contractor">Opdrachtgever <strong style="color:red;">*</strong></label>
+                <label for="contractor">Opdrachtgever <a style="text-decoration:none;cursor:default;">*</a></label>
                 @if (!Relation::find($project->client_id)->isActive())
                 <select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
                     @foreach (Relation::where('user_id','=', Auth::id())->get() as $relation)
@@ -72,34 +72,34 @@ use BynqIO\Dynq\Models\RelationKind;
 
         <div class="col-md-4">
             <div class="form-group">
-                <label for="street">Straat <strong style="color:red;">*</strong></label>
+                <label for="street">Straat <a style="text-decoration:none;cursor:default;">*</a></label>
                 <input name="street" id="street" maxlength="60" {{ $project->project_close ? 'disabled' : '' }} type="text" value="{{ old('street') ? old('street') : $project->address_street}}" class="form-control"/>
             </div>
         </div>
         <div class="col-md-1">
             <div class="form-group">
-                <label for="address_number">Huis nr. <strong style="color:red;">*</strong></label>
+                <label for="address_number">Huis nr. <a style="text-decoration:none;cursor:default;">*</a></label>
                 <input name="address_number" maxlength="5" {{ $project->project_close ? 'disabled' : '' }} id="address_number" type="text" value="{{ old('address_number') ? old('address_number') : $project->address_number }}" class="form-control"/>
             </div>
         </div>
 
         <div class="col-md-2">
             <div class="form-group">
-                <label for="zipcode">Postcode <strong style="color:red;">*</strong></label>
+                <label for="zipcode">Postcode <a style="text-decoration:none;cursor:default;">*</a></label>
                 <input name="zipcode" maxlength="6" {{ $project->project_close ? 'disabled' : '' }} id="zipcode" type="text" maxlength="6" value="{{ old('zipcode') ? old('zipcode') : $project->address_postal }}" class="form-control"/>
             </div>
         </div>
 
         <div class="col-md-3">
             <div class="form-group">
-                <label for="city">Plaats <strong style="color:red;">*</strong></label>
+                <label for="city">Plaats <a style="text-decoration:none;cursor:default;">*</a></label>
                 <input name="city" maxlength="35" {{ $project->project_close ? 'disabled' : '' }} id="city" type="text" value="{{ old('city') ? old('city'): $project->address_city }}" class="form-control"/>
             </div>
         </div>
 
         <div class="col-md-2">
             <div class="form-group">
-                <label for="province">Provincie <strong style="color:red;">*</strong></label>
+                <label for="province">Provincie <a style="text-decoration:none;cursor:default;">*</a></label>
                 <select name="province" {{ $project->project_close ? 'disabled' : '' }} id="province" class="form-control pointer">
                     @foreach ($province::all() as $province)
                     <option {{ $project->province_id==$province->id ? 'selected' : '' }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
@@ -110,7 +110,7 @@ use BynqIO\Dynq\Models\RelationKind;
 
         <div class="col-md-4">
             <div class="form-group">
-                <label for="country">Land <strong style="color:red;">*</strong></label>
+                <label for="country">Land <a style="text-decoration:none;cursor:default;">*</a></label>
                 <select name="country" {{ $project->project_close ? 'disabled' : '' }} id="country" class="form-control pointer">
                     @foreach ($country::all() as $country)
                     <option {{ $project->country_id==$country->id ? 'selected' : '' }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>

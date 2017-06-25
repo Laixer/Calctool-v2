@@ -377,7 +377,7 @@ $(document).ready(function() {
         </div>
         @endif
 
-        <h2><strong>@lang('core.new')</strong> @lang('components.' . Input::get('type')) project</h2>
+        <h2><strong>@lang('core.new')</strong> {{ $type_name }} project</h2>
 
         @if(!Relation::where('user_id', Auth::user()->id)->count())
         <div class="alert alert-info">

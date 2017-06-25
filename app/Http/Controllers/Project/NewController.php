@@ -38,7 +38,25 @@ class NewController extends Controller
      */
     public function index(Request $request)
     {
-        return view('project.new', ['debtor_code' => mt_rand(1000000, 9999999)]);
+        $type_name = null;
+        switch ($request->get('type')) {
+            case 'calculate':
+                 $type_name = __('components.calculate');
+                break;
+            case 'quickinvoice':
+                $type_name = __('components.quickinvoice');
+                break;
+            case 'directwork':
+                $type_name = __('components.directwork');
+                break;
+            default:
+                abort(404);
+        }
+
+        return view('project.new', [
+            'type_name'   => strtolower($type_name),
+            'debtor_code' => mt_rand(1000000, 9999999)
+        ]);
     }
 
     protected function random_name($size = 4)

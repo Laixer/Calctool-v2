@@ -4,6 +4,9 @@ use \BynqIO\Dynq\Models\RelationKind;
 use \BynqIO\Dynq\Models\RelationType;
 
 ?>
+@inject('province', 'BynqIO\Dynq\Models\Province')
+@inject('country', 'BynqIO\Dynq\Models\Country')
+@inject('contact_function', 'BynqIO\Dynq\Models\ContactFunction')
 
 @extends('layout.master')
 
@@ -14,7 +17,6 @@ use \BynqIO\Dynq\Models\RelationType;
 @endpush
 
 @section('content')
-?>
 <script type="text/javascript">
 $(document).ready(function() {
     function prefixURL(field) {
@@ -54,7 +56,6 @@ $(document).ready(function() {
             $(this).removeClass("error-input");
         }
     });
-
 
     $('#telephone_com').blur(function() {
         var telcompcheck = $(this).val();
@@ -110,16 +111,6 @@ $(document).ready(function() {
         }
     });
 
-    $('#summernote').summernote({
-        height: $(this).attr("data-height") || 200,
-        toolbar: [
-            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-            ["para", ["ul", "ol", "paragraph"]],
-            ["table", ["table"]],
-            ["media", ["link", "picture", "video"]],
-        ]
-    })
-
 });
 </script>
 
@@ -136,7 +127,6 @@ $(document).ready(function() {
                   <li>Nieuwe Relatie</li>
                 </ol>
             <div>
-            <br>
 
             @if (Session::has('success'))
             <div class="alert alert-success">
@@ -166,7 +156,7 @@ $(document).ready(function() {
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="relationkind">Relatiesoort*</label>
+                            <label for="relationkind">Relatiesoort <a style="text-decoration:none;cursor:default;">*</a></label>
                             <select name="relationkind" id="relationkind" class="form-control pointer">
                                 @foreach (RelationKind::all() as $kind)
                                 <option {{ old('relationkind') && old('relationkind') == $kind->id ? 'selected' : '' }} value="{{ $kind->id }}">{{ ucwords($kind->kind_name) }}</option>
@@ -177,7 +167,7 @@ $(document).ready(function() {
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="debtor">Debiteurennummer*</label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
+                            <label for="debtor">Debiteurennummer <a style="text-decoration:none;cursor:default;">*</a></label>&nbsp;<a data-toggle="tooltip" data-placement="bottom" data-original-title="Dit nummer is gegenereerd door de CalculatieTool.com. Je kunt dit vervangen door je eigen boekhoudkundige nummering." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a>
                             <input name="debtor" maxlength="10" id="debtor" type="text" value="{{ old('debtor') ? old('debtor') : $debtor_code }}" class="form-control"/>
                         </div>
                     </div>
@@ -189,14 +179,14 @@ $(document).ready(function() {
 
                     <div class="col-md-5">
                         <div class="form-group">
-                            <label for="company_name">Bedrijfsnaam*</label>
+                            <label for="company_name">Bedrijfsnaam <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="company_name" maxlength="50" id="company_name" type="text" value="{{ old('company_name') }}" class="form-control" />
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="company_type">Bedrijfstype*</label>
+                            <label for="company_type">Bedrijfstype <a style="text-decoration:none;cursor:default;">*</a></label>
                             <select name="company_type" id="company_type" class="form-control pointer">
                                 @foreach (RelationType::all() as $type)
                                 <option {{ (old('company_type') == $type->id ? 'selected' : '') }} value="{{ $type->id }}">{{ ucwords($type->type_name) }}</option>
@@ -235,7 +225,7 @@ $(document).ready(function() {
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="email_comp">Email*</label>
+                            <label for="email_comp">Email <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="email_comp" maxlength="80" id="email_comp" type="email" value="{{ old('email_comp') }}" class="form-control"/>
                         </div>
                     </div>
@@ -247,37 +237,37 @@ $(document).ready(function() {
 
                     <div class="col-md-1">
                         <div class="form-group">
-                            <label for="address_number">Huis nr.*</label>
+                            <label for="address_number">Huis nr. <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="address_number" maxlength="5" id="address_number" type="text" value="{{ old('address_number') }}" class="form-control autoappend"/>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="zipcode">Postcode*</label>
+                            <label for="zipcode">Postcode <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="zipcode" id="zipcode" maxlength="6" type="text" value="{{ old('zipcode') }}" class="form-control autoappend"/>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="street">Straat*</label>
+                            <label for="street">Straat <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="street" id="street" maxlength="50" type="text" value="{{ old('street') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="city">Plaats*</label>
+                            <label for="city">Plaats <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="city" id="city" maxlength="35" type="text" value="{{ old('city') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="province">Provincie*</label>
+                            <label for="province">Provincie <a style="text-decoration:none;cursor:default;">*</a></label>
                             <select name="province" id="province" class="form-control pointer">
-                                @foreach (CalculatieTool\Models\Province::all() as $province)
+                                @foreach ($province::all() as $province)
                                 <option  {{ (old('province') ? (old('province') == $province->id ? 'selected' : '') : $province->province_name=='overig'  ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
                                 @endforeach
                             </select>
@@ -286,9 +276,9 @@ $(document).ready(function() {
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="country">Land*</label>
+                            <label for="country">Land <a style="text-decoration:none;cursor:default;">*</a></label>
                             <select name="country" id="country" class="form-control pointer">
-                                @foreach (CalculatieTool\Models\Country::all() as $country)
+                                @foreach ($country::all() as $country)
                                 <option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
                                 @endforeach
                             </select>
@@ -308,7 +298,7 @@ $(document).ready(function() {
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="contact_name">Achternaam*</label>
+                            <label for="contact_name">Achternaam <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="contact_name" maxlength="50" id="contact_name" type="text" value="{{ old('contact_name') }}" class="form-control"/>
                         </div>
                     </div>
@@ -336,16 +326,16 @@ $(document).ready(function() {
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="email">Email*</label>
+                            <label for="email">Email <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="email" id="email" maxlength="80" type="email" value="{{ old('email') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-4 company">
                         <div class="form-group">
-                            <label for="contactfunction">Functie*</label>
+                            <label for="contactfunction">Functie <a style="text-decoration:none;cursor:default;">*</a></label>
                             <select name="contactfunction" id="contactfunction" class="form-control pointer">
-                                @foreach (CalculatieTool\Models\ContactFunction::all() as $function)
+                                @foreach ($contact_function::all() as $function)
                                 <option {{ (old('contactfunction') ? (old('contactfunction') == $function->id ? 'selected' : '') : $function->function_name=='directeur' ? 'selected' : '') }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
                                 @endforeach
                             </select>

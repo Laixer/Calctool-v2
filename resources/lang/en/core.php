@@ -27,7 +27,9 @@ return [
     // Generic
     'new'         => 'New',
     'open'        => 'Open',
+    'opened'      => 'Opened',
     'closed'      => 'Closed',
+    'close'       => 'Close',
     'name'        => 'Name',
     'type'        => 'Type',
     'city'        => 'City',

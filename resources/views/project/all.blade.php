@@ -38,7 +38,7 @@
                 </div>
 
                 <h2><strong>Projecten</strong></h2>
-                <div class="white-row" ng-controller="projectController">
+                <div class="white-row">
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -66,20 +66,20 @@
                             @endempty
                         </tbody>
                     </table>
-
-                    <div class="text-center">
-                        <ul class="pagination">
-                            <li><a href="#">&laquo;</a></li>
-                            <li><a href="#">1</a></li>
-                            <li><a href="#">2</a></li>
-                            <li><a href="#">3</a></li>
-                            <li><a href="#">4</a></li>
-                            <li><a href="#">5</a></li>
-                            <li><a href="#">&raquo;</a></li>
-                        </ul>
-                    </div
-
                 </div>
+
+                <div class="text-center">
+                    <ul class="pagination">
+                        <li><a href="#">&laquo;</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                    </ul>
+                </div>
+
             </div>
         </div>
 

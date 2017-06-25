@@ -37,9 +37,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         'BynqIO\Dynq\Events\UserSubscriptionCanceled' => [
             'BynqIO\Dynq\Listeners\SubscriptionCanceled',
-        ],        
+        ],
         'Illuminate\Auth\Events\Login' => [
             'BynqIO\Dynq\Listeners\LogAuthenticated',
+            'BynqIO\Dynq\Listeners\EvolutionUpgrade',
         ],
     ];
 

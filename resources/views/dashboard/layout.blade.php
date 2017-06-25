@@ -94,7 +94,7 @@ $(document).ready(function() {
                         @foreach($projects as $project)
                         <div class="item">
                             <a href="/project/{{ $project->id }}-{{ $project->slug() }}/details" class="product_name">{{ $project->project_name }}</a>
-                            <a href="/project/close?id={{ $project->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Project sluiten?')" class="btn btn-default btn-xs" style="float: right;margin: 10px;">Sluiten</a>
+                            <a href="/project/close?id={{ $project->id }}&csrf={{ csrf_token() }}" onclick="return confirm('Project sluiten?')" class="btn btn-default btn-xs" style="float: right;margin: 10px;">@lang('core.close')</a>
                             <div class="total_price" style="text-align:left;">{{ ucfirst($project->type->type_name) }}</div>
                             <div class="qty" style="text-align:left;">{{ $project->client->name() }}</div>
                             <div class="clearfix"></div>

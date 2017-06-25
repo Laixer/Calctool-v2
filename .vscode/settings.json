@@ -4,5 +4,17 @@
     "editor.renderWhitespace": "all",
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
-    "editor.trimAutoWhitespace": true
+    "editor.trimAutoWhitespace": true,
+    "editor.wordWrap": "off",
+    "files.autoSave": "onFocusChange",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "window.reopenFolders": "all",
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/bower_components": true,
+        "public/components":true,
+        "public/plugins":true
+    },
+    "explorer.openEditors.dynamicHeight": false
 }

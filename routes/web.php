@@ -51,6 +51,8 @@ Route::post('support',         'SupportController@sendSupport');
 Route::get('support',          'SupportController@getSupport');
 Route::get('support/gethelp',  'SupportController@helpPage');
 
+Route::get('manifest.json',  'ManifestController');//TODO: might want to move this?
+
 /* Authentication Group */
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController')->name('dashboard');
@@ -99,7 +101,7 @@ Route::group(['middleware' => ['auth','payzone']], function() {
 
     /* Module Group Product */
     Route::group(['namespace' => 'Product'], function() {
- 
+
          /* Product list */
         Route::get('material',                        'MaterialController@getList');
         Route::get('material/subcat/{type}/{id}',     'MaterialController@getListSubcat');
@@ -148,7 +150,7 @@ Route::group(['middleware' => ['auth','payzone']], function() {
         Route::post('relation/iban/update',             'RelationController@doUpdateIban');
         Route::post('relation/iban/new',                'RelationController@doNewIban');
         Route::post('relation/updatecalc',              'RelationController@doUpdateProfit');
-        Route::get('relation',                          'RelationController@getAll');
+        Route::get('relation',                          'FilterController');
         Route::get('relation/import',                   'RelationController@getImport');
         Route::post('relation/import/save',             'ImportController');
         Route::get('relation/export',                   'ExportController');
@@ -185,12 +187,6 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         // Route::post('invoice/invclose', 'InvoiceController@doInvoiceCloseAjax');
         // Route::post('invoice/term/add', 'InvoiceController@doInvoiceNewTerm');
         // Route::post('invoice/term/delete', 'InvoiceController@doInvoiceDeleteTerm');
-        // Route::get('invoice/project-{project_id}/invoice-version-{invoice_id}', function() {
-        //     return view('calc.invoice_show_pdf');
-        // });
-        // Route::get('invoice/project-{project_id}/pdf-invoice-{invoice_id}', function() {
-        //     return view('calc.invoice_show_final_pdf');
-        // });
         // Route::get('invoice/project-{project_id}/invoice-{offer_id}/mail-preview', 'InvoiceController@getSendOfferPreview');
         // Route::post('invoice/sendmail', 'InvoiceController@doSendOffer');
         // Route::post('invoice/sendpost', 'InvoiceController@doSendPostOffer');
@@ -209,15 +205,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
 
     /* Module Group Quotations */
     Route::group(['namespace' => 'Quotation'], function() {
-        // Route::get('offer/project-{project_id}',                  'Calculation\CalcController@getOffer');;
-        // Route::post('offer/project-{project_id}',                 'OfferController@doNewOffer');
-        // Route::get('offer/project-{project_id}/offer-{offer_id}', function() {
-        //     return view('calc.offer_show_pdf');
-        // })->where('offer_id', '[0-9]+');;
-        // Route::get('offer/project-{project_id}/offer-{offer_id}/mail-preview', 'OfferController@getSendOfferPreview')->where('offer_id', '[0-9]+');;
-        // Route::post('offer/close',                                'OfferController@doOfferClose');
         // Route::post('offer/sendmail',                             'OfferController@doSendOffer');
-        // Route::post('offer/sendpost',                             'OfferController@doSendPostOffer');
 
         Route::post('quotation/new',                              'NewController');
         Route::post('quotation/confirm',                          'ConfirmController');
@@ -289,12 +277,12 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         /////////////////////////// }
     });
 
-    Route::get('xxx', function() {
-        return view('mail.user_reacted',['name'=>'kaas','body'=>'y','amount'=>12,'email'=>'info@jaas.com','reason'=>'oo',
-        'expdate'=>'21-23-2017','project_name'=>'q','note'=>'Its just great','username'=>'trol',
-        'subscription'=>'x','category'=>'trol','subject'=>'ice', 'message'=>'troll','token'=>'x','user'=>'Arie Kaas'
-        ]);
-    });
+    // Route::get('xxx', function() {
+    //     return view('mail.user_reacted',['name'=>'kaas','body'=>'y','amount'=>12,'email'=>'info@jaas.com','reason'=>'oo',
+    //     'expdate'=>'21-23-2017','project_name'=>'q','note'=>'Its just great','username'=>'trol',
+    //     'subscription'=>'x','category'=>'trol','subject'=>'ice', 'message'=>'troll','token'=>'x','user'=>'Arie Kaas'
+    //     ]);
+    // });
 
     /* Module Group Project */
     Route::group(['namespace' => 'Project'], function() {
@@ -336,7 +324,7 @@ Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
         Route::get('timesheet',                                            'CostController@getTimesheet');
         Route::post('timesheet/new',                                       'CostController@doNewTimesheet');
         Route::post('timesheet/delete',                                    'CostController@doDeleteTimesheet');
-        
+
         Route::get('timesheet/activity/{project_id}/{type}',               'CostController@getActivityByType')->where('type', '[0-9]+');
         Route::get('purchase',                                             'CostController@getPurchase');
         Route::post('purchase/new',                                        'CostController@doNewPurchase');

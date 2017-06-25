@@ -15,14 +15,11 @@
 
 namespace BynqIO\Dynq\Listeners;
 
+use Carbon\Carbon;
 use BynqIO\Dynq\Models\Audit;
 use BynqIO\Dynq\Models\User;
 use Illuminate\Auth\Events\Login;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Contracts\Queue\ShouldQueue;
 
-use Cookie;
-use Auth;
 use Cache;
 
 class LogAuthenticated
@@ -51,7 +48,7 @@ class LogAuthenticated
             Cache::forget('keepsesionstate');
         } else {
             $event->user->login_count++;
-            $event->user->online_at = \DB::raw('NOW()');
+            $event->user->online_at = Carbon::now();
             $event->user->save();
             Audit::CreateEvent('auth.login.succces', 'Login with: ' . Audit::UserAgent(), $event->user->id);
         }

@@ -149,3 +149,27 @@ if (!function_exists('cachet_redirect')) {
         return app('redirect')->to($url, $status, $headers);
     }
 }
+
+if (!function_exists('get_php_classes')) {
+    /**
+     * Create a new redirect response to a named route, which resides in a given domain.
+     *
+     * @param string $code
+     *
+     * @return array
+     */
+    function get_php_classes($code) {
+        $classes = [];
+        $tokens = token_get_all($code);
+        $count = count($tokens);
+
+        for ($i = 2; $i < $count; $i++) {
+            if ($tokens[$i - 2][0] == T_CLASS && $tokens[$i - 1][0] == T_WHITESPACE && $tokens[$i][0] == T_STRING) {
+                $class_name = $tokens[$i][1];
+                $classes[] = $class_name;
+            }
+        }
+
+        return $classes;
+    }
+}

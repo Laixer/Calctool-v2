@@ -1,5 +1,0 @@
-- Toevoegen van number checks op quotation/invoice
-- Testen van multilingual invoer, specifiek unicode CJK (hier komt een testcase van)
-- Currency symbol is consistent doorgevoerd
-- PDF inline weergave na opslaan
-- Datetime picker

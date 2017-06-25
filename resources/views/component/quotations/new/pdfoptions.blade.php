@@ -31,6 +31,11 @@ $(document).ready(function() {
     });
 
     $("[name=amount]").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
+
+    /* Remove contents from modal on close */
+    $(document).on('hidden.bs.modal', function (e) {
+        $(e.target).removeData('bs.modal');
+    });
 });
 </script>
 @endpush
@@ -48,10 +53,16 @@ $(document).ready(function() {
 </div>
 @endsection
 
+<div class="modal fade" id="asyncModal" tabindex="-1" role="dialog" aria-labelledby="asyncModal" aria-hidden="true">
+    <div class="modal-dialog {{-- modal-lg --}} {{-- modal-sm --}}">
+        <div class="modal-content"></div>
+    </div>
+</div>
+
 <form action="" method="get" class="white-row">
     <input type="hidden" name="ts" value="{{ time() }}">
-    <input type="hidden" name="pretext" value="Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken."/>
-    <input type="hidden" name="posttext" value="Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet."/>
+    <input type="hidden" name="pretext" value="{{ Input::has('pretext') ? Input::get('pretext') : 'Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken.' }}"/>
+    <input type="hidden" name="posttext" value="{{ Input::has('posttext') ? Input::get('posttext') : 'Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet.' }}"/>
 
     <h3 class="page-header nomargin-top">Instellingen</h3>
 
@@ -119,13 +130,13 @@ $(document).ready(function() {
     <h3 class="page-header nomargin-top">Teksten</h3>
     <div class="row">
         <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
-            <button style="width: 100px;" class="btn btn-sm btn-default">Aanheftekst</button><span style="margin-left:10px;">Tekst na de aanhef</span>
+            <a href="/inline/inline_edit?selector=pretext&title=Aanheftekst&package=component.modal" style="width:100px" data-toggle="modal" data-target="#asyncModal" class="btn btn-sm btn-default">Aanheftekst</a><span style="margin-left:10px;">Tekst na de aanhef</span>
         </div>
         <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
-            <button style="width: 100px;" class="btn btn-sm btn-default">Bepalingen</button><span style="margin-left:10px;">Voeg extra bepalingen toe</span>
+            <a href="/inline/description?id=1000&package=component.modal" style="width:100px" data-toggle="modal" data-target="#asyncModal" class="btn btn-sm btn-default">Bepalingen</a><span style="margin-left:10px;">Voeg extra bepalingen toe</span>
         </div>
         <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
-            <button style="width: 100px;" class="btn btn-sm btn-default">Sluittekst</button><span style="margin-left:10px;">Geef sluittekst op</span>
+            <a href="/inline/inline_edit?selector=posttext&title=Sluittekst&package=component.modal" style="width:100px" data-toggle="modal" data-target="#asyncModal" class="btn btn-sm btn-default">Sluittekst</a><span style="margin-left:10px;">Geef sluittekst op</span>
         </div>
     </div>
     {{-- /Proposal texts --}}
