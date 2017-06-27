@@ -76,7 +76,7 @@ class SignupController extends Controller
     {
         $request->merge(array('username' => trim(strtolower($request->input('username')))));
         $request->merge(array('email' => trim(strtolower($request->input('email')))));
-        
+
         $referral_user = null;
         $expiration_date = date('Y-m-d', strtotime("+1 month", time()));
         if ($request->has('client_referer')) {
@@ -111,7 +111,7 @@ class SignupController extends Controller
         $user->lastname        = $request->get('contact_name');
 
         if ($request->session()->has('referrer')) {
-            $user->referral_url = substr($request->session()->pull('referrer'), 0, 180);
+            $user->referral_url = mb_substr($request->session()->pull('referrer'), 0, 180);
         }
 
         $user->save();

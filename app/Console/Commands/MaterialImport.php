@@ -74,9 +74,9 @@ class MaterialImport extends Command
                 'unit' => $value['PriceInformation']['GrossUnitPrice']['MeasureUnitQualifier'],
                 'price' => $price_total,
                 'total_price' => $price,
-                'description' => strtolower($value['ArticleData']['SuppliersDescription']['Description']),
+                'description' => mb_strtolower($value['ArticleData']['SuppliersDescription']['Description']),
                 'group_id' => $subgroup->id,
-                'supplier_id' => $boumaat->id 
+                'supplier_id' => $boumaat->id
             ));
         }
         echo "New materials loaded\n";

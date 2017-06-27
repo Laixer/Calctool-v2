@@ -192,7 +192,7 @@ class InvoiceController extends Controller {
 
         $invoice_version->save();
 
-        $newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice_version->invoice_code.'-invoice.pdf';
+        $newname = Auth::id().'-'.mb_substr(md5(uniqid()), 0, 5).'-'.$invoice_version->invoice_code.'-invoice.pdf';
         if ($invoice->isclose) {
             $pdf = PDF::loadView('calc.invoice_pdf', ['invoice' => $invoice_version]);
         } else {
@@ -275,7 +275,7 @@ class InvoiceController extends Controller {
     public function doCreditInvoiceNew(Request $request)
     {
         $this->validate($request, [
-            'projectid' => array('required','integer'),	
+            'projectid' => array('required','integer'),
             'id' => array('required','integer'),
         ]);
 
@@ -307,7 +307,7 @@ class InvoiceController extends Controller {
         $ninvoice->rest_0 = InvoiceTerm::partTax3($project, $invoice)*$ninvoice->amount;
         $ninvoice->save();
 
-        $newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice->invoice_code.'-credit-invoice.pdf';
+        $newname = Auth::id().'-'.mb_substr(md5(uniqid()), 0, 5).'-'.$invoice->invoice_code.'-credit-invoice.pdf';
         $pdf = PDF::loadView('calc.invoice_credit_final_pdf', ['invoice' => $ninvoice, 'oldinvoice' => $invoice->invoice_code]);
 
         $relation_self = Relation::find(Auth::User()->self_id);
@@ -447,7 +447,7 @@ class InvoiceController extends Controller {
 
         $invoice->save();
 
-        $newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.$invoice->invoice_code.'-invoice.pdf';
+        $newname = Auth::id().'-'.mb_substr(md5(uniqid()), 0, 5).'-'.$invoice->invoice_code.'-invoice.pdf';
         if ($invoice->isclose) {
             $pdf = PDF::loadView('calc.invoice_final_pdf', ['invoice' => $invoice]);
         } else {
@@ -596,9 +596,9 @@ class InvoiceController extends Controller {
             'user_logo' => $user_logo
         );
         Mail::send('mail.invoice_send', $data, function($message) use ($data) {
-            $message->to($data['email'], strtolower(trim($data['client'])));
+            $message->to($data['email'], mb_strtolower(trim($data['client'])));
             foreach ($data['other_contacts'] as $email => $name) {
-                $message->cc($email, strtolower(trim($name)));
+                $message->cc($email, mb_strtolower(trim($name)));
             }
             $message->bcc($data['email_from'], $data['mycomp']);
             $message->attach($data['pdf']);
@@ -623,7 +623,7 @@ class InvoiceController extends Controller {
             return response()->json(['success' => 0]);
         }
         $relation = Relation::find($project->client_id);
-        $contacts = Contact::where('relation_id',$relation->id)->where('id','<>',$invoice->to_contact_id)->get();		
+        $contacts = Contact::where('relation_id',$relation->id)->where('id','<>',$invoice->to_contact_id)->get();
 
         $contact_client = Contact::find($invoice->to_contact_id);
         $contact_user = Contact::find($invoice->from_contact_id);

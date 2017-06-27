@@ -72,7 +72,7 @@ class NLPostcode implements PostalInterface
             $address['street'] = $data->_embedded->addresses[0]->street;
             $address['number'] = $data->_embedded->addresses[0]->number;
             $address['province'] = $data->_embedded->addresses[0]->province->label;
-            $address['province_id'] = Province::where('province_name', strtolower($data->_embedded->addresses[0]->province->label))->first()['id'];
+            $address['province_id'] = Province::where('province_name', mb_strtolower($data->_embedded->addresses[0]->province->label))->first()['id'];
             $address['city'] = $data->_embedded->addresses[0]->city->label;
 
             return $address;

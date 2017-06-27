@@ -75,7 +75,7 @@ class Kernel extends ConsoleKernel
                         'user' => $contact_user->getFormalName()
                     );
                     Mail::send('mail.invoice_demand', $data, function($message) use ($data) {
-                        $message->to($data['email'], strtolower(trim($data['client'])));
+                        $message->to($data['email'], mb_strtolower(trim($data['client'])));
                         $message->subject(config('app.name') . ' - Vordering');
                         $message->from(APP_EMAIL);
                     });
@@ -97,7 +97,7 @@ class Kernel extends ConsoleKernel
                         'user' => $contact_user->getFormalName()
                     );
                     Mail::send('mail.invoice_last_reminder', $data, function($message) use ($data) {
-                        $message->to($data['email'], strtolower(trim($data['client'])));
+                        $message->to($data['email'], mb_strtolower(trim($data['client'])));
                         $message->subject(config('app.name') . ' - Tweede betalingsherinnering');
                         $message->from(APP_EMAIL);
                     });
@@ -119,7 +119,7 @@ class Kernel extends ConsoleKernel
                         'user' => $contact_user->getFormalName()
                     );
                     Mail::send('mail.invoice_first_reminder', $data, function($message) use ($data) {
-                        $message->to($data['email'], strtolower(trim($data['client'])));
+                        $message->to($data['email'], mb_strtolower(trim($data['client'])));
                         $message->subject(config('app.name') . ' - Betalingsherinnering');
                         $message->from(APP_EMAIL);
                     });
@@ -133,7 +133,7 @@ class Kernel extends ConsoleKernel
                     $message->save();
                 }
             }
- 
+
         })->dailyAt('06:30');
 
         $schedule->call(function() {

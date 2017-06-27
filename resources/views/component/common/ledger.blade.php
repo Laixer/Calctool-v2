@@ -157,8 +157,8 @@ $(document).ready(function() {
             layer:     $row.closest("table").attr("data-layer"),
             activity:  $row.closest("table").attr("data-id"),
             project:   {{ $project->id }},
-        }, function(data) { 
-            if (data.success) { 
+        }, function(data) {
+            if (data.success) {
                 if (data.name) { $row.find("input[name='name']").val(data.name); }
                 if (data.unit) { $row.find("input[name='unit']").val(data.unit); }
                 if (data.rate) { $row.find("input[name='rate']").val(data.rate); }
@@ -253,7 +253,7 @@ $(document).ready(function() {
             </div>
 
             <div class="modal-body">
-                
+
                 <div class="form-group input-group-lg">
 
                     <div class="row">
@@ -265,7 +265,7 @@ $(document).ready(function() {
                                 ?>
                                 <option value="{{ $mysupplier->id }}">Mijn Materiaal</option>
                                 <?php } ?>
-                                
+
                                 @foreach (Wholesale::all() as $wholesale)
                                 <?php
                                 $supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
@@ -339,7 +339,7 @@ $(document).ready(function() {
             </div>
 
             <div class="modal-body">
-                
+
                 <div class="table-responsive">
                     <table id="tbl-material2" class="table table-hover">
                         <thead>
@@ -380,7 +380,7 @@ $(document).ready(function() {
             </div>
 
             <div class="modal-body">
-                
+
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <thead>
@@ -390,7 +390,7 @@ $(document).ready(function() {
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at')->get() as $favact)	
+                            @foreach (FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at')->get() as $favact)
                             <tr>
                                 <td><a class="favlink" href="#" data-id="{{ $favact->id }}">{{ $favact->activity_name }}</a></td>
                                 <td class="text-right">{{ $favact->created_at->toDateString() }}</td>
@@ -516,7 +516,7 @@ $(document).ready(function() {
                             <div class="col-md-2 text-right label label-info"><strong>BTW 0%</strong></div>
                             <div class="col-md-2"></div>
                             @else
-                            <div class="col-md-2 text-right"></div>	
+                            <div class="col-md-2 text-right"></div>
                             <div class="col-md-2">
                                 @ifallowed ($features['tax.update'])
                                 <select name="tax" data-id="{{ $activity->id }}" data-layer="labor" class="form-control-sm-text pointer">
@@ -571,7 +571,7 @@ $(document).ready(function() {
                                         @money($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0, false)
                                         @endif
                                     </td>
-                                    <td class="col-md-1"><span class="total-row">@money($calculus_register::laborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()['rate'] : $project->hour_rate, $layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount']))</span></td>
+                                    <td class="col-md-1"><span class="total-row">@money($layer_total($activity)::laborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()['rate'] : $project->hour_rate, $layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount']))</span></td>
                                     <td class="col-md-1"><span class="total-row-profit"></span>
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.labor.reset'])
@@ -597,7 +597,7 @@ $(document).ready(function() {
                             <div class="col-md-2 text-right label label-info"><strong>BTW 0%</strong></div>
                             <div class="col-md-2"></div>
                             @else
-                            <div class="col-md-2 text-right"></div>	
+                            <div class="col-md-2 text-right"></div>
                             <div class="col-md-2">
                                 @ifallowed ($features['tax.update'])
                                 <select name="tax" data-id="{{ $activity->id }}" data-layer="labor" class="form-control-sm-text pointer">
@@ -720,7 +720,7 @@ $(document).ready(function() {
                             <div class="col-md-2 text-right label label-info"></div>
                             <div class="col-md-2"></div>
                             @else
-                            <div class="col-md-2 text-right"></div>	
+                            <div class="col-md-2 text-right"></div>
                             <div class="col-md-2">
                                 @ifallowed ($features['tax.update'])
                                 <select name="tax" data-id="{{ $activity->id }}" data-layer="material" class="form-control-sm-text pointer">
@@ -805,8 +805,8 @@ $(document).ready(function() {
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
-                                    <td class="col-md-1"><strong class="subtotal">@money($calculus_register::materialTotal($activity->id))</span></td>
-                                    <td class="col-md-1"><strong class="subtotal_profit">@money($calculus_register::materialTotalProfit($activity->id, $profit('material', $activity)))</span></td>
+                                    <td class="col-md-1"><strong class="subtotal">@money($layer_total($activity)::materialTotal($activity->id))</span></td>
+                                    <td class="col-md-1"><strong class="subtotal_profit">@money($layer_total($activity)::materialTotalProfit($activity->id, $profit('material', $activity)))</span></td>
                                     <td class="col-md-1"></td>
                                 </tr>
                             </tbody>
@@ -823,7 +823,7 @@ $(document).ready(function() {
                             <div class="col-md-2 text-right label label-info"><strong>BTW 0%</strong></div>
                             <div class="col-md-2"></div>
                             @else
-                            <div class="col-md-2 text-right"></div>	
+                            <div class="col-md-2 text-right"></div>
                             <div class="col-md-2">
                                 @ifallowed ($features['tax.update'])
                                 <select name="tax" data-id="{{ $activity->id }}" data-layer="other" class="form-control-sm-text pointer">
@@ -908,8 +908,8 @@ $(document).ready(function() {
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
-                                    <td class="col-md-1"><strong class="subtotal">@money($calculus_register::equipmentTotal($activity->id))</span></td>
-                                    <td class="col-md-1"><strong class="subtotal_profit">@money($calculus_register::equipmentTotalProfit($activity->id, $profit('other', $activity)))</span></td>
+                                    <td class="col-md-1"><strong class="subtotal">@money($layer_total($activity)::equipmentTotal($activity->id))</span></td>
+                                    <td class="col-md-1"><strong class="subtotal_profit">@money($layer_total($activity)::equipmentTotalProfit($activity->id, $profit('other', $activity)))</span></td>
                                     <td class="col-md-1"></td>
                                 </tr>
                             </tbody>
@@ -938,7 +938,7 @@ $(document).ready(function() {
                             <input type="hidden" name="level" value="2">
                             <input type="hidden" name="type" value="{{ $section == 'estimate' ? 'estimate' : 'calculation' }}">
                             <input type="hidden" name="detail" value="{{ $component == 'more' ?: '' }}">
-                            <input type="text" maxlength="100" class="form-control" name="name" id="name" value="" placeholder="Nieuwe Werkzaamheid">
+                            <input type="text" maxlength="50" class="form-control" name="name" id="name" value="" placeholder="Nieuwe Werkzaamheid">
                             <div class="input-group-btn">
                                 <button class="btn btn-primary btn-primary-activity"><i class="fa fa-plus">&nbsp;&nbsp;</i> Voeg toe</button>
                                 <button type="button" class="btn btn-primary dropdown-toggle" style="padding-right: 8px;padding-left: 8px;" data-toggle="dropdown">
@@ -985,7 +985,7 @@ $(document).ready(function() {
             <div class="input-group">
                 <input type="hidden" name="project" value="{{ $project->id }}">
                 <input type="hidden" name="level" value="1">
-                <input type="text" maxlength="100" class="form-control" name="name" id="name" value="" placeholder="Nieuw onderdeel">
+                <input type="text" maxlength="50" class="form-control" name="name" id="name" value="" placeholder="Nieuw onderdeel">
                 <span class="input-group-btn">
                     <button class="btn btn-primary btn-primary-chapter"><i class="fa fa-plus">&nbsp;&nbsp;</i> Voeg toe</button>
                 </span>

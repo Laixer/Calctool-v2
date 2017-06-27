@@ -75,7 +75,7 @@ class CloseController extends Controller
         $resource = new Resource;
         $resource->resource_name = 'invoice.pdf';
         $resource->file_location = $file;
-        $resource->file_size = strlen($pdf->output());
+        $resource->file_size = mb_strlen($pdf->output());
         $resource->user_id = $user->id;
         $resource->description = 'Factuurversie';
 

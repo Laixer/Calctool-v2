@@ -155,7 +155,7 @@ class AccountController extends Controller
         }
 
         if ($user->email != $request->get('email')) {
-            $email = strtolower(trim($request->input('email')));
+            $email = mb_strtolower(trim($request->input('email')));
 
             if (User::where('email',$email)->count()>0) {
                 $errors = new MessageBag(['status' => ['Email wordt al gebruikt']]);
@@ -166,9 +166,9 @@ class AccountController extends Controller
         }
 
         if ($request->get('mobile'))
-            $user->mobile = substr($request->get('mobile'), 0, 9);
+            $user->mobile = mb_substr($request->get('mobile'), 0, 9);
         if ($request->get('phone'))
-            $user->phone = substr($request->get('phone'), 0, 9);
+            $user->phone = mb_substr($request->get('phone'), 0, 9);
         if ($request->get('website'))
             $user->website = $request->get('website');
 
@@ -245,14 +245,14 @@ class AccountController extends Controller
             $user->pref_extracondition_offer = htmlspecialchars($request->get('pref_extracondition_offer'));
         if ($request->get('pref_closure_offer'))
             $user->pref_closure_offer = htmlspecialchars($request->get('pref_closure_offer'));
-        
+
         if ($request->get('pref_email_invoice'))
             $user->pref_email_invoice = htmlspecialchars($request->get('pref_email_invoice'));
         if ($request->get('pref_invoice_description'))
             $user->pref_invoice_description = htmlspecialchars($request->get('pref_invoice_description'));
         if ($request->get('pref_invoice_closure'))
             $user->pref_invoice_closure = htmlspecialchars($request->get('pref_invoice_closure'));
-        
+
         if ($request->get('pref_email_invoice_first_reminder'))
             $user->pref_email_invoice_first_reminder = htmlspecialchars($request->get('pref_email_invoice_first_reminder'));
         if ($request->get('pref_email_invoice_last_reminder'))
@@ -261,7 +261,7 @@ class AccountController extends Controller
             $user->pref_email_invoice_first_demand = htmlspecialchars($request->get('pref_email_invoice_first_demand'));
         if ($request->get('pref_email_invoice_last_demand'))
             $user->pref_email_invoice_last_demand = htmlspecialchars($request->get('pref_email_invoice_last_demand'));
-        
+
         if ($request->get('offernumber_prefix') != "")
             $user->offernumber_prefix = $request->get('offernumber_prefix');
         if ($request->get('invoicenumber_prefix') != "")

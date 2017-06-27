@@ -173,14 +173,14 @@ class UpdateController extends Controller
         if ($offer_last){
             $invoice_end = Invoice::where('offer_id','=', $offer_last->id)->where('isclose',true)->first();
         }
-                                
+
         // $estim_total = 0;
         $more_total = 0;
         // $less_total = 0;
         // $disable_estim = false;
         $disable_more = false;
         // $disable_less = false;
-        
+
         foreach (Chapter::where('project_id','=', $project->id)->get() as $chap) {
             foreach (Activity::where('chapter_id','=', $chap->id)->get() as $activity) {
                 // $estim_total += EstimateLabor::where('activity_id','=', $activity->id)->count('id');
@@ -189,11 +189,11 @@ class UpdateController extends Controller
 
                 $more_total += MoreLabor::where('activity_id','=', $activity->id)->count('id');
                 $more_total += MoreMaterial::where('activity_id','=', $activity->id)->count('id');
-                $more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');	
+                $more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');
 
                 // $less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
                 // $less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
-                // $less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
+                // $less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
             }
         }
 
@@ -373,7 +373,7 @@ class UpdateController extends Controller
         $share->save();
 
         $offer = Offer::where('project_id', $project->id)->orderBy('created_at','desc')->first();
-        
+
         $contact_client = Contact::find($offer->to_contact_id);
         $contact_user = Contact::find($offer->from_contact_id);
 
@@ -394,7 +394,7 @@ class UpdateController extends Controller
             'note' => nl2br($request->input('user_note'))
         );
         Mail::send('mail.user_reacted', $data, function($message) use ($data) {
-            $message->to($data['email'], strtolower(trim($data['client'])));
+            $message->to($data['email'], mb_strtolower(trim($data['client'])));
             $message->subject(config('app.name') . ' - Uw vakman heeft gereageerd');
             $message->from(APP_EMAIL);
             $message->replyTo($data['email_from'], $data['mycomp']);

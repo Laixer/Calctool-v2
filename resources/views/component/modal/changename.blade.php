@@ -11,7 +11,7 @@
         <div class="col-md-12">
             <input value="{{ Input::get('id') }}" name="id" type="hidden" class="form-control" />
             <input value="{{ Input::get('level') }}" name="level" type="hidden" class="form-control" />
-            <input value="{{ Input::get('name') }}" maxlength="100" name="name" class="form-control" />
+            <input value="{{ Input::get('name') }}" maxlength="50" name="name" class="form-control" />
         </div>
     </div>
 </div>

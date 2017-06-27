@@ -28,6 +28,7 @@ class Ledger
     protected $original = true;
     protected $filter;
     protected $layer;
+    protected $layerTotal;
     protected $profit;
     protected $calculateRow;
     protected $optdata;
@@ -105,6 +106,13 @@ class Ledger
         return $this;
     }
 
+    public function layerTotal(Closure $func)
+    {
+        $this->layerTotal = $func;
+
+        return $this;
+    }
+
     public function profit(Closure $func)
     {
         $this->profit = $func;
@@ -152,6 +160,10 @@ class Ledger
 
         if (isset($this->layer)) {
             $data['layer'] = $this->layer;
+        }
+
+        if (isset($this->layerTotal)) {
+            $data['layer_total'] = $this->layerTotal;
         }
 
         if (isset($this->profit)) {

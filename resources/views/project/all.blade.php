@@ -16,9 +16,9 @@
 
             <div>
 
-                <div class="pull-right">
+                <!--<div class="pull-right">-->
                     <!--<button type="button" class="btn btn-primary">Geavanceerde Filters</button>-->
-                    <div class="btn-group">
+                    <!--<div class="btn-group">
                         <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Snelle Filters
                         <span class="caret"></span></button>
                         <ul class="dropdown-menu">
@@ -35,10 +35,39 @@
                             <li><a href="?sort=client:asc">Sorteer op Opdrachtgever</a></li>
                         </ul>
                     </div>
-                </div>
+                </div>-->
 
                 <h2><strong>Projecten</strong></h2>
                 <div class="white-row">
+
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <div class="input-group">
+                                <input type="text" class="form-control" ng-model="query" placeholder="Zoek in relaties op projectnaam, opdrachtgever of plaats">
+
+                                <div class="input-group-btn">
+                                    <button class="btn btn-primary btn-primary-activity"><i class="fa fa-search"></i> Zoeken</button>
+                                    <button type="button" class="btn btn-primary dropdown-toggle" style="padding-right: 8px;padding-left: 8px;" data-toggle="dropdown" aria-expanded="false">
+                                        <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="{{ url()->current() }}">Alle Projecten</a></li>
+                                        <li><a href="?status=open">Open Projecten</a></li>
+                                        <li><a href="?status=closed">Gesloten Projecten</a></li>
+                                        <li><a href="?updated=after:{{ $carbon::now()->subDays(2)->toDateString() }}">Recente Bewerkt</a></li>
+                                        <li class="divider" style="margin:5px 0;"></li>
+                                        <li><a href="?type=calculatie">Projecttype Calculatie</a></li>
+                                        <li><a href="?type=regie">Projecttype Regiewerk</a></li>
+                                        <li><a href="?type=snelle offerte en factuur">Projecttype Snelle offerte</a></li>
+                                        <li class="divider" style="margin:5px 0;"></li>
+                                        <li><a href="?sort=name:asc">Sorteer op Projectnaam</a></li>
+                                        <li><a href="?sort=client:asc">Sorteer op Opdrachtgever</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <table class="table table-striped">
                         <thead>
                             <tr>

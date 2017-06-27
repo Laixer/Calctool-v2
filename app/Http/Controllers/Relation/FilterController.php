@@ -56,16 +56,16 @@ class FilterController extends Controller
 
     private function updatedFilter($input, $builder)
     {
-        if (strpos($input, 'after:') !== false) {
-            $date = substr($input, strlen('after:'));
+        if (mb_strpos($input, 'after:') !== false) {
+            $date = mb_substr($input, mb_strlen('after:'));
 
             try {
                 return $builder->where('updated_at', '>', Carbon::parse($date)->toIso8601String());
             } catch (Exception $err) {
                 return null;
             }
-        } else if (strpos($input, 'before:') !== false) {
-            $date = substr($input, strlen('before:'));
+        } else if (mb_strpos($input, 'before:') !== false) {
+            $date = mb_substr($input, mb_strlen('before:'));
 
             try {
                 return $builder->where('updated_at', '<', Carbon::parse($date)->toIso8601String());
@@ -84,11 +84,11 @@ class FilterController extends Controller
     private function sortFilter($input, $builder)
     {
         $order = null;
-        if (strpos($input, ':asc') !== false) {
+        if (mb_strpos($input, ':asc') !== false) {
             $order = 'asc';
         }
 
-        if (strpos($input, ':desc') !== false) {
+        if (mb_strpos($input, ':desc') !== false) {
             $order = 'desc';
         }
 

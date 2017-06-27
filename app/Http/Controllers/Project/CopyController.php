@@ -58,7 +58,7 @@ class CopyController extends Controller
 
         $project = new Project;
         $project->user_id = Auth::id();
-        $project->project_name = substr($orig_project->project_name . "-Kopie", 0, 50);
+        $project->project_name = mb_substr($orig_project->project_name . "-Kopie", 0, 50);
         $project->address_street = $orig_project->address_street;
         $project->address_number = $orig_project->address_number;
         $project->address_postal = $orig_project->address_postal;
@@ -123,7 +123,7 @@ class CopyController extends Controller
 
                     $calc_labor->save();
                 }
-                
+
                 foreach(CalculationMaterial::where('activity_id', $orig_activity->id)->get() as $orig_calc_material) {
                     $calc_material = new CalculationMaterial;
                     $calc_material->material_name = $orig_calc_material->material_name;

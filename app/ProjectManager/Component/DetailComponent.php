@@ -26,9 +26,9 @@ class DetailComponent extends BaseComponent implements Component
     public function render()
     {
         $tabs = [
-            ['name' => 'overview', 'title' => 'Overzicht',       'icon' => 'fa-info'],
-            ['name' => 'settings', 'title' => 'Projectgegevens',   'icon' => 'fa-map-marker'],
-            ['name' => 'options',  'title' => 'Opties',          'icon' => 'fa-sliders'],
+            ['name' => 'overview', 'title' => 'Overzicht',        'icon' => 'fa-info'],
+            ['name' => 'settings', 'title' => 'Projectgegevens',  'icon' => 'fa-map-marker'],
+            ['name' => 'options',  'title' => 'Opties',           'icon' => 'fa-sliders'],
         ];
 
         /* Hide some options for quick invoice */

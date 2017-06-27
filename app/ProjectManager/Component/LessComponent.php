@@ -83,6 +83,10 @@ class LessComponent extends BaseComponent implements Component
             }
         });
 
+        $ledger->layerTotal(function ($activity) {
+            return 'BynqIO\Dynq\Calculus\LessRegister';
+        });
+
         $ledger->profit(function ($layer, $activity) {
             if ($activity->isSubcontracting()) {
                 switch ($layer) {

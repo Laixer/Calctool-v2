@@ -136,7 +136,7 @@ class CreatePaymentInvoice extends Job implements ShouldQueue
         $file = $this->createPDF($this->CTInvoiceNumber());
 
         /* Resource name and location */
-        $name = substr(md5(uniqid()), 0, 32) . '.pdf';
+        $name = mb_substr(md5(uniqid()), 0, 32) . '.pdf';
         $path = $this->user->encodedName() . '/' . $name;
 
         Storage::put($path, $file->output());

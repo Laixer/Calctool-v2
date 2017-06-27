@@ -115,7 +115,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
 
     public function encodedName() {
-        return str_replace(' ', '_', strtolower($this->username));
+        return str_replace(' ', '_', mb_strtolower($this->username));
     }
 
     public function name() {
@@ -190,7 +190,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     public function currentStatus() {
         if (!$this->online_at)
             return 'Never';
-        
+
         $d1 = new \DateTime($this->online_at);
         $d2 = new \DateTime();
 

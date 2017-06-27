@@ -118,7 +118,7 @@ class OfferController extends Controller
     //     $offer->save();
 
     //     $page = 0;
-    //     $newname = Auth::id().'-'.substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
+    //     $newname = Auth::id().'-'.mb_substr(md5(uniqid()), 0, 5).'-'.OfferController::getOfferCode($request->input('project_id')).'-offer.pdf';
     //     $pdf = PDF::loadView('calc.offer_pdf', ['offer' => $offer]);
 
     //     $relation_self = Relation::find(Auth::User()->self_id);
@@ -261,9 +261,9 @@ class OfferController extends Controller
             'user_logo' => $user_logo
         );
         Mail::send('mail.offer_send', $data, function($message) use ($data) {
-            $message->to($data['email'], strtolower(trim($data['client'])));
+            $message->to($data['email'], mb_strtolower(trim($data['client'])));
             foreach ($data['other_contacts'] as $email => $name) {
-                $message->cc($email, strtolower(trim($name)));
+                $message->cc($email, mb_strtolower(trim($name)));
             }
             $message->bcc($data['email_from'], $data['mycomp']);
             $message->attach($data['pdf']);

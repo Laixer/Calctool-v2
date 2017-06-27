@@ -143,7 +143,7 @@ class MaterialController extends Controller
         $material = Product::create(array(
             'unit' => $request->get('unit'),
             'price' => str_replace(',', '.', str_replace('.', '' , $request->get('rate'))),
-            'description' => strtolower($request->get('name')),
+            'description' => mb_strtolower($request->get('name')),
             'group_id' => $request->get('group'),
             'supplier_id' => $mysupplier->id
         ));
@@ -169,7 +169,7 @@ class MaterialController extends Controller
             return response()->json(['success' => 3]);
         }
 
-        $product->description = strtolower($request->get('name'));
+        $product->description = mb_strtolower($request->get('name'));
         $product->unit = $request->get('unit');
         $product->price = str_replace(',', '.', str_replace('.', '' , $request->get('rate')));
         $product->group_id = $request->get('group');
@@ -253,10 +253,10 @@ class MaterialController extends Controller
                 while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                     if ($row++ == 0)
                         continue;
-                    
+
                     if (count($data)<4)
                         continue;
-                    
+
                     $price = str_replace(',', '.', str_replace('.', '' , trim($data[2])));
                     if (!$price)
                         $price = 0;
@@ -264,7 +264,7 @@ class MaterialController extends Controller
                         $price = 0;
 
                     Product::create(array(
-                        'description' => strtolower($data[0]),
+                        'description' => mb_strtolower($data[0]),
                         'unit' => $data[1],
                         'price' => $price,
                         'group_id' => $group->id,
@@ -280,7 +280,7 @@ class MaterialController extends Controller
             return back()->withErrors('Geen CSV geupload');
         }
     }
-    
+
     public function getListSubcat(Request $request, $type, $id) {
         $rs = [];
         if ($type == 'group') {

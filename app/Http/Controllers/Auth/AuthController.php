@@ -76,25 +76,25 @@ class AuthController extends Controller
         switch ($grant_type) {
             case 'authorization_code':
                 if (!$grants->grant_authorization_code) {
-                    return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+                    return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400);
                 }
                 break;
             case 'implicit':
                 if (!$grants->grant_implicit) {
-                    return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+                    return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400);
                 }
                 break;
             case 'password':
                 if (!$grants->grant_password) {
-                    return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+                    return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400);
                 }
                 break;
             case 'client_credentials':
                 if (!$grants->grant_client_credential) {
-                    return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400); 
+                    return response()->json(['error' => 'invalid_request', 'error_description' => 'The request is missing a required parameter, includes an invalid parameter value, includes a parameter more than once, or is otherwise malformed. Check the "grant_type" parameter.'], 400);
                 }
                 break;
-            
+
             default:
                 break;
         }
@@ -175,7 +175,7 @@ class AuthController extends Controller
 
         if (Authorizer::getResourceOwnerType() != "user") {
 
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $user = User::find($id);
@@ -193,7 +193,7 @@ class AuthController extends Controller
         $id = Authorizer::getResourceOwnerId();
 
         if (Authorizer::getResourceOwnerType() != "user") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $user = User::find($id);
@@ -210,7 +210,7 @@ class AuthController extends Controller
         $id = Authorizer::getResourceOwnerId();
 
         if (Authorizer::getResourceOwnerType() != "user") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $user = User::find($id);
@@ -225,7 +225,7 @@ class AuthController extends Controller
      */
     public function getRestVerify(Request $request) {
         if (Authorizer::getResourceOwnerType() != "client") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         return response()->json(['success' => 1]);
@@ -239,7 +239,7 @@ class AuthController extends Controller
      */
     public function getRestAllUsers(Request $request) {
         if (Authorizer::getResourceOwnerType() != "client") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $users = User::select(
@@ -260,7 +260,7 @@ class AuthController extends Controller
      */
     public function getRestAllRelations(Request $request) {
         if (Authorizer::getResourceOwnerType() != "client") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $relations = Relation::select(
@@ -286,7 +286,7 @@ class AuthController extends Controller
      */
     public function getRestAllProjects(Request $request) {
         if (Authorizer::getResourceOwnerType() != "client") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $projects = Project::select(
@@ -314,7 +314,7 @@ class AuthController extends Controller
      */
     public function getRestAllChapters(Request $request) {
         if (Authorizer::getResourceOwnerType() != "client") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $chapters = Chapter::select(
@@ -332,7 +332,7 @@ class AuthController extends Controller
      */
     public function getRestAllActivities(Request $request) {
         if (Authorizer::getResourceOwnerType() != "client") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $activities = Activity::select(
@@ -341,12 +341,12 @@ class AuthController extends Controller
             'part_name', 'type_name', 'detail_name',
             'created_at', 'updated_at'
             )
-            ->join('tax as tax_labor', 'activity.tax_labor_id', '=', 'tax_labor.id') 
-            ->join('tax as tax_material', 'activity.tax_material_id', '=', 'tax_material.id') 
-            ->join('tax as tax_equipment', 'activity.tax_equipment_id', '=', 'tax_equipment.id') 
-            ->join('part', 'activity.part_id', '=', 'part.id') 
-            ->join('part_type', 'activity.part_type_id', '=', 'part_type.id') 
-            ->join('detail', 'activity.detail_id', '=', 'detail.id') 
+            ->join('tax as tax_labor', 'activity.tax_labor_id', '=', 'tax_labor.id')
+            ->join('tax as tax_material', 'activity.tax_material_id', '=', 'tax_material.id')
+            ->join('tax as tax_equipment', 'activity.tax_equipment_id', '=', 'tax_equipment.id')
+            ->join('part', 'activity.part_id', '=', 'part.id')
+            ->join('part_type', 'activity.part_type_id', '=', 'part_type.id')
+            ->join('detail', 'activity.detail_id', '=', 'detail.id')
             ->get();
 
         return response()->json($activities);
@@ -359,7 +359,7 @@ class AuthController extends Controller
      */
     public function getRestAllOffers(Request $request) {
         if (Authorizer::getResourceOwnerType() != "client") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $offers = Offer::select(
@@ -367,8 +367,8 @@ class AuthController extends Controller
             'offer_code', 'delivertime_name', 'valid_name', 'project_id',
             'created_at', 'updated_at'
             )
-            ->join('deliver_time', 'offer.deliver_id', '=', 'deliver_time.id') 
-            ->join('valid', 'offer.valid_id', '=', 'valid.id') 
+            ->join('deliver_time', 'offer.deliver_id', '=', 'deliver_time.id')
+            ->join('valid', 'offer.valid_id', '=', 'valid.id')
             ->get();
 
         return response()->json($offers);
@@ -381,7 +381,7 @@ class AuthController extends Controller
      */
     public function getRestAllInvoices(Request $request) {
         if (Authorizer::getResourceOwnerType() != "client") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $invoices = Invoice::select(
@@ -401,7 +401,7 @@ class AuthController extends Controller
      */
     public function doRestUsernameCheck(Request $request) {
         if (Authorizer::getResourceOwnerType() != "client") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $counter = User::where('username',strtolower(trim($request->get('name'))))->count();
@@ -415,18 +415,18 @@ class AuthController extends Controller
      */
     public function doRestNewUser(Request $request) {
         if (Authorizer::getResourceOwnerType() != "client") {
-            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401); 
+            return response()->json(['error' => 'access_denied', 'error_description' => 'The resource owner or authorization server denied the request.'], 401);
         }
 
         $api_client = DB::table('oauth_clients')->where('id', Authorizer::getClientId())->select('name')->first();
 
-        $request->merge(array('username' => strtolower(trim($request->input('account')))));
-        $request->merge(array('email' => strtolower(trim($request->input('email')))));
-        
+        $request->merge(array('username' => mb_strtolower(trim($request->input('account')))));
+        $request->merge(array('email' => mb_strtolower(trim($request->input('email')))));
+
         if ($request->has('phone')) {
-            $request->merge(array('phone' => substr($request->input('phone'), 0, 12)));
+            $request->merge(array('phone' => mb_substr($request->input('phone'), 0, 12)));
         }
-        
+
         $validator = Validator::make($request->all(), [
             'username' => array('required','max:30','unique:user_account'),
             'email' => array('required','max:80','email','unique:user_account'),
@@ -467,7 +467,7 @@ class AuthController extends Controller
         $user->lastname = $request->get('last_name');
 
         if ($request->has('http_referer')) {
-            $user->referral_url = substr($request->get('http_referer'), 0, 180);
+            $user->referral_url = mb_substr($request->get('http_referer'), 0, 180);
         }
 
         $user->note  = "<p><ul><li>User created via application " . $api_client->name . "<br></li>";

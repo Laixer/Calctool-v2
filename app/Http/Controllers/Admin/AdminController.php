@@ -163,8 +163,8 @@ class AdminController extends Controller
 
     public function doNewUser(Request $request)
     {
-        $request->merge(array('username' => strtolower(trim($request->input('username')))));
-        $request->merge(array('email' => strtolower(trim($request->input('email')))));
+        $request->merge(array('username' => mb_strtolower(trim($request->input('username')))));
+        $request->merge(array('email' => mb_strtolower(trim($request->input('email')))));
 
         $this->validate($request, [
             /* General */
@@ -195,7 +195,7 @@ class AdminController extends Controller
         $user->username = $request->input('username');
         $user->secret = Hash::make($request->input('secret'));
         $user->user_type = $request->input('type');
-        $user->user_group = $request->input('group');		
+        $user->user_group = $request->input('group');
 
         /* Server */
         $user->referral_key = md5(mt_rand());
@@ -259,7 +259,7 @@ class AdminController extends Controller
         if (!$user->isAdmin()) {
             if ($request->input('username')) {
                 if ($user->username != $request->get('username')) {
-                    $username = strtolower(trim($request->input('username')));
+                    $username = mb_strtolower(trim($request->input('username')));
 
                     if (User::where('username',$username)->count()>0) {
                         $errors = new MessageBag(['status' => ['Gebruikersnaam wordt al gebruikt']]);
@@ -295,7 +295,7 @@ class AdminController extends Controller
         if (!$user->isAdmin()) {
             if ($request->input('email')) {
                 if ($user->email != $request->get('email')) {
-                    $email = strtolower(trim($request->input('email')));
+                    $email = mb_strtolower(trim($request->input('email')));
 
                     if (User::where('email',$email)->count()>0) {
                         $errors = new MessageBag(['status' => ['Email wordt al gebruikt']]);
@@ -360,7 +360,7 @@ class AdminController extends Controller
         $log->created_at = date('Y-m-d', strtotime($request->get('date')));
         $log->label_id = $request->get('label');
         $log->user_id = $user_id;
-        
+
         $log->save();
 
         return back()->with('success', 'Item toegevoegd');
@@ -369,21 +369,22 @@ class AdminController extends Controller
 
     public function getSwitchSession(Request $request, $user_id)
     {
-        if (!Auth::user()->isAdmin())
+        if (!Auth::user()->isAdmin()) {
             return back();
+        }
 
-        if (session()->has('swap_session'))
+        if (session()->has('swap_session')) {
             return back();
+        }
 
-        if (Cache::has('keepsesionstate'))
+        if (Cache::has('keepsesionstate')) {
             return back();
+        }
 
         $swapinfo = [
             'user_id' => $user_id,
             'admin_id' => Auth::id(),
         ];
-
-        Audit::CreateEvent('auth.swap.session.succces', 'Session takeover by: ' . auth::user()->username, $user_id);
 
         Cache::put('keepsesionstate', $user_id, 1);
 
@@ -424,7 +425,7 @@ class AdminController extends Controller
 
     public function doNewGroup(Request $request)
     {
-        $request->merge(array('name' => strtolower(trim($request->input('name')))));
+        $request->merge(array('name' => mb_strtolower(trim($request->input('name')))));
 
         $this->validate($request, [
             'name' => array('required','unique:user_group'),
@@ -433,11 +434,11 @@ class AdminController extends Controller
 
         /* General */
         $group = new UserGroup;
-        $group->name = strtolower($request->input('name'));
+        $group->name = mb_strtolower($request->input('name'));
         $group->subscription_amount = floatval($request->input('subscription_amount'));
 
         if ($request->input('note'))
-            $group->note = $request->input('note');	
+            $group->note = $request->input('note');
         if ($request->input('toggle-active'))
             $group->active = true;
         else
@@ -478,7 +479,7 @@ class AdminController extends Controller
         $group = UserGroup::find($group_id);
         if ($request->input('name')) {
             if ($group->name != $request->get('name')) {
-                $name = strtolower(trim($request->input('name')));
+                $name = mb_strtolower(trim($request->input('name')));
 
                 if (UserGroup::where('name',$name)->where('id','!=',$group->id)->count()>0) {
                     $errors = new MessageBag(['status' => ['Groepnaam wordt al gebruikt']]);
@@ -491,7 +492,7 @@ class AdminController extends Controller
 
         $group->subscription_amount = floatval($request->input('subscription_amount'));
         if ($request->input('note'))
-            $group->note = $request->input('note');	
+            $group->note = $request->input('note');
         if ($request->input('toggle-active'))
             $group->active = true;
         else
@@ -514,7 +515,7 @@ class AdminController extends Controller
         /* General */
         $group = UserGroup::find($group_id);
         $group->delete();
-   
+
         return redirect('admin/group')->with('success', 'Groep verwijderd');
     }
 
@@ -526,7 +527,7 @@ class AdminController extends Controller
         /* General */
         $tag = UserTag::find($tag_id);
         $tag->delete();
-   
+
         return redirect('admin/user/tags')->with('success', 'Tag verwijderd');
     }
 
@@ -557,8 +558,8 @@ class AdminController extends Controller
 
         $post->save();
 
-        $offer = Offer::find($post->offer_id); 
-        $project = Project::find($offer->project_id); 
+        $offer = Offer::find($post->offer_id);
+        $project = Project::find($offer->project_id);
 
         $message = new MessageBox;
         $message->subject = 'Offerte ' . $project->project_name;
@@ -584,9 +585,9 @@ class AdminController extends Controller
 
         $post->save();
 
-        $invoice = Invoice::find($post->invoice_id); 
-        $offer = Offer::find($invoice->offer_id); 
-        $project = Project::find($offer->project_id); 
+        $invoice = Invoice::find($post->invoice_id);
+        $offer = Offer::find($invoice->offer_id);
+        $project = Project::find($offer->project_id);
 
         $message = new MessageBox;
         $message->subject = 'Factuur ' . $project->project_name;
@@ -676,13 +677,13 @@ class AdminController extends Controller
                 while (($data = fgetcsv($handle, 1000, ";")) !== FALSE) {
                     if ($row++ == 0)
                         continue;
-                    
+
                     if (count($data)<9) {
                         $skip++;
                         continue;
                     }
-                    
-                    $description = strtolower(preg_replace('/[[:^print:]]/', '', $data[0]));
+
+                    $description = mb_strtolower(preg_replace('/[[:^print:]]/', '', $data[0]));
                     $unit = $data[1];
                     $article_code = $data[2];
 
@@ -1013,5 +1014,5 @@ class AdminController extends Controller
         Artisan::call('session:clear');
 
         return back()->with('success', 'Applicatie caches verwijderd');
-    }	
+    }
 }

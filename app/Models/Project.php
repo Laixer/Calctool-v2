@@ -53,7 +53,7 @@ class Project extends Model
      */
     public function slug()
     {
-        return strtolower(str_slug(substr($this->project_name, 0, 25)));
+        return mb_strtolower(str_slug(mb_substr($this->project_name, 0, 25)));
     }
 
     public function status()
@@ -62,7 +62,7 @@ class Project extends Model
             if ($this->is_dilapidated) {
                 return 'vervallen';
             }
-            
+
             return 'gesloten';
         }
 

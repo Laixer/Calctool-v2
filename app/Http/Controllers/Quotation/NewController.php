@@ -114,7 +114,7 @@ class NewController extends Controller
         $resource = new Resource;
         $resource->resource_name  = 'quotation.pdf';
         $resource->file_location  = $file;
-        $resource->file_size      = strlen($pdf->output());
+        $resource->file_size      = mb_strlen($pdf->output());
         $resource->user_id        = $user->id;
         $resource->description    = 'Offerteversie';
 
@@ -167,7 +167,7 @@ class NewController extends Controller
         $offer->auto_email_reminder = false;
         $offer->deliver_id = $request->get('deliver') || 1;
         $offer->valid_id = $request->get('valid') || 1;
-        
+
         if ($request->get('terms')) {
             $offer->invoice_quantity = $request->get('terms');
         }
@@ -179,7 +179,7 @@ class NewController extends Controller
         //     $offer->include_tax = true;
         // else
         //     $offer->include_tax = false;
-        
+
         // if ($request->get('only-totals'))
         //     $offer->only_totals = true;
         // else

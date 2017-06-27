@@ -17,10 +17,9 @@
             <div>
 
                 <div class="pull-right">
-
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i>Nieuwe relatie</button>
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a href="/relation/new" class="btn btn-primary"><i class="fa fa-file" aria-hidden="true"></i>Nieuwe relatie</a>
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="caret"></span>
                             <span class="sr-only">Toggle Dropdown</span>
                         </button>
@@ -29,25 +28,6 @@
                             <li><a href="/relation/export" type="button"><i class="fa fa-download"></i> Exporteer</a></li>
                         </ul>
                     </div>
-
-                    <!--<button type="button" class="btn btn-primary">Geavanceerde Filters</button>-->
-                    <!--<div class="btn-group">
-                        <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Snelle Filters
-                        <span class="caret"></span></button>
-                        <ul class="dropdown-menu">
-                            <li><a href="{{ url()->current() }}">Alle Projecten</a></li>
-                            <li><a href="?status=open">Open Projecten</a></li>
-                            <li><a href="?status=closed">Gesloten Projecten</a></li>
-                            <li><a href="?updated=after:{{ $carbon::now()->subDays(2)->toDateString() }}">Recente Bewerkt</a></li>
-                            <li class="divider" style="margin:5px 0;"></li>
-                            <li><a href="?type=calculatie">Projecttype Calculatie</a></li>
-                            <li><a href="?type=regie">Projecttype Regiewerk</a></li>
-                            <li><a href="?type=snelle offerte en factuur">Projecttype Snelle offerte</a></li>
-                            <li class="divider" style="margin:5px 0;"></li>
-                            <li><a href="?sort=name:asc">Sorteer op Projectnaam</a></li>
-                            <li><a href="?sort=client:asc">Sorteer op Opdrachtgever</a></li>
-                        </ul>
-                    </div>-->
                 </div>
 
                 <h2><strong>Relaties</strong></h2>

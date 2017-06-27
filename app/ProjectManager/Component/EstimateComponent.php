@@ -87,6 +87,10 @@ class EstimateComponent extends BaseComponent implements Component
             }
         });
 
+        $ledger->layerTotal(function ($activity) {
+            return 'BynqIO\Dynq\Calculus\EstimateRegister';
+        });
+
         $ledger->profit(function ($layer, $activity) {
             if ($activity->isSubcontracting()) {
                 switch ($layer) {

@@ -44,7 +44,7 @@ class Relation extends Model
      */
     public function slug()
     {
-        return strtolower(str_slug(substr($this->name(), 0, 25)));
+        return mb_strtolower(str_slug(mb_substr($this->name(), 0, 25)));
     }
 
     public function kind() {
@@ -72,7 +72,7 @@ class Relation extends Model
     }
 
     public function encodedName() {
-        return str_replace(' ', '_', strtolower($this->name()));
+        return str_replace(' ', '_', mb_strtolower($this->name()));
     }
 
     public function fullAddress() {

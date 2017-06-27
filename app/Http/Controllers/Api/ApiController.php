@@ -95,7 +95,7 @@ class ApiController extends Controller
         }
 
         if ($request->has('location')) {
-            $currloc = substr($request->get('location'), 0, 160);
+            $currloc = mb_substr($request->get('location'), 0, 160);
             $update_user->current_url = $currloc . '#p' . $request->get('prescount');
             $update_user->online_at = \DB::raw('NOW()');
             $update_user->save();

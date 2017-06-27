@@ -56,7 +56,11 @@ $(document).ready(function() {
 <section class="paddings">
     <div class="row text-center countTo">
         <div class="col-md-6">
-            <strong>{{ $project->created_at->diffInDays($project->updated_at) }}</strong>
+            @if ($project->project_close)
+            <strong>{{ $project->created_at->startOfDay()->diffInDays($carbon::parse($project->project_close)) }}</strong>
+            @else
+            <strong>{{ $carbon::now()->diffInDays($project->created_at) }}</strong>
+            @endif
             <label>Dagen geopend</label>
         </div>
         <div class="col-md-6">

@@ -87,7 +87,7 @@ class UploadController extends Controller
 
         if ($request->hasFile('doc')) {
             $file = $request->file('doc');
-            if (strlen($file->getClientOriginalName()) >= 50) {
+            if (mb_strlen($file->getClientOriginalName()) >= 50) {
                 return back()->withErrors(['msg' => 'Bestandsnaam te lang']);
             }
 

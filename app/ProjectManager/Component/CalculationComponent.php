@@ -99,6 +99,14 @@ class CalculationComponent extends BaseComponent implements Component
             }
         });
 
+        $ledger->layerTotal(function ($activity) {
+            if ($activity->isEstimate()) {
+                return 'BynqIO\Dynq\Calculus\EstimateRegister';
+            } else {
+                return 'BynqIO\Dynq\Calculus\CalculationRegister';
+            }
+        });
+
         $ledger->profit(function ($layer, $activity) {
             if ($activity->isSubcontracting()) {
                 switch ($layer) {

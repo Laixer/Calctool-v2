@@ -35,7 +35,7 @@ class ImportController extends Controller
 
         if ($request->hasFile('csvfile')) {
             $file = $request->file('csvfile');
-            
+
             $kind_zakelijk = RelationKind::where('kind_name','zakelijk')->first()->id;
             $kind_particulier = RelationKind::where('kind_name','particulier')->first()->id;
             $type_id = RelationType::where('type_name','aannemer')->first()->id;
@@ -61,10 +61,10 @@ class ImportController extends Controller
                         if (strtolower($data[0]) != 'bedrijfsnaam')
                             return back()->withErrors('Bestand heeft verkeerde indeling');
 
-                        if (strlen($data[14]) > 0)
+                        if (mb_strlen($data[14]) > 0)
                             return back()->withErrors('Bestand heeft verkeerde indeling');
 
-                        if (strtolower($data[20]) != 'geslacht')
+                        if (mb_strtolower($data[20]) != 'geslacht')
                             return back()->withErrors('Bestand heeft verkeerde indeling');
                         continue;
                     }
@@ -74,7 +74,7 @@ class ImportController extends Controller
                         continue;
                     }
 
-                    if (strlen($data[14]) > 0) {
+                    if (mb_strlen($data[14]) > 0) {
                         $skip++;
                         continue;
                     }
@@ -100,7 +100,7 @@ class ImportController extends Controller
                     $mobile = trim($data[17]);
                     $phone = trim($data[18]);
                     $email = trim($data[19]);
-                    $gender = strtolower(trim($data[20]));
+                    $gender = mb_strtolower(trim($data[20]));
 
                     /* Fixes */
                     if (empty($debtor))

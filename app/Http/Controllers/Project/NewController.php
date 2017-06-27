@@ -54,7 +54,7 @@ class NewController extends Controller
         }
 
         return view('project.new', [
-            'type_name'   => strtolower($type_name),
+            'type_name'   => $type_name,
             'debtor_code' => mt_rand(1000000, 9999999)
         ]);
     }

@@ -71,7 +71,7 @@ class FlowControl
 
     public static function name($input)
     {
-        $name = strtolower(class_basename($input));
+        $name = mb_strtolower(class_basename($input));
         if (str_contains($name, 'flow')) {
             return str_replace("flow", null, $name);
         }
