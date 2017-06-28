@@ -13,9 +13,6 @@
 @section('content')
 <script type="text/javascript">
 $(function() {
-    function normalize(str) {
-        return str.toLowerCase().replace(/ |\.|\&|-|_|@|~|\\|!|>|<|\(|\)|%/g,'');
-    }
     $(window).keydown(function(event){
         if(event.keyCode == 13 && !$('#tos').prop('checked')) {
             event.preventDefault();
@@ -51,22 +48,6 @@ $(function() {
             $('<i class="glyphicon icon-eye-open glyphicon-eye-open"></i>').appendTo('#passtoggle');
         }
     });
-    $('#company_name').keyup(function() {
-        $('#username').val(normalize($('#company_name').val()));
-    });
-    $('#username').blur(function(){
-        if ($(this).val()) {
-            $.post("/api/v1/register/usernamecheck", {
-                name: $(this).val(),
-            }, function(data) {
-                if (data.exist) {
-                    $('#check_username').html('<i class="fa fa-exclamation-triangle" aria-hidden="true"></i>&nbsp;In gebruik');
-                } else {
-                    $('#check_username').html('<i class="fa fa-check" aria-hidden="true"></i>');
-                }
-            });
-        }
-    });
 });
 </script>
 <div id="wrapper">
@@ -83,7 +64,7 @@ $(function() {
 
                     <form action="/auth/signup" method="post" class="white-row">
                         {!! csrf_field() !!}
-                        
+
                         @if (isset($client_referer))
                         <input name="client_referer" type="hidden" value="{{ $client_referer }}" />
                         @endif
@@ -111,30 +92,19 @@ $(function() {
                             <div class="form-group">
                                 <div class="col-md-6">
                                     <label for="contact_firstname">Voornaam</label>
-                                    <input class="form-control" name="contact_firstname" type="text" id="contact_firstname" value="{{ old('contact_firstname') }}">
+                                    <input class="form-control" name="contact_firstname" type="text" id="contact_firstname" value="{{ old('contact_firstname') }}" required/>
                                 </div>
                                 <div class="col-md-6">
                                     <label for="contact_name">Achternaam</label>
-                                    <input class="form-control" name="contact_name" type="text" id="contact_name" value="{{ old('contact_name') }}">
+                                    <input class="form-control" name="contact_name" type="text" id="contact_name" value="{{ old('contact_name') }}" required/>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="form-group">
                                 <div class="col-md-12">
-                                    <label for="company_name">Bedrijfsnaam</label>
-                                    <input class="form-control" name="company_name" type="text" id="company_name" value="{{ old('company_name') }}">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    <label for="username">Gebruikersnaam</label>
-                                    <div class="input-group">
-                                        <input class="form-control" name="username" type="text" id="username" value="{{ old('username') }}">
-                                        <span class="input-group-addon" id="check_username"><i class="fa fa-check" aria-hidden="true"></i></span>
-                                    </div>
+                                    <label for="company_name">Bedrijfsnaam (optioneel)</label>
+                                    <input class="form-control" name="company_name" type="text" id="company_name" value="{{ old('company_name') }}" />
                                 </div>
                             </div>
                         </div>
@@ -142,7 +112,7 @@ $(function() {
                             <div class="form-group">
                                 <div class="col-md-12">
                                     <label for="email">E-mail adres</label>
-                                    <input class="form-control" name="email" type="email" id="email" value="{{ old('email') }}">
+                                    <input class="form-control" name="email" type="email" id="email" value="{{ old('email') }}" required/>
                                 </div>
                             </div>
                         </div>

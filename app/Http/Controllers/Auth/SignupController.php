@@ -74,8 +74,7 @@ class SignupController extends Controller
      */
     public function signup(Request $request)
     {
-        $request->merge(array('username' => trim(strtolower($request->input('username')))));
-        $request->merge(array('email' => trim(strtolower($request->input('email')))));
+        $request->merge(['email'    => trim(strtolower($request->input('email')))]);
 
         $referral_user = null;
         $expiration_date = date('Y-m-d', strtotime("+1 month", time()));
@@ -87,17 +86,21 @@ class SignupController extends Controller
         }
 
         $this->validate($request, [
-            'username' => array('required','max:30','unique:user_account'),
-            'email' => array('required','max:80','email','unique:user_account'),
-            'secret' => array('required','confirmed','min:5'),
-            'secret_confirmation' => array('required','min:5'),
-            'contact_name' => array('required','max:50'),
-            'contact_firstname' => array('max:30'),
-            'company_name' => array('required','max:50'),
+            'email'                => ['required','max:80','email','unique:user_account'],
+            'secret'               => ['required','confirmed','min:5'],
+            'secret_confirmation'  => ['required','min:5'],
+            'contact_name'         => ['required','max:50'],
+            'contact_firstname'    => ['max:30'],
+            'company_name'         => ['max:50'],
+        ],[
+            'secret.min'               => 'Wachtwoord moet minimaal 5 karakters bevatten.',
+            'secret_confirmation.min'  => 'Bevestig het wachtwoord.',
+            'secret.confirmed'         => 'Opgegeven wachtwoorden komen niet overeen.',
+            'email.unique'             => 'Het email adres is al in gebruik.',
         ]);
 
         $user = new User;
-        $user->username        = $request->get('username');
+        $user->username        = $request->get('email');
         $user->secret          = Hash::make($request->get('secret'));
         $user->firstname       = $user->username;
         $user->reset_token     = sha1(mt_rand());
@@ -116,29 +119,33 @@ class SignupController extends Controller
 
         $user->save();
 
-        /* General relation */
-        $relation = new Relation;
-        $relation->user_id     = $user->id;
-        $relation->debtor_code = mt_rand(1000000, 9999999);
+        $relation = null;
+        $contact = null;
+        if ($request->has('company_name')) {
+            /* General relation */
+            $relation = new Relation;
+            $relation->user_id     = $user->id;
+            $relation->debtor_code = mt_rand(1000000, 9999999);
 
-        /* Company info */
-        $relation->kind_id      = RelationKind::where('kind_name', 'zakelijk')->firstOrFail()->id;
-        $relation->company_name = $request->input('company_name');
-        $relation->type_id      = RelationType::where('type_name', 'aannemer')->firstOrFail()->id;
-        $relation->email        = $user->email;
-        $relation->save();
+            /* Company info */
+            $relation->kind_id      = RelationKind::where('kind_name', 'zakelijk')->firstOrFail()->id;
+            $relation->company_name = $request->input('company_name');
+            $relation->type_id      = RelationType::where('type_name', 'aannemer')->firstOrFail()->id;
+            $relation->email        = $user->email;
+            $relation->save();
 
-        $user->self_id = $relation->id;
-        $user->save();
+            $user->self_id = $relation->id;
+            $user->save();
 
-        /* Contact */
-        $contact = new Contact;
-        $contact->firstname   = $request->input('contact_firstname');
-        $contact->lastname    = $request->input('contact_name');
-        $contact->email       = $user->email;
-        $contact->relation_id = $relation->id;
-        $contact->function_id = ContactFunction::where('function_name','eigenaar')->firstOrFail()->id;
-        $contact->save();
+            /* Contact */
+            $contact = new Contact;
+            $contact->firstname   = $request->input('contact_firstname');
+            $contact->lastname    = $request->input('contact_name');
+            $contact->email       = $user->email;
+            $contact->relation_id = $relation->id;
+            $contact->function_id = ContactFunction::where('function_name','eigenaar')->firstOrFail()->id;
+            $contact->save();
+        }
 
         if ($referral_user) {
             $referral_user->expiration_date = date('Y-m-d', strtotime("+3 month", strtotime($referral_user->expiration_date)));

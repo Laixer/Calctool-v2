@@ -701,7 +701,7 @@ $(document).ready(function() {
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
                                     <td class="col-md-1"></td>
-                                    <td class="col-md-1"><strong class="subtotal">@money($calculus_register::timesheetTotal($activity->id))</span></td>
+                                    <td class="col-md-1"><strong class="subtotal">@money($layer_total($activity)::timesheetTotal($activity->id))</span></td>
                                     <td class="col-md-1"><strong class="subtotal_profit"></span></td>
                                     <td class="col-md-1"></td>
                                 </tr>

@@ -34,7 +34,7 @@ class UserSignup extends Event
      *
      * @return void
      */
-    public function __construct(User $user, Relation $relation, Contact $contact)
+    public function __construct(User $user, Relation $relation = null, Contact $contact = null)
     {
         $this->user = $user;
         $this->relation = $relation;

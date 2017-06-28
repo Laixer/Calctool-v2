@@ -56,6 +56,7 @@ Route::get('manifest.json',  'ManifestController');//TODO: might want to move th
 /* Authentication Group */
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController')->name('dashboard');
+    Route::get('options', 'OptionsController');
 
     Route::get('admin/switch/back', 'AdminController@getSwitchSessionBack');
 

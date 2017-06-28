@@ -55,7 +55,7 @@ $(document).ready(function() {
             @endif
 
             <h2 style="margin: 10px 0 20px 0;"><strong>{{ $welcomeMessage }}</strong> {{ Auth::user()->firstname }}</h2>
-            
+
             <div class="row">
                 @include('dashboard.widgets')
             </div>
@@ -66,7 +66,11 @@ $(document).ready(function() {
                 <div class="white-row" >
 
                     <div class="pull-right">
+                        @if (Cookie::has('beta'))
                         <a href="/inline/projecttypes?package=dashboard" data-toggle="modal" data-target="#asyncModal" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> @lang('core.new') {{ trans_choice('core.project', 1) }}</a>
+                        @else
+                        <a href="/project/new?type=calculate" class="btn btn-primary btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> @lang('core.new') {{ trans_choice('core.project', 1) }}</a>
+                        @endif
 
                         <div class="btn-group" role="group">
                             <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-ellipsis-h" aria-hidden="true"></span></button>
@@ -116,13 +120,17 @@ $(document).ready(function() {
 
                 <h2><strong>@lang('core.firststep')</strong></h2>
                 <div class="bs-callout text-center whiteBg" style="margin:0">
+                    @if (Cookie::has('beta'))
                     <h3><a href="/inline/projecttypes?package=dashboard" data-toggle="modal" data-target="#asyncModal" class="btn btn-primary btn-lg">@lang('core.crefirstprod') <i class="fa fa-arrow-right"></i></a></h3>
+                    @else
+                    <h3><a href="/project/new?type=calculate" class="btn btn-primary btn-lg">@lang('core.crefirstprod') <i class="fa fa-arrow-right"></i></a></h3>
+                    @endif
                 </div>
 
                 @endif
             </div>
         </section>
-    </div> 
+    </div>
 
 </div>
 @stop

@@ -53,7 +53,12 @@ class Project extends Model
      */
     public function slug()
     {
-        return mb_strtolower(str_slug(mb_substr($this->project_name, 0, 25)));
+        $slug = mb_substr(str_slug($this->project_name), 0, 50);
+        if (!$slug) {
+            return $this->id;
+        }
+
+        return $slug;
     }
 
     public function status()

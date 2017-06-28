@@ -252,35 +252,35 @@ $(document).ready(function() {
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="address_number">Huis nr.*</label>
+                            <label for="address_number">Huis nr. <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="address_number" maxlength="5" id="address_number2" type="text" value="{{ old('address_number') }}" class="form-control autoappend2"/>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="zipcode">Postcode*</label>
+                            <label for="zipcode">Postcode <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="zipcode" id="zipcode2" maxlength="6" type="text" value="{{ old('zipcode') }}" class="form-control autoappend2"/>
                         </div>
                     </div>
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="street">Straat*</label>
+                            <label for="street">Straat <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="street" maxlength="50" id="street2" type="text" value="{{ old('street') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="city">Plaats*</label>
+                            <label for="city">Plaats <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="city" maxlength="35" id="city2" type="text" value="{{ old('city') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="province">Provincie*</label>
+                            <label for="province">Provincie <a style="text-decoration:none;cursor:default;">*</a></label>
                             <select name="province" id="province2" class="form-control pointer">
                                 @foreach (Province::all() as $province)
                                 <option  {{ (old('province') ? (old('province') == $province->id ? 'selected' : '') : $province->province_name=='overig' ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
@@ -291,7 +291,7 @@ $(document).ready(function() {
 
                     <div class="col-md-4">
                         <div class="form-group">
-                            <label for="country">Land*</label>
+                            <label for="country">Land <a style="text-decoration:none;cursor:default;">*</a></label>
                             <select name="country" id="country2" class="form-control pointer">
                                 @foreach (Country::all() as $country)
                                 <option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
@@ -306,21 +306,21 @@ $(document).ready(function() {
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="contact_name">Achternaam*</label>
+                            <label for="contact_name">Achternaam <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="contact_name" maxlength="50" id="contact_name" type="text" value="{{ old('contact_name') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="email">Email*</label>
+                            <label for="email">Email <a style="text-decoration:none;cursor:default;">*</a></label>
                             <input name="email" maxlength="80" id="email" type="email" value="{{ old('email') }}" class="form-control"/>
                         </div>
                     </div>
 
                     <div class="col-md-3 company">
                         <div class="form-group">
-                            <label for="contactfunction">Functie*</label>
+                            <label for="contactfunction">Functie <a style="text-decoration:none;cursor:default;">*</a></label>
                             <select name="contactfunction" id="contactfunction" class="form-control pointer">
                                 @foreach (ContactFunction::all() as $function)
                                 <option {{ (old('contactfunction') ? (old('contactfunction') == $function->id ? 'selected' : '') : $function->function_name=='directeur' ? 'selected' : '') }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
@@ -388,105 +388,101 @@ $(document).ready(function() {
         </div>
         @endif
 
+        <form method="POST" action="{{ url()->current() }}" accept-charset="UTF-8">
+        {!! csrf_field() !!}
+        <input name="type" type="hidden" value="{{ Input::get('type') }}" />
+
         <div class="col-md-8 nopadding">
             <div class="white-row">
 
-                <div id="project">
-                    <form method="POST" action="{{ url()->current() }}" accept-charset="UTF-8">
-                        {!! csrf_field() !!}
-                        <input name="type" type="hidden" value="{{ Input::get('type') }}" />
+                <h4>Projectgegevens</h4>
+                <h5><strong>Gegevens</strong></h5>
+                <div class="row">
 
-                        <h4>Projectgegevens</h4>
-                        <h5><strong>Gegevens</strong></h5>
-                        <div class="row">
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Projectnaam (optioneel)</label>
-                                    <input name="name" id="name" type="text" maxlength="50" placeholder="{{ 'PROJ-' . date("Ymd") . '-XXXX' }}" value="{{ old('name') }}" class="form-control" />
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="contractor">Opdrachtgever <a style="text-decoration:none;cursor:default;">*</a></label>
-                                    <select name="contractor" id="contractor" class="form-control pointer">
-                                        @foreach (Relation::where('user_id', Auth::user()->id)->where('active',true)  ->get() as $relation)
-                                        <option data-business="{{ $relation->isBusiness() ? 1 : 0 }}" value="{{ $relation->id }}">{{ $relation->name() }}</option>
-                                        @endforeach
-                                    </select>
-                                    <a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
-                                </div>
-                            </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">Projectnaam (optioneel)</label>
+                            <input name="name" id="name" type="text" maxlength="50" placeholder="{{ 'PROJ-' . date("Ymd") . '-XXXX' }}" value="{{ old('name') }}" class="form-control" />
                         </div>
-
-                        <h5><strong>Adresgegevens</strong>&nbsp;(<a href="javascript:void(0);" id="copyaddr">Overnemen van relatie</a>)</h5>
-                        <div class="row">
-
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="address_number">Huis nr. <a style="text-decoration:none;cursor:default;">*</a></label>
-                                    <input name="address_number" maxlength="5" id="address_number" type="text" value="{{ old('address_number') }}" class="form-control autoappend"/>
-                                </div>
-                            </div>
-
-                            <div class="col-md-2">
-                                <div class="form-group">
-                                    <label for="zipcode">Postcode <a style="text-decoration:none;cursor:default;">*</a></label>
-                                    <input name="zipcode" id="zipcode" type="text" maxlength="6" value="{{ old('zipcode') }}" class="form-control autoappend"/>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="street">Straat <a style="text-decoration:none;cursor:default;">*</a></label>
-                                    <input name="street" maxlength="60" id="street" type="text" value="{{ old('street') }}" class="form-control"/>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="city">Plaats <a style="text-decoration:none;cursor:default;">*</a></label>
-                                    <input name="city" maxlength="35" id="city" type="text" value="{{ old('city') }}" class="form-control"/>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="province">Provincie <a style="text-decoration:none;cursor:default;">*</a></label>
-                                    <select name="province" id="province" class="form-control pointer">
-                                        @foreach (Province::all() as $province)
-                                        <option {{ (old('province') ? (old('province') == $province->id ? 'selected' : '') : $province->province_name=='overig'  ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="country">Land <a style="text-decoration:none;cursor:default;">*</a></label>
-                                    <select name="country" id="country" class="form-control pointer">
-                                        @foreach (Country::all() as $country)
-                                        <option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="contractor">Opdrachtgever <a style="text-decoration:none;cursor:default;">*</a></label>
+                            <select name="contractor" id="contractor" class="form-control pointer">
+                                @foreach (Relation::where('user_id', Auth::user()->id)->where('active',true)  ->get() as $relation)
+                                <option data-business="{{ $relation->isBusiness() ? 1 : 0 }}" value="{{ $relation->id }}">{{ $relation->name() }}</option>
+                                @endforeach
+                            </select>
+                            <a href="#" data-toggle="modal" data-target="#tutModal">+ Nieuwe opdrachtgever toevoegen</a>
                         </div>
+                    </div>
+                </div>
 
-                        <div class="row text-right">
-                            <div class="col-md-12 item-full">
-                                <button name="save-project" class="btn btn-primary item-full"><i class="fa fa-check"></i> Opslaan</button>
-                            </div>
+                <h5><strong>Adresgegevens</strong>&nbsp;(<a href="javascript:void(0);" id="copyaddr">Overnemen van relatie</a>)</h5>
+                <div class="row">
+
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="address_number">Huis nr. <a style="text-decoration:none;cursor:default;">*</a></label>
+                            <input name="address_number" maxlength="5" id="address_number" type="text" value="{{ old('address_number') }}" class="form-control autoappend" required/>
                         </div>
+                    </div>
 
-                    </form>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label for="zipcode">Postcode <a style="text-decoration:none;cursor:default;">*</a></label>
+                            <input name="zipcode" id="zipcode" type="text" maxlength="6" value="{{ old('zipcode') }}" class="form-control autoappend" required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="street">Straat <a style="text-decoration:none;cursor:default;">*</a></label>
+                            <input name="street" maxlength="60" id="street" type="text" value="{{ old('street') }}" class="form-control" required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="city">Plaats <a style="text-decoration:none;cursor:default;">*</a></label>
+                            <input name="city" maxlength="35" id="city" type="text" value="{{ old('city') }}" class="form-control" required/>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="province">Provincie <a style="text-decoration:none;cursor:default;">*</a></label>
+                            <select name="province" id="province" class="form-control pointer">
+                                @foreach (Province::all() as $province)
+                                <option {{ (old('province') ? (old('province') == $province->id ? 'selected' : '') : $province->province_name=='overig'  ? 'selected' : '') }} value="{{ $province->id }}">{{ ucwords($province->province_name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="country">Land <a style="text-decoration:none;cursor:default;">*</a></label>
+                            <select name="country" id="country" class="form-control pointer">
+                                @foreach (Country::all() as $country)
+                                <option {{ (old('country') ? (old('country') == $country->id ? 'selected' : '') : $country->country_name=='nederland' ? 'selected' : '') }} value="{{ $country->id }}">{{ ucwords($country->country_name) }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row text-right">
+                    <div class="col-md-12 item-full">
+                        <button name="save-project" class="btn btn-primary item-full"><i class="fa fa-check"></i> Opslaan</button>
+                    </div>
                 </div>
 
             </div>
         </div>
 
         <div class="col-md-4">
-            <form action="" method="get" class="white-row">
+            <div class="white-row">
 
                 <h3 class="page-header nomargin-top">{{ $type_name }} Opties</h3>
 
@@ -501,9 +497,10 @@ $(document).ready(function() {
 
                     </div>
                 </div>
-
-            </form>
+            </div>
         </div>
+
+        </form>
 
     </section>
 

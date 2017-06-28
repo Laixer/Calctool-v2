@@ -47,9 +47,9 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         return $this->hasOne(UserType::class, 'id', 'user_type');
     }
 
-    // public function productFavorite() {
-    //     return $this->belongsToMany('\BynqIO\Dynq\Models\Product', 'product_favorite', 'user_id', 'product_id');
-    // }
+    public function productFavorite() {
+        return $this->belongsToMany(Product::class, 'product_favorite', 'user_id', 'product_id');
+    }
 
     // public function tag() {
     //     return $this->hasOne('\BynqIO\Dynq\Models\UserTag', 'id', 'user_tag_id');

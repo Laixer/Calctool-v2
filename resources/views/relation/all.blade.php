@@ -90,6 +90,8 @@
                     </table>
                 </div>
 
+                {{-- TODO --}}
+                @if (Cookie::has('beta'))
                 <div class="text-center">
                     <ul class="pagination">
                         <li><a href="#">&laquo;</a></li>
@@ -101,6 +103,8 @@
                         <li><a href="#">&raquo;</a></li>
                     </ul>
                 </div>
+                @endif
+                {{-- /TODO --}}
 
             </div>
         </div>

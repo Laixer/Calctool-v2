@@ -108,6 +108,8 @@ class NewController extends Controller
             if (!trim($relation->btw)) {
                 return back()->withErrors(['error' => 'Opdrachtgever heeft geen BTW nummer'])->withInput($request->all());
             }
+
+            $project->tax_reverse = true;
         }
 
         if (!$request->has('name')) {
@@ -183,8 +185,7 @@ class NewController extends Controller
 
         Audit::CreateEvent('project.new.success', 'Created project: ' . $project->project_name);
 
-        $title = str_slug($project->project_name, '-');
-        return redirect('project/' . $project->id . '-' . $title . '/details')->with('success', 'Opgeslagen');
+        return redirect('project/' . $project->id . '-' . $project->slug() . '/details')->with('success', 'Opgeslagen');
     }
 
 }

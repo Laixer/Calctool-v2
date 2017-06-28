@@ -99,7 +99,7 @@ $(document).ready(function() {
               $('#payment_url').attr('href', '/payment');
         }
     });
-    
+
     $('#acc-deactive').click(function(e){
         e.preventDefault();
         location.href = '/account/deactivate?reason=' + $('#reason').val();
@@ -262,7 +262,7 @@ $(document).ready(function() {
                 <i class="fa fa-info"></i>
                 Langer testen? Dat kan, neem contact op met de support afdeling.
             </div>
-            
+
             @endif
 
             @if (Session::has('success'))
@@ -313,7 +313,7 @@ $(document).ready(function() {
                             <a href="#apps" data-toggle="tab"><i class="fa fa-exchange"></i> Applicaties</a>
                         </li>
                         @endif
-                        @if (Input::has('options'))
+                        @if (Cookie::has('beta'))
                         <li id="tab-other">
                             <a href="#other" data-toggle="tab"><i class="fa fa-plus"></i> Overig</a>
                         </li>
@@ -328,14 +328,6 @@ $(document).ready(function() {
 
                             <div>
                             <h4 class="company">Contactgegevens</h4>
-                            <div class="row company">
-                                <div class="col-md-3">
-                                    <div class="form-group">
-                                        <label for="username">Gebruikersnaam</label>
-                                        <input name="username" id="username" type="text" disabled="" value="{{ $user->username }}" class="form-control"/>
-                                    </div>
-                                </div>
-                            </div>
                             </div>
                             <div class="row company">
                                 <div class="col-md-4">
@@ -520,7 +512,7 @@ $(document).ready(function() {
 
                         </div>
                         @endif
-                        
+
                         @if (count($clients))
                         <div id="apps" class="tab-pane">
 
@@ -558,7 +550,7 @@ $(document).ready(function() {
                         </div>
                         @endif
 
-                        @if (Input::has('options'))
+                        @if (Cookie::has('beta'))
                         <div id="other" class="tab-pane">
 
                             <div class="row">
@@ -585,6 +577,5 @@ $(document).ready(function() {
     </section>
 
 </div>
-<?#-- /WRAPPER --?>
 
 @stop
