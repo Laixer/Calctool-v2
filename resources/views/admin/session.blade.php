@@ -16,11 +16,10 @@ use \BynqIO\Dynq\Models\User;
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
+              <li><a href="/admin">Admin Dashboard</a></li>
               <li class="active">Sessies</li>
             </ol>
             <div>
-            <br />
 
             <h2><strong>Sessies</strong></h2>
 

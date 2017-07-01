@@ -55,12 +55,11 @@ $(document).ready(function() {
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
+              <li><a href="/admin">Admin Dashboard</a></li>
               <li><a href="/admin/group">Groep</a></li>
               <li class="active">{{ ucfirst($group->name) }}</li>
             </ol>
             <div>
-            <br />
 
             @if (Session::has('success'))
             <div class="alert alert-success">

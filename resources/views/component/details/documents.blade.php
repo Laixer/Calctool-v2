@@ -33,10 +33,10 @@ use BynqIO\Dynq\Models\Resource;
         @foreach(Resource::where('project_id', $project->id)->get() as $file)
         <?php $i++; ?>
         <div class="item">
-            <div class="cart_img" style="width:45px;"><a href="/res-{{ $file->id }}/download"><i class="fa {{ $file->fa_icon() }} fsize20"></i></a></div>
-            <a href="/res-{{ $file->id }}/download" class="product_name">{{ $file->resource_name }}</a>
+            <div class="cart_img" style="width:45px;"><a href="/resource/{{ $file->id }}/download/file"><i class="fa {{ $file->fa_icon() }} fsize20"></i></a></div>
+            <a href="/resource/{{ $file->id }}/download/file" class="product_name">{{ $file->resource_name }}</a>
             @if (!$project->project_close)
-            <a href="/res-{{ $file->id }}/delete" class="btn btn-danger btn-xs" style="float: right;margin: 10px;">Verwijderen</a>
+            <a href="/resource/{{ $file->id }}/delete" class="btn btn-danger btn-xs" style="float: right;margin: 10px;">Verwijderen</a>
             @else
             <a href="#" class="btn btn-danger btn-xs disabled" style="float: right;margin: 10px;">Verwijderen</a>
             @endif

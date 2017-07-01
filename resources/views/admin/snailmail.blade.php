@@ -52,11 +52,10 @@ use \BynqIO\Dynq\Models\Invoice;
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
+              <li><a href="/admin">Admin Dashboard</a></li>
               <li class="active">Opdrachtbeheer</li>
             </ol>
             <div>
-            <br />
 
             <h2><strong>Opdrachtbeheer</strong></h2>
 
@@ -91,7 +90,7 @@ use \BynqIO\Dynq\Models\Invoice;
                     @endforeach
                     </tbody>
                 </table>
-            </div>	
+            </div>
             <div class="white-row">
                 <h4>Facturen</h4>
                 <table class="table table-striped">

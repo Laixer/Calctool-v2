@@ -35,7 +35,7 @@
             <td class="col-md-3">{{ $invoice->invoice_code }}</td>
             <td class="col-md-2">{{ $invoice->status() }}</td>
             <td class="col-md-2 text-right">
-                
+
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opties <span class="caret"></span></button>
                     <ul class="dropdown-menu">
@@ -47,7 +47,7 @@
 
                         <li><a href="/invoice/pay?id={{ $invoice->id }}&csrf={{ csrf_token() }}">Betaald</a></li>
                         @endif
-                        <li><a href="/res-{{ $invoice->resource_id }}/download">Download PDF</a></li>
+                        <li><a href="/resource/{{ $invoice->resource_id }}/download/invoice.pdf">Download PDF</a></li>
                         @if ($invoice->amount > 0)
                         <li><a href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="docredit">Creditfactuur</a></li>
                         @endif
@@ -62,7 +62,7 @@
 
                     </ul>
                 </div>
-                
+
             </td>
         </tr>
         @endforeach

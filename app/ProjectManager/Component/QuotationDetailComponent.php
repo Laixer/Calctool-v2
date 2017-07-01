@@ -27,7 +27,7 @@ class QuotationDetailComponent extends BaseComponent implements Component
 
     protected function buildUrl($id)
     {
-        $this->url = "/res-{$id}/view";
+        $this->url = "/resource/{$id}/view/quotation.pdf";
     }
 
     public function render()

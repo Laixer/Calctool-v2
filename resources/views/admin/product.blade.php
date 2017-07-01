@@ -27,11 +27,10 @@ $(document).ready(function() {
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
+              <li><a href="/admin">Admin Dashboard</a></li>
               <li class="active">Producten</li>
             </ol>
             <div>
-            <br />
 
             @if (Session::has('success'))
             <div class="alert alert-success">

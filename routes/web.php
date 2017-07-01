@@ -58,12 +58,9 @@ Route::group(['middleware' => 'auth'], function() {
     Route::get('admin/switch/back', 'AdminController@getSwitchSessionBack');
 
     /* Resource actions*/
-    Route::get('res-{resource_id}/download',        'ResourceController@download');
-    Route::get('res-{resource_id}/view/{name?}',    'ResourceController@view');
-    Route::get('res-{resource_id}/delete',          'ResourceController@delete');
-    Route::any('resource/view/{name}',              'ResourceController@endpoint');
-    Route::any('resource/download/{name}',          'ResourceController@endpoint');
-    Route::any('resource',                          'ResourceController@endpoint');
+    Route::any('resource/{resource_id}/view/{name}',      'ResourceController@view');
+    Route::any('resource/{resource_id}/download/{name}',  'ResourceController@download');
+    Route::get('resource/{resource_id}/delete',           'ResourceController@delete');
 
     /* Routes by PaymentController */
     Route::get('payment',                      'PaymentController@getPayment');
@@ -95,8 +92,10 @@ Route::group(['middleware' => ['auth','payzone']], function() {
     Route::get('notification/message-{message}/delete', 'NotificationController@doDelete')->where('message', '[0-9]+');
     Route::get('notification/message-{message}',        'NotificationController@getMessage')->where('message', '[0-9]+');
 
-    /* Finance actions */
-    Route::get('finance/overview', 'Finance\OverviewController@overview')->middleware('reqcompany');
+    /* Module Group Finance */
+    Route::group(['namespace' => 'Finance'], function() {
+       Route::get('finance/overview', 'OverviewController@overview')->middleware('reqcompany');
+    });
 
     /* Module Group Product */
     Route::group(['namespace' => 'Product'], function() {
@@ -279,9 +278,10 @@ Route::group(['middleware' => ['auth', 'payzone', 'reqcompany']], function() {
     });
 
     // Route::get('xxx', function() {
-    //     return view('mail.user_reacted',['name'=>'kaas','body'=>'y','amount'=>12,'email'=>'info@jaas.com','reason'=>'oo',
+    //     return view('mail.offer_send',['name'=>'kaas','body'=>'y','amount'=>12,'email'=>'info@jaas.com','reason'=>'oo',
     //     'expdate'=>'21-23-2017','project_name'=>'q','note'=>'Its just great','username'=>'trol',
-    //     'subscription'=>'x','category'=>'trol','subject'=>'ice', 'message'=>'troll','token'=>'x','user'=>'Arie Kaas'
+    //     'subscription'=>'x','category'=>'trol','subject'=>'ice', 'message'=>'troll','token'=>'x','user'=>'Arie Kaas',
+    //     'pref_email_offer' => 'Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk zoals eerder opgenomen. De offerte heb ik in de bijlage toegevoegd. Mocht u vragen hebben, stel ze gerust, dan beantwoord ik deze graag.'
     //     ]);
     // });
 

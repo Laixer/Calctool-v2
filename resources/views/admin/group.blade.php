@@ -11,11 +11,10 @@
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
+              <li><a href="/admin">Admin Dashboard</a></li>
               <li class="active">Groepen</li>
             </ol>
             <div>
-            <br />
 
             <h2><strong>Groepen</strong></h2>
 

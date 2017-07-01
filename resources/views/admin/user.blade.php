@@ -34,11 +34,10 @@ if (Input::has('group')) {
             <div>
                 <ol class="breadcrumb">
                     <li><a href="/">Dashboard</a></li>
-                    <li><a href="/admin">Admin CP</a></li>
+                    <li><a href="/admin">Admin Dashboard</a></li>
                     <li class="active">Gebruikers</li>
                 </ol>
             <div>
-            <br />
 
             <div class="pull-right">
                 @if ($all)
@@ -46,8 +45,15 @@ if (Input::has('group')) {
                 @else
                     <a class="btn btn-primary" href="?all=1">Alle gebruikers</a>
                 @endif
-                <a href="/admin/user/new" class="btn btn-primary"><i class="fa fa-pencil"></i> Nieuwe gebruiker</a>
-                <a href="/admin/user/tags" class="btn btn-primary"><i class="fa fa-tag"></i> Tags</a>
+
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="fa fa-ellipsis-h" aria-hidden="true"></span></button>
+                    <ul class="dropdown-menu">
+                        <li><a href="/admin/user/new">Nieuwe gebruiker</a></li>
+                        <li><a href="/admin/user/tags">Tags</a></li>
+                    </ul>
+                </div>
+
             </div>
 
             <?php
@@ -100,13 +106,13 @@ if (Input::has('group')) {
                         <td class="col-md-2 hidden-sm hidden-xs">
                         {{ userStatus($users) }}
                         @if ($users->isAdmin())
-                        <i class="fa fa-bolt" aria-hidden="true"></i> 
+                        <i class="fa fa-bolt" aria-hidden="true"></i>
                         @elseif ($users->isTryPeriod())
-                        <i class="fa fa-flask" aria-hidden="true"></i> 
+                        <i class="fa fa-flask" aria-hidden="true"></i>
                         @elseif ($users->hasPayed())
-                        <i class="fa fa-heart" aria-hidden="true"></i> 
+                        <i class="fa fa-heart" aria-hidden="true"></i>
                         @else
-                        <i class="fa fa-exclamation" aria-hidden="true"></i> 
+                        <i class="fa fa-exclamation" aria-hidden="true"></i>
                         @endif
                         </td>
                         <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\Dynq\Models\UserType::find($users->user_type)->user_type) }}</td>
@@ -145,13 +151,13 @@ if (Input::has('group')) {
                         <td class="col-md-2 hidden-sm hidden-xs">
                         {{ userStatus($users) }}
                         @if ($users->isAdmin())
-                        <i class="fa fa-bolt" aria-hidden="true"></i> 
+                        <i class="fa fa-bolt" aria-hidden="true"></i>
                         @elseif ($users->isTryPeriod())
-                        <i class="fa fa-flask" aria-hidden="true"></i> 
+                        <i class="fa fa-flask" aria-hidden="true"></i>
                         @elseif ($users->hasPayed())
-                        <i class="fa fa-heart" aria-hidden="true"></i> 
+                        <i class="fa fa-heart" aria-hidden="true"></i>
                         @else
-                        <i class="fa fa-exclamation" aria-hidden="true"></i> 
+                        <i class="fa fa-exclamation" aria-hidden="true"></i>
                         @endif
                         </td>
                         <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\Dynq\Models\UserType::find($users->user_type)->user_type) }}</td>
@@ -190,13 +196,13 @@ if (Input::has('group')) {
                         <td class="col-md-2 hidden-sm hidden-xs">
                         {{ userStatus($users) }}
                         @if ($users->isAdmin())
-                        <i class="fa fa-bolt" aria-hidden="true"></i> 
+                        <i class="fa fa-bolt" aria-hidden="true"></i>
                         @elseif ($users->isTryPeriod())
-                        <i class="fa fa-flask" aria-hidden="true"></i> 
+                        <i class="fa fa-flask" aria-hidden="true"></i>
                         @elseif ($users->hasPayed())
-                        <i class="fa fa-heart" aria-hidden="true"></i> 
+                        <i class="fa fa-heart" aria-hidden="true"></i>
                         @else
-                        <i class="fa fa-exclamation" aria-hidden="true"></i> 
+                        <i class="fa fa-exclamation" aria-hidden="true"></i>
                         @endif
                         </td>
                         <td class="col-md-1 hidden-sm hidden-xs">{{ ucfirst(\BynqIO\Dynq\Models\UserType::find($users->user_type)->user_type) }}</td>

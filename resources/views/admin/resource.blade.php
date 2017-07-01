@@ -18,11 +18,10 @@ use \BynqIO\Dynq\Models\Project;
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
+              <li><a href="/admin">Admin Dashboard</a></li>
               <li class="active">Bestandsbeheer</li>
             </ol>
             <div>
-            <br />
 
             <h2><strong>Bestandsbeheer</strong></h2>
 
@@ -42,7 +41,7 @@ use \BynqIO\Dynq\Models\Project;
                 <tbody>
                 @foreach (Resource::where('unlinked',false)->orderBy('created_at','desc')->limit(50)->get() as $resource)
                     <tr data-id="{{ $resource->id}}">
-                        <td class="col-md-3"><a target="blank" href="/res-{{ $resource->id }}/view">{{ $resource->description }} <i class="fa fa-external-link" aria-hidden="true"></i></a></td>
+                        <td class="col-md-3"><a target="blank" href="/resource/{{ $resource->id }}/view/object">{{ $resource->description }} <i class="fa fa-external-link" aria-hidden="true"></i></a></td>
                         <td class="col-md-2">{{ $resource->file_size }}</td>
                         <td class="col-md-2">{{ ucfirst(User::find($resource->user_id)->username) }}</td>
                         <td class="col-md-2">{{ $resource->project_id ? Project::find($resource->project_id)->project_name : 'Geen' }}</td>

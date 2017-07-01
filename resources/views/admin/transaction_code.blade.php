@@ -22,12 +22,11 @@ try {
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
+              <li><a href="/admin">Admin Dashboard</a></li>
               <li><a href="/admin/payment">Transacties & Betalingen</a></li>
               <li class="active">{{ Route::Input('transcode') }}</li>
             </ol>
             <div>
-            <br />
 
             <h2><strong>Transactie {{ Route::Input('transcode') }}</strong></h2>
 

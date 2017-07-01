@@ -27,11 +27,10 @@ if (Input::get('group_id')) {
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
+              <li><a href="/admin">Admin Dashboard</a></li>
               <li class="active">Transacties & Betalingen</li>
             </ol>
             <div>
-            <br />
 
             <h2><strong>Transacties</strong></h2>
 

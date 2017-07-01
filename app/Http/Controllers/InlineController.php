@@ -28,16 +28,6 @@ class InlineController extends Controller
     */
 
     /**
-     * Instantiate the dashboard controller.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
-
-    /**
      * Show the inline page.
      *
      * @return Response
@@ -47,6 +37,10 @@ class InlineController extends Controller
         $this->validate($request, [
             'package'      => ['required'],
         ]);
+
+        foreach ($request->all() as $key => $param) {
+            $data[$key] = $param;
+        }
 
         return view("{$request->get('package')}.$page", $data);
     }

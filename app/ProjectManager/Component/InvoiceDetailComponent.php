@@ -38,7 +38,7 @@ class InvoiceDetailComponent extends BaseComponent implements Component
 
         /* Show the report in the viewer */
         if ($invoice->invoice_close) {
-            $data['url'] = "/res-{$invoice->resource_id}/view";
+            $data['url'] = "/resource/{$invoice->resource_id}/view/invoice.pdf";
             return view('component.reportviewer', $data);
         }
 

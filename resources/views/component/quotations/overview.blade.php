@@ -30,7 +30,7 @@
 
     @if ($offer_last && !$offer_last->offer_finish && !$project->project_close)
     <div class="btn-group">
-        <a href="/inline/description?id=23&package=component.modal" data-toggle="modal" data-target="#asyncModal" class="btn btn-primary"><i class="fa fa-paper-plane-o" style="padding-right:5px">&nbsp;</i>Versturen</a>
+        <a href="/inline/offer_send?project_name={{ $project->project_name }}&user={{ urlencode($offer_last->fromContact->getFormalName()) }}&package=mail" data-toggle="modal" data-target="#asyncModal" class="btn btn-primary"><i class="fa fa-paper-plane-o" style="padding-right:5px">&nbsp;</i>Versturen</a>
         <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
@@ -65,7 +65,7 @@
             <td class="col-md-4"><a href="/project/{{ $project->id }}-{{ $project->slug() }}/quotations/detail?id={{ $offer->id }}">{{ $offer->offer_code }}</a> @if ($offer->offer_finish)<span class="label label-default">Definitief</span>@endif</td>
             <td class="col-md-3">{{ $carbon::parse($offer->offer_make)->toDateString() }}</td>
             <td class="col-md-3">@money($offer->offer_total)</td>
-            <td class="col-md-3 text-right"><a href="/res-{{ ($offer->resource_id) }}/download" class="btn btn-primary btn-xs"><i class="fa fa-download fa-fw"></i> Downloaden</a></td>
+            <td class="col-md-3 text-right"><a href="/resource/{{ $offer->resource_id }}/download/quotation.pdf" class="btn btn-primary btn-xs"><i class="fa fa-download fa-fw"></i> Downloaden</a></td>
         </tr>
         @endforeach
         @if (!$i)

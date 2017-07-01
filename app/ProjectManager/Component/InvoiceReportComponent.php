@@ -49,7 +49,6 @@ class InvoiceReportComponent extends BaseComponent implements Component
             'phone' => $relation_self->phone_number,
             'email' => $relation_self->email,
             'overlay' => 'concept',
-            'pages' => ['main'],
         ];
 
         $letter = [
@@ -62,23 +61,17 @@ class InvoiceReportComponent extends BaseComponent implements Component
             'contact_to'       => Contact::find($this->request->get('contact_to')),
             'contact_from'     => Contact::find($this->request->get('contact_from')),
             'reference'        => $this->request->get('our_reference'),
+            'client_reference' => $this->request->get('client_reference'),
             'pretext'          => $this->request->get('pretext'),
             'posttext'         => $this->request->get('posttext'),
+            'messages'         => ["Gaarne bij betaling factuurnummer vermelden."],
         ];
 
-        $terms   = $this->request->get('terms');
-        $amount  = $this->request->get('amount');
-        $deliver = $this->request->get('deliver');
-        $valid   = $this->request->get('valid');
-
-        /* Terms and amount */
-        if ($terms > 1 && $amount > 1) {
-            $letter['messages'][] = "Indien opdracht gegund wordt, ontvangt u $terms termijnen waarvan de eerste termijn een aanbetaling betreft á € $amount";
-        } else if ($terms > 1) {
-            $letter['messages'][] = "Indien opdracht gegund wordt, ontvangt u $terms termijnen waarvan de laatste een eindfactuur.";
-        } else {
-            $letter['messages'][] = "Indien opdracht gegund wordt, ontvangt u één eindfactuur.";
-        }
+        $terms       = $this->request->get('terms');
+        $amount      = $this->request->get('amount');
+        $deliver     = $this->request->get('deliver');
+        $valid       = $this->request->get('valid');
+        $conditions  = $this->request->get('conditions');
 
         /* Delivery options */
         if ($deliver == 1 || $deliver == 2) {
@@ -94,7 +87,19 @@ class InvoiceReportComponent extends BaseComponent implements Component
             $letter['messages'][] = "Deze offerte is geldig tot $name na dagtekening.";
         }
 
+        /* Extra conditions */
+        if (isset($conditions)) {
+            foreach(explode(PHP_EOL, $conditions) as $condition) {
+                $letter['messages'][] = $condition;
+            }
+        }
+
+        if ($this->request->has('separate_subcon')) {
+            $data['separate_subcon'] = true;
+        }
+
         /* Additional pages */
+        $data['pages'][] = 'total';
         if ($this->request->has('display_specification')) {
             $data['pages'][] = 'specification';
         }

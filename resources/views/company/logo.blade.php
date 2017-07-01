@@ -16,7 +16,7 @@ use \BynqIO\Dynq\Models\Resource;
 
         @if ($relation->logo_id)
         <div>
-        <h5>Huidige logo</h5><img src="/res-{{ $relation->logo_id }}/view"/ width="300"></div>
+        <h5>Huidige logo</h5><img src="/resource/{{ $relation->logo_id }}/view/logo.img"/ width="300"></div>
         @endif
 
         <br />
@@ -48,8 +48,8 @@ use \BynqIO\Dynq\Models\Resource;
 
         @if ($relation->agreement_id)
         <div class=
-            <span class="cart_img" style="width:45px;"><a href="/res-{{ $relation->agreement_id }}/download"><i class="fa fa-file-pdf-o fsize60"></i></a></span>
-            <a href="/res-{{ $relation->agreement_id }}/download" class="product_name">{{ Resource::find($relation->agreement_id)->resource_name }}</a>
+            <span class="cart_img" style="width:45px;"><a href="/resource/{{ $relation->agreement_id }}/download/agreement.pdf"><i class="fa fa-file-pdf-o fsize60"></i></a></span>
+            <a href="/resource/{{ $relation->agreement_id }}/download/agreement.pdf" class="product_name">{{ Resource::find($relation->agreement_id)->resource_name }}</a>
         </div>
         @endif
 

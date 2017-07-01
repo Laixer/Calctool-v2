@@ -36,6 +36,9 @@
 @isset($reference)
 <div class="date">Referentie: {{ $reference }}</div>
 @endisset
+@isset($client_reference)
+<div class="date">Klant Referentie: {{ $client_reference }}</div>
+@endisset
 @endsection
 
 @section('topleft')

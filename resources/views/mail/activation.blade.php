@@ -16,6 +16,6 @@
 {{-- /Button --}}
 
 @include('mail.layout.elements.textblock', ['text' => [
-    'Je wordt na de bevestiging direct doorgestuurd naar de <strong>' . config('app.name') . '</strong> en kunt dan 30 dagen lang gebruikmaken van alles wat de <strong>' . config('app.name') . '</strong> te bieden heeft. Zonder beperkingen, afgeschermde delen of verborgen kosten. Wij geloven in simpel en transparant. De <strong>' . config('app.name') . '</strong> is voor de zzp\'er die snel en gemakkelijk gestructureerde offertes en facturen wilt kunnen maken.',
+    'U wordt na de bevestiging direct doorgestuurd naar de <strong>' . config('app.name') . '</strong> en kunt dan 30 dagen lang gebruikmaken van alles wat de <strong>' . config('app.name') . '</strong> te bieden heeft. Zonder beperkingen, afgeschermde delen of verborgen kosten. Wij geloven in simpel en transparant. De <strong>' . config('app.name') . '</strong> is voor de zzp\'er die snel en gemakkelijk gestructureerde offertes en facturen wilt kunnen maken.',
 ]])
 @stop

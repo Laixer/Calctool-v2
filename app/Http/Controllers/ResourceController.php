@@ -31,7 +31,7 @@ class ResourceController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('payzone')->only('doDeleteResource');
+        $this->middleware('payzone')->only('delete');
 
         //
     }
@@ -58,7 +58,6 @@ class ResourceController extends Controller
     public function download(Request $request, $resourceid)
     {
         $res = Resource::findOrFail($resourceid);
-        dd($res);
         if (!$res->isOwner()){
             return response(null, 403);
         }
@@ -90,20 +89,20 @@ class ResourceController extends Controller
         return back();
     }
 
-    public function endpoint(Request $request)
-    {
-        switch ($request->method()) {
-            case 'GET':
-                break;
-            case 'POST':
-                break;
-            case 'PUT':
-                break;
-            case 'DELETE':
-                break;
-            default:
-                return response(null, 405);
-        }
-    }
+    // public function endpoint(Request $request)
+    // {
+    //     switch ($request->method()) {
+    //         case 'GET':
+    //             break;
+    //         case 'POST':
+    //             break;
+    //         case 'PUT':
+    //             break;
+    //         case 'DELETE':
+    //             break;
+    //         default:
+    //             return response(null, 405);
+    //     }
+    // }
 
 }

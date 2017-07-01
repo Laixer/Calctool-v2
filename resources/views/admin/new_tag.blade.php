@@ -13,13 +13,12 @@
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
+              <li><a href="/admin">Admin Dashboard</a></li>
               <li><a href="/admin/user">Gebruikers</a></li>
               <li><a href="/admin/user/tags">Gebruikerstags</a></li>
               <li class="active">Nieuwe tag</li>
             </ol>
             <div>
-            <br />
 
             @if (Session::has('success'))
             <div class="alert alert-success">

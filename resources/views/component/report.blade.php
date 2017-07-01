@@ -22,7 +22,7 @@ $offer_last = Offer::where('project_id', $project->id)->orderBy('created_at', 'd
     <div class="row">
         <div class="col-sm-7">
             @if ($relation_self && $relation_self->logo_id)
-            <img src="/res-{{ $relation_self->logo_id }}/view" width="150px" class="img-responsive" />
+            <img src="/resource/{{ $relation_self->logo_id }}/view/logo.img" width="150px" class="img-responsive" />
             @endif
         </div>
         <div class="col-sm-5">
@@ -124,7 +124,7 @@ $offer_last = Offer::where('project_id', $project->id)->orderBy('created_at', 'd
     <div class="row">
         <div class="col-sm-6">
             @if ($relation_self && $relation_self->logo_id)
-            <img src="/res-{{ $relation_self->logo_id }}/view" class="img-responsive" />
+            <img src="/resource/{{ $relation_self->logo_id }}/view/logo.img" class="img-responsive" />
             @endif
         </div>
         <div class="col-sm-6 text-right">
@@ -151,7 +151,7 @@ $offer_last = Offer::where('project_id', $project->id)->orderBy('created_at', 'd
     <div class="row">
         <div class="col-sm-6">
             @if ($relation_self && $relation_self->logo_id)
-            <img src="/res-{{ $relation_self->logo_id }}/view" class="img-responsive" />
+            <img src="/resource/{{ $relation_self->logo_id }}/view/logo.img" class="img-responsive" />
             @endif
         </div>
         <div class="col-sm-6 text-right">

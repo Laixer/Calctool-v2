@@ -13,6 +13,14 @@ class Offer extends Model
         return $this->hasMany(Invoice::class);
     }
 
+    public function fromContact() {
+        return $this->hasOne(Contact::class, 'id', 'from_contact_id');
+    }
+
+    public function toContact() {
+        return $this->hasOne(Contact::class, 'id', 'to_contact_id');
+    }
+
     // public function deliverTime() {
     //     return $this->hasOne('DeliverTime');
     // }

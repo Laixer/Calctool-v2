@@ -456,7 +456,7 @@ $(document).ready(function() {
                                         <td class="col-md-1">{{ $order->method ? ucfirst($order->method) : '-' }}</td>
                                         <td class="col-md-1">
                                         @if ($order->resource_id)
-                                        <a href="/res-{{ $order->resource_id }}/download" class="btn btn-xs btn-primary" style="padding:0px 10px;"><i class="fa fa-download" aria-hidden="true"></i>Factuur</a>
+                                        <a href="/resource/{{ $order->resource_id }}/download/invoice.pdf" class="btn btn-xs btn-primary" style="padding:0px 10px;"><i class="fa fa-download" aria-hidden="true"></i>Factuur</a>
                                         @endif
                                         </td>
                                     </tr>

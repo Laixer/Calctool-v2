@@ -26,11 +26,10 @@
             <div>
             <ol class="breadcrumb">
               <li><a href="/">Dashboard</a></li>
-              <li><a href="/admin">Admin CP</a></li>
+              <li><a href="/admin">Admin Dashboard</a></li>
               <li class="active">Alerts</li>
             </ol>
             <div>
-            <br />
 
             <h2><strong>Meldingen</strong></h2>
 
