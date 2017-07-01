@@ -12,27 +12,27 @@
 <tbody>
     <tr>
         <td class="desc">Calculatief te offreren</td>
-        <td class="unit">€ 1.713,99</td>
+        <td class="unit">@money(\BynqIO\Dynq\Calculus\CalculationEndresult::totalProject($project))</td>
         <td class="qty"></td>
         <td class="total"></td>
     </tr>
     <tr>
         <td class="desc">BTW bedrag 21%</td>
         <td class="unit"></td>
-        <td class="qty">€ 100,78</td>
+        <td class="qty">@money(\BynqIO\Dynq\Calculus\CalculationEndresult::totalContractingTax1($project)+\BynqIO\Dynq\Calculus\CalculationEndresult::totalSubcontractingTax1($project)+\BynqIO\Dynq\Calculus\BlancRowsEndresult::rowTax1AmountTax($project))</td>
         <td class="total"></td>
     </tr>
     <tr>
         <td class="desc">BTW bedrag 6%</td>
         <td class="unit"></td>
-        <td class="qty">€ 74,05</td>
+        <td class="qty">@money(\BynqIO\Dynq\Calculus\CalculationEndresult::totalContractingTax2($project)+\BynqIO\Dynq\Calculus\CalculationEndresult::totalSubcontractingTax2($project)+\BynqIO\Dynq\Calculus\BlancRowsEndresult::rowTax2AmountTax($project))</td>
         <td class="total"></td>
     </tr>
     <tr>
         <td class="desc">Calculatief te offreren</td>
         <td class="unit"></td>
         <td class="qty"></td>
-        <td class="total">€ 1.888,82</td>
+        <td class="total">@money(\BynqIO\Dynq\Calculus\CalculationEndresult::superTotalProject($project)+\BynqIO\Dynq\Calculus\BlancRowsEndresult::rowTax1AmountTax($project)+\BynqIO\Dynq\Calculus\BlancRowsEndresult::rowTax2AmountTax($project))</td>
     </tr>
 </tbody>
 </table>

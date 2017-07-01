@@ -114,7 +114,7 @@ $(document).ready(function() {
                                     $offer_total += $offer->offer_total;
                                     ?>
                                     <tr>
-                                        <td class="col-md-4"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
+                                        <td class="col-md-4"><a href="/project/{{ $project->id }}-{{ $project->slug() }}/details">{{ $project->project_name }}</a></td>
                                         <td class="col-md-2"><a href="/offer/project-{{ $project->id }}/offer-{{ $offer->id }}">{{ $offer->offer_code }}</a></td>
                                         <td class="col-md-2"><?php echo date('d-m-Y', strtotime($offer->offer_make)); ?></td>
                                         <td class="col-md-3">@money($offer->offer_total)</td>
@@ -159,7 +159,7 @@ $(document).ready(function() {
                                     $invoice_total += $invoice->amount;
                                     ?>
                                     <tr>
-                                        <td class="col-md-3"><a href="/project-{{ $project->id }}/edit">{{ $project->project_name }}</a></td>
+                                        <td class="col-md-3"><a href="/project/{{ $project->id }}-{{ $project->slug() }}/details">{{ $project->project_name }}</a></td>
                                         <td class="col-md-2"><a href="/invoice/project-{{ $project->id }}/pdf-invoice-{{ $invoice->id }}">{{ Auth::user()->pref_use_ct_numbering ? $invoice->invoice_code : ($invoice->book_code ? $invoice->book_code : $invoice->invoice_code) }}</a></td>
                                         <td class="col-md-2">@money($invoice->amount, false)</td>
                                         <td class="col-md-2">{{ $invoice->invoice_make ? date("d-m-Y", strtotime($invoice->invoice_make)) : '-' }}</td>
@@ -183,7 +183,7 @@ $(document).ready(function() {
                                 </tfooter>
                             </table>
                         </div>
-                        
+
                     </div>
                 </div>
 

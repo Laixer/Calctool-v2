@@ -67,6 +67,11 @@ class FormatService extends BaseService
     {
         return LOCALE_DATE;
     }
+
+    public static function phone($number)
+    {
+        return $number;
+    }
 }
 
 /*

@@ -41,8 +41,10 @@ return [
             'username' => env('DB_USERNAME'),
             'password' => env('DB_PASSWORD'),
             'charset'  => 'utf8',
-            'prefix'   => '',
             'schema'   => 'public',
+            'options'   => array(
+                PDO::ATTR_PERSISTENT => true,
+            )
         ],
 
     ],

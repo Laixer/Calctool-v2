@@ -98,60 +98,33 @@ $(document).ready(function() {
         }
     });
 
-    $('#summernote').summernote({
-        height: $(this).attr("data-height") || 200,
-        toolbar: [
-            ["style", ["bold", "italic", "underline", "strikethrough", "clear"]],
-            ["para", ["ul", "ol", "paragraph"]],
-            ["table", ["table"]],
-            ["media", ["link", "picture", "video"]],
-        ]
-    })
-          
 });
 </script>
 <div id="wrapper">
-    
+
     <section class="container">
 
         <div class="col-md-12">
 
             <div>
                 <ol class="breadcrumb">
-                  <li><a href="/">Dashboard</a></li>
-                  <li><a href="/relation">Relaties</a></li>
-                  <li>{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</li>
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/relation">Relaties</a></li>
+                    <li>{{ $relation->name() }}</li>
                 </ol>
             </div>
 
-            @if (Session::has('success'))
-            <div class="alert alert-success">
-                <i class="fa fa-check-circle"></i>
-                <strong>{{ Session::get('success') }}</strong>
-            </div>
-            @endif
-
-            @if (count($errors) > 0)
-            <div class="alert alert-danger">
-                <i class="fa fa-frown-o"></i>
-                <strong>Fouten in de invoer</strong>
-                <ul>
-                    @foreach ($errors->all() as $error)
-                    <li><h5 class="nomargin">{{ $error }}</h5></li>
-                    @endforeach
-                </ul>
-            </div>
-            @endif
+            @include('layout.message')
 
             <aside class="col-md-3 nav-align">
                 <div class="white-row" style="padding:10px;">
                     <ul class="nav nav-list">
-                        <li class="{{ $page == 'details' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/details"><i class="fa fa-id-card"></i> Bedrijfsgegevens</a></li>
-                        <li class="{{ $page == 'contacts' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/contacts"><i class="fa fa-users"></i> Contacten</a></li>
-                        <li class="{{ $page == 'notes' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/notes"><i class="fa fa-cogs"></i> Notities</a></li>
-                        <li class="{{ $page == 'financial' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/financial"><i class="fa fa-university"></i> Financieel</a></li>
-                        <li class="{{ $page == 'invoices' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/invoices"><i class="fa fa-file-pdf-o"></i> Facturen</a></li>
-                        <li class="{{ $page == 'preferences' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ str_slug($relation->company_name) }}/preferences"><i class="fa fa-sliders"></i> Voorkeuren</a></li>
+                        <li class="{{ $page == 'details' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ $relation->slug() }}/details"><i class="fa fa-id-card"></i> Bedrijfsgegevens</a></li>
+                        <li class="{{ $page == 'contacts' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ $relation->slug() }}/contacts"><i class="fa fa-users"></i> Contacten</a></li>
+                        <li class="{{ $page == 'notes' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ $relation->slug() }}/notes"><i class="fa fa-cogs"></i> Notities</a></li>
+                        <li class="{{ $page == 'financial' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ $relation->slug() }}/financial"><i class="fa fa-university"></i> Financieel</a></li>
+                        <li class="{{ $page == 'invoices' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ $relation->slug() }}/invoices"><i class="fa fa-file-pdf-o"></i> Facturen</a></li>
+                        <li class="{{ $page == 'preferences' ? 'nav-active' : '' }}"><a href="/relation/{{ $relation->id }}-{{ $relation->slug() }}/preferences"><i class="fa fa-sliders"></i> Voorkeuren</a></li>
                     </ul>
                 </div>
             </aside>

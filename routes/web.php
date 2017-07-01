@@ -51,21 +51,19 @@ Route::post('support',         'SupportController@sendSupport');
 Route::get('support',          'SupportController@getSupport');
 Route::get('support/gethelp',  'SupportController@helpPage');
 
-Route::get('manifest.json',  'ManifestController');//TODO: might want to move this?
-
 /* Authentication Group */
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/', 'DashboardController')->name('dashboard');
-    Route::get('options', 'OptionsController');
 
     Route::get('admin/switch/back', 'AdminController@getSwitchSessionBack');
 
     /* Resource actions*/
-    Route::get('res-{resource_id}/download', 'ResourceController@download');
-    Route::get('res-{resource_id}/view',     'ResourceController@view');
-    Route::get('res-{resource_id}/delete',   'ResourceController@doDeleteResource');
-
-    Route::get('inline/{content}', 'InlineController');
+    Route::get('res-{resource_id}/download',        'ResourceController@download');
+    Route::get('res-{resource_id}/view/{name?}',    'ResourceController@view');
+    Route::get('res-{resource_id}/delete',          'ResourceController@delete');
+    Route::any('resource/view/{name}',              'ResourceController@endpoint');
+    Route::any('resource/download/{name}',          'ResourceController@endpoint');
+    Route::any('resource',                          'ResourceController@endpoint');
 
     /* Routes by PaymentController */
     Route::get('payment',                      'PaymentController@getPayment');
@@ -125,19 +123,19 @@ Route::group(['middleware' => ['auth','payzone']], function() {
         Route::get('wholesale-{wholesale_id}/delete', 'WholesaleController@getDelete')->where('wholesale_id', '[0-9]+');
     });
 
-    /* Module Group Company */ //TODO: namespace
-    Route::group(['prefix' => 'company'], function() {
-        Route::get('details',                 'Company\LayoutController@details');
-        Route::get('setupcompany',            'Company\LayoutController@setupCompany');
-        Route::post('setupcompany',           'Company\SetupCompanyController');
-        Route::get('contacts',                'Company\LayoutController@contacts');
-        Route::get('financial',               'Company\LayoutController@financial');
-        Route::get('logo',                    'Company\LayoutController@logo');
-        Route::get('preferences',             'Company\LayoutController@preferences');
-        Route::post('update',                 'Company\UpdateController@updateDetails');
-        Route::post('updatefinacial',         'Company\UpdateController@updateIban');
-        Route::post('uploadlogo',             'Company\UploadController@uploadLogo');
-        Route::post('uploadagreement',        'Company\UploadController@uploadAgreement');
+    /* Module Group Company */
+    Route::group(['namespace' => 'Company'], function() {
+        Route::get('company/details',                 'LayoutController@details');
+        Route::get('company/setupcompany',            'LayoutController@setupCompany');
+        Route::post('company/setupcompany',           'SetupCompanyController');
+        Route::get('company/contacts',                'LayoutController@contacts');
+        Route::get('company/financial',               'LayoutController@financial');
+        Route::get('company/logo',                    'LayoutController@logo');
+        Route::get('company/preferences',             'LayoutController@preferences');
+        Route::post('company/update',                 'UpdateController@updateDetails');
+        Route::post('company/updatefinacial',         'UpdateController@updateIban');
+        Route::post('company/uploadlogo',             'UploadController@uploadLogo');
+        Route::post('company/uploadagreement',        'UploadController@uploadAgreement');
     });
 
     /* Module Group Relation */
@@ -145,32 +143,34 @@ Route::group(['middleware' => ['auth','payzone']], function() {
         Route::get('relation/new',                      'RelationController@getNew');
         Route::post('relation/new',                     'RelationController@doNew');
         Route::post('relation/update',                  'RelationController@doUpdate');
+        Route::post('relation/note/update',             'RelationController@doUpdateNote');
         Route::post('relation/contact/new',             'RelationController@doNewContact');
         Route::post('relation/contact/update',          'RelationController@doUpdateContact');
         Route::post('relation/contact/delete',          'RelationController@doDeleteContact');
         Route::post('relation/iban/update',             'RelationController@doUpdateIban');
         Route::post('relation/iban/new',                'RelationController@doNewIban');
         Route::post('relation/updatecalc',              'RelationController@doUpdateProfit');
+        Route::get('relation/delete',                   'RelationController@getDelete');
         Route::get('relation',                          'FilterController');
         Route::get('relation/import',                   'RelationController@getImport');
         Route::post('relation/import/save',             'ImportController');
         Route::get('relation/export',                   'ExportController');
-        Route::get('relation/{relation_id}-{name}/details','RelationController@details');
-        Route::get('relation/{relation_id}-{name}/contacts','RelationController@contacts');
-        Route::get('relation/{relation_id}-{name}/financial','RelationController@financial');
-        Route::get('relation/{relation_id}-{name}/invoices','RelationController@invoices');
-        Route::get('relation/{relation_id}-{name}/preferences','RelationController@preferences');
-        Route::get('relation/{relation_id}-{name}/notes','RelationController@notes');
-        Route::get('relation/delete',     'RelationController@getDelete');
-        Route::get('relation-{relation_id}/contact/new','RelationController@getNewContact');
-        Route::get('relation-{relation_id}/contact-{contact_id}/edit', 'RelationController@getEditContact');
-        Route::get('relation-{relation_id}/convert',    'RelationController@getConvert');
-        Route::get('relation-{relation_id}/contact-{contact_id}/vcard', 'RelationController@downloadVCard');
+
+        Route::get('relation/{relation_id}-{name}/details',                     'RelationController@details');
+        Route::get('relation/{relation_id}-{name}/contacts',                    'RelationController@contacts');
+        Route::get('relation/{relation_id}-{name}/financial',                   'RelationController@financial');
+        Route::get('relation/{relation_id}-{name}/invoices',                    'RelationController@invoices');
+        Route::get('relation/{relation_id}-{name}/preferences',                 'RelationController@preferences');
+        Route::get('relation/{relation_id}-{name}/notes',                       'RelationController@notes');
+        Route::get('relation/{relation_id}-{name}/contact/new',                 'RelationController@getNewContact');
+        Route::get('relation/{relation_id}-{name}/convert',                     'RelationController@getConvert');
+        Route::get('relation/{relation_id}-{name}/contact-{contact_id}/edit',   'RelationController@getEditContact');
+        Route::get('relation/{relation_id}-{name}/contact-{contact_id}/vcard',  'RelationController@downloadVCard');
     });
 });
 
 /* Authentication, Payzone, Require Company Group */
-Route::group(['middleware' => ['auth','payzone','reqcompany']], function() {
+Route::group(['middleware' => ['auth', 'payzone', 'reqcompany']], function() {
 
     /* Module Group Invoice */
     Route::group(['namespace' => 'Invoice'], function() {

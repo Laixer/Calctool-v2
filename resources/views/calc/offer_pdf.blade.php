@@ -56,7 +56,7 @@ function invoice_condition($offer) {
     } else {
         echo "Indien opdracht gegund wordt, ontvangt u één eindfactuur.";
     }
-} 
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +65,7 @@ function invoice_condition($offer) {
     <title>Offerte</title>
     <link rel="stylesheet" href="{{ getcwd() }}/css/pdf.css" media="all" />
    </head>
- 
+
   <body>
     <header class="clearfix">
           <div id="heading" class="clearfix">
@@ -97,13 +97,13 @@ function invoice_condition($offer) {
                                         <div><strong>Adres:</strong></div>
                                         <div><strong>&nbsp;</strong></div>
                                         @if ($relation_self->phone)<div><strong>Telefoon:</strong></div>@endif
-                                        @if ($relation_self->email)<div><strong>E-mail:</strong></div>@endif	
+                                        @if ($relation_self->email)<div><strong>E-mail:</strong></div>@endif
                                         @if ($relation_self->kvk)<div><strong>KVK:</strong></div>@endif
                                     </td>
                                     <td style="width: 300px">
-                                        <div>@if ($relation_self->address_street) {{ $relation_self->address_street . ' ' . $relation_self->address_number }} @else 1 @endif</div>	
+                                        <div>@if ($relation_self->address_street) {{ $relation_self->address_street . ' ' . $relation_self->address_number }} @else 1 @endif</div>
                                         <div>@if ($relation_self->address_postal) {{ $relation_self->address_postal . ', ' . $relation_self->address_city }} @else 1 @endif</div>
-                                        @if ($relation_self->phone)<div>{{ $relation_self->phone }} </div>@endif	
+                                        @if ($relation_self->phone)<div>{{ $relation_self->phone }} </div>@endif
                                         @if ($relation_self->email)<div>{{ $relation_self->email }}</div>@endif
                                         @if ($relation_self->kvk)<div>{{ $relation_self->kvk }}&nbsp;</div>@endif
                                     </td>
@@ -353,7 +353,7 @@ function invoice_condition($offer) {
           <tr style="page-break-after: always;">
             <td style="width: 147px" class="qty">Materiaalkosten</td>
             <td style="width: 60px" class="qty">&nbsp;</td>
-            <td style="width: 119px" class="qty">{{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
+            <td style="width: 119px" class="qty">{{ ' &euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1Amount($project), 2, ",",".") }}</td>
             <td style="width: 70px" class="qty">21%</td>
             <td style="width: 80px" class="qty">@if(!$project->tax_reverse) {{ '&euro; '.number_format(CalculationEndresult::conCalcMaterialActivityTax1AmountTax($project), 2, ",",".") }} @endif</td>
             <td style="width: 119px" class="qty">&nbsp;</td>
@@ -619,7 +619,7 @@ function invoice_condition($offer) {
         @endif
         <li>Indien akkoord, gaarne de offerte ondertekend retour.</li>
       </div>
-     
+
       <div class="from">{{ ($offer ? $offer->closure : '') }}</div>
 
       <div class="from">Met vriendelijke groet,</div>
@@ -951,7 +951,7 @@ function invoice_condition($offer) {
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
             <td class="qty">&nbsp;</td>
-            <td class="qty"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</strong></td>								
+            <td class="qty"><strong class="pull-right">{{ '&euro; '.number_format(CalculationEndresult::superTotalProject($project)+BlancRowsEndresult::rowTax1AmountTax($project)+BlancRowsEndresult::rowTax2AmountTax($project), 2, ",",".") }}</strong></td>
           </tr>
           @endif
         </tbody>
@@ -993,7 +993,7 @@ function invoice_condition($offer) {
       <br>
       <br>
     </main>
- 
+
 @endif
 
 @if (!$only_totals)

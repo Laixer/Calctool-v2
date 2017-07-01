@@ -46,7 +46,8 @@ class ProjectReportComponent extends BaseComponent implements Component
             'address'  => $relation_self->fullAddress(),
             'phone'    => $relation_self->phone_number,
             'email'    => $relation_self->email,
-            'pages'    => ['main'],
+            'pages'    => ['overview_contracting','overview_subcontracting'],
+            'landscape' => true,
         ];
 
         $letter = [
@@ -57,14 +58,13 @@ class ProjectReportComponent extends BaseComponent implements Component
             'reference'        => $this->project->id,
         ];
 
-        $data['pages'][] = 'overview_contracting';
-
         $pdf = PDF::loadView('letter', array_merge($data, $letter));
         $pdf->setOption('footer-font-size', 8);
         $pdf->setOption('footer-left', $relation_self->name());
         $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
         $pdf->setOption('encoding', 'utf-8');
         $pdf->setOption('lowquality', false);
+        $pdf->setOrientation('landscape');
 
         return $pdf->inline();
     }

@@ -38,6 +38,7 @@ $(document).ready(function() {
             }
         }
     }
+
     $('#tab-company').click(function(e){
         sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'company';
     });
@@ -53,6 +54,7 @@ $(document).ready(function() {
     $('#tab-other').click(function(e){
         sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'other';
     });
+
     @if (!Auth::user()->hasPayed())
         sessionStorage.toggleTabMyAcc{{Auth::id()}} = 'payment';
         $('#tab-payment').addClass('active');
@@ -68,6 +70,7 @@ $(document).ready(function() {
         $('#company').addClass('active');
     }
     @endif
+
     $('#warn-link').click(function(e) {
         var $curr = sessionStorage.toggleTabMyAcc{{Auth::id()}}
         $('#tab-' + $curr).removeClass('active');
@@ -75,9 +78,11 @@ $(document).ready(function() {
         $('#tab-payment').addClass('active');
         $('#payment').addClass('active');
     });
+
     $('#website').blur(function(e) {
         prefixURL($(this));
     });
+
     $('#iban').blur(function() {
         if (! IBAN.isValid($(this).val()) ) {
             $(this).parent().addClass('has-error');
@@ -104,6 +109,7 @@ $(document).ready(function() {
         e.preventDefault();
         location.href = '/account/deactivate?reason=' + $('#reason').val();
     });
+
     $('#promocode').blur(function(e){
         e.preventDefault();
         $field = $(this);
@@ -124,6 +130,8 @@ $(document).ready(function() {
 
 });
 </script>
+
+{{--TODO: Move into inline model--}}
 <div class="modal fade" id="paymentModal" tabindex="-1" role="dialog" aria-labelledby="paymentModal" aria-hidden="true">
     <div class="modal-dialog modal-dialog">
         <div class="modal-content">
@@ -238,6 +246,7 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
+{{--/TODO--}}
 
 <div id="wrapper">
 

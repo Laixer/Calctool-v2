@@ -48,7 +48,6 @@ class QuotationReportComponent extends BaseComponent implements Component
             'phone'    => $relation_self->phone_number,
             'email'    => $relation_self->email,
             'overlay'  => 'concept',
-            'pages'    => ['main'],
         ];
 
         $letter = [
@@ -64,10 +63,11 @@ class QuotationReportComponent extends BaseComponent implements Component
             'posttext'         => $this->request->get('posttext'),
         ];
 
-        $terms   = $this->request->get('terms');
-        $amount  = $this->request->get('amount');
-        $deliver = $this->request->get('deliver');
-        $valid   = $this->request->get('valid');
+        $terms       = $this->request->get('terms');
+        $amount      = $this->request->get('amount');
+        $deliver     = $this->request->get('deliver');
+        $valid       = $this->request->get('valid');
+        $conditions  = $this->request->get('conditions');
 
         /* Terms and amount */
         if ($terms > 1 && $amount > 1) {
@@ -92,7 +92,19 @@ class QuotationReportComponent extends BaseComponent implements Component
             $letter['messages'][] = "Deze offerte is geldig tot $name na dagtekening.";
         }
 
+        /* Extra conditions */
+        if (isset($conditions)) {
+            foreach(explode(PHP_EOL, $conditions) as $condition) {
+                $letter['messages'][] = $condition;
+            }
+        }
+
+        if ($this->request->has('separate_subcon')) {
+            $data['separate_subcon'] = true;
+        }
+
         /* Additional pages */
+        $data['pages'][] = 'total';
         if ($this->request->has('display_specification')) {
             $data['pages'][] = 'specification';
         }

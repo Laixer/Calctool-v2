@@ -24,6 +24,7 @@ use BynqIO\Dynq\Models\PartType;
 use BynqIO\Dynq\Models\Detail;
 use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 //TODO: check every operation with project status & permissions
 class LevelController extends Controller
@@ -253,13 +254,17 @@ class LevelController extends Controller
             abort(404);
         }
 
-        switch ($request->get('level')) {
-            case 1:
-                $this->moveChapter($request->get('id'), $request->input('direction'));
-                break;
-            case 2:
-                $this->moveActivity($request->get('id'), $request->input('direction'));
-                break;
+        try {
+            switch ($request->get('level')) {
+                case 1:
+                    $this->moveChapter($request->get('id'), $request->input('direction'));
+                    break;
+                case 2:
+                    $this->moveActivity($request->get('id'), $request->input('direction'));
+                    break;
+            }
+        } catch (ModelNotFoundException $e) {
+            return back();
         }
 
         return back()->with('success', 'Niveau bijgewerkt');

@@ -21,7 +21,7 @@ class OptionsController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Dashboard Controller
+    | Options Controller
     |--------------------------------------------------------------------------
     |
     |

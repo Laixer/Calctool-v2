@@ -53,7 +53,7 @@ class Project extends Model
      */
     public function slug()
     {
-        $slug = mb_substr(str_slug($this->project_name), 0, 50);
+        $slug = mb_substr(str_replace(' ', '-', $this->project_name), 0, 50);
         if (!$slug) {
             return $this->id;
         }

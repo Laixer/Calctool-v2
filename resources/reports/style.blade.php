@@ -22,7 +22,6 @@
 #overlay {
     position: absolute;
     z-index: 100;
-    /*top: 30px;*/
     font-size: 30px;
     width: 100%;
     color: #000;
@@ -55,13 +54,18 @@ h4 {
 
 body {
     position: relative;
-    width: 24cm;  
-    height: 35cm; 
-    margin: 0 auto; 
+@isset($landscape)
+    width: 35cm;
+    height: 24cm;
+@else
+    width: 24cm;
+    height: 35cm;
+@endif
+    margin: 0 auto;
     color: #555555;
-    background: #FFFFFF; 
-    font-family: Arial, sans-serif; 
-    font-size: 14px; 
+    background: #FFFFFF;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
     font-family: latoregular;
 }
 
@@ -193,8 +197,8 @@ table tfoot td {
     background: #FFFFFF;
     border-bottom: none;
     font-size: 1.2em;
-    white-space: nowrap; 
-    border-top: 1px solid #AAAAAA; 
+    white-space: nowrap;
+    border-top: 1px solid #AAAAAA;
 }
 
 table tfoot tr:first-child td {
@@ -204,7 +208,7 @@ table tfoot tr:first-child td {
 table tfoot tr:last-child td {
     color: #57B223;
     font-size: 1.4em;
-    border-top: 1px solid #57B223; 
+    border-top: 1px solid #57B223;
 }
 
 table tfoot tr td:first-child {

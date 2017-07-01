@@ -61,6 +61,7 @@ $(document).ready(function() {
 
 <form action="" method="get" class="white-row">
     <input type="hidden" name="ts" value="{{ time() }}">
+    <input type="hidden" name="conditions" value="{{ Input::has('conditions') ? Input::get('conditions') : '' }}"/>
     <input type="hidden" name="pretext" value="{{ Input::has('pretext') ? Input::get('pretext') : 'Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken.' }}"/>
     <input type="hidden" name="posttext" value="{{ Input::has('posttext') ? Input::get('posttext') : 'Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet.' }}"/>
 
@@ -72,7 +73,7 @@ $(document).ready(function() {
 
             <div class="col-md-5">
                 <label>Termijnen</label>
-                <input type="number" class="form-control" name="terms" min="1" value="{{ Input::has('terms') ? Input::get('terms') : '1' }}">
+                <input type="number" class="form-control" name="terms" min="1" max="99" value="{{ Input::has('terms') ? Input::get('terms') : '1' }}">
             </div>
 
             <div class="col-md-7">
@@ -93,7 +94,7 @@ $(document).ready(function() {
                 <label>Namens</label>
                 <select class="form-control" name="contact_from">
                     <option value="">Selecteer</option>
-                    @foreach (Contact::where('relation_id','=',$relation_self->id)->get() as $contact)
+                    @foreach (Contact::where('relation_id',$relation_self->id)->get() as $contact)
                     <option {{ Input::has('contact_from') ? (Input::get('contact_from') == $contact->id ? 'selected' : '') : '' }} value="{{ $contact->id }}">{{ $contact->firstname . ' ' . $contact->lastname }}</option>
                     @endforeach
                 </select>
@@ -133,7 +134,7 @@ $(document).ready(function() {
             <a href="/inline/inline_edit?selector=pretext&title=Aanheftekst&package=component.modal" style="width:100px" data-toggle="modal" data-target="#asyncModal" class="btn btn-sm btn-default">Aanheftekst</a><span style="margin-left:10px;">Tekst na de aanhef</span>
         </div>
         <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
-            <a href="/inline/description?id=1000&package=component.modal" style="width:100px" data-toggle="modal" data-target="#asyncModal" class="btn btn-sm btn-default">Bepalingen</a><span style="margin-left:10px;">Voeg extra bepalingen toe</span>
+            <a href="/inline/inline_edit?selector=conditions&title=Bepalingen&package=component.modal" style="width:100px" data-toggle="modal" data-target="#asyncModal" class="btn btn-sm btn-default">Bepalingen</a><span style="margin-left:10px;">Voeg extra bepalingen toe</span>
         </div>
         <div class="col-sm-offset-0 col-sm-12" style="margin-bottom: 10px;">
             <a href="/inline/inline_edit?selector=posttext&title=Sluittekst&package=component.modal" style="width:100px" data-toggle="modal" data-target="#asyncModal" class="btn btn-sm btn-default">Sluittekst</a><span style="margin-left:10px;">Geef sluittekst op</span>
@@ -149,7 +150,7 @@ $(document).ready(function() {
 
             <div class="col-sm-offset-0 col-sm-12">
                 <div class="checkbox">
-                    <input name="display_specification" type="checkbox" {{ Input::has('display_specification') ? 'checked' : '' }}><span style="margin-left:10px;">Werkzaamheden specificeren</span>
+                    <input name="display_specification" type="checkbox" {{ Input::has('display_specification') ? 'checked' : '' }}><span style="margin-left:10px;">Specificeren op onderdelen</span>
                 </div>
             </div>
             <div class="col-sm-offset-0 col-sm-12">

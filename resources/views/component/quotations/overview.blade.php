@@ -5,60 +5,11 @@
 <link media="all" type="text/css" rel="stylesheet" href="/plugins/bootstrap-datepicker/css/bootstrap-datepicker3.min.css">
 @endpush
 
-@push('scripts')
-<script src="/plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js"></script>
-@endpush
-
-@push('jsinline')
-<script type="text/javascript">
-$(document).ready(function() {
-    $('[name=date]').datepicker({format: '{{ \BynqIO\Dynq\Services\FormatService::dateFormatJS() }}'});
-});
-</script>
-@endpush
-
-@if ($offer_last)
-<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-
-            <form action="/quotation/confirm" method="post">
-                {!! csrf_field() !!}
-
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title" id="myModalLabel2">Opdracht bevestiging</h4>
-                </div>
-
-                <div class="modal-body">
-
-                    <div class="form-horizontal">
-                        <div class="form-group">
-                            <div class="col-md-12">
-                                <label>Bevestig {{ $offer_last->offer_code }} op</label>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="input-group input-append date" id="dateRangePicker">
-                                    <input type="text" class="form-control" name="date" value="{{ $carbon::now()->toDateString() }}" />
-                                    <span class="input-group-addon add-on"><span class="glyphicon glyphicon-calendar"></span></span>
-                                </div>
-                                <input value="{{ $project->id }}" type="hidden" name="project" />
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="modal-footer">
-                    <button class="btn btn-primary">Opslaan</button>
-                </div>
-
-            </form>
-
-        </div>
+<div class="modal fade" id="asyncModal" tabindex="-1" role="dialog" aria-labelledby="asyncModal" aria-hidden="true">
+    <div class="modal-dialog {{-- modal-lg --}} {{-- modal-sm --}}">
+        <div class="modal-content"></div>
     </div>
 </div>
-@endif
 
 @if ($offer_last)
 @if (number_format($calculus::totalProject($project), 3, ",",".") != number_format($offer_last->offer_total, 3, ",","."))
@@ -79,19 +30,19 @@ $(document).ready(function() {
 
     @if ($offer_last && !$offer_last->offer_finish && !$project->project_close)
     <div class="btn-group">
-        <button type="button" class="btn btn-primary"><i class="fa fa-paper-plane" aria-hidden="true"></i>Versturen</button>
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a href="/inline/description?id=23&package=component.modal" data-toggle="modal" data-target="#asyncModal" class="btn btn-primary"><i class="fa fa-paper-plane-o" style="padding-right:5px">&nbsp;</i>Versturen</a>
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <span class="caret"></span>
             <span class="sr-only">Toggle Dropdown</span>
         </button>
         <ul class="dropdown-menu">
-            <li><a data-toggle="modal" data-target="#confirmModal"><i class="fa fa-check-square-o">&nbsp;</i>Opdracht Bevestigen</a></li>
+            <li><a href="/inline/confirm?id={{ $offer_last->id }}&project={{ $project->id }}&package=component.modal" data-toggle="modal" data-target="#asyncModal" data-toggle="modal"><i class="fa fa-check-square-o">&nbsp;</i>Opdracht Bevestigen</a></li>
         </ul>
     </div>
     @endif
 
     @if (!($offer_last && $offer_last->offer_finish) && !$project->project_close)
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/quotations/new" class="btn btn-primary btn"><i class="fa fa-pencil-square-o"></i>Nieuwe Offerte</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/quotations/new?ts={{ time() }}&pretext=Bij+deze+doe+ik+u+toekomen+mijn+prijsopgaaf+betreffende+het+uit+te+voeren+werk.+Onderstaand+zal+ik+het+werk+en+de+uit+te+voeren+werkzaamheden+specificeren+zoals+afgesproken.&posttext=Hopende+u+hiermee+een+passende+aanbieding+gedaan+te+hebben%2C+zie+ik+uw+reactie+met+genoegen+tegemoet.&terms=1&contact_to={{ $project->client->contacts->first()->id }}&contact_from={{ Auth::user()->ownCompany->contacts->first()->id }}" class="btn btn-primary btn"><i class="fa fa-pencil-square-o"></i>Nieuwe Offerte</a>
     @endif
 
 </div>

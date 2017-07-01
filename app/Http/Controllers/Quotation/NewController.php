@@ -47,7 +47,6 @@ class NewController extends Controller
             'address'  => $relation_self->fullAddress(),
             'phone'    => $relation_self->phone_number,
             'email'    => $relation_self->email,
-            'pages'    => ['main'],
         ];
 
         $letter = [
@@ -92,6 +91,7 @@ class NewController extends Controller
         }
 
         /* Additional pages */
+        $data['pages'][] = 'total';
         if ($quotation->display_specification) {
             $data['pages'][] = 'specification';
         }
@@ -142,25 +142,25 @@ class NewController extends Controller
         }
 
         $offer = new Offer;
-        $offer->to_contact_id = $request->get('contact_to');
-        $offer->from_contact_id = $request->get('contact_from');
-        $offer->description = $request->get('pretext');
+        $offer->to_contact_id    = $request->get('contact_to');
+        $offer->from_contact_id  = $request->get('contact_from');
+        $offer->description      = $request->get('pretext');
 
         $offer->offer_code = sprintf("%s%05d-%03d-%s", $request->user()->offernumber_prefix, $project->id, $request->user()->offer_counter, date('y'));
         // $offer->extracondition = $request->get('extracondition');
         $offer->closure = $request->get('posttext');
 
-        if ($request->get('offdateval')) {
-            $offer->offer_make = date('Y-m-d', strtotime($request->get('offdateval')));
+        if ($request->has('offdateval')) {
+            $offer->offer_make = Carbon::parse($request->get('offdateval'));
         } else {
-            $offer->offer_make = date('Y-m-d');
+            $offer->offer_make = Carbon::now();
         }
 
-        if ($request->get('toggle-payment')) {
+        if ($request->has('toggle-payment')) {
             $offer->downpayment = $request->get('toggle-payment');
         }
 
-        if ($request->get('amount')) {
+        if ($request->has('amount')) {
             $offer->downpayment_amount = str_replace(',', '.', str_replace('.', '' , $request->get('amount')));
         }
 
@@ -168,7 +168,7 @@ class NewController extends Controller
         $offer->deliver_id = $request->get('deliver') || 1;
         $offer->valid_id = $request->get('valid') || 1;
 
-        if ($request->get('terms')) {
+        if ($request->has('terms')) {
             $offer->invoice_quantity = $request->get('terms');
         }
 
@@ -185,25 +185,25 @@ class NewController extends Controller
         // else
         //     $offer->only_totals = false;
 
-        if ($request->has('seperate-subcon')) {
+        if ($request->has('seperate_subcon')) {
             $offer->seperate_subcon = true;
         } else {
             $offer->seperate_subcon = false;
         }
 
-        if ($request->has('display-worktotals')) {
+        if ($request->has('display_worktotals')) {
             $offer->display_worktotals = true;
         } else {
             $offer->display_worktotals = false;
         }
 
-        if ($request->has('display-specification')) {
+        if ($request->has('display_specification')) {
             $offer->display_specification = true;
         } else {
             $offer->display_specification = false;
         }
 
-        if ($request->has('display-description')) {
+        if ($request->has('display_description')) {
             $offer->display_description = true;
         } else {
             $offer->display_description = false;

@@ -17,7 +17,7 @@
     <div class="col-md-5">
         <div class="form-group">
             <label for="company_name">Bedrijfsnaam*</label>
-            <input name="company_name" maxlength="50" id="company_name" type="text" value="{{ old('company_name') ? old('company_name') : $relation->company_name }}" class="form-control" />
+            <input name="company_name" maxlength="50" id="company_name" type="text" value="{{ old('company_name') ? old('company_name') : $relation->company_name }}" class="form-control" required/>
         </div>
     </div>
 

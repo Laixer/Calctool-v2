@@ -1007,7 +1007,6 @@ $(document).ready(function() {
                     <li>Stap 4: Klik op de toegevoegde <i>Werkzaamheid</i></li>
                     <li>Stap 5: Nu kunt u de <i>Werkzaamheid</i> gaan calculeren</li>
                 </ul>
-                <img src="/images/exp_calc.jpg" />
             </div>
         </div>
         @endif

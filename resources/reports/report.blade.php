@@ -24,7 +24,11 @@
 
     @foreach($pages as $page)
 
+    @isset($landscape)
+    <div style="height: 24cm;position:relative;">
+    @else
     <div style="height: 35cm;position:relative;">
+    @endif
 
     @isset($overlay)
     <div id="overlay">{{ strtoupper($overlay) }}</div>
@@ -51,7 +55,6 @@
     </footer>
 
     </div>
-
     @endforeach
 
 </body>

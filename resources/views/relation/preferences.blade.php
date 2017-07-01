@@ -9,6 +9,29 @@ use \BynqIO\Dynq\Models\Relation;
 $relation = Relation::find(Route::Input('relation_id'));
 ?>
 
+@push('scripts')
+<script src="/plugins/jquery.number.min.js"></script>
+@endpush
+
+@push('jsinline')
+<script type="text/javascript">
+$(document).ready(function() {
+    $("[name='hour_rate']").change(function() {
+        if ($("[name='more_hour_rate']").val() == undefined || $("[name='more_hour_rate']").val() == '0,000') {
+            $("[name='more_hour_rate']").val($(this).val());
+        }
+    });
+
+    $("[name=hour_rate]").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
+    $("[name=more_hour_rate]").number({!! \BynqIO\Dynq\Services\FormatService::monetaryJS('true') !!});
+
+    $('#btn-load-file').change(function() {
+        $('#upload-file').submit();
+    });
+});
+</script>
+@endpush
+
 <div class="white-row">
     <form method="post" action="/relation/updatecalc">
         {!! csrf_field() !!}
@@ -23,10 +46,10 @@ $relation = Relation::find(Route::Input('relation_id'));
             <div class="col-md-5"><label for="hour_rate">Uurtarief excl. BTW</label></div>
             <div class="col-md-1"><div class="pull-right">&euro;</div></div>
             <div class="col-md-2">
-                <input name="hour_rate" type="text" value="{{ old('hour_rate') ? old('hour_rate') : number_format($relation->hour_rate, 2,",",".") }}" class="form-control form-control-sm-number"/>
+                <input name="hour_rate" type="text" value="@money($relation->hour_rate, false)" class="form-control form-control-sm-number"/>
             </div>
             <div class="col-md-2">
-                <input name="more_hour_rate" id="more_hour_rate" type="text" value="{{ old('more_hour_rate') ? old('more_hour_rate') : number_format($relation->hour_rate_more, 2,",",".") }}" class="form-control form-control-sm-number"/>
+                <input name="more_hour_rate" id="more_hour_rate" type="text" value="@money($relation->hour_rate_more, false)" class="form-control form-control-sm-number"/>
             </div>
         </div>
 

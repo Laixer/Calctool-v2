@@ -69,23 +69,24 @@ if (!$contact) {
             @endif
 
             <div>
-            <ol class="breadcrumb">
-              <li><a href="/">Dashboard</a></li>
-              <li><a href="/relation">Relaties</a></li>
-              <li><a href="/relation-{{ $relation->id }}/edit">{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</a></li>
-              <li class="active">contact bewerken</li>
-            </ol>
+                <ol class="breadcrumb">
+                    <li><a href="/">Dashboard</a></li>
+                    <li><a href="/relation">Relaties</a></li>
+                    <li><a href="/relation/{{ $relation->id }}-{{ $relation->slug() }}/details">{{ $relation->company_name ? $relation->company_name : $contact->firstname . ' ' . $contact->lastname }}</a></li>
+                    <li class="active">contact bewerken</li>
+                </ol>
             </div>
-            <br>
 
+            @if (0)
             <div class="pull-right">
                 <a href="/relation-{{ $relation->id }}/contact-{{ $contact->id }}/vcard" class="btn btn-primary">Download vCard</a>
             </div>
+            @endif
 
             <h2><strong>Contact</strong> {{ $contact->lastname }}</h2>
 
             <div class="white-row">
-                <form method="POST" action="/relation/contact/update" accept-charset="UTF-8">
+                <form method="POST" action="/relation/contact/update">
                 {!! csrf_field() !!}
 
                 <h4>Contactgegevens</h4>
@@ -93,7 +94,7 @@ if (!$contact) {
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="contact_salutation">Aanhef</label>
+                            <label for="contact_salutation">Titel</label>
                             <input name="contact_salutation" maxlength="16" id="contact_salutation" type="text" value="{{ old('contact_salutation') ? old('contact_salutation') : $contact->salutation }}" class="form-control"/>
                             <input type="hidden" name="id" id="id" value="{{ $contact->id }}"/>
                         </div>
@@ -101,14 +102,14 @@ if (!$contact) {
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="contact_name">Achternaam*</label>
-                            <input name="contact_name" maxlength="50" id="contact_name" type="text" value="{{ old('contact_name') ? old('contact_name') : $contact->lastname }}" class="form-control"/>
+                            <label for="contact_name">Achternaam <a style="text-decoration:none;cursor:default;">*</a></label>
+                            <input name="contact_name" maxlength="50" id="contact_name" type="text" value="{{ old('contact_name') ? old('contact_name') : $contact->lastname }}" class="form-control" required/>
                         </div>
                     </div>
 
                     <div class="col-md-2">
                         <div class="form-group">
-                            <label for="contact_firstname">Voornaam*</label>
+                            <label for="contact_firstname">Voornaam</label>
                             <input name="contact_firstname" maxlength="30" id="contact_firstname" type="text" value="{{ old('contact_firstname') ? old('contact_firstname') : $contact->firstname }}" class="form-control"/>
                         </div>
                     </div>
@@ -129,19 +130,19 @@ if (!$contact) {
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="email">Email*</label>
-                            <input name="email" maxlength="80" id="email" type="email" value="{{ old('email') ? old('email') : $contact->email }}" class="form-control"/>
+                            <label for="email">Email <a style="text-decoration:none;cursor:default;">*</a></label>
+                            <input name="email" maxlength="80" id="email" type="email" value="{{ old('email') ? old('email') : $contact->email }}" class="form-control" required/>
                         </div>
                     </div>
 
                     @if (RelationKind::find($relation->kind_id)->kind_name=='zakelijk')
                     <div class="col-md-4 company">
                         <div class="form-group">
-                            <label for="contactfunction">Functie*</label>
+                            <label for="contactfunction">Functie <a style="text-decoration:none;cursor:default;">*</a></label>
                             <select name="contactfunction" id="contactfunction" class="form-control pointer">
-                            @foreach (ContactFunction::all() as $function)
+                                @foreach (ContactFunction::all() as $function)
                                 <option {{ $contact->function_id==$function->id ? 'selected' : '' }} value="{{ $function->id }}">{{ ucwords($function->function_name) }}</option>
-                            @endforeach
+                                @endforeach
                             </select>
                         </div>
                     </div>

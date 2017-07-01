@@ -27,7 +27,7 @@ class RouteServiceProvider extends ServiceProvider
      * Toplevel namespaces.
      *
      * @var string
-     */ 
+     */
     protected $namespace            = 'BynqIO\Dynq\Http\Controllers';
     protected $namespaceApi         = 'BynqIO\Dynq\Http\Controllers\Api';
     protected $namespaceAdmin       = 'BynqIO\Dynq\Http\Controllers\Admin';
@@ -70,10 +70,17 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected function mapWebRoutes()
     {
-        $routesWeb   = function ($router) { require base_path('routes/web.php'); };
-        $routesAdmin = function ($router) { require base_path('routes/admin.php'); };
+        $routesWeb          = function ($router) { require base_path('routes/web.php'); };
+        $routesAdmin        = function ($router) { require base_path('routes/admin.php'); };
+        $routesApplication  = function ($router) { require base_path('routes/application.php'); };
 
-        /* Default application routes */
+        /* Generic application routes */
+        Route::group([
+            'namespace' => $this->namespace,
+            'middleware' => 'web'
+        ], $routesApplication);
+
+        /* Application specific routes */
         Route::group([
             'namespace' => $this->namespace,
             'middleware' => 'web'

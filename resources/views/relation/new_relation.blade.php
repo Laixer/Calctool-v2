@@ -291,7 +291,7 @@ $(document).ready(function() {
 
                     <div class="col-md-3">
                         <div class="form-group">
-                            <label for="contact_salutation">Aanhef</label>
+                            <label for="contact_salutation">Titel</label>
                             <input name="contact_salutation" maxlength="16" id="contact_salutation" type="text" value="{{ old('contact_salutation') }}" class="form-control"/>
                         </div>
                     </div>

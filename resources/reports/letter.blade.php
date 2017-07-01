@@ -52,7 +52,7 @@
 
 {{-- First page --}}
 
-@section('body_main')
+@section("body_$pages[0]")
 <div id="details" class="clearfix">
     <div id="client">@yield('topleft')</div>
     <div id="invoice">@yield('topright')</div>
@@ -65,7 +65,7 @@
 <div style="font-size: 16px;padding-bottom: 30px;">{{ $pretext }}</div>
 @endisset
 
-@include('partials.total')
+@include("partials.$pages[0]")
 
 @isset($posttext)
 <div style="font-size: 16px;padding-bottom: 10px;">{{ $posttext }}</div>

@@ -16,6 +16,7 @@
 namespace BynqIO\Dynq\Http\Controllers;
 
 use Illuminate\Http\Request;
+use BynqIO\Dynq\Models\Audit;
 use BynqIO\Dynq\Models\Resource;
 
 use Auth;
@@ -57,8 +58,9 @@ class ResourceController extends Controller
     public function download(Request $request, $resourceid)
     {
         $res = Resource::findOrFail($resourceid);
-        if (!$res->isOwner()) {
-            return response(null, 404);//abort 404? -> http not allowed
+        dd($res);
+        if (!$res->isOwner()){
+            return response(null, 403);
         }
 
         return $this->fileTransfer($res)->header('Content-Disposition', 'attachment; filename="' . $res->resource_name . '"');
@@ -68,13 +70,13 @@ class ResourceController extends Controller
     {
         $res = Resource::findOrFail($resourceid);
         if (!$res->isOwner()) {
-            return response(null, 404);//abort 404?
+            return response(null, 403);
         }
 
         return $this->fileTransfer($res);
     }
 
-    public function doDeleteResource(Request $request, $resourceid)
+    public function delete(Request $request, $resourceid)
     {
         $res = Resource::findOrFail($resourceid);
         if (!$res->isOwner()) {
@@ -86,6 +88,22 @@ class ResourceController extends Controller
         Audit::CreateEvent('resource.delete.success', 'Resource ' . $res->id . ' deleted');
 
         return back();
+    }
+
+    public function endpoint(Request $request)
+    {
+        switch ($request->method()) {
+            case 'GET':
+                break;
+            case 'POST':
+                break;
+            case 'PUT':
+                break;
+            case 'DELETE':
+                break;
+            default:
+                return response(null, 405);
+        }
     }
 
 }

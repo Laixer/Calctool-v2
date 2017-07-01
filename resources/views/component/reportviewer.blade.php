@@ -1,7 +1,11 @@
 @extends('component.layout', ['title' => $page])
 
 @section('component_content')
-@if (1)
+@if (Input::has('embed'))
+<object data="{{ $url }}#view=fit&toolbar=0&navpanes=0&statusbar=0&messages=0" type="application/pdf" width="300" height="300">
+    <embed src="{{ $url }}#view=fit&toolbar=0&navpanes=0&statusbar=0&messages=0" type="application/pdf">
+</object>
+@else
 <script src="/plugins/pdf/build/pdf.js" type="text/javascript"></script>
 <script type="text/javascript">
 
@@ -11,7 +15,7 @@ PDFJS.getDocument('{!! $url !!}').then(function(pdf) {
     var pageNumber = 0;
 
     function buildPage(page) {
-        var scale = 1.92;
+        var scale = 1.5;
         var viewport = page.getViewport(scale);
 
         // Prepare canvas using PDF page dimensions
@@ -40,12 +44,8 @@ PDFJS.getDocument('{!! $url !!}').then(function(pdf) {
 }, function (reason) { console.error(reason); });
 </script>
 
-<div class="col-md-12 nopadding">
-    <div id="pages"></div>
+<div class="col-md-12 nopadding text-center">
+    <div id="pages" style="background-color: #4c4c4c;padding-top: 20px;border-radius: 2px;"></div>
 </div>
-@else
-<object data="{{ $url }}#view=fit&toolbar=0&navpanes=0&statusbar=0&messages=0" type="application/pdf" width="300" height="300">
-    <embed src="{{ $url }}#view=fit&toolbar=0&navpanes=0&statusbar=0&messages=0" type="application/pdf">
-</object>
 @endif
 @stop

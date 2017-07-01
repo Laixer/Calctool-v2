@@ -189,36 +189,32 @@ class RelationController extends Controller
     public function doUpdateContact(Request $request)
     {
         $this->validate($request, [
-            'id' => array('required','integer'),
-            'contact_salutation' => array('max:16'),
-            'contact_name' => array('required','max:50'),
-            'contact_firstname' => array('max:30'),
-            'email' => array('required','email','max:80'),
+            'id'                  => ['required','integer'],
+            'contact_salutation'  => ['max:16'],
+            'contact_name'        => ['required','max:50'],
+            'contact_firstname'   => ['max:30'],
+            'email'               => ['required','email','max:80'],
         ]);
 
-        $contact = \BynqIO\Dynq\Models\Contact::find($request->input('id'));
-        if (!$contact) {
-            return back()->withInput($request->all());
-        }
-        $relation = \BynqIO\Dynq\Models\Relation::find($contact->relation_id);
-        if (!$relation || !$relation->isOwner()) {
-            return back()->withInput($request->all());
-        }
+        $contact = Contact::findOrFail($request->input('id'));
+        // $relation = Relation::findOrFail($contact->relation_id);
 
-        if ($request->input('contact_salutation')) {
-            $contact->salutation = $request->input('contact_salutation');
-        }
-        if ($request->input('contact_firstname')) {
-            $contact->firstname = $request->input('contact_firstname');
-        }
-        $contact->lastname = $request->input('contact_name');
-        $contact->mobile = $request->input('mobile');
-        $contact->phone = $request->input('telephone');
-        $contact->email = $request->input('email');
-        $contact->note = $request->input('note');
-        if ($request->input('contactfunction')) {
+        // if (!$relation->isOwner()) {
+        //     return back()->withInput($request->all());
+        // }
+
+        $contact->salutation  = $request->input('contact_salutation');
+        $contact->firstname   = $request->input('contact_firstname');
+        $contact->lastname    = $request->input('contact_name');
+        $contact->mobile      = $request->input('mobile');
+        $contact->phone       = $request->input('telephone');
+        $contact->email       = $request->input('email');
+        $contact->note        = $request->input('note');
+
+        if ($request->has('contactfunction')) {
             $contact->function_id = $request->input('contactfunction');
         }
+
         if ($request->input('gender') == '-1') {
             $contact->gender = NULL;
         } else {
@@ -233,21 +229,33 @@ class RelationController extends Controller
     public function doUpdateIban(Request $request)
     {
         $this->validate($request, [
-            'iban' => array('alpha_num','max:25'),
-            'iban_name' => array('max:50'),
+            'iban'       => ['nullable','alpha_num','max:25'],
+            'iban_name'  => ['nullable','max:50'],
         ]);
 
-        $relation = \BynqIO\Dynq\Models\Relation::find($request->input('id'));
-        if (!$relation || !$relation->isOwner()) {
+        $relation = Relation::findOrFail($request->input('id'));
+        if (!$relation->isOwner()) {
             return back()->withInput($request->all());
         }
 
-        $relation->iban = $request->input('iban');
-        $relation->iban_name = $request->input('iban_name');
-
+        $relation->iban       = $request->input('iban');
+        $relation->iban_name  = $request->input('iban_name');
         $relation->save();
 
         return back()->with('success', 'Betalingsgegevens zijn aangepast');
+    }
+
+    public function doUpdateNote(Request $request)
+    {
+        $relation = Relation::findOrFail($request->input('id'));
+        if (!$relation->isOwner()) {
+            return back()->withInput($request->all());
+        }
+
+        $relation->note = $request->input('note');
+        $relation->save();
+
+        return back()->with('success', 'Notities aangepast');
     }
 
     public function doNew(Request $request)
@@ -353,7 +361,7 @@ class RelationController extends Controller
         $this->validate($request, [
             'id' => array('required','integer'),
             'contact_salutation' => array('max:16'),
-            'contact_firstname' => array('required','max:50'),
+            // 'contact_firstname' => array('required','max:50'),
             'contact_name' => array('required','max:50'),
             'email' => array('required','email','max:80'),
         ]);
@@ -385,7 +393,7 @@ class RelationController extends Controller
 
         $contact->save();
 
-        return redirect('/relation-'.$request->input('id').'/edit')->with('success','Contact opgeslagen');
+        return redirect('/relation/'.$relation->id.'-'.$relation->slug().'/contacts')->with('success','Contact opgeslagen');
     }
 
     public function doDeleteContact()

@@ -5,7 +5,7 @@
 | Register Constant Definitions
 |--------------------------------------------------------------------------
 |
-| This file provides a single point for global definitions and will 
+| This file provides a single point for global definitions and will
 | decouple implementation from configuration. This list must include
 | everything that should be marked as static data.
 |
@@ -22,6 +22,7 @@ define('APP_LOCALE',    'en');
 define('APP_LOG_LEVEL', 'error');
 
 /* Businessline configuration */
+define('APP_KEY',        'BYNQ');
 // define('APP_LOGO',      '/images/logo.png');
 // define('APP_LOGO_WIDTH',240);
 define('APP_LOGO',        '/images/dynq2.png');

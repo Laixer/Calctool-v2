@@ -44,7 +44,12 @@ class Relation extends Model
      */
     public function slug()
     {
-        return mb_strtolower(str_slug(mb_substr($this->name(), 0, 25)));
+        $slug = mb_substr(str_replace(' ', '-', $this->name()), 0, 50);
+        if (!$slug) {
+            return $this->id;
+        }
+
+        return $slug;
     }
 
     public function kind() {

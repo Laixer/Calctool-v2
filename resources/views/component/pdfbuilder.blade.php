@@ -36,7 +36,8 @@ PDFJS.getDocument('{!! $url !!}').then(function(pdf) {
 
     // Build the canvas
     for (var i = 0; i < pdf.numPages; ++i) {
-       $('#pages').append('<canvas id="the-canvas' + i + '" style="border:0px solid black;text-align:center;margin-bottom:20px;border-radius:2px;"></canvas>');
+        $('#loader').remove();
+        $('#pages').append('<canvas id="the-canvas' + i + '" style="border:0px solid black;text-align:center;margin-bottom:20px;border-radius:2px;"></canvas>');
     };
 
     pdf.getPage(pageNumber + 1).then(buildPage);
@@ -45,11 +46,15 @@ PDFJS.getDocument('{!! $url !!}').then(function(pdf) {
 
 @isset($options)
 <div class="col-md-8 nopadding">
-    <div id="pages"></div>
+    <div id="pages" class="text-center">
+        <img id="loader" src="https://www.processexcellencenetwork.com/sites/all/themes/iqpc_portal1/assets/images/thankyou-loader.gif" />
+    </div>
 </div>
 @else
 <div class="col-md-12 nopadding">
-    <div id="pages"></div>
+    <div id="pages" class="text-center">
+        <img id="loader" src="https://www.processexcellencenetwork.com/sites/all/themes/iqpc_portal1/assets/images/thankyou-loader.gif" />
+    </div>
 </div>
 @endisset
 
