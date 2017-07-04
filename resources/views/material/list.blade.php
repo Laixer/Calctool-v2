@@ -719,7 +719,7 @@ $(document).ready(function() {
                     $req = false;
                 }
             });
-            
+
         });
 
     });
@@ -755,7 +755,7 @@ $(document).ready(function() {
                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                     <h4 class="modal-title" id="myModalLabel">Omschrijving werkzaamheid</h4>
                 </div>
-                
+
                 <div class="modal-body">
                     <div class="form-group">
                         <div class="col-md-12">
@@ -814,7 +814,7 @@ $(document).ready(function() {
                 </div>
 
                 <div class="modal-body">
-                    
+
                     <div class="form-group input-group-lg">
 
                         <div class="row">
@@ -826,7 +826,7 @@ $(document).ready(function() {
                                     ?>
                                     <option value="{{ $mysupplier->id }}">Mijn Materiaal</option>
                                     <?php } ?>
-                                    
+
                                     @foreach (Wholesale::all() as $wholesale)
                                     <?php
                                     $supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
@@ -922,6 +922,16 @@ $(document).ready(function() {
 
             <h2><strong>Producten</strong></h2>
 
+            <div class="pull-right">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="btn-group">
+                            <a href="/wholesale" class="btn btn-primary"><i class="fa fa-truck"></i> Leveranciers</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="tabs nomargin-top">
 
                 <ul class="nav nav-tabs">
@@ -953,7 +963,7 @@ $(document).ready(function() {
                                         ?>
                                         <option value="{{ $mysupplier->id }}">Mijn Materiaal</option>
                                         <?php } ?>
-                                        
+
                                         @foreach (Wholesale::all() as $wholesale)
                                         <?php
                                         $supplier = Supplier::where('wholesale_id', $wholesale->id)->first();
@@ -1271,7 +1281,7 @@ $(document).ready(function() {
                                         </tr>
                                     </tbody>
                                 </table>
-                                
+
                                 <div class="row">
                                     <div class="col-md-2"><h4>Overig</h4></div>
                                     <div class="col-md-9"></div>

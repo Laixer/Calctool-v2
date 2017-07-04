@@ -33,7 +33,7 @@ class PackListReportComponent extends BaseComponent implements Component
     public function render()
     {
         $relation_self = Relation::findOrFail($this->request->user()->self_id);
-        $document_number = sprintf("%s%05d-%03d-%s", $this->request->user()->offernumber_prefix, $this->project->id, $this->request->user()->offer_counter, date('y'));
+        $document_number = sprintf("%05d%03d%s", $this->project->id, $this->request->user()->id, date('y'));
 
         $logo = null;
         if ($relation_self->logo) {
@@ -41,26 +41,26 @@ class PackListReportComponent extends BaseComponent implements Component
         }
 
         $data = [
-            'logo'     => $logo,
-            'company'  => $relation_self->name(),
-            'address'  => $relation_self->fullAddress(),
-            'phone'    => $relation_self->phone_number,
-            'email'    => $relation_self->email,
-            'pages'    => ['main'],
+            'logo'      => $logo,
+            'company'   => $relation_self->name(),
+            'address'   => $relation_self->fullAddress(),
+            'phone'     => $relation_self->phone_number,
+            'email'     => $relation_self->email,
+            'pages'     => ['overview_contracting','overview_subcontracting'],
+            'overlay'   => 'TODO',
+            'landscape' => true,
         ];
 
         $letter = [
             'document'         => 'Pakbon',
             'document_date'    => Carbon::now(),
+            'reference'        => $document_number,
             'project'          => $this->project,
             'relation_self'    => $relation_self,
-            'reference'        => $this->project->id,
         ];
 
         $letter['messages'][] = "Overzicht gebaseerd op huidige projectstatus.";
         $letter['messages'][] = "Materiaalprijzen zijn excl. winstpercentages.";
-
-        $data['pages'][] = 'overview_contracting';
 
         $pdf = PDF::loadView('letter', array_merge($data, $letter));
         $pdf->setOption('footer-font-size', 8);
@@ -68,6 +68,7 @@ class PackListReportComponent extends BaseComponent implements Component
         $pdf->setOption('footer-right', 'Pagina [page]/[toPage]');
         $pdf->setOption('encoding', 'utf-8');
         $pdf->setOption('lowquality', false);
+        $pdf->setOrientation('landscape');
 
         return $pdf->inline();
     }

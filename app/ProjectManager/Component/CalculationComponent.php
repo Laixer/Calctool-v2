@@ -41,6 +41,7 @@ class CalculationComponent extends BaseComponent implements Component
         $ledger = new Ledger($this, [
             'level.new'                  => true,
 
+            'chapter'                    => true,
             'chapter.options'            => true,
 
             /* Activity options */
@@ -76,6 +77,10 @@ class CalculationComponent extends BaseComponent implements Component
             /* Tax */
             'tax.update'             => true,
         ]);
+
+        $ledger->levelFilter(function () {
+            return $this->project->chapters()->orderBy('priority')->get();
+        });
 
         $ledger->layer(function ($layer, $activity) {
             if ($activity->isEstimate()) {

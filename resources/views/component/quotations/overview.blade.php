@@ -42,7 +42,7 @@
     @endif
 
     @if (!($offer_last && $offer_last->offer_finish) && !$project->project_close)
-    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/quotations/new?ts={{ time() }}&pretext=Bij+deze+doe+ik+u+toekomen+mijn+prijsopgaaf+betreffende+het+uit+te+voeren+werk.+Onderstaand+zal+ik+het+werk+en+de+uit+te+voeren+werkzaamheden+specificeren+zoals+afgesproken.&posttext=Hopende+u+hiermee+een+passende+aanbieding+gedaan+te+hebben%2C+zie+ik+uw+reactie+met+genoegen+tegemoet.&terms=1&contact_to={{ $project->client->contacts->first()->id }}&contact_from={{ Auth::user()->ownCompany->contacts->first()->id }}" class="btn btn-primary btn"><i class="fa fa-pencil-square-o"></i>Nieuwe Offerte</a>
+    <a href="/project/{{ $project->id }}-{{ $project->slug() }}/quotations/new?ts={{ time() }}&pretext={{ urlencode(Auth::user()->pref_offer_description) }}&posttext={{ urlencode(Auth::user()->pref_closure_offer) }}&conditions={{ urlencode(Auth::user()->pref_extracondition_offer) }}&terms=1&contact_to={{ $project->client->contacts->first()->id }}&contact_from={{ Auth::user()->ownCompany->contacts->first()->id }}" class="btn btn-primary btn"><i class="fa fa-pencil-square-o"></i>Nieuwe Offerte</a>
     @endif
 
 </div>

@@ -17,26 +17,19 @@ namespace BynqIO\Dynq\ProjectManager\Component;
 
 use BynqIO\Dynq\ProjectManager\Contracts\Component;
 use BynqIO\Dynq\ProjectManager\Support\Ledger;
-use BynqIO\Dynq\Models\Detail;
-use BynqIO\Dynq\Models\PartType;
+use BynqIO\Dynq\Models\FavoriteActivity;
+
+use Auth;
 
 /**
- * Class MoreComponent.
+ * Class FavoriteComponent.
  */
-class MoreComponent extends BaseComponent implements Component
+class FavoriteComponent extends BaseComponent implements Component
 {
     public function calculateFilter($builder)
     {
-        return $builder->where('detail_id', Detail::where('detail_name','more')->firstOrFail()->id)
-                       ->where('part_type_id', PartType::where('type_name','calculation')->firstOrFail()->id)
-                       ->orderBy('priority');
-    }
-
-    public function summaryFilter($builder)
-    {
-        return $builder->where('detail_id', Detail::where('detail_name','more')->firstOrFail()->id)
-                       ->where('part_type_id', PartType::where('type_name','calculation')->firstOrFail()->id)
-                       ->orderBy('priority');
+        return FavoriteActivity::where('user_id', Auth::id())
+                          ->orderBy('created_at', 'desc');
     }
 
     public function render()
@@ -44,17 +37,14 @@ class MoreComponent extends BaseComponent implements Component
         $ledger = new Ledger($this, [
             'level.new'              => true,
 
-            'chapter'                => true,
+            // 'chapter'                => true,
             'chapter.options'        => true,
 
             /* Activity options */
             'activity.options'        => true,
-            'activity.move'           => true,
             'activity.changename'     => true,
+            'activity.note'           => true,
             'activity.remove'         => true,
-            'activity.timesheet'      => true,
-            'activity.convertsubcon'  => true,
-            'activity.converestimate' => false,
 
             /* Row options */
             'rows.labor'                 => true,
@@ -86,44 +76,27 @@ class MoreComponent extends BaseComponent implements Component
         ]);
 
         $ledger->levelFilter(function () {
-            return $this->project->chapters()->orderBy('priority')->get();
+            return [null];
+            // return $this->project->chapters()->orderBy('priority')->get();
         });
 
         $ledger->layer(function ($layer, $activity = null) {
             switch ($layer) {
                 case 'labor':
-                    return 'BynqIO\Dynq\Models\MoreLabor';
+                    return 'BynqIO\Dynq\Models\FavoriteLabor';
                 case 'material':
-                    return 'BynqIO\Dynq\Models\MoreMaterial';
+                    return 'BynqIO\Dynq\Models\FavoriteMaterial';
                 case 'other':
-                    return 'BynqIO\Dynq\Models\MoreEquipment';
+                    return 'BynqIO\Dynq\Models\FavoriteEquipment';
             }
         });
 
         $ledger->layerTotal(function ($activity) {
-            return 'BynqIO\Dynq\Calculus\MoreRegister';
+            return 'BynqIO\Dynq\Calculus\FavoriteRegister';
         });
 
         $ledger->profit(function ($layer, $activity) {
-            if ($activity->isSubcontracting()) {
-                switch ($layer) {
-                    case 'labor':
-                        return 0;
-                    case 'material':
-                        return $this->project->profit_more_subcontr_mat;
-                    case 'other':
-                        return $this->project->profit_more_subcontr_equip;
-                }
-            } else {
-                switch ($layer) {
-                    case 'labor':
-                        return 0;
-                    case 'material':
-                        return $this->project->profit_more_contr_mat;
-                    case 'other':
-                        return $this->project->profit_more_contr_equip;
-                }
-            }
+            return 0;
         });
 
         $ledger->calculateRow(function ($row, $profit = 0) use ($ledger) {
@@ -134,17 +107,6 @@ class MoreComponent extends BaseComponent implements Component
             $ledger->features(['rows.other' => true]);
         }
 
-        /* Disable all editable options for closed projects */
-        if ($this->project->project_close) {
-            $this->readOnly();
-        }
-
-        $tabs = [
-            ['name' => 'calculate', 'title' => 'Meerwerk',    'icon' => 'fa-list'],
-            ['name' => 'summary',   'title' => 'Uittrekstaat',  'icon' => 'fa-sort-amount-asc', 'async' => "summary/project-{$this->project->id}"],
-            ['name' => 'endresult', 'title' => 'Eindresultaat', 'icon' => 'fa-check-circle-o',  'async' => "endresult/project-{$this->project->id}"],
-        ];
-
-        return $this->tabLayout($tabs, $ledger->make());
+        return $this->blockLayout($ledger->data(['name' => 'calculate'])->make());
     }
 }

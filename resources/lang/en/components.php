@@ -20,7 +20,7 @@ return [
     | Core Language Lines
     |--------------------------------------------------------------------------
     |
-    | 
+    |
     |
     */
 
@@ -28,5 +28,18 @@ return [
     'calculate'         => 'Calculation',
     'quickinvoice'      => 'Quick Invoice',
     'directwork'        => 'Directwork',
+
+    // Components
+    'details'           => 'Overview',
+    'calculation'       => 'Calculation',
+    'quotations'        => 'Quotations',
+    'quotations/new'    => 'New Quotation',
+    'quotations/detail' => 'Quotation PDF',
+    'less'              => 'Less Work',
+    'more'              => 'More Work',
+    'favorite'          => 'Favorite activities',
+    'invoices'          => 'Invoices',
+    'invoices/detail'   => 'Concept Invoice',
+    'result'            => 'Result',
 
 ];

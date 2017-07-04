@@ -41,12 +41,17 @@ class CloseController extends Controller
         $relation = Relation::findOrFail($project->client_id);
         $relation_self = Relation::findOrFail($user->self_id);
 
+        $logo = null;
+        if ($relation_self->logo) {
+            $logo = Encryptor::base64($relation_self->logo->file_location);
+        }
+
         $data = [
+            'logo'     => $logo,
             'company'  => $relation_self->name(),
             'address'  => $relation_self->fullAddress(),
             'phone'    => $relation_self->phone_number,
             'email'    => $relation_self->email,
-            'pages'    => ['main'],
         ];
 
         $letter = [
@@ -73,11 +78,11 @@ class CloseController extends Controller
         $file = Encryptor::putAuto($user->ownCompany->encodedName(), 'pdf', $pdf->output());
 
         $resource = new Resource;
-        $resource->resource_name = 'invoice.pdf';
-        $resource->file_location = $file;
-        $resource->file_size = mb_strlen($pdf->output());
-        $resource->user_id = $user->id;
-        $resource->description = 'Factuurversie';
+        $resource->resource_name  = 'invoice.pdf';
+        $resource->file_location  = $file;
+        $resource->file_size      = mb_strlen($pdf->output());
+        $resource->user_id        = $user->id;
+        $resource->description    = 'Factuurversie';
 
         $resource->save();
 
@@ -102,8 +107,8 @@ class CloseController extends Controller
         }
 
         $invoice = Invoice::findOrFail($request->get('id'));
-        $invoice->to_contact_id = $request->get('contact_to');
-        $invoice->from_contact_id = $request->get('contact_from');
+        $invoice->to_contact_id    = $request->get('contact_to');
+        $invoice->from_contact_id  = $request->get('contact_from');
 
         // $invoice_version                 = InvoiceVersion::where('invoice_id', $invoice->id)->orderBy('created_at','desc')->first();
         // $invoice->include_tax            = $invoice_version->include_tax;
@@ -112,25 +117,25 @@ class CloseController extends Controller
         // $invoice->description            = $invoice_version->description;
         // $invoice->closure                = $invoice_version->closure;
 
-        if ($request->has('seperate-subcon')) {
+        if ($request->has('seperate_subcon')) {
             $invoice->seperate_subcon = true;
         } else {
             $invoice->seperate_subcon = false;
         }
 
-        if ($request->has('display-worktotals')) {
+        if ($request->has('display_worktotals')) {
             $invoice->display_worktotals = true;
         } else {
             $invoice->display_worktotals = false;
         }
 
-        if ($request->has('display-specification')) {
+        if ($request->has('display_specification')) {
             $invoice->display_specification = true;
         } else {
             $invoice->display_specification = false;
         }
 
-        if ($request->has('display-description')) {
+        if ($request->has('display_description')) {
             $invoice->display_description = true;
         } else {
             $invoice->display_description = false;

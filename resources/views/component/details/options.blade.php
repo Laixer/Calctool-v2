@@ -38,11 +38,11 @@ foreach(Chapter::where('project_id','=', $project->id)->get() as $chap) {
 
         $more_total += MoreLabor::where('activity_id','=', $activity->id)->count('id');
         $more_total += MoreMaterial::where('activity_id','=', $activity->id)->count('id');
-        $more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');	
+        $more_total += MoreEquipment::where('activity_id','=', $activity->id)->count('id');
 
         $less_total += CalculationLabor::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
         $less_total += CalculationMaterial::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
-        $less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');	
+        $less_total += CalculationEquipment::where('activity_id','=', $activity->id)->where('isless',true)->count('id');
     }
 }
 
@@ -97,7 +97,7 @@ $(document).ready(function() {
 
     @if ($type != 'directwork')
     <div class="row">
-        <div class="col-md-6">	
+        <div class="col-md-6">
             <div class="col-md-3">
                 <label for="type"><b>BTW verlegd</b></label>
                 <div class="form-group">
@@ -116,7 +116,7 @@ $(document).ready(function() {
             <div class="col-md-3">
                 <label for="type"><b>Meer-/Minderwerk</b></label>
                 <div class="form-group">
-                    <input name="use_more" type="checkbox" {{ $project->project_close ? 'disabled' : ($disable_more ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : ($project->use_less ? 'checked' : '') }}>
+                    <input name="use_more" type="checkbox" {{ $project->project_close ? 'disabled' : ($project->use_more ? 'disabled' : '') }} {{ $project->use_more ? 'checked' : ($project->use_less ? 'checked' : '') }}>
                 </div>
             </div>
             <div class="col-md-9" style="padding-top:30px;">

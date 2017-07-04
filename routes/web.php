@@ -94,7 +94,7 @@ Route::group(['middleware' => ['auth','payzone']], function() {
 
     /* Module Group Finance */
     Route::group(['namespace' => 'Finance'], function() {
-       Route::get('finance/overview', 'OverviewController@overview')->middleware('reqcompany');
+        Route::get('finance/overview', 'OverviewController@overview')->middleware('reqcompany');
     });
 
     /* Module Group Product */
@@ -173,29 +173,14 @@ Route::group(['middleware' => ['auth', 'payzone', 'reqcompany']], function() {
 
     /* Module Group Invoice */
     Route::group(['namespace' => 'Invoice'], function() {
-        // Route::post('invoice/updatecondition', 'InvoiceController@doUpdateCondition');
-        // Route::post('invoice/updatecode', 'InvoiceController@doUpdateCode');
         // Route::post('invoice/updatedesc', 'InvoiceController@doUpdateDescription');
         // Route::post('invoice/updateamount', 'InvoiceController@doUpdateAmount');
-        // // Route::get('invoice/project-{project_id}', 'Calculation\CalcController@getInvoiceAll');;
-        // Route::get('invoice/project-{project_id}/invoice-{invoice_id}', 'Calculation\CalcController@getInvoice');
-        // Route::get('invoice/project-{project_id}/term-invoice-{invoice_id}', 'Calculation\CalcController@getTermInvoice');
-        // Route::post('invoice/save', 'InvoiceController@doInvoiceVersionNew');
-        // Route::post('invoice/close', 'InvoiceController@doInvoiceClose');
-        // Route::post('invoice/pay', 'InvoiceController@doInvoicePay');
         // Route::post('invoice/creditinvoice', 'InvoiceController@doCreditInvoiceNew');
         // Route::post('invoice/invclose', 'InvoiceController@doInvoiceCloseAjax');
         // Route::post('invoice/term/add', 'InvoiceController@doInvoiceNewTerm');
         // Route::post('invoice/term/delete', 'InvoiceController@doInvoiceDeleteTerm');
         // Route::get('invoice/project-{project_id}/invoice-{offer_id}/mail-preview', 'InvoiceController@getSendOfferPreview');
         // Route::post('invoice/sendmail', 'InvoiceController@doSendOffer');
-        // Route::post('invoice/sendpost', 'InvoiceController@doSendPostOffer');
-        // Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}', 'Calculation\CalcController@getInvoicePDF');
-        // Route::get('invoice/pdf/project-{project_id}/invoice-{invoice_id}/download', 'Calculation\CalcController@getInvoiceDownloadPDF');
-        // Route::get('invoice/pdf/project-{project_id}/term-invoice-{invoice_id}/download', 'Calculation\CalcController@getTermInvoiceDownloadPDF');
-        // Route::get('invoice/project-{project_id}/history-invoice-{invoice_id}', function() {
-        //     return view('calc.invoice_version');
-        // });
 
         Route::get('invoice/new',    'NewTermController');
         Route::get('invoice/delete', 'DeleteTermController');
@@ -214,7 +199,6 @@ Route::group(['middleware' => ['auth', 'payzone', 'reqcompany']], function() {
     /* Module Group Calculation */
     Route::group(['namespace' => 'Calculation'], function() {
 
-        /* Routes by FavoriteController */
         // Route::post('favorite/newmaterial',                       'FavoriteController@doNewMaterial');
         // Route::post('favorite/newequipment',                      'FavoriteController@doNewEquipment');
         // Route::post('favorite/newlabor',                          'FavoriteController@doNewLabor');
@@ -227,6 +211,12 @@ Route::group(['middleware' => ['auth', 'payzone', 'reqcompany']], function() {
         // Route::post('favorite/deleteactivity',                    'FavoriteController@doDeleteActivity');
         // Route::post('favorite/noteactivity',                      'FavoriteController@doUpdateNote');
         // Route::post('favorite/rename_activity',                   'FavoriteController@doRenameActivity');
+
+        /* Routes by FavoriteController */
+        Route::post('favorite/new',                               'FavoriteController@new');
+        Route::post('favorite/update',                            'FavoriteController@update');
+        Route::post('favorite/delete',                            'FavoriteController@delete');
+
 
         /* Calculation actions */
         Route::post('calculation/new',                            'CalculationController@new');

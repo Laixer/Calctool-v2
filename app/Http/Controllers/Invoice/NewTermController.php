@@ -34,28 +34,29 @@ class NewTermController extends Controller
             return response()->json(['success' => 0]);
         }
 
-        $offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->first();
+        $offer_last = Offer::where('project_id',$project->id)->orderBy('created_at', 'desc')->firstOrFail();
+
         /* Copy last term */
         if (Invoice::where('offer_id', $offer_last->id)->where('isclose',false)->count() > 0) {
-            $invoice = Invoice::where('offer_id',$offer_last->id)->where('isclose',false)->orderBy('priority', 'desc')->first();
+            $invoice = Invoice::where('offer_id',$offer_last->id)->where('isclose',false)->orderBy('priority', 'desc')->firstOrFail();
             $ninvoice = new Invoice;
-            $ninvoice->payment_condition = $invoice->payment_condition;
-            $ninvoice->invoice_code = $invoice->invoice_code;
-            $ninvoice->priority = $invoice->priority + 1;
-            $ninvoice->offer_id = $invoice->offer_id;
-            $ninvoice->to_contact_id = $invoice->to_contact_id;
-            $ninvoice->from_contact_id = $invoice->from_contact_id;
+            $ninvoice->payment_condition  = $invoice->payment_condition;
+            $ninvoice->invoice_code       = $invoice->invoice_code;
+            $ninvoice->priority           = $invoice->priority + 1;
+            $ninvoice->offer_id           = $invoice->offer_id;
+            $ninvoice->to_contact_id      = $invoice->to_contact_id;
+            $ninvoice->from_contact_id    = $invoice->from_contact_id;
             $ninvoice->save();
         } else {
-            $invoice = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->first();
+            $invoice = Invoice::where('offer_id',$offer_last->id)->where('isclose',true)->firstOrFail();
 
             $ninvoice = new Invoice;
-            $ninvoice->payment_condition = $invoice->payment_condition;
-            $ninvoice->invoice_code = $invoice->invoice_code;
-            $ninvoice->priority = 0;
-            $ninvoice->offer_id = $invoice->offer_id;
-            $ninvoice->to_contact_id = $invoice->to_contact_id;
-            $ninvoice->from_contact_id = $invoice->from_contact_id;
+            $ninvoice->payment_condition  = $invoice->payment_condition;
+            $ninvoice->invoice_code       = $invoice->invoice_code;
+            $ninvoice->priority           = 0;
+            $ninvoice->offer_id           = $invoice->offer_id;
+            $ninvoice->to_contact_id      = $invoice->to_contact_id;
+            $ninvoice->from_contact_id    = $invoice->from_contact_id;
             $ninvoice->save();
         }
 

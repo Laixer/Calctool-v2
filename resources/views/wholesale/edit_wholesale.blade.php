@@ -102,7 +102,6 @@ $(document).ready(function() {
              <li>{{ $wholesale->company_name }}</li>
             </ol>
             <div>
-            <br>
 
             <h2><strong>Leverancier</strong> {{ $wholesale->company_name }}</h2>
 

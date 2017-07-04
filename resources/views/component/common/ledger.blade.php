@@ -371,43 +371,7 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-<div class="modal fade" id="myFavAct" tabindex="-1" role="dialog" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title" id="myModalLabel">Favoriete werkzaamheden</h4>
-            </div>
-
-            <div class="modal-body">
-
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Omschrijving</th>
-                                <th class="text-right">Aangemaakt</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (FavoriteActivity::where('user_id', Auth::id())->orderBy('created_at')->get() as $favact)
-                            <tr>
-                                <td><a class="favlink" href="#" data-id="{{ $favact->id }}">{{ $favact->activity_name }}</a></td>
-                                <td class="text-right">{{ $favact->created_at->toDateString() }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times">&nbsp;</i>Sluiten</button>
-            </div>
-
-        </div>
-    </div>
-</div> */ ?>
+ */ ?>
 {{-- /TODO: move into module --}}
 
 <div class="modal fade" id="asyncModal" tabindex="-1" role="dialog" aria-labelledby="asyncModal" aria-hidden="true">
@@ -417,14 +381,16 @@ $(document).ready(function() {
 </div>
 
 <div class="toogle">
-    @foreach ($project->chapters()->orderBy('priority')->get() as $chapter)
-    <div id="toggle-chapter-{{ $section }}-{{ $chapter->id }}" class="toggle toggle-{{ $section }} toggle-chapter">
-        <label>{{ $chapter->chapter_name }}</label>
+    @foreach ($level_filter() as $chapter)
+    @ifallowed ($features['chapter'])
+    <div id="toggle-chapter-{{ $section }}-{{ !$chapter ? null : $chapter->id }}" class="toggle toggle-{{ $section }} toggle-chapter">
+        <label>{{ !$chapter ? null : $chapter->chapter_name }}</label>
         <div class="toggle-content" style="padding: 5px 10px;">
+        @endifallowed
 
             {{-- Activity body --}}
             <div class="toogle">
-                @foreach ($filter($section, $chapter->activities())->get() as $activity)
+                @foreach ($filter($section, !$chapter ? null : $chapter->activities())->get() as $activity)
                 <div id="toggle-activity-{{ $section }}-{{ $activity->id }}" class="toggle toggle-{{ $section }} toggle-activity">
                     <label>
                         <span>{{ $activity->activity_name }}</span>
@@ -452,8 +418,13 @@ $(document).ready(function() {
                                         <li><a href="/inline/changename?id={{ $activity->id }}&level=2&name={{ urlencode($activity->activity_name) }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
                                         @endifallowed
 
+                                        @ifallowed ($features['activity.note'])
                                         <li><a href="/inline/description?id={{ $activity->id }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-file-text-o" style="padding-right:5px">&nbsp;</i>Omschrijving</a></li>
+                                        @endifallowed
+
+                                        @ifallowed ($features['activity.favorite'])
                                         <li><a href="/project/level/favorite?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau opslaan als favoriet?')"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
+                                        @endifallowed
 
                                         @if ((isset($features['activity.timesheet']) && $features['activity.timesheet'] === true)
                                             || (isset($features['activity.convertsubcon']) && $features['activity.convertsubcon'] === true)
@@ -571,7 +542,18 @@ $(document).ready(function() {
                                         @money($layer('labor', $activity)::where('activity_id', $activity->id)->first() ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()->getAmount() : 0, false)
                                         @endif
                                     </td>
-                                    <td class="col-md-1"><span class="total-row">@money($layer_total($activity)::laborTotal(Part::find($activity->part_id)->part_name=='subcontracting' ? $layer('labor', $activity)::where('activity_id', $activity->id)->first()['rate'] : $project->hour_rate, $layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount']))</span></td>
+                                    <td class="col-md-1">
+                                        <span class="total-row">
+                                        @money($layer_total($activity)::laborTotal(
+                                            $activity->isSubcontracting() ?
+                                                $layer('labor', $activity)::where('activity_id', $activity->id)->first()['rate']
+                                            :
+                                                $project->hour_rate, $layer('labor', $activity)::where('activity_id', $activity->id)->first()['amount']
+                                            )
+                                        )
+                                        </span>
+                                    </td>
+
                                     <td class="col-md-1"><span class="total-row-profit"></span>
                                     <td class="col-md-1 text-right">
                                         @ifallowed ($features['rows.labor.reset'])
@@ -925,7 +907,7 @@ $(document).ready(function() {
             </div>
             {{-- /Activity body --}}
 
-            {{-- Level:chapter options --}}
+            {{-- Chapter options --}}
             <form method="POST" action="/project/level/new" accept-charset="UTF-8">
                 {!! csrf_field() !!}
 
@@ -934,18 +916,18 @@ $(document).ready(function() {
                         @ifallowed ($features['level.new'])
                         <div class="input-group">
                             <input type="hidden" name="project" value="{{ $project->id }}">
-                            <input type="hidden" name="chapter" value="{{ $chapter->id }}">
+                            <input type="hidden" name="chapter" value="{{ !$chapter ? null : $chapter->id }}">
                             <input type="hidden" name="level" value="2">
                             <input type="hidden" name="type" value="{{ $section == 'estimate' ? 'estimate' : 'calculation' }}">
                             <input type="hidden" name="detail" value="{{ $component == 'more' ?: '' }}">
-                            <input type="text" maxlength="50" class="form-control" name="name" id="name" value="" placeholder="Nieuwe Werkzaamheid">
+                            <input type="text" maxlength="50" class="form-control" name="name" id="name" placeholder="@lang('core.new_activity')" required />
                             <div class="input-group-btn">
-                                <button class="btn btn-primary btn-primary-activity"><i class="fa fa-plus">&nbsp;&nbsp;</i> Voeg toe</button>
+                                <button class="btn btn-primary btn-primary-activity"><i class="fa fa-plus">&nbsp;&nbsp;</i>@lang('core.add')</button>
                                 <button type="button" class="btn btn-primary dropdown-toggle" style="padding-right: 8px;padding-left: 8px;" data-toggle="dropdown">
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#" class="lfavselect" data-id="{{ $chapter->id }}" data-toggle="modal" data-target="#myFavAct"><i class="fa fa-star-o">&nbsp;</i>Favoriet selecteren</a></li>
+                                    <li><a href="/inline/favorite?package=component.modal" data-toggle="modal" data-target="#asyncModal" data-id="{{ !$chapter ? null : $chapter->id }}" data-toggle="modal" data-target="#myFavAct"><i class="fa fa-star-o">&nbsp;</i>@lang('core.select_favorite')</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -953,29 +935,34 @@ $(document).ready(function() {
                     </div>
 
                     @ifallowed ($features['chapter.options'])
+                    @if ($chapter)
                     <div class="col-md-6 text-right">
                         <div class="btn-group" role="group">
-                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Onderdeel&nbsp;&nbsp;<span class="caret"></span></button>
+                            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('core.activity')&nbsp;&nbsp;<span class="caret"></span></button>
                             <ul class="dropdown-menu">
-                                <li><a href="/inline/changename?id={{ $chapter->id }}&level=1&name={{ urlencode($chapter->chapter_name) }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
-                                <li><a href="/project/level/move?id={{ $chapter->id }}&level=1&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up">&nbsp;</i>Verplaats omhoog</a></li>
-                                <li><a href="/project/level/move?id={{ $chapter->id }}&level=1&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down">&nbsp;</i>Verplaats omlaag</a></li>
-                                <li><a href="/project/level/delete?chapter={{ $chapter->id }}&level=1&csrf={{ csrf_token() }}" onclick="return confirm('Niveau verwijderen?')"><i class="fa fa-times">&nbsp;</i>Verwijderen</a></li>
+                                <li><a href="/inline/changename?id={{ $chapter->id }}&level=1&name={{ urlencode($chapter->chapter_name) }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>@lang('core.change_name')</a></a></li>
+                                <li><a href="/project/level/move?id={{ $chapter->id }}&level=1&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up">&nbsp;</i>@lang('core.move_up')</a></li>
+                                <li><a href="/project/level/move?id={{ $chapter->id }}&level=1&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down">&nbsp;</i>@lang('core.move_down')</a></li>
+                                <li><a href="/project/level/delete?chapter={{ $chapter->id }}&level=1&csrf={{ csrf_token() }}" onclick="return confirm('Niveau verwijderen?')"><i class="fa fa-times">&nbsp;</i>@lang('core.remove')</a></li>
                             </ul>
                         </div>
                     </div>
+                    @endif
                     @endifallowed
                 </div>
 
             </form>
             {{-- /Chapter options --}}
 
+            @ifallowed ($features['chapter'])
         </div>
     </div>
+    @endifallowed
     @endforeach
 </div>
 
 {{-- Project options --}}
+@ifallowed ($features['chapter'])
 <form method="POST" action="/project/level/new" accept-charset="UTF-8">
     {!! csrf_field() !!}
 
@@ -985,9 +972,9 @@ $(document).ready(function() {
             <div class="input-group">
                 <input type="hidden" name="project" value="{{ $project->id }}">
                 <input type="hidden" name="level" value="1">
-                <input type="text" maxlength="50" class="form-control" name="name" id="name" value="" placeholder="Nieuw onderdeel">
+                <input type="text" maxlength="50" class="form-control" name="name" id="name" placeholder="@lang('core.new_activity')" required />
                 <span class="input-group-btn">
-                    <button class="btn btn-primary btn-primary-chapter"><i class="fa fa-plus">&nbsp;&nbsp;</i> Voeg toe</button>
+                    <button class="btn btn-primary btn-primary-chapter"><i class="fa fa-plus">&nbsp;&nbsp;</i>@lang('core.add')</button>
                 </span>
             </div>
         </div>
@@ -1013,4 +1000,5 @@ $(document).ready(function() {
     @endif
 
 </form>
+@endifallowed
 {{-- /Project options --}}

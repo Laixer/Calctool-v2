@@ -54,7 +54,7 @@ class InvoiceReportComponent extends BaseComponent implements Component
         $letter = [
             'document'         => 'Factuur',
             'document_number'  => $invoice->invoice_code,
-            'document_date'    => Carbon::now(),
+            'document_date'    => Carbon::parse($this->request->get('date')),
             'project'          => $this->project,
             'relation'         => $relation,
             'relation_self'    => $relation_self,
@@ -67,24 +67,21 @@ class InvoiceReportComponent extends BaseComponent implements Component
             'messages'         => ["Gaarne bij betaling factuurnummer vermelden."],
         ];
 
-        $terms       = $this->request->get('terms');
         $amount      = $this->request->get('amount');
-        $deliver     = $this->request->get('deliver');
-        $valid       = $this->request->get('valid');
+        $condition   = $this->request->get('condition');
         $conditions  = $this->request->get('conditions');
 
         /* Delivery options */
-        if ($deliver == 1 || $deliver == 2) {
-            $letter['messages'][] = "De werkzaamheden starten na uw opdrachtbevestiging.";
-        } else if (isset($deliver)) {
-            $name = DeliverTime::findOrFail($deliver)->delivertime_name;
-            $letter['messages'][] = "De werkzaamheden starten binnen $name.";
-        }
+        // if ($deliver == 1 || $deliver == 2) {
+        //     $letter['messages'][] = "De werkzaamheden starten na uw opdrachtbevestiging.";
+        // } else if (isset($deliver)) {
+        //     $name = DeliverTime::findOrFail($deliver)->delivertime_name;
+        //     $letter['messages'][] = "De werkzaamheden starten binnen $name.";
+        // }
 
         /* Valid options */
-        if (isset($valid)) {
-            $name = Valid::findOrFail($valid)->valid_name;
-            $letter['messages'][] = "Deze offerte is geldig tot $name na dagtekening.";
+        if (isset($condition)) {
+            $letter['messages'][] = "Deze factuur dient betaald te worden binnen $condition dag(en) na dagtekening.";
         }
 
         /* Extra conditions */
@@ -98,8 +95,13 @@ class InvoiceReportComponent extends BaseComponent implements Component
             $data['separate_subcon'] = true;
         }
 
+        if ($invoice->isclose) {
+            $data['pages'][] = 'total';
+        } else {
+            $data['pages'][] = 'term';
+        }
+
         /* Additional pages */
-        $data['pages'][] = 'total';
         if ($this->request->has('display_specification')) {
             $data['pages'][] = 'specification';
         }
@@ -109,8 +111,6 @@ class InvoiceReportComponent extends BaseComponent implements Component
         if ($this->request->has('display_description')) {
             $data['pages'][] = 'description';
         }
-
-        // $data['pages'][] = 'appendix';
 
         $pdf = PDF::loadView('letter', array_merge($data, $letter));
         $pdf->setOption('footer-font-size', 8);

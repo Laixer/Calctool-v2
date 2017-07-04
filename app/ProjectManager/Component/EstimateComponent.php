@@ -44,6 +44,7 @@ class EstimateComponent extends BaseComponent implements Component
             'activity.options'       => true,
             'activity.timesheet'     => true,
 
+            'chapter'                => true,
             'chapter.options'        => false,
             'chapter.move'           => false,
             'chapter.changename'     => false,
@@ -75,6 +76,10 @@ class EstimateComponent extends BaseComponent implements Component
 
             'tax.update'             => false,
         ]);
+
+        $ledger->levelFilter(function () {
+            return $this->project->chapters()->orderBy('priority')->get();
+        });
 
         $ledger->layer(function ($layer, $activity) {
             switch ($layer) {

@@ -20,7 +20,7 @@ return [
     | Core Language Lines
     |--------------------------------------------------------------------------
     |
-    | 
+    |
     |
     */
 
@@ -28,5 +28,8 @@ return [
     'calculate'         => 'Calculatie',
     'quickinvoice'      => 'Snelle Factuur',
     'directwork'        => 'Regiewerk',
+
+    // Components
+    'details'           => 'Overzicht',
 
 ];

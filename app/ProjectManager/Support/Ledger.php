@@ -26,6 +26,7 @@ class Ledger
      */
     protected $features = [];
     protected $original = true;
+    protected $levelFilter;
     protected $filter;
     protected $layer;
     protected $layerTotal;
@@ -99,6 +100,13 @@ class Ledger
         return $this;
     }
 
+    public function levelFilter(Closure $func)
+    {
+        $this->levelFilter = $func;
+
+        return $this;
+    }
+
     public function layer(Closure $func)
     {
         $this->layer = $func;
@@ -153,6 +161,10 @@ class Ledger
             'features' => $this->features,
             'original' => $this->original,
         ];
+
+        if (isset($this->levelFilter)) {
+            $data['level_filter'] = $this->levelFilter;
+        }
 
         if (isset($this->filter)) {
             $data['filter'] = $this->filter;

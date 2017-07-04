@@ -41,12 +41,12 @@ class ProjectReportComponent extends BaseComponent implements Component
         }
 
         $data = [
-            'logo'     => $logo,
-            'company'  => $relation_self->name(),
-            'address'  => $relation_self->fullAddress(),
-            'phone'    => $relation_self->phone_number,
-            'email'    => $relation_self->email,
-            'pages'    => ['overview_contracting','overview_subcontracting'],
+            'logo'      => $logo,
+            'company'   => $relation_self->name(),
+            'address'   => $relation_self->fullAddress(),
+            'phone'     => $relation_self->phone_number,
+            'email'     => $relation_self->email,
+            'pages'     => ['overview_contracting','overview_subcontracting'],
             'landscape' => true,
         ];
 

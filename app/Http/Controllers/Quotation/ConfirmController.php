@@ -54,7 +54,7 @@ class ConfirmController extends Controller
         }
 
         $offer = Offer::where('project_id', $project->id)->orderBy('created_at', 'desc')->firstOrFail();
-        $offer->offer_finish     = date('Y-m-d', strtotime($request->get('date')));
+        $offer->offer_finish = Carbon::parse($request->get('date'));
         $offer->save();
 
         for ($i = 0; $i < $offer->invoice_quantity; ++$i) {
@@ -65,12 +65,15 @@ class ConfirmController extends Controller
             $invoice->offer_id          = $offer->id;
             $invoice->to_contact_id     = $offer->to_contact_id;
             $invoice->from_contact_id   = $offer->from_contact_id;
+            $invoice->amount            = $offer->offer_total;
 
+            /* Last invoice is endinvoice */
             if (($i + 1) == $offer->invoice_quantity) {
                 $invoice->isclose = true;
                 $invoice->priority = 100;
             }
 
+            /* If there is a downpayment set, calculate the tax differences */
             if ($i == 0 && $offer->downpayment) {
                 $invoice->amount = $offer->downpayment_amount;
                 $invoice->rest_21 = InvoiceTerm::partTax1($project, $invoice) * $offer->downpayment_amount;

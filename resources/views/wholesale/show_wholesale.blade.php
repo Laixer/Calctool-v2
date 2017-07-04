@@ -40,12 +40,10 @@ if (!$wholesale || $wholesale->user_id) {
 			<div>
 			<ol class="breadcrumb">
 			  <li><a href="/">Dashboard</a></li>
-			  <li><a href="/purchase">Inkoopfacturen</a></li>
 			  <li><a href="/wholesale">Leveranciers</a></li>
 			 <li>{{ $wholesale->company_name }}</li>
 			</ol>
 			<div>
-			<br>
 
 			<h2><strong>Leverancier</strong> {{ $wholesale->company_name }}</h2>
 

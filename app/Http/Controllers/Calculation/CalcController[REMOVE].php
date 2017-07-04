@@ -15,7 +15,7 @@
 
 namespace BynqIO\Dynq\Http\Controllers\Calculation;
 
-use \Illuminate\Http\Request;
+use Illuminate\Http\Request;
 use BynqIO\Dynq\Models\Project;
 use BynqIO\Dynq\Models\Chapter;
 use BynqIO\Dynq\Models\Part;
@@ -247,7 +247,7 @@ class CalcController extends Controller {
 
             $calc_labor->save();
         }
-        
+
         foreach (CalculationMaterial::where('activity_id', $activity->id)->get() as $orig_calc_material) {
             $calc_material = new FavoriteMaterial;
             $calc_material->material_name = $orig_calc_material->material_name;
@@ -314,7 +314,7 @@ class CalcController extends Controller {
 
             $calc_labor->save();
         }
-        
+
         foreach (EstimateMaterial::where('activity_id', $activity->id)->get() as $orig_calc_material) {
             $calc_material = new FavoriteMaterial;
             $calc_material->material_name = $orig_calc_material->material_name;

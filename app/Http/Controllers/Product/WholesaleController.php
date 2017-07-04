@@ -33,22 +33,22 @@ class WholesaleController extends Controller {
 
     public function getAll(Request $request)
     {
-        return view('user.wholesale');
+        return view('wholesale.wholesale');
     }
 
     public function getNew(Request $request)
     {
-        return view('user.new_wholesale');
+        return view('wholesale.new_wholesale');
     }
 
     public function getEdit(Request $request)
     {
-        return view('user.edit_wholesale');
+        return view('wholesale.edit_wholesale');
     }
 
     public function getShow(Request $request)
     {
-        return view('user.show_wholesale');
+        return view('wholesale.show_wholesale');
     }
 
     public function doUpdateIban(Request $request)

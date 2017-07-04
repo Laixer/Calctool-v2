@@ -49,6 +49,7 @@ class LessComponent extends BaseComponent implements Component
             'activity.convertsubcon' => false,
             'activity.timesheet'     => false,
 
+            'chapter'                => true,
             'chapter.options'        => false,
             'chapter.move'           => false,
             'chapter.changename'     => false,
@@ -71,6 +72,10 @@ class LessComponent extends BaseComponent implements Component
 
             'tax.update' => false,
         ]);
+
+        $ledger->levelFilter(function () {
+            return $this->project->chapters()->orderBy('priority')->get();
+        });
 
         $ledger->layer(function ($layer, $activity = null) {
             switch ($layer) {

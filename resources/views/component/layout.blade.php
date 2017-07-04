@@ -10,7 +10,7 @@
 
         @yield('component_buttons')
 
-        <h2><strong>{{ ucfirst($title) }}</strong></h2>
+        <h2><strong>{{ __("components.$title") }}</strong></h2>
 
         @yield('component_content')
 

@@ -62,8 +62,8 @@ $(document).ready(function() {
 <form action="" method="get" class="white-row">
     <input type="hidden" name="ts" value="{{ time() }}">
     <input type="hidden" name="conditions" value="{{ Input::has('conditions') ? Input::get('conditions') : '' }}"/>
-    <input type="hidden" name="pretext" value="{{ Input::has('pretext') ? Input::get('pretext') : 'Bij deze doe ik u toekomen mijn prijsopgaaf betreffende het uit te voeren werk. Onderstaand zal ik het werk en de uit te voeren werkzaamheden specificeren zoals afgesproken.' }}"/>
-    <input type="hidden" name="posttext" value="{{ Input::has('posttext') ? Input::get('posttext') : 'Hopende u hiermee een passende aanbieding gedaan te hebben, zie ik uw reactie met genoegen tegemoet.' }}"/>
+    <input type="hidden" name="pretext" value="{{ Input::has('pretext') ? Input::get('pretext') : '' }}"/>
+    <input type="hidden" name="posttext" value="{{ Input::has('posttext') ? Input::get('posttext') : '' }}"/>
 
     <h3 class="page-header nomargin-top">Instellingen</h3>
 

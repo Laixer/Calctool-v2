@@ -27,9 +27,15 @@
     </div>
     {{-- /Modal body --}}
 
+    @isset($button_close)
+    <div class="modal-footer">
+        <button class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times">&nbsp;</i>Sluiten</button>
+    </div>
+    @else
     <div class="modal-footer">
         <button class="btn btn-primary" {{ isset($button_id) ? 'id=' . $button_id : '' }}><i class="fa fa-check"></i> Opslaan</button>
     </div>
+    @endisset
 
     @isset($form)
 </form>

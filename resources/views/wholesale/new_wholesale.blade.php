@@ -107,12 +107,10 @@ $(document).ready(function() {
             <div>
                 <ol class="breadcrumb">
                   <li><a href="/">Dashboard</a></li>
-                  <li><a href="/purchase">Inkoopfacturen</a></li>
                   <li><a href="/wholesale">Leveranciers</a></li>
                   <li>Nieuwe Leverancier</li>
                 </ol>
             <div>
-            <br>
 
             @if (Session::has('success'))
             <div class="alert alert-success">

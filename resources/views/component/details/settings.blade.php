@@ -50,16 +50,16 @@ use BynqIO\Dynq\Models\RelationKind;
         <div class="col-md-3">
             <div class="form-group">
                 <label for="contractor">Opdrachtgever <a style="text-decoration:none;cursor:default;">*</a></label>
-                @if (!Relation::find($project->client_id)->isActive())
+                @if (!$project->client->isActive())
                 <select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
-                    @foreach (Relation::where('user_id','=', Auth::id())->get() as $relation)
-                    <option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
+                    @foreach (Auth::user()->relations as $relation)
+                    <option {{ $project->client_id == $relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
                     @endforeach
                 </select>
                 @else
                 <select name="contractor" id="contractor" {{ $project->project_close ? 'disabled' : '' }} class="form-control pointer">
-                    @foreach (Relation::where('user_id','=', Auth::id())->where('active',true)->get() as $relation)
-                    <option {{ $project->client_id==$relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
+                    @foreach (Auth::user()->relations()->where('active',true)->get() as $relation)
+                    <option {{ $project->client_id == $relation->id ? 'selected' : '' }} value="{{ $relation->id }}">{{ RelationKind::find($relation->kind_id)->kind_name == 'zakelijk' ? ucwords($relation->company_name) : (Contact::where('relation_id','=',$relation->id)->first()['firstname'].' '.Contact::where('relation_id','=',$relation->id)->first()['lastname']) }}</option>
                     @endforeach
                 </select>
                 @endif

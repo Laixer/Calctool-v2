@@ -392,7 +392,26 @@ $(document).ready(function() {
         {!! csrf_field() !!}
         <input name="type" type="hidden" value="{{ Input::get('type') }}" />
 
-        <div class="col-md-8 nopadding">
+        <div class="col-md-4 nopadding">
+            <div class="white-row">
+
+                <h3 class="page-header nomargin-top">{{ $type_name }} Opties</h3>
+
+                <div class="row">
+                    <div class="form-group">
+
+                        <div class="col-sm-offset-0 col-sm-12">
+                            <div class="checkbox">
+                                <input name="tax_reverse" type="checkbox" {{ Input::has('separate_subcon') ? 'checked' : '' }}><span style="margin-left:10px;">BTW verlegd</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-8">
             <div class="white-row">
 
                 <h4>Projectgegevens</h4>
@@ -478,25 +497,6 @@ $(document).ready(function() {
                     </div>
                 </div>
 
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="white-row">
-
-                <h3 class="page-header nomargin-top">{{ $type_name }} Opties</h3>
-
-                <div class="row">
-                    <div class="form-group">
-
-                        <div class="col-sm-offset-0 col-sm-12">
-                            <div class="checkbox">
-                                <input name="tax_reverse" type="checkbox" {{ Input::has('separate_subcon') ? 'checked' : '' }}><span style="margin-left:10px;">BTW verlegd</span>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
             </div>
         </div>
 

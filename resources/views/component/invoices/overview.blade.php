@@ -29,13 +29,14 @@
         <?php $i = 0; ?>
         @foreach ($offer->invoices()->orderBy('priority')->orderBy('created_at')->get() as $invoice)
         <?php $i++; ?>
-        <tr>
-            <td class="col-md-2"><a href="/project/{{ $project->id }}-{{ $project->slug() }}/invoices/detail?id={{ $invoice->id }}">{{ $invoice->name($i) }}</a></td>
+        <tr style="height:33px;">
+            <td class="col-md-2"><a href="/project/{{ $project->id }}-{{ $project->slug() }}/invoices/detail?id={{ $invoice->id }}&ts={{ time() }}&pretext={{ urlencode(Auth::user()->pref_invoice_description) }}&posttext={{ urlencode(Auth::user()->pref_invoice_closure) }}&contact_to={{ $invoice->to_contact_id }}&contact_from={{ $invoice->from_contact_id }}&condition={{ $invoice->payment_condition }}">{{ $invoice->name($i) }}</a></td>
             <td class="col-md-3">@money($invoice->amount)</td>
             <td class="col-md-3">{{ $invoice->invoice_code }}</td>
             <td class="col-md-2">{{ $invoice->status() }}</td>
             <td class="col-md-2 text-right">
 
+                @if (!$invoice->invoice_close && !$invoice->isclose)
                 <div class="btn-group" role="group">
                     <button type="button" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Opties <span class="caret"></span></button>
                     <ul class="dropdown-menu">
@@ -52,16 +53,13 @@
                         <li><a href="javascript:void(0);" data-invoice="{{ $invoice->id }}" data-project="{{ $project->id }}" class="docredit">Creditfactuur</a></li>
                         @endif
 
-                        @else
-
-                        @if (!$invoice->isclose)
+                        @elseif (!$invoice->isclose)
                         <li><a href="/invoice/delete?id={{ $invoice->id }}&csrf={{ csrf_token() }}">Verwijderen</a></li>
-                        @endif
-
                         @endif
 
                     </ul>
                 </div>
+                @endif
 
             </td>
         </tr>
