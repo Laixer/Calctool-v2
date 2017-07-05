@@ -344,10 +344,22 @@ class CalculationController extends Controller
 
     protected function deleteMaterialRow($activity, Array $parameters)
     {
+        $project = $activity->chapter->project;
+
         if ($activity->isEstimate()) {
             EstimateMaterial::findOrFail($parameters['id'])->delete();
+
+            return [
+                'total'            => EstimateRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+                'total_profit'     => EstimateRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
+            ];
         } else {
             CalculationMaterial::findOrFail($parameters['id'])->delete();
+
+            return [
+                'total'            => CalculationRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+                'total_profit'     => CalculationRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
+            ];
         }
     }
 
@@ -355,8 +367,18 @@ class CalculationController extends Controller
     {
         if ($activity->isEstimate()) {
             EstimateEquipment::findOrFail($parameters['id'])->delete();
+
+            return [
+                'total'            => EstimateRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+                'total_profit'     => EstimateRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
+            ];
         } else {
             CalculationEquipment::findOrFail($parameters['id'])->delete();
+
+            return [
+                'total'            => CalculationRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+                'total_profit'     => CalculationRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
+            ];
         }
     }
 
@@ -368,18 +390,20 @@ class CalculationController extends Controller
             'layer'     => ['required'],
         ]);
 
+        $object = null;
+
         $activity = Activity::findOrFail($request->get('activity'));
 
         switch ($request->get('layer')) {
             case 'material':
-                $id = $this->deleteMaterialRow($activity, $request->all());
+                $object = $this->deleteMaterialRow($activity, $request->all());
                 break;
             case 'other':
-                $id = $this->deleteOtherRow($activity, $request->all());
+                $object = $this->deleteOtherRow($activity, $request->all());
                 break;
         }
 
-        return response()->json(['success' => 1]);
+        return response()->json(array_merge(['success' => true], $object));
     }
 
     //TODO; placed here fow now

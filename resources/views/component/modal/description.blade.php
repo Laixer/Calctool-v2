@@ -1,6 +1,6 @@
 @inject('activity', 'BynqIO\Dynq\Models\Activity')
 
-@extends('component.modal', ['form' => '/project/level/description'])
+@extends('component.modal', ['form' => "$level_endpoint/description"])
 
 @section('modal_name', 'Omschrijving aanpassen')
 

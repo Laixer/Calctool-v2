@@ -315,17 +315,31 @@ class MoreController extends Controller
         return response()->json(array_merge(['success' => true], $object));
     }
 
-    protected function deleteMaterialRow(Array $parameters)
+    protected function deleteMaterialRow($activity, Array $parameters)
     {
-        $row = MoreMaterial::findOrFail($parameters['id'])->delete();
+        $project = $activity->chapter->project;
+
+        MoreMaterial::findOrFail($parameters['id'])->delete();
+
+        return [
+            'total'            => MoreRegister::materialTotal($activity->id, $this->profit('material', $activity, $project)),
+            'total_profit'     => MoreRegister::materialTotalProfit($activity->id, $this->profit('material', $activity, $project)),
+        ];
     }
 
-    protected function deleteOtherRow(Array $parameters)
+    protected function deleteOtherRow($activity, Array $parameters)
     {
-        $row = MoreEquipment::findOrFail($parameters['id'])->delete();
+        $project = $activity->chapter->project;
+
+        MoreEquipment::findOrFail($parameters['id'])->delete();
+
+        return [
+            'total'            => MoreRegister::equipmentTotal($activity->id, $this->profit('other', $activity, $project)),
+            'total_profit'     => MoreRegister::equipmentTotalProfit($activity->id, $this->profit('other', $activity, $project)),
+        ];
     }
 
-    protected function deleteTimesheetRow(Array $parameters)
+    protected function deleteTimesheetRow($activity, Array $parameters)
     {
         $row = MoreLabor::findOrFail($parameters['id']);
         $timesheet = Timesheet::findOrFail($row->hour_id);
@@ -341,19 +355,23 @@ class MoreController extends Controller
             'layer'     => ['required'],
         ]);
 
+        $object = null;
+
+        $activity = Activity::findOrFail($request->get('activity'));
+
         switch ($request->get('layer')) {
             case 'material':
-                $id = $this->deleteMaterialRow($request->all());
+                $object = $this->deleteMaterialRow($activity, $request->all());
                 break;
             case 'other':
-                $id = $this->deleteOtherRow($request->all());
+                $object = $this->deleteOtherRow($activity, $request->all());
                 break;
             case 'timesheet':
-                $id = $this->deleteTimesheetRow($request->all());
+                $object = $this->deleteTimesheetRow($activity, $request->all());
                 break;
         }
 
-        return response()->json(['success' => 1]);
+        return response()->json(array_merge(['success' => true], $object));
     }
 
     //TODO; placed here fow now

@@ -145,7 +145,12 @@ $(document).ready(function() {
             layer:     $row.closest("table").attr("data-layer"),
             activity:  $row.closest("table").attr("data-id"),
             project:   {{ $project->id }},
-        }, function(data) { if (data.success) { $row.remove() } });
+        }, function(data) {
+            if (data.success) {
+                update_callback($row, data);
+                $row.remove();
+            }
+        });
     }
 
     function reset_row() {
@@ -203,34 +208,16 @@ $(document).ready(function() {
             layer:     $tr.closest("table").attr("data-layer"),
             activity:  $tr.closest("table").attr("data-id"),
             project:   {{ $project->id }},
-        }, function(data) { if (data.success) { save_callback($tr, data); } });
+        }, function(data) { if (data.success) { update_callback($tr, data); } });
     }
 
     /* Update row and total amounts */
-    function save_callback($tr, data) {
-        if (data.success) {
-            $tr.attr("data-id", data.id);
-
-            if (data.amount) {
-                $tr.find(".total-row").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.amount));
-            }
-
-            if (data.amount_incl) {
-                $tr.find(".total-row-profit").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.amount_incl));
-            }
-
-            if (data.total) {
-                $tr.closest("table").find(".subtotal").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.total));
-            }
-
-            if (data.total) {
-                $tr.closest("table").find(".subtotal").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.total));
-            }
-
-            if (data.total_profit) {
-                $tr.closest("table").find(".subtotal_profit").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.total_profit));
-            }
-        }
+    function update_callback($tr, data) {
+        if (data.id) { $tr.attr("data-id", data.id); }
+        if (data.amount) { $tr.find(".total-row").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.amount)); }
+        if (data.amount_incl) { $tr.find(".total-row-profit").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.amount_incl)); }
+        if (data.total) { $tr.closest("table").find(".subtotal").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.total)); }
+        if (data.total_profit) { $tr.closest("table").find(".subtotal_profit").html('{{ LOCALE_CURRENCY }} ' + convertNumber(data.total_profit)); }
     }
 
     /* Remove contents from modal on close */
@@ -415,15 +402,15 @@ $(document).ready(function() {
                                     <button type="button" class="btn btn-default dropdown-toggle btn-xs" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-pencil">&nbsp;&nbsp;</i>Werkzaamheid&nbsp;&nbsp;<span class="caret"></span></button>
                                     <ul class="dropdown-menu">
                                         @ifallowed ($features['activity.changename'])
-                                        <li><a href="/inline/changename?id={{ $activity->id }}&level=2&name={{ urlencode($activity->activity_name) }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
+                                        <li><a href="/inline/changename?id={{ $activity->id }}&level=2&name={{ urlencode($activity->activity_name) }}&level_endpoint={{ urlencode($level_endpoint) }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>Naam wijzigen</a></a></li>
                                         @endifallowed
 
                                         @ifallowed ($features['activity.note'])
-                                        <li><a href="/inline/description?id={{ $activity->id }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-file-text-o" style="padding-right:5px">&nbsp;</i>Omschrijving</a></li>
+                                        <li><a href="/inline/description?id={{ $activity->id }}&level_endpoint={{ urlencode($level_endpoint) }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-file-text-o" style="padding-right:5px">&nbsp;</i>Omschrijving</a></li>
                                         @endifallowed
 
                                         @ifallowed ($features['activity.favorite'])
-                                        <li><a href="/project/level/favorite?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau opslaan als favoriet?')"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
+                                        <li><a href="{{ $level_endpoint }}/favorite?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau opslaan als favoriet?')"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
                                         @endifallowed
 
                                         @if ((isset($features['activity.timesheet']) && $features['activity.timesheet'] === true)
@@ -434,25 +421,25 @@ $(document).ready(function() {
 
                                         @ifallowed ($features['activity.timesheet'])
                                         @if ($activity->use_timesheet)
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=disable_timesheet&csrf={{ csrf_token() }}"><i class="fa fa-hourglass-end">&nbsp;&nbsp;</i>Gebruik Arbeid</a></li>
+                                        <li><a href="{{ $level_endpoint }}/option?activity={{ $activity->id }}&action=disable_timesheet&csrf={{ csrf_token() }}"><i class="fa fa-hourglass-end">&nbsp;&nbsp;</i>Gebruik Arbeid</a></li>
                                         @else
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=enable_timesheet&csrf={{ csrf_token() }}"><i class="fa fa-clock-o">&nbsp;&nbsp;</i>Gebruik Urenregistratie</a></li>
+                                        <li><a href="{{ $level_endpoint }}/option?activity={{ $activity->id }}&action=enable_timesheet&csrf={{ csrf_token() }}"><i class="fa fa-clock-o">&nbsp;&nbsp;</i>Gebruik Urenregistratie</a></li>
                                         @endif
                                         @endifallowed
 
                                         @ifallowed ($features['activity.convertsubcon'])
                                         @if ($activity->isSubcontracting())
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_contracting&csrf={{ csrf_token() }}"><i class="fa fa-outdent">&nbsp;&nbsp;</i>Maak Aanneming</a></li>
+                                        <li><a href="{{ $level_endpoint }}/option?activity={{ $activity->id }}&action=convert_contracting&csrf={{ csrf_token() }}"><i class="fa fa-outdent">&nbsp;&nbsp;</i>Maak Aanneming</a></li>
                                         @else
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_subcontracting&csrf={{ csrf_token() }}"><i class="fa fa-indent">&nbsp;&nbsp;</i>Maak Onderaanneming</a></li>
+                                        <li><a href="{{ $level_endpoint }}/option?activity={{ $activity->id }}&action=convert_subcontracting&csrf={{ csrf_token() }}"><i class="fa fa-indent">&nbsp;&nbsp;</i>Maak Onderaanneming</a></li>
                                         @endif
                                         @endifallowed
 
                                         @ifallowed ($features['activity.converestimate'])
                                         @if ($activity->isEstimate())
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_calculation&csrf={{ csrf_token() }}"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak Calculatie</a></li>
+                                        <li><a href="{{ $level_endpoint }}/option?activity={{ $activity->id }}&action=convert_calculation&csrf={{ csrf_token() }}"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak Calculatie</a></li>
                                         @else
-                                        <li><a href="/project/level/option?activity={{ $activity->id }}&action=convert_estimate&csrf={{ csrf_token() }}"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak Stelpost</a></li>
+                                        <li><a href="{{ $level_endpoint }}/option?activity={{ $activity->id }}&action=convert_estimate&csrf={{ csrf_token() }}"><i class="fa fa-retweet">&nbsp;&nbsp;</i>Maak Stelpost</a></li>
                                         @endif
                                         @endifallowed
 
@@ -462,12 +449,12 @@ $(document).ready(function() {
                                         @endifallowed
 
                                         @ifallowed ($features['activity.move'])
-                                        <li><a href="/project/level/move?id={{ $activity->id }}&level=2&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up" style="padding-right:5px">&nbsp;</i>Verplaats omhoog</a></li>
-                                        <li><a href="/project/level/move?id={{ $activity->id }}&level=2&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down" style="padding-right:5px">&nbsp;</i>Verplaats omlaag</a></li>
+                                        <li><a href="{{ $level_endpoint }}/move?id={{ $activity->id }}&level=2&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up" style="padding-right:5px">&nbsp;</i>Verplaats omhoog</a></li>
+                                        <li><a href="{{ $level_endpoint }}/move?id={{ $activity->id }}&level=2&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down" style="padding-right:5px">&nbsp;</i>Verplaats omlaag</a></li>
                                         @endifallowed
 
                                         @ifallowed ($features['activity.remove'])
-                                        <li><a href="/project/level/delete?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau verwijderen?')"><i class="fa fa-times" style="padding-right:5px">&nbsp;</i>Verwijderen</a></li>
+                                        <li><a href="{{ $level_endpoint }}/delete?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau verwijderen?')"><i class="fa fa-times" style="padding-right:5px">&nbsp;</i>Verwijderen</a></li>
                                         @endifallowed
                                     </ul>
                                 </div>
@@ -908,7 +895,7 @@ $(document).ready(function() {
             {{-- /Activity body --}}
 
             {{-- Chapter options --}}
-            <form method="POST" action="/project/level/new" accept-charset="UTF-8">
+            <form method="POST" action="{{ $level_endpoint }}/new" accept-charset="UTF-8">
                 {!! csrf_field() !!}
 
                 <div class="row">
@@ -941,9 +928,9 @@ $(document).ready(function() {
                             <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@lang('core.activity')&nbsp;&nbsp;<span class="caret"></span></button>
                             <ul class="dropdown-menu">
                                 <li><a href="/inline/changename?id={{ $chapter->id }}&level=1&name={{ urlencode($chapter->chapter_name) }}&package=component.modal" data-toggle="modal" data-target="#asyncModal"><i class="fa fa-pencil-square-o">&nbsp;</i>@lang('core.change_name')</a></a></li>
-                                <li><a href="/project/level/move?id={{ $chapter->id }}&level=1&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up">&nbsp;</i>@lang('core.move_up')</a></li>
-                                <li><a href="/project/level/move?id={{ $chapter->id }}&level=1&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down">&nbsp;</i>@lang('core.move_down')</a></li>
-                                <li><a href="/project/level/delete?chapter={{ $chapter->id }}&level=1&csrf={{ csrf_token() }}" onclick="return confirm('Niveau verwijderen?')"><i class="fa fa-times">&nbsp;</i>@lang('core.remove')</a></li>
+                                <li><a href="{{ $level_endpoint }}/move?id={{ $chapter->id }}&level=1&direction=up&csrf={{ csrf_token() }}"><i class="fa fa-arrow-up">&nbsp;</i>@lang('core.move_up')</a></li>
+                                <li><a href="{{ $level_endpoint }}/move?id={{ $chapter->id }}&level=1&direction=down&csrf={{ csrf_token() }}"><i class="fa fa-arrow-down">&nbsp;</i>@lang('core.move_down')</a></li>
+                                <li><a href="{{ $level_endpoint }}/delete?chapter={{ $chapter->id }}&level=1&csrf={{ csrf_token() }}" onclick="return confirm('Niveau verwijderen?')"><i class="fa fa-times">&nbsp;</i>@lang('core.remove')</a></li>
                             </ul>
                         </div>
                     </div>
@@ -963,7 +950,7 @@ $(document).ready(function() {
 
 {{-- Project options --}}
 @ifallowed ($features['chapter'])
-<form method="POST" action="/project/level/new" accept-charset="UTF-8">
+<form method="POST" action="{{ $level_endpoint }}/new" accept-charset="UTF-8">
     {!! csrf_field() !!}
 
     @ifallowed ($features['level.new'])

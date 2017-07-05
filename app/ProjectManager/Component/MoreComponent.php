@@ -51,6 +51,8 @@ class MoreComponent extends BaseComponent implements Component
             'activity.options'        => true,
             'activity.move'           => true,
             'activity.changename'     => true,
+            'activity.note'           => true,
+            'activity.favorite'       => true,
             'activity.remove'         => true,
             'activity.timesheet'      => true,
             'activity.convertsubcon'  => true,

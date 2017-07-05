@@ -23,11 +23,12 @@ use BynqIO\Dynq\Models\Part;
 use BynqIO\Dynq\Models\PartType;
 use BynqIO\Dynq\Models\Detail;
 use BynqIO\Dynq\Http\Controllers\Controller;
+use BynqIO\Dynq\Contracts\LevelSink;
 use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 //TODO: check every operation with project status & permissions
-class LevelController extends Controller
+class LevelController extends Controller implements LevelSink
 {
     protected function newActivity($project, $chapter, $name, $type, $detail)
     {
@@ -277,8 +278,8 @@ class LevelController extends Controller
         }
 
         $activity = Activity::findOrFail($request->get('activity'));
-        $chapter = Chapter::findOrFail($activity->chapter_id);
-        $project = Project::findOrFail($chapter->project_id);
+        $project = $activity->chapter->project;
+
         switch ($request->get('action')) {
             case 'enable_timesheet':
                 $this->enableTimesheet($activity);

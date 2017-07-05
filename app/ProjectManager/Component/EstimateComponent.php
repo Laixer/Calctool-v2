@@ -43,6 +43,7 @@ class EstimateComponent extends BaseComponent implements Component
         $ledger = new Ledger($this, [
             'activity.options'       => true,
             'activity.timesheet'     => true,
+            'activity.favorite'      => true,
 
             'chapter'                => true,
             'chapter.options'        => false,

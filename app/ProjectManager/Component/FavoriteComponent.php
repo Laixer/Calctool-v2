@@ -44,6 +44,7 @@ class FavoriteComponent extends BaseComponent implements Component
             'activity.options'        => true,
             'activity.changename'     => true,
             'activity.note'           => true,
+            'activity.favorite'       => true,
             'activity.remove'         => true,
 
             /* Row options */
@@ -62,7 +63,7 @@ class FavoriteComponent extends BaseComponent implements Component
             'rows.material.edit.rate'    => true,
             'rows.material.edit.amount'  => true,
             'rows.material.remove'       => true,
-            'rows.other'                 => false,
+            'rows.other'                 => true,
             'rows.other.add'             => true,
             'rows.other.edit'            => true,
             'rows.other.edit.name'       => true,
@@ -77,7 +78,6 @@ class FavoriteComponent extends BaseComponent implements Component
 
         $ledger->levelFilter(function () {
             return [null];
-            // return $this->project->chapters()->orderBy('priority')->get();
         });
 
         $ledger->layer(function ($layer, $activity = null) {
@@ -102,10 +102,6 @@ class FavoriteComponent extends BaseComponent implements Component
         $ledger->calculateRow(function ($row, $profit = 0) use ($ledger) {
             return $row->getRate($ledger->isOriginal()) * $row->getAmount($ledger->isOriginal()) * (($profit/100)+1);
         });
-
-        if ($this->project->use_equipment) {
-            $ledger->features(['rows.other' => true]);
-        }
 
         return $this->blockLayout($ledger->data(['name' => 'calculate'])->make());
     }

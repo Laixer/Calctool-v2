@@ -1,11 +1,12 @@
 # TODO
 * Move BTW verlegt
-* White label favicon
+* Bootstrap switch conform theme.css
+* White label favicon + manifest
 * Validation
+    -> HTML 'required' attr
 * Translations
 * Comments
-* Database rewrite
-    * Migration squashing
 
 # To Upgrade
 * LB1 forward headers
+* Set nginx config upload above PHP upload size

@@ -166,6 +166,16 @@ Route::group(['middleware' => ['auth','payzone']], function() {
         Route::get('relation/{relation_id}-{name}/contact-{contact_id}/edit',   'RelationController@getEditContact');
         Route::get('relation/{relation_id}-{name}/contact-{contact_id}/vcard',  'RelationController@downloadVCard');
     });
+
+    /* Module Group Favorite */
+    Route::group(['namespace' => 'Favorite'], function() {
+        Route::post('favorite/level/new',                                   'LevelController@newLevel');
+        Route::post('favorite/level/rename',                                'LevelController@renameLevel');
+        Route::post('favorite/level/description',                           'LevelController@descriptionLevel');
+        // Route::get('favorite/level/move',                                   'LevelController@moveLevel');
+        // Route::get('favorite/level/option',                                 'LevelController@setOption');
+        Route::get('favorite/level/delete',                                 'LevelController@deleteLevel');
+    });
 });
 
 /* Authentication, Payzone, Require Company Group */

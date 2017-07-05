@@ -48,6 +48,8 @@ class CalculationComponent extends BaseComponent implements Component
             'activity.options'           => true,
             'activity.move'              => true,
             'activity.changename'        => true,
+            'activity.note'              => true,
+            'activity.favorite'          => true,
             'activity.remove'            => true,
             'activity.convertsubcon'     => true,
             'activity.converestimate'    => true,

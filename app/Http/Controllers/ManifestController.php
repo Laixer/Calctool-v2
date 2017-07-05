@@ -15,21 +15,12 @@
 
 namespace BynqIO\Dynq\Http\Controllers;
 
-use BynqIO\Dynq\Models\Project;
-use BynqIO\Dynq\Models\Offer;
-use BynqIO\Dynq\Models\Invoice;
-use BynqIO\Dynq\Models\ProjectType;
-use BynqIO\Dynq\Models\Relation;
-use BynqIO\Dynq\Models\Contact;
-use BynqIO\Dynq\Models\Chapter;
-use BynqIO\Dynq\Models\Audit;
-use BynqIO\Dynq\Models\RelationKind;
-use BynqIO\Dynq\Http\Controllers\InvoiceController;
-use BynqIO\Dynq\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class ManifestController extends Controller
 {
+    const VERSION = 2;
+
     /**
      * Display a listing of the resource.
      * GET /relation
@@ -39,20 +30,20 @@ class ManifestController extends Controller
     public function __invoke(Request $request)
     {
         return response()->json([
-            'manifest_version'  => 2,
-            'version'           => 'alpha',
+            'manifest_version'  => self::VERSION,
+            'version'           => config('app.version'),
             'default_locale'    => app()->getLocale(),
             'description'       => 'Calculeren, Offreren, Registreren en Administreren in een handomdraai',
             'name'              => config('app.name'),
-            'short_name'        => 'CT',
+            'short_name'        => APP_KEY,
+            'theme_color'       => APP_THEME_COLOR,
+            'background_color'  => APP_BG_COLOR,
             'homepage_url'      => '/',
             'start_url'         => '/',
             'orientation'       => 'any',
             'display'           => 'browser',
-            'theme_color'       => '#517a00',
-            'background_color'  => '#ccc',
+            'dir'               => LOCALE_DIRECTION,
             'author'            => 'Bynq.io B.V.',
-            'dir'               => 'ltr',
             'icons'             => [
                 [
                     'src'=> '/images/android-chrome-36x36.png',

@@ -30,6 +30,8 @@ use Illuminate\Http\Request;
 
 class NewController extends Controller
 {
+    const PREFIX = 'PROJ';
+
     /**
      * Display a listing of the resource.
      * GET /relation
@@ -59,9 +61,44 @@ class NewController extends Controller
         ]);
     }
 
+    //TODO: move to helper
     protected function random_name($size = 4)
     {
         return chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90));
+    }
+
+    private function relationPreferences($relation, $project)
+    {
+        if ($relation->hour_rate > 0) {
+            $project->hour_rate = $relation->hour_rate;
+        }
+        if ($relation->hour_rate_more > 0) {
+            $project->hour_rate_more = $relation->hour_rate_more;
+        }
+        if ($relation->profit_calc_contr_mat) {
+            $project->profit_calc_contr_mat = $relation->profit_calc_contr_mat;
+        }
+        if ($relation->profit_calc_contr_equip) {
+            $project->profit_calc_contr_equip = $relation->profit_calc_contr_equip;
+        }
+        if ($relation->profit_calc_subcontr_mat) {
+            $project->profit_calc_subcontr_mat = $relation->profit_calc_subcontr_mat;
+        }
+        if ($relation->profit_calc_subcontr_equip) {
+            $project->profit_calc_subcontr_equip = $relation->profit_calc_subcontr_equip;
+        }
+        if ($relation->profit_more_contr_mat) {
+            $project->profit_more_contr_mat = $relation->profit_more_contr_mat;
+        }
+        if ($relation->profit_more_contr_equip) {
+            $project->profit_more_contr_equip = $relation->profit_more_contr_equip;
+        }
+        if ($relation->profit_more_subcontr_mat) {
+            $project->profit_more_subcontr_mat = $relation->profit_more_subcontr_mat;
+        }
+        if ($relation->profit_more_subcontr_equip) {
+            $project->profit_more_subcontr_equip = $relation->profit_more_subcontr_equip;
+        }
     }
 
     public function new(Request $request)
@@ -86,7 +123,6 @@ class NewController extends Controller
         $project->user_id                    = $request->user()->id;
         $project->province_id                = $request->input('province');
         $project->country_id                 = $request->input('country');
-        // $project->type_id                    = $request->input('type');
         $project->client_id                  = $request->input('contractor');
         $project->hour_rate                  = $request->user()->pref_hourrate_calc;
         $project->hour_rate_more             = $request->user()->pref_hourrate_more;
@@ -113,7 +149,7 @@ class NewController extends Controller
         }
 
         if (!$request->has('name')) {
-            $project->project_name = 'PROJ-' . date("Ymd") . '-' . $this->random_name();
+            $project->project_name = self::PREFIX . date("Ymd") . '-' . $this->random_name();
         } else {
             $project->project_name = $request->input('name');
         }
@@ -130,26 +166,7 @@ class NewController extends Controller
                 break;
         }
 
-        if ($relation->hour_rate)
-            $project->hour_rate = $relation->hour_rate;
-        if ($relation->hour_rate_more)
-            $project->hour_rate_more = $relation->hour_rate_more;
-        if ($relation->profit_calc_contr_mat)
-            $project->profit_calc_contr_mat = $relation->profit_calc_contr_mat;
-        if ($relation->profit_calc_contr_equip)
-            $project->profit_calc_contr_equip = $relation->profit_calc_contr_equip;
-        if ($relation->profit_calc_subcontr_mat)
-            $project->profit_calc_subcontr_mat = $relation->profit_calc_subcontr_mat;
-        if ($relation->profit_calc_subcontr_equip)
-            $project->profit_calc_subcontr_equip = $relation->profit_calc_subcontr_equip;
-        if ($relation->profit_more_contr_mat)
-            $project->profit_more_contr_mat = $relation->profit_more_contr_mat;
-        if ($relation->profit_more_contr_equip)
-            $project->profit_more_contr_equip = $relation->profit_more_contr_equip;
-        if ($relation->profit_more_subcontr_mat)
-            $project->profit_more_subcontr_mat = $relation->profit_more_subcontr_mat;
-        if ($relation->profit_more_subcontr_equip)
-            $project->profit_more_subcontr_equip = $relation->profit_more_subcontr_equip;
+        $this->relationPreferences($relation, $project);
 
         $project->save();
 

@@ -52,7 +52,7 @@ class PackListReportComponent extends BaseComponent implements Component
         ];
 
         $letter = [
-            'document'         => 'Pakbon',
+            'document'         => __('core.packingslip'),
             'document_date'    => Carbon::now(),
             'reference'        => $document_number,
             'project'          => $this->project,
@@ -60,7 +60,6 @@ class PackListReportComponent extends BaseComponent implements Component
         ];
 
         $letter['messages'][] = "Overzicht gebaseerd op huidige projectstatus.";
-        $letter['messages'][] = "Materiaalprijzen zijn excl. winstpercentages.";
 
         $pdf = PDF::loadView('letter', array_merge($data, $letter));
         $pdf->setOption('footer-font-size', 8);

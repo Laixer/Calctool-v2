@@ -1,4 +1,4 @@
-@extends('component.modal', ['form' => '/project/level/rename'])
+@extends('component.modal', ['form' => "$level_endpoint/rename"])
 
 @section('modal_name', 'Naam aanpassen')
 
