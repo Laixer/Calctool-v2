@@ -35,6 +35,7 @@ return [
     'quotations'        => 'Quotations',
     'quotations/new'    => 'New Quotation',
     'quotations/detail' => 'Quotation PDF',
+    'estimate'          => 'Estimate',
     'less'              => 'Less Work',
     'more'              => 'More Work',
     'favorite'          => 'Favorite activities',

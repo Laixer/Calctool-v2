@@ -172,8 +172,6 @@ Route::group(['middleware' => ['auth','payzone']], function() {
         Route::post('favorite/level/new',                                   'LevelController@newLevel');
         Route::post('favorite/level/rename',                                'LevelController@renameLevel');
         Route::post('favorite/level/description',                           'LevelController@descriptionLevel');
-        // Route::get('favorite/level/move',                                   'LevelController@moveLevel');
-        // Route::get('favorite/level/option',                                 'LevelController@setOption');
         Route::get('favorite/level/delete',                                 'LevelController@deleteLevel');
     });
 });
@@ -304,6 +302,7 @@ Route::group(['middleware' => ['auth', 'payzone', 'reqcompany']], function() {
         Route::get('project/level/move',                                   'LevelController@moveLevel');
         Route::get('project/level/option',                                 'LevelController@setOption');
         Route::get('project/level/delete',                                 'LevelController@deleteLevel');
+        Route::get('project/level/favorite',                               'TransformController');
 
         /* Project specific operations */
         Route::post('project/update',                                      'UpdateController@updateDetails');

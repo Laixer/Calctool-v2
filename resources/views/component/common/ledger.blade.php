@@ -891,6 +891,13 @@ $(document).ready(function() {
                     </div>
                 </div>
                 @endforeach
+
+                @ifallowed ($features['level.new'])
+                @else
+                @if ($filter($section, !$chapter ? null : $chapter->activities())->count() === 0)
+                <h5><strong><i class="fa fa-info-circle" aria-hidden="true"></i> Op dit niveau geen werkzaamheden</strong></h5>
+                @endif
+                @endifallowed
             </div>
             {{-- /Activity body --}}
 

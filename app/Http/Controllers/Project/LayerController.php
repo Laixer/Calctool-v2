@@ -63,6 +63,6 @@ class LayerController extends Controller
                 break;
         }
 
-        return response()->json(['success' => 1]);
+        return response()->json(['success' => true]);
     }
 }
