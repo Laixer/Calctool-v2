@@ -302,7 +302,8 @@ Route::group(['middleware' => ['auth', 'payzone', 'reqcompany']], function() {
         Route::get('project/level/move',                                   'LevelController@moveLevel');
         Route::get('project/level/option',                                 'LevelController@setOption');
         Route::get('project/level/delete',                                 'LevelController@deleteLevel');
-        Route::get('project/level/favorite',                               'TransformController');
+        Route::get('project/level/export',                                 'TransformController@toFavorite');
+        Route::get('project/level/import',                                 'TransformController@fromFavorite');
 
         /* Project specific operations */
         Route::post('project/update',                                      'UpdateController@updateDetails');

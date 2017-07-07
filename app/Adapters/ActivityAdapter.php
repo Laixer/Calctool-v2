@@ -16,6 +16,8 @@
 namespace BynqIO\Dynq\Adapters;
 
 use BynqIO\Dynq\Models\Tax;
+use BynqIO\Dynq\Models\Activity;
+use BynqIO\Dynq\Models\FavoriteActivity;
 
 class ActivityAdapter
 {
@@ -76,9 +78,13 @@ class ActivityAdapter
         return $this->activity->tax_equipment_id = $tax->id;
     }
 
-    public function setUser($user)
+    public function setParent($parent)
     {
-        $this->activity->user_id = $user->id;
+        if ($this->activity instanceof FavoriteActivity) {
+            $this->activity->user_id = $parent->id;
+        } else if ($this->activity instanceof Activity) {
+            $this->activity->chapter_id = $parent->id;
+        }
     }
 
     public function getActivity()

@@ -15,8 +15,6 @@
 
 namespace BynqIO\Dynq\Adapters;
 
-use BynqIO\Dynq\Models\Tax;
-
 class LaborAdapter
 {
     private $labor;

@@ -16,7 +16,7 @@
         <tbody>
             @foreach ($activity::where('user_id', Auth::id())->orderBy('created_at','desc')->get() as $favact)
             <tr>
-                <td><a href="/project/select_favorite?id={{ $favact->id }}&csrf={{ csrf_token() }}">{{ $favact->activity_name }}</a></td>
+                <td><a href="/project/level/import?activity={{ $favact->id }}&chapter={{ $chapter }}&csrf={{ csrf_token() }}">{{ $favact->activity_name }}</a></td>
                 <td class="text-right">{{ $favact->created_at->toDateString() }}</td>
             </tr>
             @endforeach

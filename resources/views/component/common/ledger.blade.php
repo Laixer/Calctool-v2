@@ -410,7 +410,7 @@ $(document).ready(function() {
                                         @endifallowed
 
                                         @ifallowed ($features['activity.favorite'])
-                                        <li><a href="{{ $level_endpoint }}/favorite?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau opslaan als favoriet?')"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
+                                        <li><a href="{{ $level_endpoint }}/export?activity={{ $activity->id }}&level=2&csrf={{ csrf_token() }}" onclick="return confirm('Niveau opslaan als favoriet?')"><i class="fa fa-star-o" style="padding-right:5px">&nbsp;</i>Opslaan als Favoriet</a></li>
                                         @endifallowed
 
                                         @if ((isset($features['activity.timesheet']) && $features['activity.timesheet'] === true)
@@ -921,7 +921,7 @@ $(document).ready(function() {
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a href="/inline/favorite?package=component.modal" data-toggle="modal" data-target="#asyncModal" data-id="{{ !$chapter ? null : $chapter->id }}" data-toggle="modal" data-target="#myFavAct"><i class="fa fa-star-o">&nbsp;</i>@lang('core.select_favorite')</a></li>
+                                    <li><a href="/inline/favorite?chapter={{ $chapter->id }}&package=component.modal" data-toggle="modal" data-target="#asyncModal" data-id="{{ !$chapter ? null : $chapter->id }}" data-toggle="modal" data-target="#myFavAct"><i class="fa fa-star-o">&nbsp;</i>@lang('core.select_favorite')</a></li>
                                 </ul>
                             </div>
                         </div>

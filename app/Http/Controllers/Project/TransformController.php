@@ -15,75 +15,22 @@
 
 namespace BynqIO\Dynq\Http\Controllers\Project;
 
+use BynqIO\Dynq\Models\Chapter;
 use BynqIO\Dynq\Models\Activity;
 use BynqIO\Dynq\Models\FavoriteActivity;
 use BynqIO\Dynq\Models\CalculationLabor;
+use BynqIO\Dynq\Models\CalculationMaterial;
+use BynqIO\Dynq\Models\CalculationEquipment;
 use BynqIO\Dynq\Models\FavoriteLabor;
-
+use BynqIO\Dynq\Models\FavoriteMaterial;
+use BynqIO\Dynq\Models\FavoriteEquipment;
+use BynqIO\Dynq\Mappers\LayerMapper;
 use BynqIO\Dynq\Http\Controllers\Controller;
-use BynqIO\Dynq\Adapters\LaborAdapter;
-use BynqIO\Dynq\Adapters\ActivityAdapter;
 use Illuminate\Http\Request;
 
 class TransformController extends Controller
 {
-    private function mapActivity($activity_new, $activity_copy, $user)
-    {
-        $new  = new ActivityAdapter($activity_new);
-        $copy = new ActivityAdapter($activity_copy);
-
-        $new->setName($copy->getName());
-        $new->setNote($copy->getNote());
-        $new->setUser($user);
-
-        $new->setLaborTax($copy->getLaborTax());
-        $new->setMaterialTax($copy->getMaterialTax());
-        $new->setOtherTax($copy->getOtherTax());
-
-        return $new->getActivity();
-    }
-
-    private function mapLabor($activity_new, $labor_copy, $activity)
-    {
-        $new  = new LaborAdapter($activity_new);
-        $copy = new LaborAdapter($labor_copy);
-
-        $new->setRate($copy->getRate());
-        $new->setAmount($copy->getAmount());
-        $new->setParent($activity);
-
-        return $new->getLabor();
-    }
-
-    private function mapMaterial($activity_new, $labor_copy, $activity)
-    {
-        // foreach (CalculationMaterial::where('activity_id', $activity->id)->get() as $orig_calc_material) {
-        //     $calc_material = new FavoriteMaterial;
-        //     $calc_material->material_name = $orig_calc_material->material_name;
-        //     $calc_material->unit = $orig_calc_material->unit;
-        //     $calc_material->rate = $orig_calc_material->rate;
-        //     $calc_material->amount = $orig_calc_material->amount;
-        //     $calc_material->activity_id = $fav_activity->id;
-
-        //     $calc_material->save();
-        // }
-    }
-
-    private function mapEquipment($activity_new, $labor_copy, $activity)
-    {
-        // foreach (CalculationEquipment::where('activity_id', $activity->id)->get() as $orig_calc_equipment) {
-        //     $calc_equipment = new FavoriteEquipment;
-        //     $calc_equipment->equipment_name = $orig_calc_equipment->equipment_name;
-        //     $calc_equipment->unit = $orig_calc_equipment->unit;
-        //     $calc_equipment->rate = $orig_calc_equipment->rate;
-        //     $calc_equipment->amount = $orig_calc_equipment->amount;
-        //     $calc_equipment->activity_id = $fav_activity->id;
-
-        //     $calc_equipment->save();
-        // }
-    }
-
-    public function __invoke(Request $request)
+    public function toFavorite(Request $request)
     {
         $this->validate($request, [
             'activity' => ['required','integer']
@@ -92,17 +39,57 @@ class TransformController extends Controller
         $activity = Activity::findOrFail($request->get('activity'));
 
         /* Convert activity and commit to persistent storage */
-        $new_activity = $this->mapActivity(new FavoriteActivity, $activity, $request->user());
+        $new_activity = LayerMapper::mapActivity(new FavoriteActivity, $activity, $request->user());
         $new_activity->save();
 
         foreach (CalculationLabor::where('activity_id', $activity->id)->get() as $labor) {
-            $new_labor = $this->mapLabor(new FavoriteLabor, $labor, $new_activity);
+            $new_labor = LayerMapper::mapLabor(new FavoriteLabor, $labor, $new_activity);
             $new_labor->save();
         }
 
-        ////
+        foreach (CalculationMaterial::where('activity_id', $activity->id)->get() as $material) {
+            $new_material = LayerMapper::mapMaterial(new FavoriteMaterial, $material, $new_activity);
+            $new_material->save();
+        }
+
+        foreach (CalculationEquipment::where('activity_id', $activity->id)->get() as $other) {
+            $new_other = LayerMapper::mapOther(new FavoriteEquipment, $other, $new_activity);
+            $new_other->save();
+        }
 
         return back()->with('success', 'Toegevoegd aan favorieten');
+    }
+
+    public function fromFavorite(Request $request)
+    {
+        $this->validate($request, [
+            'activity' => ['required','integer'],
+            'chapter'  => ['required','integer'],
+        ]);
+
+        $activity = FavoriteActivity::findOrFail($request->get('activity'));
+        $chapter = Chapter::findOrFail($request->get('chapter'));
+
+        /* Convert activity and commit to persistent storage */
+        $new_activity = LayerMapper::mapActivity(new Activity, $activity, $chapter);
+        $new_activity->save();
+
+        foreach (FavoriteLabor::where('activity_id', $activity->id)->get() as $labor) {
+            $new_labor = LayerMapper::mapLabor(new CalculationLabor, $labor, $new_activity);
+            $new_labor->save();
+        }
+
+        foreach (FavoriteMaterial::where('activity_id', $activity->id)->get() as $material) {
+            $new_material = LayerMapper::mapMaterial(new CalculationMaterial, $material, $new_activity);
+            $new_material->save();
+        }
+
+        foreach (FavoriteEquipment::where('activity_id', $activity->id)->get() as $other) {
+            $new_other = LayerMapper::mapOther(new CalculationEquipment, $other, $new_activity);
+            $new_other->save();
+        }
+
+        return back()->with('success', 'Toegevoegd aan project');
     }
 
 }

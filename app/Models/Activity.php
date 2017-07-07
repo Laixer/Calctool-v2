@@ -9,7 +9,15 @@ class Activity extends Model
     protected $table = 'activity';
     protected $guarded = ['id'];
 
-    public function chapter() {
+    public function __construct()
+    {
+        $this->priority = 0;
+        $this->part_id = 1;
+        $this->part_type_id = 1;
+    }
+
+    public function chapter()
+    {
         return $this->belongsTo(Chapter::class);
     }
 
