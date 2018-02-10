@@ -345,8 +345,9 @@ class PaymentController extends Controller
         $order->increment = $increment_months;
         $order->description = $description;
         $order->method = '';
-        if (isset($payment_object['recurringType']))
+        if (isset($payment_object['recurringType'])) {
             $order->recurring_type = $payment_object['recurringType'];
+        }
         $order->user_id = Auth::id();
         $order->save();
 
