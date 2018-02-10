@@ -830,7 +830,7 @@ class ProjectController extends Controller {
 			$file->move('user-content', $newname);
 
 			$resource = new Resource;
-			$resource->resource_name = $file->getClientOriginalName();
+			$resource->resource_name = substr($file->getClientOriginalName(), 0, 49);
 			$resource->file_location = 'user-content/' . $newname;
 			$resource->file_size = $file->getClientSize();
 			$resource->user_id = Auth::id();
