@@ -75,23 +75,6 @@
 						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
-									<a class="item-hover" href="/admin/auditlog">
-										<span class="overlay color2"></span>
-										<span class="inner">
-											<span class="block fa fa-list-alt fsize60"></span>
-										</span>
-									</a>
-									<a href="/admin/auditlog" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Auditlog</a>
-								</figure>
-								<div class="item-box-desc">
-									<a href="/admin/auditlog" ><h4>Auditlog</h4></a>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-sm-12 col-md-2">
-							<div class="item-box item-box-show fixed-box">
-								<figure>
 									<a class="item-hover" href="/admin/project">
 										<span class="overlay color2"></span>
 										<span class="inner">
@@ -103,24 +86,6 @@
 								<div class="item-box-desc">
 									<a href="/admin/project"><h4>Projecten</h4></a>
 									<small class="styleColor">{{ \CalculatieTool\Models\Project::count() }} Projecten</small>
-								</div>
-							</div>
-						</div>
-
-						<div class="col-sm-12 col-md-2">
-							<div class="item-box item-box-show fixed-box">
-								<figure>
-									<a class="item-hover" href="/admin/resource">
-										<span class="overlay color2"></span>
-										<span class="inner">
-											<span class="block fa fa-file fsize60"></span>
-										</span>
-									</a>
-									<a href="/admin/resource" class="btn btn-primary add_to_cart"><i class="fa fa-file"></i> Bestanden</a>
-								</figure>
-								<div class="item-box-desc">
-									<a href="/admin/resource"><h4>Bestanden</h4></a>
-									<small class="styleColor">{{ \CalculatieTool\Models\Resource::count() }} bestand(en)</small>
 								</div>
 							</div>
 						</div>
@@ -197,19 +162,39 @@
 							</div>
 						</div>
 
+                        @if (Auth::user()->isSystem())
+                        
 						<div class="col-sm-12 col-md-2">
 							<div class="item-box item-box-show fixed-box">
 								<figure>
-									<a class="item-hover" href="/admin/application">
+									<a class="item-hover" href="/admin/auditlog">
 										<span class="overlay color2"></span>
 										<span class="inner">
-											<span class="block fa fa-user-plus fsize60"></span>
+											<span class="block fa fa-list-alt fsize60"></span>
 										</span>
 									</a>
-									<a href="/admin/application" class="btn btn-primary add_to_cart"><i class="fa fa-user-plus"></i> Applicaties</a>
+									<a href="/admin/auditlog" class="btn btn-primary add_to_cart"><i class="fa fa-list-alt"></i> Auditlog</a>
 								</figure>
 								<div class="item-box-desc">
-									<a href="/admin/application"><h4>Applicaties</h4></a>
+									<a href="/admin/auditlog" ><h4>Auditlog</h4></a>
+								</div>
+							</div>
+						</div>
+                        
+                        <div class="col-sm-12 col-md-2">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/resource">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-file fsize60"></span>
+										</span>
+									</a>
+									<a href="/admin/resource" class="btn btn-primary add_to_cart"><i class="fa fa-file"></i> Bestanden</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/resource"><h4>Bestanden</h4></a>
+									<small class="styleColor">{{ \CalculatieTool\Models\Resource::count() }} bestand(en)</small>
 								</div>
 							</div>
 						</div>
@@ -227,6 +212,23 @@
 								</figure>
 								<div class="item-box-desc">
 									<a href="/admin/product"><h4>Producten</h4></a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col-sm-12 col-md-2">
+							<div class="item-box item-box-show fixed-box">
+								<figure>
+									<a class="item-hover" href="/admin/application">
+										<span class="overlay color2"></span>
+										<span class="inner">
+											<span class="block fa fa-user-plus fsize60"></span>
+										</span>
+									</a>
+									<a href="/admin/application" class="btn btn-primary add_to_cart"><i class="fa fa-user-plus"></i> Applicaties</a>
+								</figure>
+								<div class="item-box-desc">
+									<a href="/admin/application"><h4>Applicaties</h4></a>
 								</div>
 							</div>
 						</div>
@@ -281,6 +283,7 @@
 								</div>
 							</div>
 						</div>
+                        @endif
 
 					</div>
 

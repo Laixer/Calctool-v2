@@ -95,7 +95,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 		}
 	});
 </script>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog modal-lg">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -136,7 +136,7 @@ if (!$project || !$project->isOwner() || $project->is_dilapidated)
 
 		</div>
 	</div>
-</div>
+</div> -->
 <div id="wrapper">
 
 	<section class="container fix-footer-bottom">

@@ -165,9 +165,11 @@ $(document).ready(function() {
 							<li id="tab-admin">
 								<a href="#admin" data-toggle="tab">Adminlog</a>
 							</li>
+                            @if (Auth::user()->isSystem())
 							<li id="tab-audit">
 								<a href="#audit" data-toggle="tab">Eventlog</a>
 							</li>
+                            @endif
 						</ul>
 
 						<div class="tab-content">
@@ -386,6 +388,7 @@ $(document).ready(function() {
 											</div>
 										</div>
 
+                                        @if (Auth::user()->isSystem())
 										<div class="col-md-4">
 											<div class="form-group">
 												<label for="address_city">Referral at signup</label>
@@ -413,7 +416,7 @@ $(document).ready(function() {
 												<input name="api" id="api" type="text" readonly="readonly" value="{{ URL::to('/') }}/register?client_referer={{ $user->referral_key }}" class="form-control"/>
 											</div>
 										</div>
-
+                                        @endif
 									</div>
 
 									<h4 class="hidden-xs">Opmerkingen <a data-toggle="tooltip" data-placement="bottom" data-original-title="Niet zichtbaar voor de gebruiker." href="javascript:void(0);"><i class="fa fa-info-circle"></i></a></h4>
@@ -482,6 +485,7 @@ $(document).ready(function() {
 								</table>
 							</div>
 
+                            @if (Auth::user()->isSystem())
 							<div id="audit" class="tab-pane">
 
 								<div class="pull-right">
@@ -520,6 +524,7 @@ $(document).ready(function() {
 									</tbody>
 								</table>
 							</div>
+                            @endif
 						</div>
 
 					</div>

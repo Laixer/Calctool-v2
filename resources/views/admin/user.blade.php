@@ -98,10 +98,7 @@ $(document).ready(function() {
 				@foreach ($selection_today as $users)
 					<tr>
 						<td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
-							echo $users->username;
-							if ($users->firstname != $users->username) {
-								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
-							}
+						    echo $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '');
 						?></a></td>
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
@@ -143,10 +140,7 @@ $(document).ready(function() {
 				@foreach ($selection_week as $users)
 					<tr>
 						<td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
-							echo $users->username;
-							if ($users->firstname != $users->username) {
-								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
-							}
+							echo $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '');
 						?></a></td>
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
@@ -188,10 +182,7 @@ $(document).ready(function() {
 				@foreach ($selection_other as $users)
 					<tr>
 						<td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
-							echo $users->username;
-							if ($users->firstname != $users->username) {
-								echo ' (' . $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '') . ')';
-							}
+							echo $users->firstname . ($users->lastname ? (', ' . $users->lastname) : '');
 						?></a></td>
 						<td class="col-md-2">{{ $users->currentStatus() }}</td>
 						<td class="col-md-1 hidden-sm hidden-xs">
