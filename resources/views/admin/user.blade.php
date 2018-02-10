@@ -85,7 +85,6 @@ $(document).ready(function() {
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-1 hidden-xs">ID</th>
 						<th class="col-md-4">Gebruikersnaam</th>
 						<th class="col-md-2">Actief</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
@@ -98,7 +97,6 @@ $(document).ready(function() {
 				<tbody>
 				@foreach ($selection_today as $users)
 					<tr>
-						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
 						<td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
 							echo $users->username;
 							if ($users->firstname != $users->username) {
@@ -132,7 +130,6 @@ $(document).ready(function() {
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-1 hidden-xs">ID</th>
 						<th class="col-md-4">Gebruikersnaam</th>
 						<th class="col-md-2">Actief</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
@@ -145,7 +142,6 @@ $(document).ready(function() {
 				<tbody>
 				@foreach ($selection_week as $users)
 					<tr>
-						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
 						<td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
 							echo $users->username;
 							if ($users->firstname != $users->username) {
@@ -179,7 +175,6 @@ $(document).ready(function() {
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-1 hidden-xs">ID</th>
 						<th class="col-md-4">Gebruikersnaam</th>
 						<th class="col-md-2">Actief</th>
 						<th class="col-md-1 hidden-sm hidden-xs">Status</th>
@@ -192,7 +187,6 @@ $(document).ready(function() {
 				<tbody>
 				@foreach ($selection_other as $users)
 					<tr>
-						<td class="col-md-1 hidden-xs"><a href="{{ '/admin/user-'.$users->id.'/edit' }}">{{ $users->id }}</a></td>
 						<td class="col-md-4"><a href="{{ '/admin/user-'.$users->id.'/edit' }}"><?php
 							echo $users->username;
 							if ($users->firstname != $users->username) {

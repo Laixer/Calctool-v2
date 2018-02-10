@@ -113,6 +113,17 @@ class PaymentController extends Controller
      *
      * @return Response
      */
+    public function doCheckPromotionCode(Request $request)
+    {
+        return response()->json(['success' => 0]);
+    }
+
+    /**
+     * Callback from payment provider.
+     * POST /payment/webhook
+     *
+     * @return Response
+     */
     public function doPaymentUpdate(Request $request)
     {
         $user = null;
@@ -488,7 +499,7 @@ class PaymentController extends Controller
         $subscription_id = Auth::user()->payment_subscription_id;
         $customerId      = Auth::user()->payment_customer_id;
 
-        $subscription = $this->userSubscription($customerId)->cancel(subscription_id);
+        $subscription = $this->userSubscription($customerId)->cancel($subscription_id);
 
         Auth::user()->payment_subscription_id = NULL;
         Auth::user()->save();
