@@ -48,8 +48,8 @@
                         <div>3047 BJ Rotterdam</div>
                         <div>085 0655268</div>
                         <div>administratie@calculatietool.com</div> 
-                        <div>54565243&nbsp;</div> 
-                        <div>851353423B01</div>
+                        <div>64153835&nbsp;</div> 
+                        <div>NL855545380B01</div>
                         <div>NL29INGB0006863509&nbsp;</div> 
                         <div>CalculatieTool&nbsp;</div> 
                       </td>
