@@ -23,7 +23,6 @@
 			<table class="table table-striped">
 				<thead>
 					<tr>
-						<th class="col-md-1 hidden-sm hidden-xs">ID</th>
 						<th class="col-md-3">Groepnaam</th>
 						<th class="col-md-2">Accountprijs</th>
 						<th class="col-md-2">Gebruikers</th>
@@ -33,7 +32,6 @@
 				<tbody>
 				@foreach ($selection = \CalculatieTool\Models\UserGroup::orderBy('id')->get() as $group)
 					<tr>
-						<td class="col-md-1 hidden-sm hidden-xs"><a href="{{ '/admin/group-'.$group->id.'/edit' }}">{{ $group->id }}</a></td>
 						<td class="col-md-3"><a href="{{ '/admin/group-'.$group->id.'/edit' }}">{{ ucfirst($group->name) }}</a></td>
 						<td class="col-md-2">{{ '&euro; '.number_format($group->subscription_amount, 2,",",".") }}</td>
 						<td class="col-md-2">{{ \CalculatieTool\Models\User::where('user_group', $group->id)->where('active','=','true')->count() }}</td>

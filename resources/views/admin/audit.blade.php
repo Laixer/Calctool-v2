@@ -72,7 +72,7 @@ $(document).ready(function() {
 							<thead>
 								<tr>
 									<th class="col-md-2 hidden-sm hidden-xs">Timestamp</th>
-									<th class="col-md-2 hidden-sm hidden-xs">Gebruiker</th>
+									<th class="col-md-2">Gebruiker</th>
 									<th class="col-md-2 hidden-sm hidden-xs">IP</th>
 									<th class="col-md-6">Event</th>
 								</tr>
@@ -89,7 +89,7 @@ $(document).ready(function() {
 								@foreach ($selection as $rec)
 								<tr>
 									<td class="col-md-2 hidden-sm hidden-xs">{{ date('d-m-Y H:i:s', strtotime(DB::table('audit')->select('created_at')->where('id',$rec->id)->get()[0]->created_at)) }}</td>
-									<td class="col-md-2 hidden-sm hidden-xs"><a href="/admin/user-{{ $rec->user_id }}/edit">{{ \CalculatieTool\Models\User::find($rec->user_id)->username }}</a></td>
+									<td class="col-md-2"><a href="/admin/user-{{ $rec->user_id }}/edit">{{ \CalculatieTool\Models\User::find($rec->user_id)->username }}</a></td>
 									<td class="col-md-2 hidden-sm hidden-xs">{{ $rec->ip }}</td>
 									<td class="col-md-6">{!! nl2br($rec->event) !!}</td>
 								</tr>

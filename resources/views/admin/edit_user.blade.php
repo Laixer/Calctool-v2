@@ -36,6 +36,9 @@ if (!$user){ ?>
 <?php }else{ ?>
 <script type="text/javascript">
 $(document).ready(function() {
+    $('#tab-overview').click(function(e){
+		sessionStorage.toggleAdminEditUser{{Auth::id()}} = 'overview';
+	});
 	$('#tab-userdata').click(function(e){
 		sessionStorage.toggleAdminEditUser{{Auth::id()}} = 'userdata';
 	});
@@ -50,9 +53,9 @@ $(document).ready(function() {
 		$('#tab-'+$toggleOpenTab).addClass('active');
 		$('#'+$toggleOpenTab).addClass('active');
 	} else {
-		sessionStorage.toggleAdminEditUser{{Auth::id()}} = 'userdata';
-		$('#tab-userdata').addClass('active');
-		$('#userdata').addClass('active');
+		sessionStorage.toggleAdminEditUser{{Auth::id()}} = 'overview';
+		$('#tab-overview').addClass('active');
+		$('#overview').addClass('active');
 	}
 	function prefixURL(field) {
 		var cur_val = $(field).val();
@@ -159,6 +162,9 @@ $(document).ready(function() {
 					<div class="tabs nomargin-top">
 
 						<ul class="nav nav-tabs">
+                            <li id="tab-overview">
+								<a href="#overview" data-toggle="tab">Overzicht</a>
+							</li>
 							<li id="tab-userdata">
 								<a href="#userdata" data-toggle="tab">Gebruikersgegevens</a>
 							</li>
@@ -173,6 +179,25 @@ $(document).ready(function() {
 						</ul>
 
 						<div class="tab-content">
+                            <div id="overview" class="tab-pane">
+                            <section class="paddings">
+								<div class="row text-center countTo">
+									<div class="col-md-4">
+										<strong>{{ \CalculatieTool\Models\Project::where('user_id', $user->id)->count() }}</strong>
+										<label>Projecten</label>
+									</div>
+									<div class="col-md-4">
+										<strong>{{ \CalculatieTool\Models\Relation::where('user_id', $user->id)->count() }}</strong>
+										<label>Relaties</label>
+									</div>
+									<div class="col-md-4">
+										<strong>{{ $user->login_count }}</strong>
+										<label>Logins</label>
+									</div>
+								</div>
+							</section>
+                            </div>
+
 							<div id="userdata" class="tab-pane">
 
 								<form method="POST" action="" accept-charset="UTF-8">
